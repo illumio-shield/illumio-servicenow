@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+    <style>
+        .sp-yes-no-cancel-dialog-root .body {
+            display: flex;
+        }
+
+        .sp-yes-no-cancel-dialog-root .body .icon {
+            font-size: 32px;
+            margin-right: 15px;
+        }
+
+        .sp-yes-no-cancel-dialog-root .body .msg {
+            flex-grow: 1;
+            font-size: 14px;
+        }
+
+        .sp-yes-no-cancel-dialog-root .actions {
+            margin-top: 15px;
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .sp-yes-no-cancel-dialog-root .actions button {
+            margin: auto 5px;
+        }
+    </style>
+
+    <g:ui_form>
+
+        <div class="sp-yes-no-cancel-dialog-root">
+            <div class="body">
+                <div class="icon">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </div>
+                <div class="msg">${HTML:sysparm_message}</div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-default" id="no" onclick="return onNo();">${gs.getMessage('No')}</button>
+                <button class="btn btn-primary" id="yes"
+                    onclick="return onYes();">${gs.getMessage('Yes')}</button>
+            </div>
+        </div>
+    </g:ui_form>
+</j:jelly>

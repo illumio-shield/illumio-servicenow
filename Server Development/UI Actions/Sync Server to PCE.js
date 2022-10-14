@@ -1,0 +1,350 @@
+function doSyncWithPCE() {
+    var dialog;
+    var gaCustomTableData, answer, id, sys_id, count = 0;
+    var checkedRecordsSysID = [];
+    id = g_form.getUniqueValue();
+    checkedRecordsSysID.push(g_form.getUniqueValue() + "");
+    var userFirstName = g_user.firstName;
+    var userLastName = g_user.lastName;
+    var userName = userFirstName + " " + userLastName;
+    sys_id = id;
+
+    // Read SNOW label values from form
+    var snowApp = g_form.getValue("select_application").trim() || "";
+    var snowEnv = g_form.getValue("select_environment").trim() || "";
+    var snowLoc = g_form.getValue("select_location").trim() || "";
+    var snowRole = g_form.getValue("select_role").trim() || "";
+
+    // Read PCE label values from form
+    var pceEnv = g_form.getValue("pce_environment").trim() || "";
+    var pceLoc = g_form.getValue("pce_location").trim() || "";
+    var pceApp = g_form.getValue("pce_application").trim() || "";
+    var pceRole = g_form.getValue("pce_role").trim() || "";
+
+    var pceWorkloadHref = g_form.getValue("pce_workload_href").trim() || "";
+    var hostname = g_form.getValue("hostname").trim();
+
+    var update_application =
+        g_form.getValue("update_application") === "true" ? true : false;
+    var update_environment =
+        g_form.getValue("update_environment") === "true" ? true : false;
+    var update_location =
+        g_form.getValue("update_location") === "true" ? true : false;
+    var update_role = g_form.getValue("update_role") === "true" ? true : false;
+    var conflicts = g_form.getValue("conflicts") === "true" ? true : false;
+    var update_ip_address = g_form.getValue("update_ip_address") === "true" ? true : false;
+    var known_to_pce_for_interfaces = g_form.getValue("known_to_pce").trim() || "";
+    var interfaces;
+    var updateUnmanagedIPAdresses = ((known_to_pce_for_interfaces == "unmanaged") && update_ip_address);
+    var msg, labelsToFetch, payload;
+    var loadingDialog = new GlideModal();
+    loadingDialog.setTitle("Starting sync process");
+    loadingDialog.setWidth(400);
+    loadingDialog.renderWithContent(
+        '<html><body><div class="row loading-container" id="loadingDialog"><label style="font-size: medium;">Validating Sync process...</label><br /><div class="loading-indicator icon-loading icon-lg"></div></div></html>'
+    );
+    if (updateUnmanagedIPAdresses && conflicts) {
+        gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
+        gaCustomTableData.addParam("sysparm_name", "getValidatedInterfaces");
+        gaCustomTableData.addParam("sysparm_sys_ids", sys_id);
+        gaCustomTableData.getXML(gaParseResponseForInterfaces);
+    } else {
+        gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
+        gaCustomTableData.addParam("sysparm_name", "fetchCriticalLabels");
+        gaCustomTableData.getXML(gaParseResponse);
+    }
+    function gaParseResponseForInterfaces(response) {
+        interfaces = JSON.parse(response.responseXML.documentElement.getAttribute("answer"));
+        gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
+        gaCustomTableData.addParam("sysparm_name", "fetchCriticalLabels");
+        gaCustomTableData.getXML(gaParseResponse);
+    }
+    function gaParseResponse(response) {
+        getLabelGroups();
+    }
+
+    function getLabelGroups() {
+
+        gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
+        gaCustomTableData.addParam("sysparm_name", "fetchLabelsForLabelGroups");
+
+        gaCustomTableData.addParam("sysparm_sys_ids", JSON.stringify(sys_id));
+        gaCustomTableData.getXML(gaParseLResponse);
+
+        /**
+         * Callback function for AJAX call to IllumioGetCustomTableRecord
+         */
+        function gaParseLResponse(response) {
+            answer = response.responseXML.documentElement.getAttribute("answer");
+
+            answer = JSON.parse(answer);
+            checkedRecordsSysID = answer;
+            getLabelGroupsCount();
+        }
+    }
+
+    function getLabelGroupsCount() {
+        gaCustomTableData = new GlideAjax('GetLabelGroupsAjax');
+        gaCustomTableData.addParam('sysparm_name', 'countCriticalGroupsFetched');
+        gaCustomTableData.getXML(gaParseLCResponse);
+
+        function gaParseLCResponse(response) {
+            answer = response.responseXML.documentElement.getAttribute("answer");
+            count = answer;
+            getCustomtableRecord();
+        }
+    }
+
+    function getCustomtableRecord() {
+        // If not labels is checked to update, skip operation
+        loadingDialog.destroy();
+        if (!(
+            update_application ||
+            update_environment ||
+            update_location ||
+            update_role || updateUnmanagedIPAdresses
+        )) {
+            msg = "No labels are selected for update.";
+            if (known_to_pce_for_interfaces == "unmanaged") {
+                if (!update_ip_address) {
+                    msg = "No labels or IP Addresses are selected for update.";
+                }
+            }
+            dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+            dialog.setTitle(msg);
+            dialog.render();
+            return;
+        }
+
+        if (checkedRecordsSysID.length == 0) {
+            dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+            dialog.setTitle("Cannot sync a workload that has a critical label.");
+            dialog.render();
+            return;
+        }
+
+        //Display message and skip if the values of all selected fields are in sync with PCE
+        var fieldVariableMap = {
+            update_application: [snowApp, pceApp],
+            update_location: [snowLoc, pceLoc],
+            update_environment: [snowEnv, pceEnv],
+            update_role: [snowRole, pceRole],
+        };
+        var updateCheckboxList = [
+            "update_application",
+            "update_environment",
+            "update_location",
+            "update_role",
+        ];
+        var ga_fields = new GlideAjax("IllumioPrepareWorkload");
+        ga_fields.addParam("sysparm_name", "getMappedFields");
+
+        ga_fields.getXML(gaParseFieldsResponse);
+
+        function gaParseFieldsResponse(responseFields) {
+            var answerRawFields = JSON.parse(responseFields.responseXML.documentElement.getAttribute("answer"));
+
+            var needToUpdate = false;
+            for (var i = 0; i < updateCheckboxList.length; i++) {
+                if (g_form.getValue(updateCheckboxList[i]) === "true") {
+                    if (
+                        fieldVariableMap[updateCheckboxList[i]][0] !=
+                        fieldVariableMap[updateCheckboxList[i]][1] &&
+                        answerRawFields.fields[updateCheckboxList[i].slice(7)]
+                    ) {
+                        needToUpdate = true;
+                    }
+                }
+            }
+            msg = "All selected labels are same";
+            if (updateUnmanagedIPAdresses) {
+                var NUMBER_OF_FIELDS = 32;
+                for (var index = 0; index < NUMBER_OF_FIELDS; index++) {
+                    if ((index == 0 && g_form.getValue("select_ip_address") != g_form.getValue("pce_ip_address") && answerRawFields.fields.ip_address) ||
+                        (g_form.getValue("select_ip_address_" + index) != g_form.getValue("pce_ip_address_" + index) && answerRawFields.fields["ip_address_" + index])) {
+                        needToUpdate = true;
+                        break;
+                    }
+                }
+            }
+            if ((!needToUpdate) && updateUnmanagedIPAdresses) {
+                msg += " and IP Addresses are either empty or have Invalid IP Address Format";
+            }
+            msg += " so no need to update the workload";
+            if (!needToUpdate) {
+                dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                dialog.setTitle(
+                    msg
+                );
+                dialog.render();
+                return;
+            }
+
+            payload = {
+                href: pceWorkloadHref,
+                hostname: hostname,
+                sys_id: checkedRecordsSysID,
+                labels: [], // Labels already present on PCE
+                createlabels: [], // Labels that needs to be created
+                updateFields: [], // The fields selected by user to update
+            };
+
+            labelsToFetch = {};
+
+
+            /**
+             * If user has checked the label and it's non empty on snow side, update
+             * If user has selected the label and it's empty on snow side, remove from PCE
+             * If user has not selected the label then keep the PCE side intact
+             */
+            if (update_application && answerRawFields.fields.application) {
+                payload.updateFields.push("app");
+                if (snowApp) {
+                    labelsToFetch["app"] = snowApp;
+                }
+            } else {
+                if (pceApp) {
+                    labelsToFetch["app"] = pceApp;
+                }
+            }
+
+            if (update_location && answerRawFields.fields.location) {
+                payload.updateFields.push("loc");
+                if (snowLoc) {
+                    labelsToFetch["loc"] = snowLoc;
+                }
+            } else {
+                if (pceLoc) {
+                    labelsToFetch["loc"] = pceLoc;
+                }
+            }
+
+            if (update_environment && answerRawFields.fields.environment) {
+                payload.updateFields.push("env");
+                if (snowEnv) {
+                    labelsToFetch["env"] = snowEnv;
+                }
+            } else {
+                if (pceEnv) {
+                    labelsToFetch["env"] = pceEnv;
+                }
+            }
+
+            if (update_role && answerRawFields.fields.role) {
+                payload.updateFields.push("role");
+                if (snowRole) {
+                    labelsToFetch["role"] = snowRole;
+                }
+            } else {
+                if (pceRole) {
+                    labelsToFetch["role"] = pceRole;
+                }
+            }
+            var ga_labels = new GlideAjax("IllumioPrepareWorkload");
+            ga_labels.addParam("sysparm_name", "getHrefs");
+            ga_labels.addParam("sysparm_labels_to_map", JSON.stringify(labelsToFetch));
+            ga_labels.addParam("sysparm_workload", JSON.stringify(payload));
+            ga_labels.getXML(function (response) {
+                gaParseLabelsResponse(response);
+            });
+            /**
+             * Callback function for response from IllumioPrepareWorkload
+             */
+            function gaParseLabelsResponse(response) {
+                var href, answer, jobSysId;
+                var answer_raw = JSON.parse(
+                    response.responseXML.documentElement.getAttribute("answer")
+                );
+
+                href = answer_raw.workload.href;
+                answer = answer_raw.retVal;
+                var instanceURL = answer_raw.instanceURL;
+
+
+                // The object that will be processed in MID Server script
+                var workload_object = {
+                    href: href,
+                    hostname: answer_raw.workload.hostname,
+                    sys_id: answer_raw.workload.sys_id,
+                    labels: [],
+                    createlabels: [],
+                    updateFields: answer_raw.workload.updateFields,
+                };
+                if (updateUnmanagedIPAdresses) {
+                    workload_object["known_to_pce"] = known_to_pce_for_interfaces;
+                    workload_object["interfaces"] = interfaces;
+                }
+
+                // Update the labels nd create labels list of the workload
+                for (var lr = 0; lr < answer.length; lr++) {
+                    var label_response = answer[lr];
+                    if (label_response.status == "success") {
+                        workload_object.labels.push({
+                            href: label_response["href"],
+                        });
+                    } else if (label_response.status == "failed") {
+                        workload_object.createlabels.push({
+                            key: label_response.key,
+                            value: label_response.value,
+                        });
+                    }
+                }
+
+
+                // Add the description in the workload payload
+                workload_object["description"] =
+                    "Updated by " +
+                    userName +
+                    " [" + instanceURL + "] at " +
+                    new Date().toLocaleString();
+                var managed_workload = [workload_object];
+
+                // Create scheduled job for adding unknown workload to PCE
+                var createJob = new GlideAjax("IllumioManageJobs");
+                createJob.addParam("sysparm_name", "createScheduledJob");
+                createJob.addParam("sysparm_job_status", "running");
+                createJob.addParam("sysparm_type_flag", "true");
+                createJob.addParam(
+                    "sysparm_current_operation",
+                    "Updating " + workload_object.hostname + " workload on PCE"
+                );
+                createJob.addParam(
+                    "sysparm_logs",
+                    "Updating " + workload_object.hostname + " workload on PCE"
+                );
+
+                createJob.addParam("sysparm_job_type", "data sync");
+                createJob.addParam("sysparm_count", (count));
+                createJob.getXML(gaGetJobSysID);
+
+                function gaGetJobSysID(response1) {
+                    jobSysId = response1.responseXML.documentElement.getAttribute("answer");
+
+                    // Check if sceduled job is created or not
+                    if (jobSysId == null) {
+                        dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                        dialog.setTitle(
+                            "Can not start data sync process as there is data collection in running state."
+                        );
+                        dialog.render();
+                    } else {
+                        // Make the AJAX call to script which eventually will call the MID server script
+                        var ga_update;
+                        ga_update = new GlideAjax("IllumioUpdatePCE");
+                        ga_update.addParam("sysparm_name", "action");
+                        ga_update.addParam("sysparm_operation", "update");
+                        ga_update.addParam("sysparm_custom_record_sys_id", g_form.getUniqueValue());
+                        ga_update.addParam("sysparm_jobSysId", jobSysId);
+                        ga_update.addParam("sysparm_partial", "false");
+                        ga_update.addParam("sysparm_payload", JSON.stringify(managed_workload));
+                        ga_update.getXML();
+
+                        dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                        dialog.setTitle("Sync process started.");
+                        dialog.render();
+                    }
+                }
+            }
+        }
+    }
+}

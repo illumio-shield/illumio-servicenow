@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+    <g:ui_form>    
+        <table>
+            <caption> </caption>
+            <th scope = "col"></th>
+            <tr style="padding : 10px;">
+            </tr>
+        </table>
+        <g:macro
+                 ok="actionOK()"
+                 ok_id="ok_button"
+                 ok_type="submit"
+                 />
+        <div style="text-align: center">
+            <g:dialog_button
+                             id="${HTML:jvar_ok_id}"
+                             type="button"
+                             onclick="return closePopup();"
+                             style="width: 5em; margin-top: 15px; margin-left: 5px;">${gs.getMessage('OK')}
+            </g:dialog_button>
+        </div>
+    </g:ui_form>
+</j:jelly>
