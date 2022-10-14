@@ -4,7 +4,7 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
      * Get list of labels' href by its key and value
      * @return {String} href.
      */
-    getHrefs: function () {
+    getHrefs: function() {
         var retVal = []; // Return value       
         var labels = JSON.parse(this.getParameter('sysparm_labels_to_map'));
         var workload = JSON.parse(this.getParameter('sysparm_workload'));
@@ -17,17 +17,21 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
             labelsGr.addQuery('key', labelType);
             labelsGr.addQuery('value', labels[labelType]);
             labelsGr.query();
+            var found = false;
+            while (labelsGr.next()) {
+                var value = labelsGr.getValue('value');
+                if (labels[labelType] && labels[labelType] == value) {
+                    found = true;
+                    retVal.push({
+                        status: 'success',
+                        href: labelsGr.getValue('href'),
+                        key: labelType,
+                        value: value
+                    });
+                }
 
-            if (labelsGr.next()) {
-                retVal.push({
-                    status: 'success',
-                    href: labelsGr.getValue('href'),
-                    key: labelType,
-                    value: labelsGr.getValue('value')
-                });
-
-            } else {
-
+            }
+            if (!found) {
                 retVal.push({
                     status: 'failed',
                     key: labelType,
@@ -36,11 +40,11 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
             }
         }
         var instanceURL = gs.getProperty('glide.servlet.uri');
-        instanceURL = instanceURL.replace('https://','');
+        instanceURL = instanceURL.replace('https://', '');
         var result = {
             "workload": workload,
             "retVal": retVal,
-            "instanceURL": instanceURL.replace('/','')
+            "instanceURL": instanceURL.replace('/', '')
         };
         return JSON.stringify(result);
     },
@@ -49,7 +53,7 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
      * get the mapped fields from the configuration
      * @return {String} mapped fields.
      */
-    getMappedFields: function () {
+    getMappedFields: function() {
         var mappedFields = new IllumioGetPCEConfiguration().getMappedFields();
         return JSON.stringify(mappedFields);
     },

@@ -34,7 +34,8 @@ IllumioUpdatePCE.prototype = Object.extendsObject(global.AbstractAjaxProcessor, 
                 pce_authorization: gs.base64Encode(pceConfig.pceUsername + ':' + pceConfig.pceSecret),
                 time_zone: gs.getSession().getTimeZoneName(),
                 batch_size: gs.getProperty('x_illu2_illumio.bulk_operation_batch_size', 1000),
-                pce_mid_proxy: pceConfig.enable_pce_mid_proxy
+                pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                retry_params: JSON.stringify(pceConfig.retry_params)
             };
 
             var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioUpdateWorkloads', pceConfig.midServer, parameters);

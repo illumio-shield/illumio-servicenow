@@ -280,7 +280,7 @@ IllumioUtils.prototype = {
                         grWorkloads.query();
 
                         if (grWorkloads.next()) {
-                            if ((grWorkloads.getValue("pce_role") + '').toLowerCase() == (retRoleLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_role") + '').toLowerCase() != (grWorkloads.getValue("select_role") + '').toLowerCase()) {
+                            if ((grWorkloads.getValue("pce_role") + '') == (retRoleLabels.labels[j] + '') && (grWorkloads.getValue("pce_role") + '') != (grWorkloads.getValue("select_role") + '')) {
 
                                 flag = true;
                             }
@@ -297,7 +297,7 @@ IllumioUtils.prototype = {
 
                         if (grWorkloads.next()) {
                             if (
-                                (grWorkloads.getValue("pce_location") + '').toLowerCase() == (retLocLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_location") + '').toLowerCase() != (grWorkloads.getValue("select_location") + '').toLowerCase()
+                                (grWorkloads.getValue("pce_location") + '') == (retLocLabels.labels[j] + '') && (grWorkloads.getValue("pce_location") + '') != (grWorkloads.getValue("select_location") + '')
                             ) {
                                 flag = true;
                             }
@@ -315,7 +315,7 @@ IllumioUtils.prototype = {
 
                         if (grWorkloads.next()) {
                             if (
-                                (grWorkloads.getValue("pce_environment") + '').toLowerCase() == (retEnvLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_environment") + '').toLowerCase() != (grWorkloads.getValue("select_environment") + '').toLowerCase()
+                                (grWorkloads.getValue("pce_environment") + '') == (retEnvLabels.labels[j] + '') && (grWorkloads.getValue("pce_environment") + '') != (grWorkloads.getValue("select_environment") + '')
                             ) {
                                 flag = true;
                             }
@@ -331,7 +331,7 @@ IllumioUtils.prototype = {
                         grWorkloads.query();
                         if (grWorkloads.next()) {
                             if (
-                                (grWorkloads.getValue("pce_application") + '').toLowerCase() == (retAppLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_application") + '').toLowerCase() != (grWorkloads.getValue("select_application") + '').toLowerCase()
+                                (grWorkloads.getValue("pce_application") + '') == (retAppLabels.labels[j] + '') && (grWorkloads.getValue("pce_application") + '') != (grWorkloads.getValue("select_application") + '')
                             ) {
                                 flag = true;
                             }
@@ -529,7 +529,7 @@ IllumioUtils.prototype = {
             // Set conflicts to true if any label mismatch present
             for (var label in labels) {
                 var currentLabel = labels[label];
-                if ((((current["select_" + currentLabel] + "").trim()).toLowerCase() != ((current["pce_" + currentLabel] + "").trim()).toLowerCase() && mappedFields[currentLabel])) {
+                if ((((current["select_" + currentLabel] + "").trim()) != ((current["pce_" + currentLabel] + "").trim()) && mappedFields[currentLabel])) {
                     return true;
                 }
             }

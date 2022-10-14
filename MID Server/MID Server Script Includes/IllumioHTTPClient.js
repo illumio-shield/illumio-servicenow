@@ -1,13 +1,16 @@
-ms.include("IllumioHttpIncludes");
-ms.include("IllumioMIDConstants");
+ms.include('IllumioHttpIncludes');
+ms.include('IllumioMIDConstants');
 
 var IllumioHTTPClient = Class.create();
 IllumioHTTPClient.prototype = {
-    initialize: function(baseUrl, username, password, protocol, pceMIDProxy) {
+    initialize: function(baseUrl, username, password, protocol, pceMIDProxy, retryParams) {
         this.logger = new IllumioLogUtil();
         this.baseUrl = baseUrl;
-        var proxyFlag = (pceMIDProxy == "true" || pceMIDProxy == null) ? true : false;
+        var proxyFlag = (pceMIDProxy == 'true' || pceMIDProxy == null) ? true : false;
         this.client = this._setupClient(baseUrl, username, password, protocol, proxyFlag);
+        this.HTTP_RETRY_COUNT = retryParams.http_retry_count;
+        this.HTTP_RETRY_INTERVAL_INCREMENT = retryParams.http_retry_interval_increment;
+        this.HTTP_RETRY_INTERVAL_MAX = retryParams.http_retry_interval_max;
     },
 
     /**
@@ -41,15 +44,15 @@ IllumioHTTPClient.prototype = {
      **/
     _getProxy: function(proxyFlag) {
         var proxy = null;
-        if (ms.getConfigParameter("mid.proxy.use_proxy") != "true") {
-            this.logger._debug("Proxy is not configured, continuing with internet connection");
+        if (ms.getConfigParameter('mid.proxy.use_proxy') != 'true') {
+            this.logger._debug('Proxy is not configured, continuing with internet connection');
             return proxy;
         }
         if (proxyFlag) {
-            var proxyHost = ms.getConfigParameter("mid.proxy.host");
-            var proxyPort = ms.getConfigParameter("mid.proxy.port");
-            var proxyUsername = ms.getConfigParameter("mid.proxy.username");
-            var proxyPassword = ms.getConfigParameter("mid.proxy.password");
+            var proxyHost = ms.getConfigParameter('mid.proxy.host');
+            var proxyPort = ms.getConfigParameter('mid.proxy.port');
+            var proxyUsername = ms.getConfigParameter('mid.proxy.username');
+            var proxyPassword = ms.getConfigParameter('mid.proxy.password');
             proxy = {
                 host: proxyHost,
                 port: proxyPort,
@@ -69,9 +72,9 @@ IllumioHTTPClient.prototype = {
      * @param {JSON} requestData Request body as JSON
      * @returns {JSON} Object of the response
      */
-    _executeMethod: function(endpoint, queryString, method, headers, requestData) {
+    _executeMethod: function(endpoint, queryString, method, headers, requestData, retryCount, lastSleepTime) {
 
-        if (queryString != "") {
+        if (queryString != '') {
             method.setQueryString(queryString);
         }
 
@@ -81,7 +84,6 @@ IllumioHTTPClient.prototype = {
             }
         }
         if (requestData) {
-
             method.setRequestBody(JSON.stringify(requestData));
             method.addRequestHeader('Content-Type', 'application/json');
         }
@@ -105,15 +107,22 @@ IllumioHTTPClient.prototype = {
                 };
 
                 return responseObj;
-            } else {
-
+            }
+            if (retryCount == 0 || (RETRY_CODES.indexOf(responseCode) == -1 && !(responseCode >= 500))) {
                 return {
                     hasError: true,
                     status: responseCode
                 };
             }
+
+            lastSleepTime = lastSleepTime ? lastSleepTime : 0;
+            var currentSleepTime = Math.min(this.HTTP_RETRY_INTERVAL_MAX, lastSleepTime + this.HTTP_RETRY_INTERVAL_INCREMENT);
+            lastSleepTime = currentSleepTime;
+            this.logger._error('Failed to execute HTTP call: Waiting for ' + currentSleepTime + ' seconds before doing another REST call.');
+            this._sleep(currentSleepTime * 1000);
+            return this._executeMethod(endpoint, queryString, method, headers, requestData, retryCount - 1, lastSleepTime);
         } catch (e) {
-            this.logger._error("PCE request failed : Exception " + e);
+            this.logger._error('PCE request failed : Exception ' + e);
             return {
                 hasError: true,
                 status: 0
@@ -152,19 +161,15 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     get: function(endpoint, queryString, headers, requestData) {
-        var retryCount = 0;
         var response = null;
-        while (retryCount < MAX_RETRY_COUNTS) {
-            var getMethod = new GetMethod(this.baseUrl + endpoint);
-            this.logger._debug("APICALL: GET endpoint: " + endpoint + " queryString: " + queryString);
-            response = this._executeMethod(endpoint, queryString, getMethod, headers, requestData);
-            if (!response.hasError) {
-                this.logger._debug("HTTP GET Call complete, status: " + response.status);
-                return response;
-            }
-            this.logger._error("Failed: HTTP GET Call, status: " + response.status);
-            retryCount++;
+        var getMethod = new GetMethod(this.baseUrl + endpoint);
+        this.logger._debug('APICALL: GET endpoint: ' + endpoint + ' queryString: ' + queryString);
+        response = this._executeMethod(endpoint, queryString, getMethod, headers, requestData, this.HTTP_RETRY_COUNT);
+        if (!response.hasError) {
+            this.logger._debug('HTTP GET Call complete, status: ' + response.status);
+            return response;
         }
+        this.logger._error('Failed: HTTP GET Call, status: ' + response.status);
         return response;
     },
 
@@ -177,19 +182,15 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     post: function(endpoint, queryString, headers, requestData) {
-        var retryCount = 0;
         var response = null;
-        while (retryCount < MAX_RETRY_COUNTS) {
-            var postMethod = new PostMethod(this.baseUrl + endpoint);
-            this.logger._debug("APICALL: POST endpoint: " + endpoint + " queryString: " + queryString);
-            response = this._executeMethod(endpoint, queryString, postMethod, headers, requestData);
-            if (!response.hasError) {
-                this.logger._debug("HTTP POST Call complete, status: " + response.status);
-                return response;
-            }
-            this.logger._error("Failed: HTTP POST Call, status: " + response.status);
-            retryCount++;
+        var postMethod = new PostMethod(this.baseUrl + endpoint);
+        this.logger._debug('APICALL: POST endpoint: ' + endpoint + ' queryString: ' + queryString);
+        response = this._executeMethod(endpoint, queryString, postMethod, headers, requestData, this.HTTP_RETRY_COUNT);
+        if (!response.hasError) {
+            this.logger._debug('HTTP POST Call complete, status: ' + response.status);
+            return response;
         }
+        this.logger._error('Failed: HTTP POST Call, status: ' + response.status);
         return response;
 
     },
@@ -203,19 +204,15 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     put: function(endpoint, queryString, headers, requestData) {
-        var retryCount = 0;
         var response = null;
-        while (retryCount < MAX_RETRY_COUNTS) {
-            var putMethod = new PutMethod(this.baseUrl + endpoint);
-            this.logger._debug("APICALL: PUT endpoint: " + endpoint + " queryString: " + queryString);
-            response = this._executeMethod(endpoint, queryString, putMethod, headers, requestData);
-            if (!response.hasError) {
-                this.logger._debug("HTTP PUT Call complete, status: " + response.status);
-                return response;
-            }
-            this.logger._error("Failed: HTTP PUT Call, status: " + response.status);
-            retryCount++;
+        var putMethod = new PutMethod(this.baseUrl + endpoint);
+        this.logger._debug('APICALL: PUT endpoint: ' + endpoint + ' queryString: ' + queryString);
+        response = this._executeMethod(endpoint, queryString, putMethod, headers, requestData, this.HTTP_RETRY_COUNT);
+        if (!response.hasError) {
+            this.logger._debug('HTTP PUT Call complete, status: ' + response.status);
+            return response;
         }
+        this.logger._error('Failed: HTTP PUT Call, status: ' + response.status);
         return response;
     },
 
@@ -228,19 +225,15 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     deleteMethod: function(endpoint, queryString, headers, requestData) {
-        var retryCount = 0;
         var response = null;
-        while (retryCount < MAX_RETRY_COUNTS) {
-            var method = new DeleteMethod(this.baseUrl + endpoint);
-            this.logger._debug("APICALL: DELETE endpoint: " + endpoint + " queryString: " + queryString);
-            response = this._executeMethod(endpoint, queryString, method, headers, requestData);
-            if (!response.hasError) {
-                this.logger._debug("HTTP DELETE Call complete, status: " + response.status);
-                return response;
-            }
-            this.logger._error("Failed: HTTP DELETE Call, status: " + response.status);
-            retryCount++;
+        var method = new DeleteMethod(this.baseUrl + endpoint);
+        this.logger._debug('APICALL: DELETE endpoint: ' + endpoint + ' queryString: ' + queryString);
+        response = this._executeMethod(endpoint, queryString, method, headers, requestData, this.HTTP_RETRY_COUNT);
+        if (!response.hasError) {
+            this.logger._debug('HTTP DELETE Call complete, status: ' + response.status);
+            return response;
         }
+        this.logger._error('Failed: HTTP DELETE Call, status: ' + response.status);
         return response;
     },
 
@@ -267,10 +260,23 @@ IllumioHTTPClient.prototype = {
                 return result;
             }
         } catch (error) {
-            this.logger._except("Failed to load mid server configurations.");
+            this.logger._except('Failed to load mid server configurations.');
             return null;
         }
     },
 
-    type: "IllumioHTTPClient"
+    /**
+     * Performs sleep for given amount of time.
+     *
+     * @param {int} ms Time to sleep for in ms.
+     */
+    _sleep: function(ms) {
+        var endAt = new Date().getTime() + ms,
+            currentTime;
+        do {
+            currentTime = new Date().getTime();
+        } while (currentTime < endAt);
+    },
+
+    type: 'IllumioHTTPClient'
 };

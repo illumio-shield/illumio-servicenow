@@ -12,6 +12,7 @@ var METHOD_CLASSES = {
     DELETE: DeleteMethod
 };
 var SUCCESS_CODES = [200, 201, 202, 204];
+var RETRY_CODES = [429];
 var MAX_IP_ADDRESSES = 32;
 var MAX_RETRY_COUNTS = 3;
 var TABLE_API = "/api/now/table/";

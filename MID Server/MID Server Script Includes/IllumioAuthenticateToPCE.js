@@ -28,10 +28,17 @@ IllumioAuthenticateToPCE.prototype = {
         this.utils = new IllumioPCEUtils(this.timeZone);
         this.protocol = this.utils.getPortFromUrl(this.pceUrl);
 
+        this.retryParams = null;
+        try {
+            this.retryParams = JSON.parse(probe.getParameter('glide.jms.retry_params'));
+        } catch(e) {
+            this.logger._except('IllumioAuthenticateToPCE - Cannot parse the JSON of retry parameters');
+        }
+        
         var decodedAuth = this.utils.decodeBase64(this.pceAuthorization);
         this.pceUsername = decodedAuth.substring(0, decodedAuth.indexOf(":"));
         this.pcePassword = decodedAuth.substring(decodedAuth.indexOf(":") + 1);
-        this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy);
+        this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy, this.retryParams);
     },
 
     run: function() {
@@ -63,8 +70,9 @@ IllumioAuthenticateToPCE.prototype = {
 
 
         // Authenticating using given authorization
-        var response = this.pceHttpClient.get(this.pceEndpoint, '');
+        
         try {
+            var response = this.pceHttpClient.get(this.pceEndpoint, '');
             this.logger._debug("Response code of authorization is: " + response.status);
 
             if (response.status != "200" && response.status != "202") {

@@ -36,12 +36,19 @@ IllumioManageAsyncJobs.prototype = {
 
         this.protocol = this.utils.getPortFromUrl(this.pceUrl);
         
+        this.retryParams = null;
+        try {
+            this.retryParams = JSON.parse(probe.getParameter('glide.jms.retry_params'));
+        } catch(e) {
+            this.logger._except('IllumioManageAsyncJobs - Cannot parse the JSON of retry parameters');
+        }
+        
         var decodedAuth = this.utils.decodeBase64(this.pceAuthorization);
         this.pceUsername = decodedAuth.substring(0, decodedAuth.indexOf(":"));
         this.pcePassword = decodedAuth.substring(decodedAuth.indexOf(":") + 1);
 
-        this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy);
-        this.snHttpClient = new IllumioHTTPClient(this.snowUrl, this.snowUsername, this.snowPassword, "443");
+        this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy, this.retryParams);
+        this.snHttpClient = new IllumioHTTPClient(this.snowUrl, this.snowUsername, this.snowPassword, "443", null, this.retryParams);
     },
 
     run: function () {

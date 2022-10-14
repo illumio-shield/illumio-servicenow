@@ -37,7 +37,12 @@ IllumioGetPCEConfiguration.prototype = {
                 wl_creation_limit: pceConfig.number_of_workloads_to_be_created_from_servicenow,
                 limit_on_wl_deletion: pceConfig.set_limit_on_workload_deletion,
                 wl_deletion_limit: pceConfig.workload_deletion_limit,
-                enable_pce_mid_proxy: pceConfig.enable_proxy_between_pce_and_mid_server
+                enable_pce_mid_proxy: pceConfig.enable_proxy_between_pce_and_mid_server,
+                retry_params: {
+                    http_retry_count: parseInt(pceConfig.getValue('http_retry_count')),
+                    http_retry_interval_increment: parseInt(pceConfig.getValue('http_retry_interval_increment')),
+                    http_retry_interval_max: parseInt(pceConfig.getValue('http_retry_interval_max'))
+                }
             };
 
         } else {
