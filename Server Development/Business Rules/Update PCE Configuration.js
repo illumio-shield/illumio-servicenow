@@ -1,3 +1,4 @@
+gs.include('IllumioConstants');
 (function executeRule(current, previous /*null when async*/ ) {
 
     // set default organization id to 1 if not present
@@ -51,12 +52,12 @@
 
     //Retry mechanism Validations
     try {
-        var retryCount = !gs.nil(current.getValue('http_retry_count')) ? parseInt(current.getValue('http_retry_count')) : 5;
-        var maxRetryInterval = !gs.nil(current.getValue('http_retry_interval_max')) ? parseInt(current.getValue('http_retry_interval_max')) : 30;
-        var retryIntervalIncrement = !gs.nil(current.getValue('http_retry_interval_increment')) ? parseInt(current.getValue('http_retry_interval_increment')) : 300;
-        
-        if (!(0 <= retryCount && retryCount <= 32767)) {
-            gs.addErrorMessage('The Retry count should be in the range of 0 to 32767');
+        var retryCount = !gs.nil(current.getValue('http_retry_count')) ? parseInt(current.getValue('http_retry_count')) : HTTP_RETRY_COUNT;
+        var maxRetryInterval = !gs.nil(current.getValue('http_retry_interval_max')) ? parseInt(current.getValue('http_retry_interval_max')) : HTTP_RETRY_INTERVAL_MAX;
+        var retryIntervalIncrement = !gs.nil(current.getValue('http_retry_interval_increment')) ? parseInt(current.getValue('http_retry_interval_increment')) : HTTP_RETRY_INTERVAL_INCREMENT;
+
+        if (!(0 <= retryCount && retryCount <= 100)) {
+            gs.addErrorMessage('The Retry count should be in the range of 0 to 100');
             current.setAbortAction(true);
             return;
         }

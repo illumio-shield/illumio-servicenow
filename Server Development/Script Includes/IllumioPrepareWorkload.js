@@ -5,33 +5,26 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
      * @return {String} href.
      */
     getHrefs: function() {
+        var utils = new IllumioUtils();
         var retVal = []; // Return value       
         var labels = JSON.parse(this.getParameter('sysparm_labels_to_map'));
         var workload = JSON.parse(this.getParameter('sysparm_workload'));
 
         var labelsGr = new GlideRecord('x_illu2_illumio_illumio_pce_labels_mapping');
-
         for (var labelType in labels) {
-
             labelsGr.initialize();
             labelsGr.addQuery('key', labelType);
             labelsGr.addQuery('value', labels[labelType]);
             labelsGr.query();
-            var found = false;
-            while (labelsGr.next()) {
-                var value = labelsGr.getValue('value');
-                if (labels[labelType] && labels[labelType] == value) {
-                    found = true;
-                    retVal.push({
-                        status: 'success',
-                        href: labelsGr.getValue('href'),
-                        key: labelType,
-                        value: value
-                    });
-                }
-
-            }
-            if (!found) {
+            var resp = utils.queryCaseInsensitiveGr(labelsGr, 'value', labels[labelType], 'href');
+            if (resp.found) {
+                retVal.push({
+                    status: 'success',
+                    href: resp.returnValue,
+                    key: labelType,
+                    value: labels[labelType]
+                });
+            } else {
                 retVal.push({
                     status: 'failed',
                     key: labelType,

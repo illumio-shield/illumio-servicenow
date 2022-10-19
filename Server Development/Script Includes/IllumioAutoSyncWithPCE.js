@@ -419,27 +419,20 @@ IllumioAutoSyncWithPCE.prototype = {
      * @returns updated object of the workload
      */
     getUseCreateLabelsList: function(workload_object, labelsToMap) {
+        var utils = new IllumioUtils();
         var labelsGr = new GlideRecord(
             "x_illu2_illumio_illumio_pce_labels_mapping"
         );
         for (var labelType in labelsToMap) {
-            labelsGr.initialize();
             labelsGr.addQuery("key", labelType);
             labelsGr.addQuery("value", labelsToMap[labelType]);
             labelsGr.query();
-            var found = false;
-            while (labelsGr.next()) {
-                if (labelsToMap[labelType] && labelsToMap[labelType] == labelsGr.getValue('value')) {
-                    // Append to labels to use
-                    workload_object.labels.push({
-                        href: labelsGr.getValue("href"),
-                    });
-                    found = true;
-                }
-            }
-
-            if (!found) {
-                // Append to labels to be created if not empty
+            var resp = utils.queryCaseInsensitiveGr(labelsGr, 'value', labelsToMap[labelType], 'href');
+            if (resp.found) {
+                workload_object.labels.push({
+                    href: resp.returnValue,
+                });
+            } else {
                 if (labelsToMap[labelType]) {
                     workload_object.createlabels.push({
                         key: labelType,
@@ -478,7 +471,6 @@ IllumioAutoSyncWithPCE.prototype = {
                     createUnknown: this.unknownWorkloadsList,
                     isAutoSync: true,
                 };
-                JSON.stringify("Payloadxyz: " + JSON.stringify(payload));
                 grPayload.payload = JSON.stringify(payload);
                 sys_id = grPayload.insert();
                 if (gs.nil(sys_id)) {

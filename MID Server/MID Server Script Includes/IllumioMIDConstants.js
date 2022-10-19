@@ -3,7 +3,7 @@ var METHODS = {
     GET: "GET",
     POST: "POST",
     PUT: "PUT",
-    DELETE: "DELETE"    
+    DELETE: "DELETE"
 };
 var METHOD_CLASSES = {
     GET: GetMethod,
@@ -11,7 +11,6 @@ var METHOD_CLASSES = {
     PUT: PutMethod,
     DELETE: DeleteMethod
 };
-var SUCCESS_CODES = [200, 201, 202, 204];
 var RETRY_CODES = [429];
 var MAX_IP_ADDRESSES = 32;
 var MAX_RETRY_COUNTS = 3;
@@ -22,3 +21,9 @@ var AUTOSYNC_PAYLOAD_TABLE = "x_illu2_illumio_illumio_autosync_payload";
 var PCE_WORKLOADS_TABLE = "x_illu2_illumio_illumio_servicenow_servers";
 var PCE_WORKLOADS_MAPPING_TABLE = "x_illu2_illumio_illumio_pce_workloads_mapping";
 var PCE_LABELS_MAPPING_TABLE = "x_illu2_illumio_illumio_pce_labels_mapping";
+
+var DEFAULT_RETRY_PARAMS = {
+    http_retry_count: 5,
+    http_retry_interval_increment: 30,
+    http_retry_interval_max: 300
+};

@@ -6,11 +6,11 @@ IllumioHTTPClient.prototype = {
     initialize: function(baseUrl, username, password, protocol, pceMIDProxy, retryParams) {
         this.logger = new IllumioLogUtil();
         this.baseUrl = baseUrl;
-        var proxyFlag = (pceMIDProxy == 'true' || pceMIDProxy == null) ? true : false;
+        var proxyFlag = (pceMIDProxy == 'true' || pceMIDProxy == null);
         this.client = this._setupClient(baseUrl, username, password, protocol, proxyFlag);
-        this.HTTP_RETRY_COUNT = retryParams.http_retry_count;
-        this.HTTP_RETRY_INTERVAL_INCREMENT = retryParams.http_retry_interval_increment;
-        this.HTTP_RETRY_INTERVAL_MAX = retryParams.http_retry_interval_max;
+        this.httpRetryCount = retryParams.http_retry_count;
+        this.httpRetryIntervalIncrement = retryParams.http_retry_interval_increment;
+        this.httpRetryIntervalMax = retryParams.http_retry_interval_max;
     },
 
     /**
@@ -98,17 +98,20 @@ IllumioHTTPClient.prototype = {
             }
 
             // if response status is 200 ok or 202 for async request
-            if (SUCCESS_CODES.indexOf(responseCode) != -1) {
+            if (responseCode >= 200 && responseCode < 300) {
                 var responseObj = {
                     hasError: false,
                     data: new JSON().decode(responseBody),
                     headers: responseHeaders,
                     status: responseCode
                 };
-
+                this.logger._debug('HTTP ' + method.getName() + ' Call complete, status: ' + responseCode);
                 return responseObj;
             }
-            if (retryCount == 0 || (RETRY_CODES.indexOf(responseCode) == -1 && !(responseCode >= 500))) {
+
+            retryCount = (typeof retryCount == 'undefined') ? this.httpRetryCount : retryCount;
+            if (retryCount <= 0 || (RETRY_CODES.indexOf(responseCode) == -1 && !(responseCode >= 500))) {
+                this.logger._error('Failed: HTTP' + method.getName() + ' Call, status: ' + responseCode);
                 return {
                     hasError: true,
                     status: responseCode
@@ -116,40 +119,24 @@ IllumioHTTPClient.prototype = {
             }
 
             lastSleepTime = lastSleepTime ? lastSleepTime : 0;
-            var currentSleepTime = Math.min(this.HTTP_RETRY_INTERVAL_MAX, lastSleepTime + this.HTTP_RETRY_INTERVAL_INCREMENT);
-            lastSleepTime = currentSleepTime;
-            this.logger._error('Failed to execute HTTP call: Waiting for ' + currentSleepTime + ' seconds before doing another REST call.');
-            this._sleep(currentSleepTime * 1000);
+            lastSleepTime = Math.min(this.httpRetryIntervalMax, lastSleepTime + this.httpRetryIntervalIncrement);
+            if (responseCode == 429) {
+                if (responseHeaders['retry-after']) {
+                    lastSleepTime = parseInt(responseHeaders['retry-after']);
+                }
+            }
+            this.logger._error('Failed to execute HTTP call: Waiting for ' + lastSleepTime + ' seconds before doing another REST call.');
+            Packages.java.lang.Thread.sleep(lastSleepTime * 1000);
+            //             this._sleep(lastSleepTime * 1000);
             return this._executeMethod(endpoint, queryString, method, headers, requestData, retryCount - 1, lastSleepTime);
         } catch (e) {
             this.logger._error('PCE request failed : Exception ' + e);
+            this.logger._error('Failed: HTTP' + method.getName() + ' Call, status: 0');
             return {
                 hasError: true,
                 status: 0
             };
         }
-    },
-
-    /**
-     * Execute and retry multiple times if the request fails
-     * @param {String} endpoint Endpoint of the API
-     * @param {String} queryString Query to add in the URL
-     * @param {String} method Name of the method
-     * @param {JSON} headers Object of headers to add to the request
-     * @param {JSON} requestData Request body as JSON
-     * @returns {JSON} Object of the response
-     **/
-    execute: function(endpoint, queryString, method, headers, requestData) {
-        var retryCount = 0;
-        var response = null;
-        while (retryCount < 3) {
-            response = this._executeMethod(endpoint, queryString, method, headers, requestData);
-            if (!response.hasError) {
-                return response;
-            }
-            retryCount++;
-        }
-        return response;
     },
 
     /**
@@ -161,16 +148,9 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     get: function(endpoint, queryString, headers, requestData) {
-        var response = null;
         var getMethod = new GetMethod(this.baseUrl + endpoint);
         this.logger._debug('APICALL: GET endpoint: ' + endpoint + ' queryString: ' + queryString);
-        response = this._executeMethod(endpoint, queryString, getMethod, headers, requestData, this.HTTP_RETRY_COUNT);
-        if (!response.hasError) {
-            this.logger._debug('HTTP GET Call complete, status: ' + response.status);
-            return response;
-        }
-        this.logger._error('Failed: HTTP GET Call, status: ' + response.status);
-        return response;
+        return this._executeMethod(endpoint, queryString, getMethod, headers, requestData);
     },
 
     /**
@@ -182,17 +162,9 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     post: function(endpoint, queryString, headers, requestData) {
-        var response = null;
         var postMethod = new PostMethod(this.baseUrl + endpoint);
         this.logger._debug('APICALL: POST endpoint: ' + endpoint + ' queryString: ' + queryString);
-        response = this._executeMethod(endpoint, queryString, postMethod, headers, requestData, this.HTTP_RETRY_COUNT);
-        if (!response.hasError) {
-            this.logger._debug('HTTP POST Call complete, status: ' + response.status);
-            return response;
-        }
-        this.logger._error('Failed: HTTP POST Call, status: ' + response.status);
-        return response;
-
+        return this._executeMethod(endpoint, queryString, postMethod, headers, requestData);
     },
 
     /**
@@ -204,16 +176,9 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     put: function(endpoint, queryString, headers, requestData) {
-        var response = null;
         var putMethod = new PutMethod(this.baseUrl + endpoint);
         this.logger._debug('APICALL: PUT endpoint: ' + endpoint + ' queryString: ' + queryString);
-        response = this._executeMethod(endpoint, queryString, putMethod, headers, requestData, this.HTTP_RETRY_COUNT);
-        if (!response.hasError) {
-            this.logger._debug('HTTP PUT Call complete, status: ' + response.status);
-            return response;
-        }
-        this.logger._error('Failed: HTTP PUT Call, status: ' + response.status);
-        return response;
+        return this._executeMethod(endpoint, queryString, putMethod, headers, requestData);
     },
 
     /**
@@ -225,16 +190,9 @@ IllumioHTTPClient.prototype = {
      * @returns {JSON} Object of the response
      **/
     deleteMethod: function(endpoint, queryString, headers, requestData) {
-        var response = null;
         var method = new DeleteMethod(this.baseUrl + endpoint);
         this.logger._debug('APICALL: DELETE endpoint: ' + endpoint + ' queryString: ' + queryString);
-        response = this._executeMethod(endpoint, queryString, method, headers, requestData, this.HTTP_RETRY_COUNT);
-        if (!response.hasError) {
-            this.logger._debug('HTTP DELETE Call complete, status: ' + response.status);
-            return response;
-        }
-        this.logger._error('Failed: HTTP DELETE Call, status: ' + response.status);
-        return response;
+        return this._executeMethod(endpoint, queryString, method, headers, requestData);
     },
 
     /**

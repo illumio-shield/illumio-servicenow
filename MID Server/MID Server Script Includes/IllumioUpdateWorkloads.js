@@ -79,16 +79,17 @@ IllumioUpdateWorkloads.prototype = {
         this.utils = new IllumioPCEUtils(this.timeZone);
         this.protocol = this.utils.getPortFromUrl(this.pceUrl);
 
-        this.retryParams = null;
+        this.retryParams = DEFAULT_RETRY_PARAMS;
         try {
             this.retryParams = JSON.parse(probe.getParameter('glide.jms.retry_params'));
-        } catch(e) {
+        } catch (e) {
             this.logger._except('IllumioUpdateWorkloads - Cannot parse the JSON of retry parameters');
         }
-        
+
         var decodedAuth = this.utils.decodeBase64(this.pceAuthorization);
-        this.pceUsername = decodedAuth.substring(0, decodedAuth.indexOf(":"));
-        this.pcePassword = decodedAuth.substring(decodedAuth.indexOf(":") + 1);
+        decodedAuth = decodedAuth.split(":");
+        this.pceUsername = decodedAuth[0];
+        this.pcePassword = decodedAuth.slice(1).join(':');
 
         this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy, this.retryParams);
         this.snHttpClient = new IllumioHTTPClient(this.SNOWurl, this.SNOWusername, this.SNOWpassword, "443", null, this.retryParams);
@@ -422,16 +423,16 @@ IllumioUpdateWorkloads.prototype = {
                 }
             }
             var interface_length = this.interfaces.length;
-            for(var interface_index = 0; interface_index < interface_length; interface_index++){
+            for (var interface_index = 0; interface_index < interface_length; interface_index++) {
                 var interface_name = this.interfaces[interface_index].name;
                 var interface_address = this.interfaces[interface_index].address;
                 var intIndex = parseInt(interface_name.substring(3));
-                var pce_column = intIndex > 0 ? 'pce_ip_address_' + (intIndex+1) : 'pce_ip_address';
+                var pce_column = intIndex > 0 ? 'pce_ip_address_' + (intIndex + 1) : 'pce_ip_address';
                 snowUpdateObject.payloadPut[pce_column] = interface_address;
             }
             snowUpdateQueue.push(snowUpdateObject);
         }
-        
+
         if (payloadBody.length == 0) {
             return {
                 "exception": 'PCE. Check MID Server logs for details.'
@@ -494,7 +495,7 @@ IllumioUpdateWorkloads.prototype = {
                     if (snowUpdateQueueFinal[p]["umw" + interfaceIndex])
                         payloadPut["pce_ip_address_" + (interfaceIndex + 1)] = snowUpdateQueueFinal[p]["umw" + interfaceIndex];
                 }
-                snowUpdateQueueFinal[p].interfaces = this.interfaces; 
+                snowUpdateQueueFinal[p].interfaces = this.interfaces;
 
                 var putEndpoint = TABLE_API + PCE_WORKLOADS_TABLE + "/" + snowUpdateQueueFinal[p].sys_id;
                 var snowHttpPutResponse = this.snHttpClient.put(putEndpoint, '', null, payloadPut);
@@ -568,7 +569,7 @@ IllumioUpdateWorkloads.prototype = {
 
             href = payload.href;
             labelsToUse = payload.labels;
-            
+
             var snowUpdateObject = {};
 
             // Skip processing the workload if custom record's sys_id is not known
@@ -578,7 +579,7 @@ IllumioUpdateWorkloads.prototype = {
                 this.logger._debug("IllumioUpdateWorkloads: Sys ID not found in the payload object : SKIPPED");
                 continue;
             }
-            
+
             if (labelsToCreate.length > 0) {
                 this.logger._debug("IllumioUpdateWorkloads: Creating required labels.");
             }
@@ -804,7 +805,7 @@ IllumioUpdateWorkloads.prototype = {
             }
             // Make the HTTP call to create new the label
             var url = "/api/v2/orgs/" + this.pceOrgId + "/labels/";
-            this.logger._debug("Creating Label: "+ JSON.stringify(label));
+            this.logger._debug("Creating Label: " + JSON.stringify(label));
             var response = this.pceHttpClient.post(url, '', null, label);
             if (response.hasError && response.status != 406) {
                 this.logger._error("IllumioUpdateWorkloads: Error while creating label -> " + label.key + " : " + label.value);

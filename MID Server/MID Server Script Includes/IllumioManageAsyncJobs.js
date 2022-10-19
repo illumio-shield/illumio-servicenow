@@ -3,7 +3,7 @@ ms.include("IllumioMIDConstants");
 var IllumioManageAsyncJobs = Class.create();
 
 IllumioManageAsyncJobs.prototype = {
-    initialize: function () {
+    initialize: function() {
 
         // set the parameters here
         this.logger = new IllumioLogUtil();
@@ -30,28 +30,29 @@ IllumioManageAsyncJobs.prototype = {
         this.illumioDateFormat = this.SimpleDF("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
         this.snowDateFormat.setTimeZone(this.TimeZone.getTimeZone(this.timeZone));
-        this.illumioDateFormat.setTimeZone(this.TimeZone.getTimeZone('UTC'));    
+        this.illumioDateFormat.setTimeZone(this.TimeZone.getTimeZone('UTC'));
 
         this.utils = new IllumioPCEUtils(this.timeZone);
 
         this.protocol = this.utils.getPortFromUrl(this.pceUrl);
-        
-        this.retryParams = null;
+
+        this.retryParams = DEFAULT_RETRY_PARAMS;
         try {
             this.retryParams = JSON.parse(probe.getParameter('glide.jms.retry_params'));
-        } catch(e) {
+        } catch (e) {
             this.logger._except('IllumioManageAsyncJobs - Cannot parse the JSON of retry parameters');
         }
-        
+
         var decodedAuth = this.utils.decodeBase64(this.pceAuthorization);
-        this.pceUsername = decodedAuth.substring(0, decodedAuth.indexOf(":"));
-        this.pcePassword = decodedAuth.substring(decodedAuth.indexOf(":") + 1);
+        decodedAuth = decodedAuth.split(":");
+        this.pceUsername = decodedAuth[0];
+        this.pcePassword = decodedAuth.slice(1).join(':');
 
         this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy, this.retryParams);
         this.snHttpClient = new IllumioHTTPClient(this.snowUrl, this.snowUsername, this.snowPassword, "443", null, this.retryParams);
     },
 
-    run: function () {
+    run: function() {
 
         this.requiredOperation = probe.getParameter('glide.jms.operation');
 
@@ -73,7 +74,7 @@ IllumioManageAsyncJobs.prototype = {
      * Start async job on PCE
      * @return {Boolean} whether async job was created successfully or not.
      */
-    createNewAsyncJobRequest: function () {
+    createNewAsyncJobRequest: function() {
 
         try {
             // Required header to indicate async job
@@ -91,7 +92,7 @@ IllumioManageAsyncJobs.prototype = {
             }
 
             var responseHeaders = response.headers;
-            for(var key in responseHeaders){
+            for (var key in responseHeaders) {
                 responseHeaders[key.toLowerCase()] = responseHeaders[key];
             }
             // Async job data to be stored in Async Jobs table
@@ -130,7 +131,7 @@ IllumioManageAsyncJobs.prototype = {
      * Get status of async job running on PCE
      * @return {Boolean} whether status was successful or not.
      */
-    getAsyncJobStatus: function () {
+    getAsyncJobStatus: function() {
 
         try {
             var jobStatus = 'failed';
@@ -193,7 +194,7 @@ IllumioManageAsyncJobs.prototype = {
      * @param {String} resultsLocation location of the result.
      * @return {Boolean} whether request was successful or not.
      */
-    getAsyncJobResults: function (resultsLocation) {
+    getAsyncJobResults: function(resultsLocation) {
 
         try {
             this.logger._info('IllumioManageAsyncJobs - Getting async job results');
@@ -228,11 +229,11 @@ IllumioManageAsyncJobs.prototype = {
 
             var resultData = [];
             response.data = JSON.parse(JSON.stringify(response.data));
-            response.data.map(function (resultObj) {
+            response.data.map(function(resultObj) {
 
                 if (resultObj[primaryKey]) {
                     var requredDataObj = {};
-                    keysToMap.map(function (key) {
+                    keysToMap.map(function(key) {
                         if (key == 'agent') {
                             var agent = resultObj[key];
                             if (agent['href'])
@@ -268,7 +269,7 @@ IllumioManageAsyncJobs.prototype = {
             var mappingGR = new GlideRecord(resultTable);
             mappingGR.initialize();
             mappingGR.setValue("json_data", JSON.stringify(resultData));
-            if(!mappingGR.insert()){
+            if (!mappingGR.insert()) {
                 this.logger._error("Cannot insert the data in staging table");
                 this.handleException('Exception occurred while posting results to SNOW, Please check MID server logs for more details.');
                 return false;
@@ -290,7 +291,7 @@ IllumioManageAsyncJobs.prototype = {
      * Handles exception by logging and setting job status as failed
      * @param {String} exception thrown by methods.
      */
-    handleException: function (exception) {
+    handleException: function(exception) {
 
         payload = {
             job_status: 'failed'
@@ -315,7 +316,7 @@ IllumioManageAsyncJobs.prototype = {
      * @param {String} content of job
      * 
      */
-    _updateJobRecord: function (jobSysId, jobContent) {
+    _updateJobRecord: function(jobSysId, jobContent) {
 
         var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
         if (jobGr.get(jobSysId)) {

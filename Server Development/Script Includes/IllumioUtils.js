@@ -397,7 +397,7 @@ IllumioUtils.prototype = {
                     state[currColumn] = this.getState(i, grWorkloadsForInterfaces.getValue(currColumn), mappedFields);
                 }
                 if (!this.canSyncIP(0, state['select_ip_address'], hostname)) {
-                    gs.info("Skipping interfaces of workload with hostname: "+hostname+" as the public IP address is invalid/not mapped");
+                    gs.info("Skipping interfaces of workload with hostname: " + hostname + " as the public IP address is invalid/not mapped");
                     return [];
 
                 } else {
@@ -446,7 +446,7 @@ IllumioUtils.prototype = {
                     cmdbColumn = "select_ip_address_" + (cmdbIndex + 1);
                     ipAddress = grWorkloadsForInterfaces.getValue(cmdbColumn);
                     if (gs.nil(pceIps[ipAddress]) && this.canSyncIP(cmdbIndex, state[cmdbColumn], hostname)) {
-                        gs.info("Skipping IP address " + ipAddress + " for workload with hostname " + grWorkloadsForInterfaces.getValue('hostname') + " as there are already "+MAX_IP_ADDRESSES+" IP addresses in the PCE");
+                        gs.info("Skipping IP address " + ipAddress + " for workload with hostname " + grWorkloadsForInterfaces.getValue('hostname') + " as there are already " + MAX_IP_ADDRESSES + " IP addresses in the PCE");
                     }
                     cmdbIndex++;
                 }
@@ -487,7 +487,7 @@ IllumioUtils.prototype = {
      * @param {string} state State array
      * @param {string} hostname Hostname of the workload
      * @returns boolean
-     **/    
+     **/
     canSyncIP: function(index, state, hostname) {
         switch (state) {
             case STATES.INVALID:
@@ -688,5 +688,27 @@ IllumioUtils.prototype = {
         return new GlideTextReader(streamData).readLine();
     },
 
-    type: "IllumioStartDiscovery",
+    /**
+     * Query the case-sensitive GlideRecord 
+     * @param {string} tableGr GlideRecord of the table
+     * @param {string} key field of the table
+     * @param {string} value value to be matched
+     * @returns gr if found, else return JSON response as false
+     */
+    queryCaseInsensitiveGr: function(tableGr, key, value, targetField) {
+
+        while (tableGr.next()) {
+            if (tableGr.getValue(key) == value) {
+                return {
+                    found: true,
+                    returnValue: tableGr.getValue(targetField)
+                };
+            }
+        }
+        return {
+            found: false
+        };
+    },
+
+    type: "IllumioUtils",
 };

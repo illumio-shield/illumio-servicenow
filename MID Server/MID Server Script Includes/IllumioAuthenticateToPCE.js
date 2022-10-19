@@ -7,7 +7,7 @@ IllumioAuthenticateToPCE.prototype = {
         // set the parameters here
         this.logger = new IllumioLogUtil();
 
-        
+
         this.pceUrl = probe.getParameter('glide.jms.pce_url');
         this.pceEndpoint = probe.getParameter('glide.jms.pce_endpoint');
         this.pceAuthorization = probe.getParameter('glide.jms.pce_authorization');
@@ -28,16 +28,18 @@ IllumioAuthenticateToPCE.prototype = {
         this.utils = new IllumioPCEUtils(this.timeZone);
         this.protocol = this.utils.getPortFromUrl(this.pceUrl);
 
-        this.retryParams = null;
+        this.retryParams = DEFAULT_RETRY_PARAMS;
         try {
             this.retryParams = JSON.parse(probe.getParameter('glide.jms.retry_params'));
-        } catch(e) {
+        } catch (e) {
             this.logger._except('IllumioAuthenticateToPCE - Cannot parse the JSON of retry parameters');
         }
-        
+
         var decodedAuth = this.utils.decodeBase64(this.pceAuthorization);
-        this.pceUsername = decodedAuth.substring(0, decodedAuth.indexOf(":"));
-        this.pcePassword = decodedAuth.substring(decodedAuth.indexOf(":") + 1);
+        decodedAuth = decodedAuth.split(":");
+        this.pceUsername = decodedAuth[0];
+        this.pcePassword = decodedAuth.slice(1).join(':');
+
         this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy, this.retryParams);
     },
 
@@ -70,7 +72,7 @@ IllumioAuthenticateToPCE.prototype = {
 
 
         // Authenticating using given authorization
-        
+
         try {
             var response = this.pceHttpClient.get(this.pceEndpoint, '');
             this.logger._debug("Response code of authorization is: " + response.status);
