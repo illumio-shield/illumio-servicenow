@@ -16,7 +16,7 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
             labelsGr.addQuery('key', labelType);
             labelsGr.addQuery('value', labels[labelType]);
             labelsGr.query();
-            var resp = utils.queryCaseInsensitiveGr(labelsGr, 'value', labels[labelType], 'href');
+            var resp = utils.queryCaseSensitiveGr(labelsGr, 'value', labels[labelType], 'href');
             if (resp.found) {
                 retVal.push({
                     status: 'success',

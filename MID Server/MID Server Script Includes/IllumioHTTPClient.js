@@ -74,6 +74,7 @@ IllumioHTTPClient.prototype = {
      */
     _executeMethod: function(endpoint, queryString, method, headers, requestData, retryCount, lastSleepTime) {
 
+        this.logger._debug('APICALL: ' + method.getName() + ' endpoint: ' + endpoint + ' queryString: ' + queryString);
         if (queryString != '') {
             method.setQueryString(queryString);
         }
@@ -121,13 +122,13 @@ IllumioHTTPClient.prototype = {
             lastSleepTime = lastSleepTime ? lastSleepTime : 0;
             lastSleepTime = Math.min(this.httpRetryIntervalMax, lastSleepTime + this.httpRetryIntervalIncrement);
             if (responseCode == 429) {
-                if (responseHeaders['retry-after']) {
-                    lastSleepTime = parseInt(responseHeaders['retry-after']);
+                var retryAfterHeader = responseHeaders['retry-after'];
+                if (retryAfterHeader) {
+                    lastSleepTime = this.parseRetryAfterHeader(retryAfterHeader) || lastSleepTime;
                 }
             }
             this.logger._error('Failed to execute HTTP call: Waiting for ' + lastSleepTime + ' seconds before doing another REST call.');
             Packages.java.lang.Thread.sleep(lastSleepTime * 1000);
-            //             this._sleep(lastSleepTime * 1000);
             return this._executeMethod(endpoint, queryString, method, headers, requestData, retryCount - 1, lastSleepTime);
         } catch (e) {
             this.logger._error('PCE request failed : Exception ' + e);
@@ -149,7 +150,6 @@ IllumioHTTPClient.prototype = {
      **/
     get: function(endpoint, queryString, headers, requestData) {
         var getMethod = new GetMethod(this.baseUrl + endpoint);
-        this.logger._debug('APICALL: GET endpoint: ' + endpoint + ' queryString: ' + queryString);
         return this._executeMethod(endpoint, queryString, getMethod, headers, requestData);
     },
 
@@ -163,7 +163,6 @@ IllumioHTTPClient.prototype = {
      **/
     post: function(endpoint, queryString, headers, requestData) {
         var postMethod = new PostMethod(this.baseUrl + endpoint);
-        this.logger._debug('APICALL: POST endpoint: ' + endpoint + ' queryString: ' + queryString);
         return this._executeMethod(endpoint, queryString, postMethod, headers, requestData);
     },
 
@@ -177,7 +176,6 @@ IllumioHTTPClient.prototype = {
      **/
     put: function(endpoint, queryString, headers, requestData) {
         var putMethod = new PutMethod(this.baseUrl + endpoint);
-        this.logger._debug('APICALL: PUT endpoint: ' + endpoint + ' queryString: ' + queryString);
         return this._executeMethod(endpoint, queryString, putMethod, headers, requestData);
     },
 
@@ -191,7 +189,6 @@ IllumioHTTPClient.prototype = {
      **/
     deleteMethod: function(endpoint, queryString, headers, requestData) {
         var method = new DeleteMethod(this.baseUrl + endpoint);
-        this.logger._debug('APICALL: DELETE endpoint: ' + endpoint + ' queryString: ' + queryString);
         return this._executeMethod(endpoint, queryString, method, headers, requestData);
     },
 
@@ -223,17 +220,15 @@ IllumioHTTPClient.prototype = {
         }
     },
 
-    /**
-     * Performs sleep for given amount of time.
-     *
-     * @param {int} ms Time to sleep for in ms.
-     */
-    _sleep: function(ms) {
-        var endAt = new Date().getTime() + ms,
-            currentTime;
-        do {
-            currentTime = new Date().getTime();
-        } while (currentTime < endAt);
+    parseRetryAfterHeader: function(retryAfter) {
+        var retryAfterSeconds = parseInt(retryAfter);
+        if (isNaN(retryAfterSeconds)) {
+            var retryAfterDate = new Date(retryAfter);
+            if (retryAfterDate) {
+                retryAfterSeconds = Math.floor((retryAfterDate.getTime() - new Date().getTime())/1000);
+            }
+        }
+        return retryAfterSeconds || 0;
     },
 
     type: 'IllumioHTTPClient'

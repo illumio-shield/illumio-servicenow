@@ -52,21 +52,21 @@ gs.include('IllumioConstants');
 
     //Retry mechanism Validations
     try {
-        var retryCount = !gs.nil(current.getValue('http_retry_count')) ? parseInt(current.getValue('http_retry_count')) : HTTP_RETRY_COUNT;
-        var maxRetryInterval = !gs.nil(current.getValue('http_retry_interval_max')) ? parseInt(current.getValue('http_retry_interval_max')) : HTTP_RETRY_INTERVAL_MAX;
-        var retryIntervalIncrement = !gs.nil(current.getValue('http_retry_interval_increment')) ? parseInt(current.getValue('http_retry_interval_increment')) : HTTP_RETRY_INTERVAL_INCREMENT;
+        var retryCount = !gs.nil(current.getValue('http_retry_count')) ? parseInt(current.getValue('http_retry_count')) : DEFAULT_HTTP_RETRY_COUNT;
+        var maxRetryInterval = !gs.nil(current.getValue('http_retry_interval_max')) ? parseInt(current.getValue('http_retry_interval_max')) : DEFAULT_HTTP_RETRY_INTERVAL_MAX;
+        var retryIntervalIncrement = !gs.nil(current.getValue('http_retry_interval_increment')) ? parseInt(current.getValue('http_retry_interval_increment')) : DEFAULT_HTTP_RETRY_INTERVAL_INCREMENT;
 
-        if (!(0 <= retryCount && retryCount <= 100)) {
+        if (!(0 <= retryCount && retryCount <= HTTP_RETRY_COUNT_MAX)) {
             gs.addErrorMessage('The Retry count should be in the range of 0 to 100');
             current.setAbortAction(true);
             return;
         }
-        if (!(0 <= maxRetryInterval && maxRetryInterval <= 600)) {
+        if (!(0 <= maxRetryInterval && maxRetryInterval <= HTTP_RETRY_INTERVAL_INCREMENT_MAX)) {
             gs.addErrorMessage('The HTTP Retry interval max should be in the range of 0 to 600');
             current.setAbortAction(true);
             return;
         }
-        if (!(0 <= retryIntervalIncrement && retryIntervalIncrement <= 600)) {
+        if (!(0 <= retryIntervalIncrement && retryIntervalIncrement <= HTTP_RETRY_INTERVAL_MAX)) {
             gs.addErrorMessage('The HTTP Retry interval increment should be in the range of 0 to 600');
             current.setAbortAction(true);
             return;

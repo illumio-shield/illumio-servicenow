@@ -695,7 +695,7 @@ IllumioUtils.prototype = {
      * @param {string} value value to be matched
      * @returns gr if found, else return JSON response as false
      */
-    queryCaseInsensitiveGr: function(tableGr, key, value, targetField) {
+    queryCaseSensitiveGr: function(tableGr, key, value, targetField) {
 
         while (tableGr.next()) {
             if (tableGr.getValue(key) == value) {

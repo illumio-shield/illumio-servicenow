@@ -427,7 +427,7 @@ IllumioAutoSyncWithPCE.prototype = {
             labelsGr.addQuery("key", labelType);
             labelsGr.addQuery("value", labelsToMap[labelType]);
             labelsGr.query();
-            var resp = utils.queryCaseInsensitiveGr(labelsGr, 'value', labelsToMap[labelType], 'href');
+            var resp = utils.queryCaseSensitiveGr(labelsGr, 'value', labelsToMap[labelType], 'href');
             if (resp.found) {
                 workload_object.labels.push({
                     href: resp.returnValue,
