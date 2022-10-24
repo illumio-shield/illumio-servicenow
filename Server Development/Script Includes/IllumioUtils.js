@@ -280,7 +280,7 @@ IllumioUtils.prototype = {
                         grWorkloads.query();
 
                         if (grWorkloads.next()) {
-                            if ((grWorkloads.getValue("pce_role") + '').toLowerCase() == (retRoleLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_role") + '').toLowerCase() != (grWorkloads.getValue("select_role") + '').toLowerCase()) {
+                            if ((grWorkloads.getValue("pce_role") + '') == (retRoleLabels.labels[j] + '') && (grWorkloads.getValue("pce_role") + '') != (grWorkloads.getValue("select_role") + '')) {
 
                                 flag = true;
                             }
@@ -297,7 +297,7 @@ IllumioUtils.prototype = {
 
                         if (grWorkloads.next()) {
                             if (
-                                (grWorkloads.getValue("pce_location") + '').toLowerCase() == (retLocLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_location") + '').toLowerCase() != (grWorkloads.getValue("select_location") + '').toLowerCase()
+                                (grWorkloads.getValue("pce_location") + '') == (retLocLabels.labels[j] + '') && (grWorkloads.getValue("pce_location") + '') != (grWorkloads.getValue("select_location") + '')
                             ) {
                                 flag = true;
                             }
@@ -315,7 +315,7 @@ IllumioUtils.prototype = {
 
                         if (grWorkloads.next()) {
                             if (
-                                (grWorkloads.getValue("pce_environment") + '').toLowerCase() == (retEnvLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_environment") + '').toLowerCase() != (grWorkloads.getValue("select_environment") + '').toLowerCase()
+                                (grWorkloads.getValue("pce_environment") + '') == (retEnvLabels.labels[j] + '') && (grWorkloads.getValue("pce_environment") + '') != (grWorkloads.getValue("select_environment") + '')
                             ) {
                                 flag = true;
                             }
@@ -331,7 +331,7 @@ IllumioUtils.prototype = {
                         grWorkloads.query();
                         if (grWorkloads.next()) {
                             if (
-                                (grWorkloads.getValue("pce_application") + '').toLowerCase() == (retAppLabels.labels[j] + '').toLowerCase() && (grWorkloads.getValue("pce_application") + '').toLowerCase() != (grWorkloads.getValue("select_application") + '').toLowerCase()
+                                (grWorkloads.getValue("pce_application") + '') == (retAppLabels.labels[j] + '') && (grWorkloads.getValue("pce_application") + '') != (grWorkloads.getValue("select_application") + '')
                             ) {
                                 flag = true;
                             }
@@ -397,7 +397,7 @@ IllumioUtils.prototype = {
                     state[currColumn] = this.getState(i, grWorkloadsForInterfaces.getValue(currColumn), mappedFields);
                 }
                 if (!this.canSyncIP(0, state['select_ip_address'], hostname)) {
-                    gs.info("Skipping interfaces of workload with hostname: "+hostname+" as the public IP address is invalid/not mapped");
+                    gs.info("Skipping interfaces of workload with hostname: " + hostname + " as the public IP address is invalid/not mapped");
                     return [];
 
                 } else {
@@ -446,7 +446,7 @@ IllumioUtils.prototype = {
                     cmdbColumn = "select_ip_address_" + (cmdbIndex + 1);
                     ipAddress = grWorkloadsForInterfaces.getValue(cmdbColumn);
                     if (gs.nil(pceIps[ipAddress]) && this.canSyncIP(cmdbIndex, state[cmdbColumn], hostname)) {
-                        gs.info("Skipping IP address " + ipAddress + " for workload with hostname " + grWorkloadsForInterfaces.getValue('hostname') + " as there are already "+MAX_IP_ADDRESSES+" IP addresses in the PCE");
+                        gs.info("Skipping IP address " + ipAddress + " for workload with hostname " + grWorkloadsForInterfaces.getValue('hostname') + " as there are already " + MAX_IP_ADDRESSES + " IP addresses in the PCE");
                     }
                     cmdbIndex++;
                 }
@@ -487,7 +487,7 @@ IllumioUtils.prototype = {
      * @param {string} state State array
      * @param {string} hostname Hostname of the workload
      * @returns boolean
-     **/    
+     **/
     canSyncIP: function(index, state, hostname) {
         switch (state) {
             case STATES.INVALID:
@@ -529,7 +529,7 @@ IllumioUtils.prototype = {
             // Set conflicts to true if any label mismatch present
             for (var label in labels) {
                 var currentLabel = labels[label];
-                if ((((current["select_" + currentLabel] + "").trim()).toLowerCase() != ((current["pce_" + currentLabel] + "").trim()).toLowerCase() && mappedFields[currentLabel])) {
+                if ((((current["select_" + currentLabel] + "").trim()) != ((current["pce_" + currentLabel] + "").trim()) && mappedFields[currentLabel])) {
                     return true;
                 }
             }
@@ -688,5 +688,27 @@ IllumioUtils.prototype = {
         return new GlideTextReader(streamData).readLine();
     },
 
-    type: "IllumioStartDiscovery",
+    /**
+     * Query the case-sensitive GlideRecord 
+     * @param {string} tableGr GlideRecord of the table
+     * @param {string} key field of the table
+     * @param {string} value value to be matched
+     * @returns gr if found, else return JSON response as false
+     */
+    queryCaseSensitiveGr: function(tableGr, key, value, targetField) {
+
+        while (tableGr.next()) {
+            if (tableGr.getValue(key) == value) {
+                return {
+                    found: true,
+                    returnValue: tableGr.getValue(targetField)
+                };
+            }
+        }
+        return {
+            found: false
+        };
+    },
+
+    type: "IllumioUtils",
 };

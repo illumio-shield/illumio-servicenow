@@ -44,7 +44,8 @@ IllumioStartAuthentication.prototype = {
                 pce_endpoint: this.AUTHENTICATION_API_ENDPOINT,
                 illumio_scheduled_job_id: jobSysId,
                 time_zone: gs.getSession().getTimeZoneName(),
-                enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy
+                enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                retry_params: JSON.stringify(pceConfig.retry_params)
             };
             var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioAuthenticateToPCE', pceConfig.midServer, parameters);
             var addToECCQueue = illumioAddToECCQueue.insert();

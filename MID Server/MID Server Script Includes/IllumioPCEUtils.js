@@ -13,7 +13,7 @@ IllumioPCEUtils.prototype = {
         this.illumioDateFormat = this.SimpleDF("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         
         this.snowDateFormat.setTimeZone(this.TimeZone.getTimeZone(this.timeZone));
-        this.illumioDateFormat.setTimeZone(this.TimeZone.getTimeZone('UTC'))
+        this.illumioDateFormat.setTimeZone(this.TimeZone.getTimeZone('UTC'));
     },
 
     /**

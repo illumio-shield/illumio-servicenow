@@ -35,7 +35,8 @@ IllumioPollAsyncJobStatus.prototype = {
                     retry_count: this.retryCount,
                     job_identifier: this.job_identifier,
                     time_zone: gs.getSession().getTimeZoneName(),
-                    pce_mid_proxy: pceConfig.enable_pce_mid_proxy
+                    pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                    retry_params: JSON.stringify(pceConfig.retry_params)
                 };
 
                 var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioManageAsyncJobs', pceConfig.midServer, parameters);

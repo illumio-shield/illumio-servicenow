@@ -107,10 +107,10 @@ IllumioAutoSyncWithPCE.prototype = {
                         pce_location: (allServersGr.pce_location + "").trim(),
                         pce_role: (allServersGr.pce_role + "").trim(),
                     };
-                    
-                    for(var j=1;j<MAX_IP_ADDRESSES;j++){
+
+                    for (var j = 1; j < MAX_IP_ADDRESSES; j++) {
                         var umw = 'umw' + j;
-                        var selectIPAddress = 'select_ip_address_' + (j+1);
+                        var selectIPAddress = 'select_ip_address_' + (j + 1);
                         dataObj[umw] = (allServersGr[selectIPAddress] + "").trim();
                     }
                     recordsData.push(dataObj);
@@ -232,7 +232,7 @@ IllumioAutoSyncWithPCE.prototype = {
                         workload_object["updateFields"] = mappedFields.updateFields;
                         workload_object["known_to_pce"] = recordsData[index]["known_to_pce"];
                         workload_object["interfaces"] = recordsData[index]["interfaces"];
-                        gs.info("Unknown Workload Interfaces: "+JSON.stringify(workload_object["interfaces"]));
+                        gs.info("Unknown Workload Interfaces: " + JSON.stringify(workload_object["interfaces"]));
                         if (recordsData[index]["conflicts"] == "true") {
                             unmanagedworkloadSelected += 1;
                             this.unManagedWorkloadsList.push(workload_object);
@@ -284,9 +284,9 @@ IllumioAutoSyncWithPCE.prototype = {
             var checkThreshold = thresholdLimit.checkThresholdLimit(labelsToCreate, wlToModify, unknownWorkloadsSelected, this.workloadsToDelete);
             if (!checkThreshold.hasError && checkThreshold.limitExceed) {
                 var notDeletedworkload = new GlideRecord('x_illu2_illumio_illumio_servicenow_servers');
-                notDeletedworkload.addQuery('deleted_from_pce',true);
+                notDeletedworkload.addQuery('deleted_from_pce', true);
                 notDeletedworkload.query();
-                while(notDeletedworkload.next()){
+                while (notDeletedworkload.next()) {
                     notDeletedworkload['deleted_from_pce'] = false;
                     notDeletedworkload.update();
                 }
@@ -385,7 +385,8 @@ IllumioAutoSyncWithPCE.prototype = {
                         1000
                     ),
                     workloads_to_delete: JSON.stringify(retired_workloads_object),
-                    pce_mid_proxy: pceConfig.enable_pce_mid_proxy
+                    pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                    retry_params: JSON.stringify(pceConfig.retry_params)
                 };
                 // Add the request to ECC queue
                 var illumioAddToECCQueue = new IllumioAddToECCQueue(
@@ -418,22 +419,20 @@ IllumioAutoSyncWithPCE.prototype = {
      * @returns updated object of the workload
      */
     getUseCreateLabelsList: function(workload_object, labelsToMap) {
+        var utils = new IllumioUtils();
         var labelsGr = new GlideRecord(
             "x_illu2_illumio_illumio_pce_labels_mapping"
         );
         for (var labelType in labelsToMap) {
-            labelsGr.initialize();
             labelsGr.addQuery("key", labelType);
             labelsGr.addQuery("value", labelsToMap[labelType]);
             labelsGr.query();
-
-            if (labelsGr.next()) {
-                // Append to labels to use
+            var resp = utils.queryCaseSensitiveGr(labelsGr, 'value', labelsToMap[labelType], 'href');
+            if (resp.found) {
                 workload_object.labels.push({
-                    href: labelsGr.getValue("href"),
+                    href: resp.returnValue,
                 });
             } else {
-                // Append to labels to be created if not empty
                 if (labelsToMap[labelType]) {
                     workload_object.createlabels.push({
                         key: labelType,
@@ -472,7 +471,6 @@ IllumioAutoSyncWithPCE.prototype = {
                     createUnknown: this.unknownWorkloadsList,
                     isAutoSync: true,
                 };
-                JSON.stringify("Payloadxyz: "+JSON.stringify(payload));
                 grPayload.payload = JSON.stringify(payload);
                 sys_id = grPayload.insert();
                 if (gs.nil(sys_id)) {
