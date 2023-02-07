@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_illu2_illumio_illumio_pce_async_jobs</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_illu2_illumio_illumio_pce_async_jobs">job_status=completed^EQ<item display_value="Completed" endquery="false" field="job_status" goto="false" newquery="false" operator="=" or="false" value="completed"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Illumio start mapping when job is done</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[function checkAndUpdateJobStatus(identifier, table, illumioJobId, current) {
+
+    var currentTableGa = new GlideAggregate(table);
+    currentTableGa.addQuery('job_identifier', identifier);
+    currentTableGa.addQuery('illumio_job_id', current.illumio_job_id + "");
+    currentTableGa.addQuery('job_status', 'completed');
+    currentTableGa.addAggregate('COUNT');
+    currentTableGa.query();
+    var count;
+
+    if (currentTableGa.next()) {
+        count = currentTableGa.getAggregate('COUNT');
+        if (count == 1) {
+            var illumioScheduledJobsGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
+            illumioScheduledJobsGr.addQuery('sys_id', current.illumio_job_id + "");
+            illumioScheduledJobsGr.query();
+
+            if (illumioScheduledJobsGr.next()) {
+                gs.info('Triggering cmdb discovery');
+                illumioScheduledJobsGr.current_operation = 'Completed fetching PCE data';
+                illumioScheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Added PCE data to mapping table';
+
+                illumioScheduledJobsGr.update();
+
+                var when = new GlideDateTime();
+                gs.eventQueueScheduled("x_illu2_illumio.start_discovery_and_mapp", current, illumioJobId, "", when);
+
+            }
+        }
+    }
+}
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+    if (current.job_identifier == 'labels') {
+        checkAndUpdateJobStatus('workloads', current.getTableName(), current.illumio_job_id, current);
+    } else {
+        checkAndUpdateJobStatus('labels', current.getTableName(), current.illumio_job_id, current);
+    }
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-08 08:19:42</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>425ee9ae878a8510d7a34046cebb3535</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Illumio start mapping when job is done</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_425ee9ae878a8510d7a34046cebb3535</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-08 08:19:42</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=425ee9ae878a8510d7a34046cebb3535"/>
+</record_update>

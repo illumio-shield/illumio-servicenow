@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="select_ip_address_10" label="CMDB IP Address 10" language="en" table="x_illu2_illumio_illumio_servicenow_servers">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>select_ip_address_10</element>
+            <help/>
+            <hint/>
+            <label>CMDB IP Address 10</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <plural>CMDB IP Address 10s</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-24 09:30:32</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>6f5f4fb0dbfce9102fcecafc13961971</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>CMDB IP Address 10</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_documentation_x_illu2_illumio_illumio_servicenow_servers_select_ip_address_10_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-24 09:30:32</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

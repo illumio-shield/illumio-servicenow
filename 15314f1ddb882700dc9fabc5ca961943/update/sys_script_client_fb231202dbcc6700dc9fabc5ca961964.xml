@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Validate the Organization ID to be an integer</description>
+        <field>organization_id</field>
+        <global>true</global>
+        <isolate_script>false</isolate_script>
+        <messages/>
+        <name>Illumio Organization ID Validation</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	if (isLoading || newValue === '') {
+		return;
+	}
+
+	// Trim and test for valid regex for integer value
+	var org = newValue.trim();
+
+	if(!validateOrgId(org)) {
+		g_form.showFieldMsg('organization_id', 'The organization ID must be a number.', 'error');
+	} else {
+		g_form.hideFieldMsg('organization_id', true);
+	}
+}
+
+function validateOrgId(str) {	  
+	return str.match(/^[0-9]*$/);		
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 10:30:57</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>fb231202dbcc6700dc9fabc5ca961964</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Illumio Organization ID Validation</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_client_fb231202dbcc6700dc9fabc5ca961964</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-03 06:14:25</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_conf</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

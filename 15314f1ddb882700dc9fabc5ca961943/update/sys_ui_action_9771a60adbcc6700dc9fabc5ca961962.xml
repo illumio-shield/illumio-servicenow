@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>execute</action_name>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>Start the Discovery process</comments>
+        <condition>gs.hasRole('x_illu2_illumio.illumio_user')</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Illumio Data Collection</name>
+        <onclick/>
+        <order>200</order>
+        <script><![CDATA[var fieldMappingGr = new GlideRecord('x_illu2_illumio_illumio_pce_field_mapping');
+fieldMappingGr.setLimit(1);
+fieldMappingGr.query();
+if (!fieldMappingGr.hasNext()) {
+	gs.addErrorMessage('Can not start the discovery as there is no PCE field mapping configured');
+	gs.error('Can not start the discovery as there is no PCE field mapping configured');
+	current.setAbortAction(true);
+} else {
+
+	var midGr = current.mid_server;
+	var utils = new IllumioUtils();
+	if (utils.canStartJob(current, midGr)) {
+		var runningJobsCount = new GlideAggregate("x_illu2_illumio_illumio_scheduled_jobs");
+		runningJobsCount.addQuery('job_status', 'running');
+		runningJobsCount.addAggregate('COUNT');
+		runningJobsCount.query();
+		if (runningJobsCount.next()) {
+			if (runningJobsCount.getAggregate('COUNT') > 0) {
+				gs.addErrorMessage('Can not start discovery as there is already one job in running status.');
+				gs.info('Can not start discovery as there is already one job in running status.');
+			} else {
+				gs.addInfoMessage("The Discovery process may take a few minutes to complete.");
+				current.update();
+				var startDiscovery = new IllumioStartDiscovery();
+				startDiscovery.process();
+			}
+		}
+	}
+}]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 11:30:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9771a60adbcc6700dc9fabc5ca961962</sys_id>
+        <sys_mod_count>26</sys_mod_count>
+        <sys_name>Illumio Data Collection</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_action_9771a60adbcc6700dc9fabc5ca961962</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-04-27 10:05:36</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_conf</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[function onNo() {
+
+	if (GlideDialogWindow) {
+		GlideDialogWindow.get().destroy();
+	}
+	g_form.setValue("number_of_workloads_to_be_created_from_servicenow", "");
+	return false;
+}
+function onYes() {
+
+	if (GlideDialogWindow) {
+		GlideDialogWindow.get().destroy();
+	}
+	return false;
+}]]></client_script>
+        <description>Confirmation dialog for Workload Creation more than 10000.</description>
+        <direct>false</direct>
+        <endpoint>x_illu2_illumio_Workload_Creation_Confirmation.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<style>
+		.sp-yes-no-cancel-dialog-root .body {
+			display: flex;
+		}
+
+		.sp-yes-no-cancel-dialog-root .body .icon {
+			font-size: 32px;
+			margin-right: 15px;
+		}
+
+		.sp-yes-no-cancel-dialog-root .body .msg {
+			flex-grow: 1;
+			font-size: 14px;
+		}
+
+		.sp-yes-no-cancel-dialog-root .actions {
+			margin-top: 15px;
+			text-align: center;
+			padding-top: 15px;
+			border-top: 1px solid #e5e5e5;
+		}
+
+		.sp-yes-no-cancel-dialog-root .actions button {
+			margin: auto 5px;
+		}
+	</style>
+
+	<g:ui_form>
+
+		<div class="sp-yes-no-cancel-dialog-root">
+			<div class="body">
+				<div class="icon">
+					<span class="glyphicon glyphicon-info-sign"></span>
+				</div>
+				<div class="msg">${HTML:sysparm_message}</div>
+			</div>
+			<div class="actions">
+				<button class="btn btn-default" id="no" onclick="return onNo();">${gs.getMessage('No')}</button>
+				<button class="btn btn-primary" id="yes"
+					onclick="return onYes();">${gs.getMessage('Yes')}</button>
+			</div>
+		</div>
+	</g:ui_form>
+</j:jelly>]]></html>
+        <name>Workload_Creation_Confirmation</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-11-26 06:50:04</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>121c941cdb7460d01206fd641d961958</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Workload_Creation_Confirmation</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_page_121c941cdb7460d01206fd641d961958</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-11-26 08:19:05</sys_updated_on>
+    </sys_ui_page>
+</record_update>

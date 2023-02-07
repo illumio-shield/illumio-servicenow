@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_illu2_illumio_illumio_pce_async_jobs</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_illu2_illumio_illumio_pce_async_jobs">job_statusINnew,pending,ready_to_map,running^EQ<item display_value="new,pending,ready_to_map,running" endquery="false" field="job_status" goto="false" newquery="false" operator="IN" or="false" value="new,pending,ready_to_map,running"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Illumio Poll PCE Async Job Status</name>
+        <order>100</order>
+        <priority>1</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[// Check if both jobs are finished and then trigger CMDB discovery
+function updateJob(sys_id) {
+    var grAsync = new GlideRecord('x_illu2_illumio_illumio_pce_async_jobs');
+    if (grAsync.get(sys_id)) {
+        grAsync.job_status = 'completed';
+        if (!grAsync.update()) {
+            gs.error('Error while updating the record from x_illu2_illumio_illumio_pce_async_jobs table having sys id: ' + sys_id);
+        }
+    }
+}
+
+(function executeRule(current, previous /*null when async*/ ) {
+
+    var utils = new IllumioUtils();
+    try {
+
+        // If status is ready_to_map, dump data to mapping table from staging table
+        if (current.job_status + "" == 'ready_to_map') {
+            var data = [];
+            var mappingTableGr = new GlideRecord(current.mapping_table_name + "");
+            var stagingTableGr = new GlideRecord(current.result_table_name + "");
+            stagingTableGr.query();
+
+            while (stagingTableGr.next()) {
+                var json_data = stagingTableGr.getValue('json_data');
+                if (json_data.trim() == '<see_attachment/>') {
+                    data = data.concat(JSON.parse(utils.downloadAttachmentData(current.result_table_name + "", stagingTableGr.getUniqueValue())));
+                } else {
+                    data = data.concat(JSON.parse(stagingTableGr.json_data + ""));
+                }
+            }
+
+            if (data.length) {
+                try {
+                    mappingTableGr.deleteMultiple();
+                    var keysToMap = JSON.parse(current.keys_to_map + "");
+                    for (var index = 0, dataLength = data.length; index < dataLength; index++) {
+                        mappingTableGr.initialize();
+                        for (var key in keysToMap) {
+                            mappingTableGr[keysToMap[key]] = data[index][keysToMap[key]] + "";
+                        }
+                        mappingTableGr.insert();
+                    }
+
+                    stagingTableGr.initialize();
+                    stagingTableGr.deleteMultiple();
+                    updateJob(current.sys_id);
+                } catch (ex) {
+                    gs.error("Exception Occured while creating workloads for mapping table: " + ex);
+                }
+
+            } else {
+
+                mappingTableGr.deleteMultiple();
+                gs.info('No data present to map in {0} table', stagingTableGr);
+                updateJob(current.sys_id);
+
+            }
+            // New record is inserted, start polling for the job status
+        } else {
+
+            var when = new GlideDateTime();
+            // Add delay to wait for retry interval
+            when.addSeconds(parseInt(current.retry_interval));
+
+            gs.eventQueueScheduled("x_illu2_illumio.illumio_poll_async_statu", current, "", "", when);
+        }
+
+    } catch (e) {
+        var jobContent = {
+            logs: "Exception occured while creating/getting the status of the async job " + e,
+            current_operation: "Fetching PCE data",
+            job_status: "failed",
+            job_completed: new GlideDateTime(),
+        };
+        new IllumioUtils().updateJobRecord(current.illumio_job_id, jobContent);
+        gs.error('Exception occurred: {0}', e + "");
+    }
+
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 10:35:05</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>6db41282dbcc6700dc9fabc5ca96191f</sys_id>
+        <sys_mod_count>75</sys_mod_count>
+        <sys_name>Illumio Poll PCE Async Job Status</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_6db41282dbcc6700dc9fabc5ca96191f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-10 11:31:16</sys_updated_on>
+        <template/>
+        <when>async</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=6db41282dbcc6700dc9fabc5ca96191f"/>
+</record_update>

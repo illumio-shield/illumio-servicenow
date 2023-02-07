@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Validate configuration form on submit.</description>
+        <field>active</field>
+        <global>true</global>
+        <isolate_script>false</isolate_script>
+        <messages/>
+        <name>Illumio Configuration Form Validation</name>
+        <order/>
+        <script><![CDATA[function onSubmit() {
+
+	// username should not be blank
+	var username = g_form.getValue('username').trim();
+	g_form.setValue('username', username);
+
+	// secret key should not be blank
+	var secret = g_form.getValue('secret').trim();
+	g_form.setValue('secret', secret);
+
+	// PCE url should not be blank
+	var url = g_form.getValue('pce_url').trim();
+	g_form.setValue('pce_url', url);
+
+	// organization id should not be blank
+	var org = g_form.getValue('organization_id').trim();
+	g_form.setValue('organization_id', org);
+
+	var allowSubmit = true;
+
+	// validate url regex
+	if(!validateURL(url)) {
+		g_form.hideFieldMsg('pce_url', true);
+		g_form.showFieldMsg('pce_url', 'Invalid URL', 'error');
+		allowSubmit = false;
+	} else {
+		g_form.hideFieldMsg('pce_url', true);
+	}
+
+	// validate organization id to be an integer
+	if(!validateOrgId(org)) {
+		g_form.hideFieldMsg('organization_id', true);
+		g_form.showFieldMsg('organization_id', 'The organization ID must be a number.', 'error');
+		allowSubmit = false;
+	} else {
+		g_form.hideFieldMsg('organization_id', true);
+	}
+
+	return allowSubmit;
+
+}
+
+function validateURL(str) {
+
+	var pattern = /^(?:http(?:s)?:\/\/.)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]+\.(?:[-a-zA-Z0-9@:%._\+~#=]+)+(?:\:[0-9]+)?$/g;
+
+	return str.match(pattern);		
+}
+
+function validateOrgId(str) {	  
+
+	return str.match(/^[0-9]*$/);		
+} ]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 10:20:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0b31de8edb8c6700dc9fabc5ca96194c</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Illumio Configuration Form Validation</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_client_0b31de8edb8c6700dc9fabc5ca96194c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-07-03 06:14:04</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_conf</table>
+        <type>onSubmit</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

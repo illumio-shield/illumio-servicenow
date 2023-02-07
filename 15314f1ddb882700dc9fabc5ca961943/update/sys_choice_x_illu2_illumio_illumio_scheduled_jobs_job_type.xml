@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="job_type" table="x_illu2_illumio_illumio_scheduled_jobs" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>job_type</element>
+            <name>x_illu2_illumio_illumio_scheduled_jobs</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>e35f4fb0dbfce9102fcecafc13961915</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>job_type</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_choice_x_illu2_illumio_illumio_scheduled_jobs_job_type</sys_update_name>
+            <sys_updated_by>system</sys_updated_by>
+            <sys_updated_on>2020-05-25 08:35:54</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>job_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Data Collection</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_scheduled_jobs</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>8f66c8f01bc91c109732a6c8ec4bcba7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>system</sys_updated_by>
+            <sys_updated_on>2020-05-25 08:35:54</sys_updated_on>
+            <value>data collection</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>job_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Data Sync</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_scheduled_jobs</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>cf66c8f01bc91c109732a6c8ec4bcba7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>system</sys_updated_by>
+            <sys_updated_on>2020-05-25 08:35:54</sys_updated_on>
+            <value>data sync</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>job_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Connectivity Check</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_scheduled_jobs</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-06-01 11:16:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>994a14a41be0301046dba9f6624bcb7a</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-06-03 09:53:26</sys_updated_on>
+            <value>connectivity_check</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>
