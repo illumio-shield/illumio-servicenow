@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="0f5f0fb0dbfce9102fcecafc13961977" label="Illumio PCE Workloads Mapping Stage" max_length="40" name="x_illu2_illumio_illumio_pce_workloads_mapping_stage" type="collection">
+        <element label="JSON Data" max_length="999999999" name="json_data" type="string"/>
+    </element>
+</database>

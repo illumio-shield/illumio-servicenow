@@ -113,20 +113,15 @@ function updateJob(sys_id) {
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 10:35:05</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6db41282dbcc6700dc9fabc5ca96191f</sys_id>
-        <sys_mod_count>75</sys_mod_count>
         <sys_name>Illumio Poll PCE Async Job Status</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_6db41282dbcc6700dc9fabc5ca96191f</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-10 11:31:16</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

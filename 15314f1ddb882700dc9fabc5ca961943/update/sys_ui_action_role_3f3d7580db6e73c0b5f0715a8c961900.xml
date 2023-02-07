@@ -3,18 +3,13 @@
         <sys_class_name>sys_ui_action_role</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-07-05 06:36:32</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>3f3d7580db6e73c0b5f0715a8c961900</sys_id>
-        <sys_mod_count>0</sys_mod_count>
         <sys_name>Save Configuration.x_illu2_illumio.illumio_admin</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_ui_action display_value="Save Configuration">d712be73dbbc6380dc9fabc5ca96193a</sys_ui_action>
         <sys_update_name>sys_ui_action_role_3f3d7580db6e73c0b5f0715a8c961900</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-07-05 06:36:32</sys_updated_on>
         <sys_user_role display_value="x_illu2_illumio.illumio_admin" name="x_illu2_illumio.illumio_admin">6ad8218adb4c6700dc9fabc5ca9619b2</sys_user_role>
     </sys_ui_action_role>
 </record_update>

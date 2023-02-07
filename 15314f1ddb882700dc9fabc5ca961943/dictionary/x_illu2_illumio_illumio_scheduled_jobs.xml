@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="535f0fb0dbfce9102fcecafc139619f1" label="Illumio Scheduled Jobs" max_length="40" name="x_illu2_illumio_illumio_scheduled_jobs" type="collection">
+        <element label="Current Operation" mandatory="true" max_length="40" name="current_operation" type="string"/>
+        <element label="Job Completed" max_length="40" name="job_completed" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Job Owner" max_length="32" name="job_owner" reference="sys_user" type="reference"/>
+        <element label="Job Started" max_length="40" name="job_started" type="glide_date_time"/>
+        <element choice="1" label="Job Status" mandatory="true" max_length="20" name="job_status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Completed" value="completed"/>
+                <element inactive_on_update="false" label="Completed with errors" value="completed_with_error"/>
+                <element inactive_on_update="false" label="Failed" value="failed"/>
+                <element inactive_on_update="false" label="Partial Success" value="partial_success"/>
+                <element inactive_on_update="false" label="Running" value="running"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Job Type" max_length="40" name="job_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Data Collection" sequence="0" value="data collection"/>
+                <element inactive_on_update="false" label="Data Sync" sequence="1" value="data sync"/>
+                <element inactive_on_update="false" label="Connectivity Check" sequence="2" value="connectivity_check"/>
+            </choice>
+        </element>
+        <element label="Logs" max_length="16777215" name="logs" type="string"/>
+        <index name="index">
+            <element name="job_owner"/>
+        </index>
+    </element>
+</database>

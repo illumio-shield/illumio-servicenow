@@ -29,9 +29,6 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-20 05:52:41</sys_created_on>
         <sys_id>15314f1ddb882700dc9fabc5ca961943</sys_id>
-        <sys_mod_count>14</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-02-01 18:12:20</sys_updated_on>
         <template/>
         <trackable>true</trackable>
         <uninstall_blocked>false</uninstall_blocked>
@@ -40,6 +37,7 @@
         <vendor_prefix/>
         <version>1.4.4</version>
     </sys_app>
+    <sys_translated_text action="delete_multiple" query="documentkey=15314f1ddb882700dc9fabc5ca961943"/>
     <sys_attachment action="INSERT_OR_UPDATE">
         <average_image_color>#f6893d</average_image_color>
         <chunk_size_bytes>734003</chunk_size_bytes>

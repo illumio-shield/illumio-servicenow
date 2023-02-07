@@ -6,17 +6,11 @@
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>system</sys_created_by>
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
-            <sys_id>cf5f0fb0dbfce9102fcecafc13961973</sys_id>
-            <sys_mod_count>0</sys_mod_count>
             <sys_name>job_status</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_choice_x_illu2_illumio_illumio_pce_async_jobs_job_status</sys_update_name>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
         </sys_choice_set>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
@@ -32,10 +26,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>7666c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>completed</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -52,10 +42,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>b666c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>done</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -72,10 +58,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>f666c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>failed</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -92,10 +74,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>3a66c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>new</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -112,10 +90,6 @@
             <sys_created_on>2020-11-09 13:37:42</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>b6669abedb186c101206fd641d961944</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-11-09 13:37:42</sys_updated_on>
             <value>partial_success</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -132,10 +106,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>7a66c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>pending</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -152,10 +122,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>ba66c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>ready_to_map</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -172,10 +138,6 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>fa66c8f01bc91c109732a6c8ec4bcb38</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>system</sys_updated_by>
-            <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
             <value>running</value>
         </sys_choice>
     </sys_choice>

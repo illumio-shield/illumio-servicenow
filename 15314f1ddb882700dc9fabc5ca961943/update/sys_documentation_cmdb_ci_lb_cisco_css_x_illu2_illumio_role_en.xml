@@ -11,17 +11,11 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2018-11-02 03:00:08</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
-            <sys_id>cb5f5f89dbad670033c1a026ca9619ea</sys_id>
-            <sys_mod_count>0</sys_mod_count>
             <sys_name>Role</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_documentation_cmdb_ci_lb_cisco_css_x_illu2_illumio_role_en</sys_update_name>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2018-11-02 03:00:08</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

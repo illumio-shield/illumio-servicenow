@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_index">
     <sys_index action="INSERT_OR_UPDATE">
         <col_name_string>sys_id,duplicate</col_name_string>
-        <index_col_name>f75f4fb0dbfce9102fcecafc139619a3,af5f4fb0dbfce9102fcecafc13961927</index_col_name>
+        <index_col_name>f1a93e3a97742110d0c7f8890353af84,af5f4fb0dbfce9102fcecafc13961927</index_col_name>
         <logical_table_name>x_illu2_illumio_illumio_servicenow_servers</logical_table_name>
         <sys_class_name>sys_index</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2022-03-10 14:24:11</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>19e5d15f870e0910d7a34046cebb3599</sys_id>
-        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_illu2_illumio_illumio_servicenow_servers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_index_x_illu2_illumio_illumio_servicenow_servers_sys_id_duplicate</sys_update_name>
-        <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2022-03-10 14:24:11</sys_updated_on>
         <table display_value="Illumio PCE Workloads" name="x_illu2_illumio_illumio_servicenow_servers">ab5f4fb0dbfce9102fcecafc13961916</table>
         <unique_index>false</unique_index>
     </sys_index>
