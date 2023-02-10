@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Critical Label Groups" section_id="fef112b0dbd4ac901206fd641d96194d" sys_domain="global" table="x_illu2_illumio_illumio_pce_conf" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>d1e581b687d91d90d7a34046cebb358f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <text>&lt;html&gt;&#13;
+&lt;head&gt;&#13;
+&lt;style&gt;&#13;
+       ol {&#13;
+           list-style-type: disc;&#13;
+           margin-top: 1 em;&#13;
+           margin-left: 0;&#13;
+           margin-right: 0;&#13;
+           padding-left: 40px;&#13;
+       }&#13;
+&#13;
+       p {&#13;
+           padding-left: 20px;&#13;
+       }&#13;
+&lt;/style&gt;&#13;
+&lt;/head&gt;&#13;
+&lt;body&gt;&#13;
+&lt;p&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;b&gt;Critical Label Groups:&lt;/b&gt; &lt;/p&gt;&#13;
+&lt;ol&gt;&lt;li&gt;Critical label groups are configured on the PCE for each label type.&lt;/li&gt;&#13;
+&lt;li&gt;Labels in a critical label group are not overwritten for a workload. The entire workload record is skipped.&lt;/li&gt;&#13;
+&lt;li&gt;If critical label groups are not specified, any label on the PCE can be modified.&lt;/li&gt;&#13;
+&lt;/ol&gt;&#13;
+&#13;
+&#13;
+&lt;/body&gt;&#13;
+&lt;/html&gt;</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>critical_label_group_application</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>59e581b687d91d90d7a34046cebb3593</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>critical_label_group_location</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>d9e581b687d91d90d7a34046cebb3593</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>5de581b687d91d90d7a34046cebb3593</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>critical_label_group_environment</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>dde581b687d91d90d7a34046cebb3593</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>critical_label_group_role</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>51e581b687d91d90d7a34046cebb3594</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>d1e581b687d91d90d7a34046cebb3594</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>d1e581b687d91d90d7a34046cebb358f</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-08-17 13:21:23</sys_created_on>
+            <sys_id>55e581b687d91d90d7a34046cebb3594</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:21:23</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Critical Label Groups</caption>
+            <header>false</header>
+            <name>x_illu2_illumio_illumio_pce_conf</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2020-11-03 08:09:42</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fef112b0dbd4ac901206fd641d96194d</sys_id>
+            <sys_name>x_illu2_illumio_illumio_pce_conf</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_ui_section_fef112b0dbd4ac901206fd641d96194d</sys_update_name>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>false</disabled>
+        <field>new_label_creation_limit</field>
+        <mandatory>true</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-11-25 14:05:52</sys_created_on>
+        <sys_id>df66f4c4dbb420d01206fd641d9619a5</sys_id>
+        <sys_name>new_label_creation_limit</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_policy_action_df66f4c4dbb420d01206fd641d9619a5</sys_update_name>
+        <table>x_illu2_illumio_illumio_pce_conf</table>
+        <ui_policy display_value="Show/Hide workload label creation limit text box">0d72776ddb602050223ef5361d961912</ui_policy>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+</record_update>

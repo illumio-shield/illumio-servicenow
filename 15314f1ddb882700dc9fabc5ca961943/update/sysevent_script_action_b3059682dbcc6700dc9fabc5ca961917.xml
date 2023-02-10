@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_script_action">
+    <sysevent_script_action action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition_script/>
+        <description/>
+        <event_name>x_illu2_illumio.illumio_poll_async_statu</event_name>
+        <name>IllumioGetPCEAsyncJobStatus</name>
+        <order>100</order>
+        <script><![CDATA[function getPCEAsyncJobStatus() {
+
+	var illumioPollAsyncJobStatus = new IllumioPollAsyncJobStatus(
+		current.job_location, 
+		current.retry_interval, 
+		current.sys_id,
+		current.primary_key_to_map,
+		current.result_table_name,
+		current.keys_to_map,
+		current.retry_count,
+		current.illumio_job_id,
+		current.job_identifier
+	);
+	illumioPollAsyncJobStatus.execute();
+}
+getPCEAsyncJobStatus();]]></script>
+        <synchronous>false</synchronous>
+        <sys_class_name>sysevent_script_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 10:37:30</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b3059682dbcc6700dc9fabc5ca961917</sys_id>
+        <sys_name>IllumioGetPCEAsyncJobStatus</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sysevent_script_action_b3059682dbcc6700dc9fabc5ca961917</sys_update_name>
+    </sysevent_script_action>
+</record_update>

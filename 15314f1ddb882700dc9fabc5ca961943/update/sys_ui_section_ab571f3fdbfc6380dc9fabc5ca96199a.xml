@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Field Mapping" section_id="ab571f3fdbfc6380dc9fabc5ca96199a" sys_domain="global" table="x_illu2_illumio_illumio_pce_configuration" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>d03c4f8ddb016b4033c1a026ca9619fc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <text>&lt;b&gt;Source Table : &lt;/b&gt; The table defined  on servicenow to use as source of workloads.&lt;br/&gt;
+
+&lt;b&gt;Host Name :&lt;/b&gt; The field from the selected source table to use to map with host name of workload on PCE. The field selected must contain unique values. &lt;br/&gt;
+
+Select fields from source table to use to map with Application, Location, Environment and Role labels of the workload on PCE. &lt;br/&gt;</text>
+            <type display_value="Text">863e446c0fd30000b12e6903cfe012ce</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>d03c4f8ddb016b4033c1a026ca9619fc</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>943c4f8ddb016b4033c1a026ca9619fc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>183c4f8ddb016b4033c1a026ca9619fc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>servicenow_source_table</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>983c4f8ddb016b4033c1a026ca9619fc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>application</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>1c3c4f8ddb016b4033c1a026ca9619fc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>role</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>9c3c4f8ddb016b4033c1a026ca9619fc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>103c4f8ddb016b4033c1a026ca9619fd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>host_name</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>903c4f8ddb016b4033c1a026ca9619fd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>location</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>143c4f8ddb016b4033c1a026ca9619fd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>environment</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-08 05:04:59</sys_created_on>
+            <sys_id>943c4f8ddb016b4033c1a026ca9619fd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-10-08 05:04:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Field Mapping</caption>
+            <header>false</header>
+            <name>x_illu2_illumio_illumio_pce_configuration</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-04 08:41:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ab571f3fdbfc6380dc9fabc5ca96199a</sys_id>
+            <sys_name>x_illu2_illumio_illumio_pce_configuration</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_ui_section_ab571f3fdbfc6380dc9fabc5ca96199a</sys_update_name>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

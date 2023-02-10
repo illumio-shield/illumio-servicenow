@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_illu2_illumio.IllumioAddToECCQueue</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Used for adding data to ECC queue.</description>
+        <name>IllumioAddToECCQueue</name>
+        <script><![CDATA[var IllumioAddToECCQueue = Class.create();
+IllumioAddToECCQueue.prototype = {
+	initialize: function(probe, midserver, parameters) {
+		this.probe = probe; // probe name
+		this.midServer = midserver; // mid server name
+		this.parameters = parameters; // extra parameters to be passed
+	},
+	
+	/**
+	 * Insert to ECC queue
+	 * @returns {boolean} true if the insert is successful else false
+	 */
+	insert: function() {
+		
+		try {
+			var ecc = new GlideRecord("ecc_queue");
+			ecc.initialize();
+			ecc.agent = 'mid.server.' + this.midServer;
+			ecc.topic = 'JavascriptProbe';
+			ecc.queue = 'output';
+			ecc.state = 'ready';
+			ecc.name = this.probe;
+			
+			var xmlstring = '<?xml version="1.0" encoding="UTF-8"?><parameters></parameters>';
+			var xmldoc = new XMLDocument2();
+			xmldoc.parseXML(xmlstring);
+			
+			// add skip sensors
+			var el = xmldoc.createElement("parameter");
+			el.setAttribute("name", "skip_sensor");
+			el.setAttribute("value","true");
+			
+			// add probe name to be execute
+			el = xmldoc.createElement("parameter");
+			el.setAttribute("name", "probe_name");
+			el.setAttribute("value",this.probe + 'Run');
+			
+			// add given parameters
+			for(var param in this.parameters) {
+				
+				el = xmldoc.createElement("parameter");
+				el.setAttribute("name", "glide.jms." + param);
+				el.setAttribute("value", this.parameters[param]);
+			}
+
+			ecc.payload = xmldoc + "";
+			
+			// add it to the ECC queue
+			ecc.insert();
+			return true;
+			
+		} catch(exception) {
+			
+			gs.info('Exception occurred while adding to ECC queue. Exception: ' + exception);
+			return false;
+		}
+		
+	},
+	
+	type: 'IllumioAddToECCQueue'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 11:17:45</sys_created_on>
+        <sys_id>4aae9e42dbcc6700dc9fabc5ca9619aa</sys_id>
+        <sys_name>IllumioAddToECCQueue</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_include_4aae9e42dbcc6700dc9fabc5ca9619aa</sys_update_name>
+    </sys_script_include>
+</record_update>

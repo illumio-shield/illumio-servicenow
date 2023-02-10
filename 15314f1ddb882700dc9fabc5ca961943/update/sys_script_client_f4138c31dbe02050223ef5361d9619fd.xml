@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>number_of_workloads_to_be_created_from_servicenow</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>WorkloadCreationLimitOnChange</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading || newValue === '') {
+        return;
+    }
+
+    //Type appropriate comment here, and begin script below
+    var regex = new RegExp(/^[0-9]+%?$/);
+
+    newValue = newValue.trim();
+    if (newValue.match(regex)) {
+        if (newValue.indexOf('%') >= 0) {
+            var value = parseInt(newValue.split('%'));
+            if (value > 100) {
+                g_form.showFieldMsg('number_of_workloads_to_be_created_from_servicenow', 'Invalid value. Please enter valid percentage between 0-100', 'error');
+            }
+        }
+    } else {
+        g_form.showFieldMsg('number_of_workloads_to_be_created_from_servicenow', 'Invalid value. Please enter valid number or percentage', 'error');
+    }
+    if (newValue > 10000) {
+        var dialog = new GlideDialogWindow("x_illu2_illumio_Workload_Creation_Confirmation");
+        var message = "This will allow to create " + newValue + " workloads on PCE. Are you sure?";
+
+        renderPopup(
+            dialog,
+            'Confirmation',
+            message,
+            submitForm.bind(this, dialog),
+            hideDialog.bind(this, dialog)
+        );
+    }
+    /**
+     * Render a popup asking for confirmation. Print "message"
+     * @param {String} message 
+     */
+    function renderPopup(dialog1, title, message1, onYes, onNo) {
+
+        dialog1.setTitle(title);
+        dialog1.setPreference('sysparm_message', message1);
+        dialog1.setPreference('onNo', onNo /*hideDialog1.bind(this, dialog1)*/ );
+        dialog1.setPreference('onYes', onYes /*submitForm.bind(this, dialog1)*/ );
+        dialog1.render();
+    }
+
+}
+/**
+ * Hides the popup 
+ * @param {object} dialog 
+ */
+function hideDialog(dialog) {
+
+    try {
+        dialog.setBackdropStatic(true);
+    } catch (e) {
+        jslog(e);
+    }
+}
+
+/**
+ * Destroys the popup and submits the form
+ * @param {object} dialog 
+ */
+function submitForm(dialog) {
+
+    try {
+        dialog.setBackdropStatic(true);
+    } catch (e) {
+        jslog(e);
+    }
+    g_form.setValue("number_of_workloads_to_be_created_from_servicenow", "");
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-11-18 10:35:56</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>f4138c31dbe02050223ef5361d9619fd</sys_id>
+        <sys_name>WorkloadCreationLimitOnChange</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_client_f4138c31dbe02050223ef5361d9619fd</sys_update_name>
+        <table>x_illu2_illumio_illumio_pce_conf</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

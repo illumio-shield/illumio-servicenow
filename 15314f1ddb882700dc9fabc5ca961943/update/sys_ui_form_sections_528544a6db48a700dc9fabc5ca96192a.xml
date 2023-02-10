@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="528544a6db48a700dc9fabc5ca96192a" sys_domain="global" table="x_illu2_illumio_illumio_servicenow_servers" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-08-23 13:25:08</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d68544a6db48a700dc9fabc5ca96192c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_illu2_illumio_illumio_servicenow_servers" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">528544a6db48a700dc9fabc5ca96192a</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">6c534826db48a700dc9fabc5ca961993</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-08-23 13:25:08</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-10-04 05:12:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d977ae7bdb7c6380dc9fabc5ca961942</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_illu2_illumio_illumio_servicenow_servers" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">528544a6db48a700dc9fabc5ca96192a</sys_ui_form>
+            <sys_ui_section caption="Sync Server to PCE" display_value="Sync Server to PCE" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">9177ae7bdb7c6380dc9fabc5ca961941</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-03-12 12:15:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2019-09-23 14:43:09</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>42fc6f39db800850b5f0715a8c96190d</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_illu2_illumio_illumio_servicenow_servers" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">528544a6db48a700dc9fabc5ca96192a</sys_ui_form>
+            <sys_ui_section caption="Sync to PCE" display_value="Sync to PCE" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">71fc6f39db800850b5f0715a8c961908</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-03-12 12:15:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-08-23 13:25:08</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>528544a6db48a700dc9fabc5ca96192a</sys_id>
+            <sys_name>x_illu2_illumio_illumio_servicenow_servers</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_ui_form_sections_528544a6db48a700dc9fabc5ca96192a</sys_update_name>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="986f8fb0dbfce9102fcecafc139619a7" label="Illumio PCE Label Group Details" max_length="40" name="x_illu2_illumio_illumio_pce_label_group_details" type="collection">
+        <element label="Label Group Name" max_length="100" name="label_group_name" read_only="true" type="string"/>
+        <element label="Label Group Path" max_length="255" name="label_group_path" read_only="true" type="string"/>
+        <element label="Label Group Type" max_length="100" name="label_group_type" read_only="true" type="string"/>
+        <element label="Label Name" max_length="100" name="label_name" read_only="true" type="string"/>
+        <element label="Label Path" max_length="255" name="label_path" read_only="true" type="string"/>
+    </element>
+</database>

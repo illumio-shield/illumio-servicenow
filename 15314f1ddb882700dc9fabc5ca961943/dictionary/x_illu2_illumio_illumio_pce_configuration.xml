@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="146f8fb0dbfce9102fcecafc139619c3" extends="sysauto_script" label="Illumio PCE Configuration" max_length="40" name="x_illu2_illumio_illumio_pce_configuration" type="collection"/>
+</database>

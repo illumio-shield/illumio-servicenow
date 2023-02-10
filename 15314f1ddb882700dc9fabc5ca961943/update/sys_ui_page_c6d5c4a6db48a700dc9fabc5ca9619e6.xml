@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[function closePopup() {
+	GlideDialogWindow.get().destroy(); 
+}]]></client_script>
+        <description>For showing info popup</description>
+        <direct>false</direct>
+        <endpoint>x_illu2_illumio_IllumioInfoPopup.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:ui_form>	
+		<table>
+			<caption> </caption>
+			<th scope = "col"></th>
+			<tr style="padding : 10px;">
+			</tr>
+		</table>
+		<g:macro
+				 ok="actionOK()"
+				 ok_id="ok_button"
+				 ok_type="submit"
+				 />
+		<div style="text-align: center">
+			<g:dialog_button
+							 id="${HTML:jvar_ok_id}"
+							 type="button"
+							 onclick="return closePopup();"
+							 style="width: 5em; margin-top: 15px; margin-left: 5px;">${gs.getMessage('OK')}
+			</g:dialog_button>
+		</div>
+	</g:ui_form>
+</j:jelly>]]></html>
+        <name>IllumioInfoPopup</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-23 13:28:16</sys_created_on>
+        <sys_id>c6d5c4a6db48a700dc9fabc5ca9619e6</sys_id>
+        <sys_name>IllumioInfoPopup</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_page_c6d5c4a6db48a700dc9fabc5ca9619e6</sys_update_name>
+    </sys_ui_page>
+</record_update>

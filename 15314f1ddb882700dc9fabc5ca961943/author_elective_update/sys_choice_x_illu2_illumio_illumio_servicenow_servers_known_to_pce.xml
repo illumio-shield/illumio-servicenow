@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="known_to_pce" table="x_illu2_illumio_illumio_servicenow_servers" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>known_to_pce</element>
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_name>known_to_pce</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_choice_x_illu2_illumio_illumio_servicenow_servers_known_to_pce</sys_update_name>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>known_to_pce</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Managed</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <sequence>100</sequence>
+            <synonyms/>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <value>managed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>known_to_pce</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Unmanaged</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <sequence>200</sequence>
+            <synonyms/>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <value>unmanaged</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>known_to_pce</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Unknown</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <sequence>300</sequence>
+            <synonyms/>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2020-05-25 08:35:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <value>unknown</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

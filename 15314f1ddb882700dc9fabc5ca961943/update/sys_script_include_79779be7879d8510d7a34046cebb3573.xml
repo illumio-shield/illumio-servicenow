@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_illu2_illumio.IllumioUtilsAJAX</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>IllumioUtilsAJAX</name>
+        <script><![CDATA[var IllumioUtilsAJAX = Class.create();
+IllumioUtilsAJAX.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    FIELD_NAME_TYPE: "field_name",
+
+	/**
+     * get field name type fields.
+     * @return {String} fields with type field name.
+     */
+    getFieldNameTypeFields: function() {
+        var eligibleFields = [];
+        var mappingsGR = new GlideRecord("x_illu2_illumio_illumio_pce_field_mapping");
+        mappingsGR.initialize();
+        for (var field in mappingsGR) {
+            if (field.startsWith("sys_") || field == "order_by_column_name")
+                continue;
+            try {
+                if (mappingsGR.getElement(field).getED().getInternalType() == this.FIELD_NAME_TYPE)
+                    eligibleFields.push(field);
+            } catch (e) {
+                gs.error("Exception while fetching fields: " + e);
+            }
+
+        }
+        return JSON.stringify(eligibleFields);
+    },
+
+    type: 'IllumioUtilsAJAX'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-02 11:45:57</sys_created_on>
+        <sys_id>79779be7879d8510d7a34046cebb3573</sys_id>
+        <sys_name>IllumioUtilsAJAX</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_include_79779be7879d8510d7a34046cebb3573</sys_update_name>
+    </sys_script_include>
+</record_update>

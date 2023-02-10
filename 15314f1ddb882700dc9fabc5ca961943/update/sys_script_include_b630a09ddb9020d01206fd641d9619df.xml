@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_illu2_illumio.IllumioUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>IllumioUtils</name>
+        <script><![CDATA[gs.include("IllumioConstants");
+var IllumioUtils = Class.create();
+IllumioUtils.prototype = {
+    initialize: function() {},
+
+    VALID_IP_REGEX: /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+    /**
+     * Updates the job with given job content
+     * @param {String} jobId System id of the scheduled job
+     * @param {JSON} jobContent Object to add in the job record
+     */
+    updateJobRecord: function(jobId, jobContent) {
+        var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
+
+        if (jobGr.get(jobId)) {
+            // Update only if job is not invalidated
+            if (jobGr.job_status != 'failed') {
+                for (var key in jobContent) {
+                    if (jobContent.hasOwnProperty(key)) {
+                        if (key != "logs") {
+                            jobGr[key] = jobContent[key];
+                        } else {
+                            jobGr[key] += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + jobContent[key];
+                        }
+                    }
+                }
+                jobGr.update();
+            } else {
+                gs.info('[_updateJobRecord] Given job is invalidated. Aborting further actions');
+            }
+        } else {
+            gs.error('[_updateJobRecord] Scheduled job record for given sys_id (' + jobId + ') does not exist.');
+        }
+    },
+
+    /**
+     * Get critical label group of given type
+     * @param {String} label Type of critical label group
+     * @returns value of the critical label group
+     **/
+    getCritical: function(label) {
+        var gr = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+        gr.query();
+        if (gr.next()) {
+            if (label == "role") {
+                if (!gs.nil(gr.critical_label_group_role)) {
+                    return gr.critical_label_group_role + "";
+                } else {
+                    return null;
+                }
+            }
+            if (label == "loc") {
+                if (!gs.nil(gr.critical_label_group_location)) {
+                    return gr.critical_label_group_location + "";
+                } else {
+                    return null;
+                }
+            }
+
+            if (label == "env") {
+                if (!gs.nil(gr.critical_label_group_environment)) {
+                    return gr.critical_label_group_environment + "";
+                } else {
+                    return null;
+                }
+            }
+            if (label == "app") {
+                if (!gs.nil(gr.critical_label_group_application)) {
+                    return gr.critical_label_group_application + "";
+                } else {
+                    return null;
+                }
+            }
+        }
+    },
+
+    /**
+     * Parse label information in the label group table 
+     * @param {string} type Type of the label
+     * @param {JSON} response Check if the critical label group is present in the response and insert the record in label group mappings
+     */
+    parseLabelsInResponse: function(type, response) {
+        var gr, i;
+        var checkFlag = false;
+        var criticalGroup = this.getCritical(type);
+        if (!gs.nil(criticalGroup)) {
+            for (i = 0; i < response.length; i++) {
+                if (
+                    criticalGroup.toUpperCase() == response[i].name.toUpperCase() &&
+                    response[i].key == type
+                ) {
+                    checkFlag = true;
+                    for (var j = 0; j < response[i].labels.length; j++) {
+                        gr = new GlideRecord(
+                            "x_illu2_illumio_illumio_pce_label_group_details"
+                        );
+                        gr.label_group_name = response[i].name;
+                        gr.label_group_path = response[i].href;
+                        gr.label_group_type = response[i].key;
+                        gr.label_name = response[i].labels[j].value;
+                        gr.label_path = response[i].labels[j].href;
+                        if (!gr.insert()) {
+                            gs.error(
+                                "[parseLabelsInResponse] Error while inserting the record"
+                            );
+                        }
+                    }
+                    break;
+                }
+            }
+            if (i == response.length && !checkFlag) {
+                gs.info(
+                    "The Critical Label Group (" + criticalGroup + ") in the Configuration does not match any label groups at PCE"
+                );
+            }
+        }
+        return;
+    },
+
+    /**
+     * Fetch the details of label group from PCE
+     * @returns {Boolean} true if the request was successfull else false
+     */
+    fetchLabelGroupsAndLabelsFromPCE: function() {
+        try {
+            var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+            var gr = new GlideRecord(
+                "x_illu2_illumio_illumio_pce_label_group_details"
+            );
+            var cRole, cEnv, cLoc, cApp;
+
+            gr.deleteMultiple();
+            pceConfig.query();
+
+            cRole = this.getCritical("role");
+            cEnv = this.getCritical("env");
+            cLoc = this.getCritical("loc");
+            cApp = this.getCritical("app");
+
+            if (!gs.nil(cApp) || !gs.nil(cRole) || !gs.nil(cEnv) || !gs.nil(cLoc)) {
+                if (pceConfig.next()) {
+                    var fetchLabelGroups = new sn_ws.RESTMessageV2(
+                        "IllumioFetchLabelGroups",
+                        "GetLabelGroups"
+                    );
+                    var pce_authorization = gs.base64Encode(
+                        pceConfig.username.getDecryptedValue() + ":" + pceConfig.secret_key.getDecryptedValue()
+                    );
+
+                    fetchLabelGroups.setRequestHeader(
+                        "Authorization",
+                        "Basic " + pce_authorization
+                    );
+
+                    fetchLabelGroups.setStringParameter("url", pceConfig.pce_url + "");
+                    fetchLabelGroups.setStringParameter(
+                        "orgID",
+                        (pceConfig.organization_id || "1") + ""
+                    );
+
+                    fetchLabelGroups.setMIDServer(pceConfig.mid_server.name + "");
+
+                    fetchLabelGroups.setEccParameter("skip_sensor", "true");
+                    if (pceConfig.mid_server.status + "" == "down") {
+                        return false;
+                    }
+                    var response = fetchLabelGroups.executeAsync();
+                    var response_status = response.getStatusCode();
+
+                    if (response_status == 200 || response_status == 201) {
+                        response = JSON.parse(response.getBody());
+                        this.parseLabelsInResponse("role", response);
+                        this.parseLabelsInResponse("env", response);
+                        this.parseLabelsInResponse("loc", response);
+                        this.parseLabelsInResponse("app", response);
+                    }
+                }
+            }
+            return true;
+        } catch (exc) {
+            gs.error("Exception while fetching data from PCE" + exc);
+        }
+    },
+
+    /**
+     * Fetch the details of label group from label groups table   
+     * @param {String} type type of the label
+     * @returns {JSON} JSON object of the critical label group and its labels
+     */
+    getDataFromTable: function(type) {
+        var name = this.getCritical(type);
+        if (!gs.nil(name)) {
+            var gr = new GlideRecord(
+                "x_illu2_illumio_illumio_pce_label_group_details"
+            );
+            gr.addQuery("label_group_name", name);
+            gr.addQuery("label_group_type", type);
+            gr.query();
+            var labels = [],
+                retVal;
+            while (gr.next()) {
+                labels.push(gr.label_name + "");
+            }
+            retVal = {
+                labels: labels,
+                type: type,
+            };
+            return retVal;
+        } else {
+            return null;
+        }
+    },
+
+    /**
+     * Skip the workload with given sys id as it has critical labels
+     * @param {Array} rec Array of records
+     * @param {String} sys_id System id of the workload
+     * @returns Modified array
+     */
+    removeRec: function(rec, sys_id) {
+        var ax;
+        while ((ax = rec.indexOf(sys_id + "")) !== -1) {
+            gs.info("Skipped workload as label is critical (sys_id: " + sys_id + ")");
+            rec.splice(ax, 1);
+        }
+        return rec;
+    },
+
+    /**
+     * Get the count of label groups
+     * @returns {int} Number of label groups
+     */
+    countLabelGroups: function() {
+        try {
+            var count = 0;
+            var grLabelGroups = new GlideAggregate('x_illu2_illumio_illumio_pce_label_group_details');
+            grLabelGroups.addAggregate('COUNT', 'label_group_name');
+            grLabelGroups.query();
+            while (grLabelGroups.next()) {
+                count++;
+            }
+            return count;
+        } catch (err) {
+            gs.error("Error while fetching the count of labels:" + err);
+        }
+    },
+    /**
+     * Modify the Array after removing workloads 
+     * @param {Array} arrRecords Array of workloads
+     * @returns Modified array after removing workloads that should be skipped
+     */
+    skipRecordsForSync: function(arrRecords) {
+        try {
+            var j = 0,
+                i = 0,
+                grWorkloads,
+                retRoleLabels,
+                flag = false,
+                retEnvLabels,
+                retLocLabels,
+                retAppLabels,
+                retRec = [];
+
+            retRoleLabels = this.getDataFromTable("role");
+
+            retEnvLabels = this.getDataFromTable("env");
+
+            retLocLabels = this.getDataFromTable("loc");
+
+            retAppLabels = this.getDataFromTable("app");
+
+            for (i = 0; i < arrRecords.length; i++) {
+                flag = false;
+                if ((!gs.nil(retRoleLabels)) && (retRoleLabels.labels.length != 0)) {
+                    for (j = 0; j < retRoleLabels.labels.length; j++) {
+                        grWorkloads = new GlideRecord(
+                            "x_illu2_illumio_illumio_servicenow_servers"
+                        );
+                        grWorkloads.addQuery("sys_id", arrRecords[i]);
+                        grWorkloads.query();
+
+                        if (grWorkloads.next()) {
+                            if ((grWorkloads.getValue("pce_role") + '') == (retRoleLabels.labels[j] + '') && (grWorkloads.getValue("pce_role") + '') != (grWorkloads.getValue("select_role") + '')) {
+
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+                if ((!gs.nil(retLocLabels)) && (retLocLabels.labels.length != 0)) {
+                    for (j = 0; j < retLocLabels.labels.length; j++) {
+                        grWorkloads = new GlideRecord(
+                            "x_illu2_illumio_illumio_servicenow_servers"
+                        );
+                        grWorkloads.addQuery("sys_id", arrRecords[i]);
+                        grWorkloads.query();
+
+                        if (grWorkloads.next()) {
+                            if (
+                                (grWorkloads.getValue("pce_location") + '') == (retLocLabels.labels[j] + '') && (grWorkloads.getValue("pce_location") + '') != (grWorkloads.getValue("select_location") + '')
+                            ) {
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+                if ((!gs.nil(retEnvLabels)) && (retEnvLabels.labels.length != 0)) {
+                    for (j = 0; j < retEnvLabels.labels.length; j++) {
+                        grWorkloads = new GlideRecord(
+                            "x_illu2_illumio_illumio_servicenow_servers"
+                        );
+                        grWorkloads.addQuery("sys_id", arrRecords[i]);
+
+                        grWorkloads.query();
+
+                        if (grWorkloads.next()) {
+                            if (
+                                (grWorkloads.getValue("pce_environment") + '') == (retEnvLabels.labels[j] + '') && (grWorkloads.getValue("pce_environment") + '') != (grWorkloads.getValue("select_environment") + '')
+                            ) {
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+                if ((!gs.nil(retAppLabels)) && (retAppLabels.labels.length != 0)) {
+                    for (j = 0; j < retAppLabels.labels.length; j++) {
+                        grWorkloads = new GlideRecord(
+                            "x_illu2_illumio_illumio_servicenow_servers"
+                        );
+                        grWorkloads.addQuery("sys_id", arrRecords[i]);
+                        grWorkloads.query();
+                        if (grWorkloads.next()) {
+                            if (
+                                (grWorkloads.getValue("pce_application") + '') == (retAppLabels.labels[j] + '') && (grWorkloads.getValue("pce_application") + '') != (grWorkloads.getValue("select_application") + '')
+                            ) {
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+                if (flag == false) {
+                    retRec.push(arrRecords[i] + '');
+                } else {
+                    gs.info("Skipped workload as label is critical (sys_id: " + arrRecords[i] + ")");
+                }
+            }
+            return retRec;
+        } catch (exc) {
+            gs.error("Exception occurred while checking critical records:" + exc);
+        }
+    },
+
+    /**
+     * Get the total number of records
+     * @param {String} tableName Name of the table
+     * @returns Count of rows in the table
+     */
+    getTotalRecords: function(tableName) {
+        try {
+
+            var count = new GlideAggregate(tableName);
+            count.addAggregate('count');
+            count.query();
+            var result = 0;
+            if (count.next())
+                result = count.getAggregate('COUNT');
+            return result;
+
+        } catch (ex) {
+            gs.error("Exception occurred while getting total number of records:" + ex);
+        }
+    },
+
+    /**
+     * Get the interfaces object that can be synced
+     * @param {String} workloadSysId System id of the workload
+     * @param {JSON} mappedFields object of Mapping fields
+     * @returns {JSON} object with the details of interfaces to sync
+     */
+    getInterfacesObject: function(workloadSysId, mappedFields) {
+        try {
+            var interfaces = [];
+            var pceIps = {};
+            var emptyIndexes = [];
+            var ipAddress;
+            var grWorkloadsForInterfaces = new GlideRecord(
+                "x_illu2_illumio_illumio_servicenow_servers"
+            );
+            var state = {};
+
+            if (grWorkloadsForInterfaces.get(workloadSysId)) {
+                var hostname = grWorkloadsForInterfaces.getValue("hostname");
+                for (var i = 0; i <= MAX_IP_ADDRESSES; i++) {
+                    if (i == 1)
+                        continue;
+                    var currColumn = i ? "select_ip_address_" + i : "select_ip_address";
+                    state[currColumn] = this.getState(i, grWorkloadsForInterfaces.getValue(currColumn), mappedFields);
+                }
+                if (!this.canSyncIP(0, state['select_ip_address'], hostname)) {
+                    gs.info("Skipping interfaces of workload with hostname: " + hostname + " as the public IP address is invalid/not mapped");
+                    return [];
+
+                } else {
+                    var publicIpAddress = grWorkloadsForInterfaces.getValue('select_ip_address');
+                    pceIps[publicIpAddress] = true;
+                    interfaces.push({
+                        "name": 'umw0',
+                        "address": publicIpAddress
+                    });
+
+                }
+                for (i = 1; i < MAX_IP_ADDRESSES; i++) {
+                    var pceIpColumn = "pce_ip_address_" + (i + 1);
+                    ipAddress = grWorkloadsForInterfaces.getValue(pceIpColumn);
+                    if (!gs.nil(ipAddress)) {
+                        pceIps[ipAddress] = true;
+                        interfaces.push({
+                            "name": 'umw' + i,
+                            "address": ipAddress
+                        });
+                    } else {
+                        emptyIndexes.push(i);
+                    }
+                }
+                var checkIndex = 0;
+                var cmdbIndex = 1;
+                var cmdbColumn = "";
+                while (checkIndex < emptyIndexes.length && cmdbIndex < MAX_IP_ADDRESSES) {
+                    cmdbColumn = "select_ip_address_" + (cmdbIndex + 1);
+                    if (this.canSyncIP(cmdbIndex, state[cmdbColumn], hostname)) {
+                        ipAddress = grWorkloadsForInterfaces.getValue(cmdbColumn);
+                        if (!pceIps[ipAddress]) {
+                            pceIps[ipAddress] = true;
+                            interfaces.push({
+                                "name": 'umw' + emptyIndexes[checkIndex],
+                                "address": ipAddress
+                            });
+                            checkIndex++;
+                        }
+
+                    }
+                    cmdbIndex++;
+                }
+                //Check for more IP addresses in the cmdb if exist then add logs
+                while (cmdbIndex < MAX_IP_ADDRESSES) {
+                    cmdbColumn = "select_ip_address_" + (cmdbIndex + 1);
+                    ipAddress = grWorkloadsForInterfaces.getValue(cmdbColumn);
+                    if (gs.nil(pceIps[ipAddress]) && this.canSyncIP(cmdbIndex, state[cmdbColumn], hostname)) {
+                        gs.info("Skipping IP address " + ipAddress + " for workload with hostname " + grWorkloadsForInterfaces.getValue('hostname') + " as there are already " + MAX_IP_ADDRESSES + " IP addresses in the PCE");
+                    }
+                    cmdbIndex++;
+                }
+            }
+            return interfaces;
+        } catch (ex) {
+            gs.error("[getInterfacesObject] Exception occured while generating valid interfaces object. Exception: " + ex);
+        }
+    },
+
+    /**
+     * Checks if the IP is not empty, mapped in mappings and a valid ip
+     * @param {int} index Index of the Ip address field
+     * @param {string} ipAddress Value of the Ip address
+     * @param {json} mappedFields Field Mapping from the configuration
+     * @returns boolean
+     */
+    getState: function(index, ipAddress, mappedFields) {
+        if (gs.nil(ipAddress))
+            return STATES.EMPTY;
+        var ipField = index > 0 ? "ip_address_" + index : "ip_address";
+        var isValid = ipAddress.match(this.VALID_IP_REGEX);
+        var isMapped = mappedFields[ipField] ? true : false;
+
+        if (isMapped) {
+            if (isValid)
+                return STATES.VALID;
+            else
+                return STATES.INVALID;
+        }
+        if (isValid)
+            return STATES.NOT_MAPPED_AND_VALID;
+    },
+
+    /**
+     * Checks if the IP is not empty, mapped in mappings and a valid ip
+     * @param {int} index Index of the Ip address field
+     * @param {string} state State array
+     * @param {string} hostname Hostname of the workload
+     * @returns boolean
+     **/
+    canSyncIP: function(index, state, hostname) {
+        switch (state) {
+            case STATES.INVALID:
+                if (index != 0)
+                    gs.error("Skipping IP address " + (index + 1) + " for workload with hostname " + hostname + " as there is an invalid IP address");
+                else
+                    gs.error("Skipping Public IP address for workload with hostname " + hostname + " as there is an invalid IP address");
+                return false;
+            case STATES.NOT_MAPPED_AND_VALID:
+                if (index != 0)
+                    gs.error("Skipping IP address " + (index + 1) + " for workload with hostname " + hostname + " as it is not mapped in field mapping");
+                else
+                    gs.error("Skipping Public IP address for workload with hostname " + hostname + " as it is not mapped in field mapping");
+                return false;
+            case STATES.VALID:
+                return true;
+            default:
+                return false;
+        }
+    },
+    /**
+     * Check whether conflict is there or not in the workload
+     * @param {GlideRecord} current GlideRecord of the Objectt
+     * @param {JSON} mappedFields Object with the mapped fields
+     * @returns true if there is any conflict else false
+     */
+    checkConflict: function(current, mappedFields) {
+        try {
+            if (!current || !mappedFields) {
+                return false;
+            }
+            if (current.duplicate) {
+                return false;
+            }
+            if (current.known_to_pce == 'unknown') {
+                return true;
+            }
+            var labels = ['application', 'location', 'environment', 'role'];
+            // Set conflicts to true if any label mismatch present
+            for (var label in labels) {
+                var currentLabel = labels[label];
+                if ((((current["select_" + currentLabel] + "").trim()) != ((current["pce_" + currentLabel] + "").trim()) && mappedFields[currentLabel])) {
+                    return true;
+                }
+            }
+            if (current.known_to_pce == "unmanaged") {
+                if (
+                    mappedFields.ip_address && current.pce_ip_address != current.select_ip_address
+                ) {
+                    return true;
+                }
+
+                var pceIP = {};
+                for (var ip = 0; ip < MAX_IP_ADDRESSES; ip++) {
+                    var pceIPAddress = ip > 0 ? "pce_ip_address_" + (ip + 1) : "pce_ip_address";
+                    if (!gs.nil(current[pceIPAddress])) {
+                        pceIP[current[pceIPAddress]] = true;
+                    }
+                }
+
+                if (Object.keys(pceIP).length == MAX_IP_ADDRESSES) {
+                    return false;
+                }
+
+                for (var cmdbIP = 1; cmdbIP < MAX_IP_ADDRESSES; cmdbIP++) {
+                    var ipAddress = "select_ip_address_" + (cmdbIP + 1);
+                    if (!gs.nil(current[ipAddress]) && !pceIP[current[ipAddress]]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch (ex) {
+            gs.error("Exception while checking conflicts: " + ex);
+        }
+    },
+
+    /**
+     * Handles the error generated while any operation is in progress 
+     * @param {integer} type Type of the error Client Side or Server side
+     * @param {JSON} obj JSON object that accepts the GlideRecord of the caller, jobSysId if the type is client side and error
+     */
+    handleError: function(type, obj, current) {
+        switch (type) {
+            case CLIENT_ERROR_TYPE:
+                gs.addErrorMessage(obj.message);
+                gs.error(obj.message);
+                if (current)
+                    current.setAbortAction(true);
+                break;
+            case SERVER_ERROR_TYPE:
+                break;
+        }
+    },
+    /**
+     * Validates the MID server and User to check if the JOb can start or not
+     * @param {string} current GlideRecord of configuration table
+     * @param {GlideRecord} midGr GlideRecord of the MID server
+     * @returns {boolean} true if the validation is susccessful else false
+     **/
+    canStartJob: function(current, midGr) {
+        var mid_server = midGr.getDisplayValue();
+        if (!(midGr.status == MID_SERVER_UP_STATUS && midGr.validated == 'true')) {
+            this.handleError(CLIENT_ERROR_TYPE, {
+                message: "Configured MID server " + mid_server + " is either down or not validated"
+            }, current);
+            return false;
+        }
+        if (midGr.version + '' != MID_SERVER_VERSION) {
+            this.handleError(CLIENT_ERROR_TYPE, {
+                message: "Configured MID server " + mid_server + " is not up to date."
+            }, current);
+            return false;
+        }
+        //User roles validation
+        var loggedUserGr = new GlideRecord('sys_user');
+        loggedUserGr.addQuery('user_name', midGr.user_name);
+        loggedUserGr.setLimit(1);
+        loggedUserGr.query();
+        if (loggedUserGr.next()) {
+            var isMidUser = this.userHasRole(loggedUserGr.sys_id + '', MID_SERVER_USER_ROLE);
+            var isIllumioMidUser = this.userHasRole(loggedUserGr.sys_id + '', ILLUMIO_MID_SERVER_ROLE);
+            if (!isMidUser && isIllumioMidUser) {
+                this.handleError(CLIENT_ERROR_TYPE, {
+                    message: "The user which is configured in " + mid_server + " MID server does not have the 'mid_server' role."
+                }, current);
+                return false;
+            }
+            if (!isIllumioMidUser && isMidUser) {
+                this.handleError(CLIENT_ERROR_TYPE, {
+                    message: "The user which is configured in " + mid_server + " MID server does not have the 'x_illu2_illumio.mid_server_user' role."
+                }, current);
+                return false;
+            }
+            if (!isIllumioMidUser && !isMidUser) {
+                this.handleError(CLIENT_ERROR_TYPE, {
+                    message: "The user which is configured in " + mid_server + " MID server does not have the 'mid_server' and 'x_illu2_illumio.mid_server_user' roles."
+                }, current);
+                return false;
+            }
+        } else {
+            this.handleError(CLIENT_ERROR_TYPE, {
+                message: 'MID server user having user id ' + midGr.user_name + ' is not found in the Users(user_name) table.'
+            }, current);
+            return false;
+        }
+        return true;
+    },
+
+    /**
+     * Checks if the user has the role
+     * @param {string} userId User ID
+     * @param {string} role Role to be checked
+     * @returns {boolean} true if the user has the role else false
+     **/
+    userHasRole: function(u_id, role) {
+        var userRoleGr = new GlideRecord('sys_user_has_role');
+        userRoleGr.addQuery('user', u_id);
+        userRoleGr.addQuery('role.name', role);
+        userRoleGr.setLimit(1);
+        userRoleGr.query();
+        return userRoleGr.hasNext();
+    },
+
+    /**
+     * Completes the process monitor with failed state
+     * @param {String} jobSysId system id of the process monitor
+     * @param {String} operation current operation
+     * @param {String} message message to show in process monitor
+     **/
+    handleFailure: function(jobSysId, operation, message) {
+        if (this.scheduledJobsGr.get(jobSysId)) {
+            this.scheduledJobsGr.job_status = 'failed';
+            this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + operation;
+            this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Authentication failed';
+            this.scheduledJobsGr.job_completed = new GlideDateTime();
+            this.scheduledJobsGr.update();
+            gs.error(message);
+        } else {
+            gs.error("Cannot find the scheduled job with sys_id: " + jobSysId);
+        }
+    },
+
+    /**
+     * Download the data from attachment
+     * @param {string} tableName Name of the table to download attachment from
+     * @param {string} tableSysId Sys id of the record
+     * @returns Content of the attachment as a strin
+     */
+    downloadAttachmentData: function(tableName, tableSysId) {
+        // Open the attachment on the record.
+        var grAttachment = new GlideRecord('sys_attachment');
+        grAttachment.addQuery('table_name', tableName);
+        grAttachment.addQuery('table_sys_id', tableSysId);
+        grAttachment.query();
+        grAttachment.next();
+        var streamData = new GlideSysAttachment().getContentStream(grAttachment.getUniqueValue());
+        return new GlideTextReader(streamData).readLine();
+    },
+
+    /**
+     * Query the case-sensitive GlideRecord 
+     * @param {string} tableGr GlideRecord of the table
+     * @param {string} key field of the table
+     * @param {string} value value to be matched
+     * @returns gr if found, else return JSON response as false
+     */
+    queryCaseSensitiveGr: function(tableGr, key, value, targetField) {
+
+        while (tableGr.next()) {
+            if (tableGr.getValue(key) == value) {
+                return {
+                    found: true,
+                    returnValue: tableGr.getValue(targetField)
+                };
+            }
+        }
+        return {
+            found: false
+        };
+    },
+
+    type: "IllumioUtils",
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-11-04 13:11:02</sys_created_on>
+        <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
+        <sys_name>IllumioUtils</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
+    </sys_script_include>
+</record_update>

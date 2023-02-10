@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="select_ip_address_15" label="CMDB IP Address 15" language="en" table="x_illu2_illumio_illumio_servicenow_servers">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>select_ip_address_15</element>
+            <help/>
+            <hint/>
+            <label>CMDB IP Address 15</label>
+            <language>en</language>
+            <name>x_illu2_illumio_illumio_servicenow_servers</name>
+            <plural>CMDB IP Address 15s</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-24 09:30:31</sys_created_on>
+            <sys_name>CMDB IP Address 15</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_documentation_x_illu2_illumio_illumio_servicenow_servers_select_ip_address_15_en</sys_update_name>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

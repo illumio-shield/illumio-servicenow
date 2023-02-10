@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_illu2_illumio_illumio_pce_conf</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Update PCE Configuration</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[gs.include('IllumioConstants');
+(function executeRule(current, previous /*null when async*/ ) {
+
+    // set default organization id to 1 if not present
+    if (current.organization_id == '') {
+        current.organization_id = '1';
+    }
+
+    // there must be a single configuration, so deleting existing configuration while adding new one
+    if (current.operation() == 'insert') {
+        var configurationGr = new GlideRecord('x_illu2_illumio_illumio_pce_conf');
+        configurationGr.query();
+        configurationGr.deleteMultiple();
+        gs.info('New configuration added by {0}({1})', gs.getUserName(), gs.getUserID());
+    } else {
+        gs.info('{0}({1}) updated configuration', gs.getUserName(), gs.getUserID());
+    }
+
+    // Trimming threshold limit values
+    current.new_label_creation_limit = (current.new_label_creation_limit + '').trim();
+    current.workload_label_modifications_limit = (current.workload_label_modifications_limit + '').trim();
+    current.number_of_workloads_to_be_created_from_servicenow = (current.number_of_workloads_to_be_created_from_servicenow + '').trim();
+
+    // Validating threshold limit input
+
+    var workloads_arr = [current.new_label_creation_limit + '', current.workload_label_modifications_limit + '', current.number_of_workloads_to_be_created_from_servicenow + '', current.workload_deletion_limit + ''];
+    var limits_arr = [current.set_limit_on_new_label_creation, current.set_limit_on_workload_label_modifications, current.create_unmanaged_workloads_on_pce_from_cmdb_records, current.set_limit_on_workload_deletion];
+    var regex = new RegExp(/^[0-9]+%?$/);
+
+    for (var i = 0; i < workloads_arr.length; i++) {
+        if (limits_arr[i] && !gs.nil(workloads_arr[i])) {
+            if (workloads_arr[i].match(regex)) {
+                if (workloads_arr[i].indexOf('%') >= 0) {
+                    var value = parseInt(workloads_arr[i].split('%'));
+                    if (value > 100) {
+                        current.setAbortAction(true);
+                        return;
+                    }
+                }
+            } else {
+                current.setAbortAction(true);
+                return;
+            }
+        }
+
+    }
+    // trimming critical label group values
+    current.critical_label_group_application = (current.critical_label_group_application + '').trim();
+    current.critical_label_group_location = (current.critical_label_group_location + '').trim();
+    current.critical_label_group_environment = (current.critical_label_group_environment + '').trim();
+    current.critical_label_group_role = (current.critical_label_group_role + '').trim();
+
+    //Retry mechanism Validations
+    try {
+        var retryCount = !gs.nil(current.getValue('http_retry_count')) ? parseInt(current.getValue('http_retry_count')) : DEFAULT_HTTP_RETRY_COUNT;
+        var maxRetryInterval = !gs.nil(current.getValue('http_retry_interval_max')) ? parseInt(current.getValue('http_retry_interval_max')) : DEFAULT_HTTP_RETRY_INTERVAL_MAX;
+        var retryIntervalIncrement = !gs.nil(current.getValue('http_retry_interval_increment')) ? parseInt(current.getValue('http_retry_interval_increment')) : DEFAULT_HTTP_RETRY_INTERVAL_INCREMENT;
+
+        if (!(0 <= retryCount && retryCount <= HTTP_RETRY_COUNT_MAX)) {
+            gs.addErrorMessage('The Retry count should be in the range of 0 to 100');
+            current.setAbortAction(true);
+            return;
+        }
+        if (!(0 <= maxRetryInterval && maxRetryInterval <= HTTP_RETRY_INTERVAL_INCREMENT_MAX)) {
+            gs.addErrorMessage('The HTTP Retry interval max should be in the range of 0 to 600');
+            current.setAbortAction(true);
+            return;
+        }
+        if (!(0 <= retryIntervalIncrement && retryIntervalIncrement <= HTTP_RETRY_INTERVAL_MAX)) {
+            gs.addErrorMessage('The HTTP Retry interval increment should be in the range of 0 to 600');
+            current.setAbortAction(true);
+            return;
+        }
+        current.http_retry_count = retryCount;
+        current.http_retry_interval_max = maxRetryInterval;
+        current.http_retry_interval_increment = retryIntervalIncrement;
+    } catch (e) {
+        gs.addErrorMessage('Please enter integer values in the retry mechanism section');
+        current.setAbortAction(true);
+    }
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 11:28:00</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>63c0e206dbcc6700dc9fabc5ca96190e</sys_id>
+        <sys_name>Update PCE Configuration</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_63c0e206dbcc6700dc9fabc5ca96190e</sys_update_name>
+        <template>name=Illumio PCE Configuration^active=true^script=var startDiscovery = new x_illu2_illumio.IllumioStartDiscovery(); startDiscovery.process();^EQ</template>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=63c0e206dbcc6700dc9fabc5ca96190e"/>
+</record_update>

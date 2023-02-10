@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>application</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Illumio clear button for field mapping</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+    var utilsGA = new GlideAjax("IllumioUtilsAJAX");
+    utilsGA.addParam("sysparm_name", "getFieldNameTypeFields");
+    utilsGA.getXML(createClearButtons);
+
+    function createClearButtons(response) {
+        var inPutIdPref = "element.x_illu2_illumio_illumio_pce_field_mapping.";
+        var fields = JSON.parse(response.responseXML.documentElement.getAttribute("answer"));
+		
+        for (var fInd = 0; fInd < fields.length; fInd++) {
+			var fieldName = fields[fInd];
+            var field = document.getElementById(inPutIdPref + fieldName);
+			field = field.getElementsBySelector(".form-field-addons")[0];
+            field.innerHTML += "<div><button style='margin-left:13px' onclick=\"g_form.clearValue('" + fieldName + "')\" type=\"button\" class=\"btn btn-default deleteButton\">Clear</button></div> ";
+        }
+
+    }
+
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-31 14:17:09</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>706765cb87914510d7a34046cebb35d3</sys_id>
+        <sys_name>Illumio clear button for field mapping</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_client_706765cb87914510d7a34046cebb35d3</sys_update_name>
+        <table>x_illu2_illumio_illumio_pce_field_mapping</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
