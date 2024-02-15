@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="ec6f8fb0dbfce9102fcecafc139619d3" label="Illumio PCE Workloads Mapping" max_length="40" name="x_illu2_illumio_illumio_pce_workloads_mapping" type="collection">
-        <element attributes="edge_encryption_enabled=true" label="Agent Installed" max_length="40" name="agent" type="boolean"/>
+    <element db_object_id="fbb2c5a79300021062233f018bba1059" label="Illumio PCE Workloads Mapping" max_length="40" name="x_illu2_illumio_illumio_pce_workloads_mapping" type="collection">
+        <element label="Agent Installed" max_length="40" name="agent" type="boolean"/>
         <element label="Hostname" mandatory="true" max_length="100" name="hostname" type="string"/>
         <element label="Href" mandatory="true" max_length="100" name="href" type="string"/>
         <element label="Interfaces" max_length="4000" name="interfaces" type="string"/>
         <element label="Labels" max_length="4000" name="labels" type="string"/>
         <element label="IP Address" max_length="40" name="public_ip" type="string"/>
+        <index name="index">
+            <element name="hostname"/>
+            <element name="agent"/>
+        </index>
     </element>
 </database>

@@ -7,11 +7,14 @@
         <sys_created_by>Illumio_mid2</sys_created_by>
         <sys_created_on>2020-11-03 06:13:14</sys_created_on>
         <sys_id>fc5739b0db54ac901206fd641d96199e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>u_illumio_test_table</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_scope_privilege_fc5739b0db54ac901206fd641d96199e</sys_update_name>
+        <sys_updated_by>Illumio_mid2</sys_updated_by>
+        <sys_updated_on>2020-11-03 06:13:14</sys_updated_on>
         <target_name>u_illumio_test_table</target_name>
         <target_scope display_value="Global">global</target_scope>
         <target_type>sys_db_object</target_type>

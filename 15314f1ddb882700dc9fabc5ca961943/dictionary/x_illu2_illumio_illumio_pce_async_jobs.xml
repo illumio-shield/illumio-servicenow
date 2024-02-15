@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="435f0fb0dbfce9102fcecafc1396191a" label="Illumio PCE Async Jobs" max_length="40" name="x_illu2_illumio_illumio_pce_async_jobs" type="collection">
+    <element db_object_id="62b205a79300021062233f018bba107a" label="Illumio PCE Async Jobs" max_length="40" name="x_illu2_illumio_illumio_pce_async_jobs" type="collection">
         <element label="Illumio Job ID" mandatory="true" max_length="40" name="illumio_job_id" type="string"/>
         <element label="Job Identifier" mandatory="true" max_length="10" name="job_identifier" type="string"/>
         <element label="Job Location" mandatory="true" max_length="100" name="job_location" type="string"/>
         <element label="Job Result Location" max_length="100" name="job_result_location" type="string"/>
-        <element attributes="edge_encryption_enabled=true" choice="1" label="Job Status" mandatory="true" max_length="40" name="job_status" type="choice">
+        <element choice="1" label="Job Status" mandatory="true" max_length="40" name="job_status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Completed" value="completed"/>
                 <element inactive_on_update="false" label="Done" value="done"/>
@@ -20,7 +20,7 @@
         <element label="Mapping Table Name" mandatory="true" max_length="100" name="mapping_table_name" type="string"/>
         <element label="Primary Key To Map" max_length="20" name="primary_key_to_map" type="string"/>
         <element label="Result Table Name" mandatory="true" max_length="100" name="result_table_name" type="string"/>
-        <element attributes="edge_encryption_enabled=true" default="0" label="Retry Count" max_length="40" name="retry_count" type="integer"/>
-        <element attributes="edge_encryption_enabled=true" label="Retry Interval (in secs)" mandatory="true" max_length="40" name="retry_interval" type="integer"/>
+        <element default="0" label="Retry Count" max_length="40" name="retry_count" type="integer"/>
+        <element label="Retry Interval (in secs)" mandatory="true" max_length="40" name="retry_interval" type="integer"/>
     </element>
 </database>

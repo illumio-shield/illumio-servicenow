@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="c35f0fb0dbfce9102fcecafc1396198d" label="Illumio PCE Field Mapping" max_length="40" name="x_illu2_illumio_illumio_pce_field_mapping" type="collection">
+    <element db_object_id="f2b205a79300021062233f018bba10d1" label="Illumio PCE Field Mapping" max_length="40" name="x_illu2_illumio_illumio_pce_field_mapping" type="collection">
         <element attributes="allow_null=true,allow_references=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Conditions for Deleting Workloads" max_length="4000" name="conditions_for_deleting_workloads" type="conditions" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Conditions for Excluding Workloads" max_length="4000" name="conditions_for_retired_workloads" type="conditions" use_dependent_field="true"/>
+        <element dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Conditions for Deleting Workloads" max_length="4000" name="conditions_for_deleting_workloads" type="conditions" use_dependent_field="true"/>
+        <element dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Conditions for Excluding Workloads" max_length="4000" name="conditions_for_retired_workloads" type="conditions" use_dependent_field="true"/>
         <element attributes="allow_null=true,allow_references=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Environment" max_length="80" name="environment" type="field_name" use_dependent_field="true"/>
         <element attributes="allow_references=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Host Name" mandatory="true" max_length="80" name="host_name" type="field_name" use_dependent_field="true"/>
         <element attributes="allow_references=true,allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="IP Address 1" max_length="80" name="ip_address" type="field_name" use_dependent_field="true"/>
@@ -38,17 +38,17 @@
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="IP Address 8" max_length="80" name="ip_address_8" type="field_name" use_dependent_field="true"/>
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="IP Address 9" max_length="80" name="ip_address_9" type="field_name" use_dependent_field="true"/>
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Location" max_length="80" name="location" type="field_name" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true" choice="3" default="ASC" label="Order" max_length="40" name="order" type="choice">
+        <element choice="3" default="ASC" label="Order" max_length="40" name="order" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Ascending" value="ASC"/>
                 <element inactive_on_update="false" label="Descending" value="DESC"/>
             </choice>
         </element>
-        <element attributes="edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Order by Column Name" max_length="80" name="order_by_column_name" type="field_name" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="PCE Configuration" max_length="32" name="pce_configuration" read_only="true" reference="x_illu2_illumio_illumio_pce_conf" reference_cascade_rule="delete" type="reference"/>
+        <element dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Order by Column Name" max_length="80" name="order_by_column_name" type="field_name" use_dependent_field="true"/>
+        <element label="PCE Configuration" max_length="32" name="pce_configuration" read_only="true" reference="x_illu2_illumio_illumio_pce_conf" reference_cascade_rule="delete" type="reference"/>
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Role" max_length="80" name="role" type="field_name" use_dependent_field="true"/>
         <element attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" display="true" label="Source Table" mandatory="true" max_length="80" name="servicenow_source_table" type="table_name"/>
-        <element attributes="edge_encryption_enabled=true" label="User Configurable Sort Order" max_length="40" name="set_user_configurable_sort_order" type="boolean"/>
+        <element label="User Configurable Sort Order" max_length="40" name="set_user_configurable_sort_order" type="boolean"/>
         <index name="index">
             <element name="pce_configuration"/>
         </index>

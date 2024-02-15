@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="446f8fb0dbfce9102fcecafc1396193d" extends="sysauto_script" label="Illumio PCE Configuration" max_length="40" name="x_illu2_illumio_illumio_pce_conf" type="collection">
+    <element db_object_id="2bb285a79300021062233f018bba106a" extends="sysauto_script" label="Illumio PCE Configuration" max_length="40" name="x_illu2_illumio_illumio_pce_conf" type="collection">
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>
         <element attributes="edge_encryption_enabled=true" label="Auto Sync to PCE" max_length="40" name="auto_synchronization" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Create Unmanaged Workloads on PCE from CMDB records" max_length="40" name="create_unmanaged_workloads_on_pce_from_cmdb_records" type="boolean"/>
@@ -7,12 +7,12 @@
         <element label="Environment" max_length="255" name="critical_label_group_environment" type="string"/>
         <element label="Location" max_length="255" name="critical_label_group_location" type="string"/>
         <element label="Role" max_length="255" name="critical_label_group_role" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="Enable Proxy between PCE and MID server" max_length="40" name="enable_proxy_between_pce_and_mid_server" type="boolean"/>
+        <element label="Enable Proxy between PCE and MID server" max_length="40" name="enable_proxy_between_pce_and_mid_server" type="boolean"/>
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" calculation="(function calculatedFieldValue(current) {&#10;&#10;&#9;// Add your code here&#10;&#9;var list = ['a','b','c'];&#10;&#9;return list;  // return the calculated value&#10;&#10;})(current);" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Environment" max_length="80" name="environment" type="field_name" use_dependent_field="true"/>
         <element active="false" attributes="edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Host Name" mandatory="true" max_length="80" name="host_name" type="field_name" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true" default="5" label="HTTP Retry Count" max_length="40" name="http_retry_count" type="integer"/>
-        <element attributes="edge_encryption_enabled=true" default="30" label="HTTP Retry interval increment (seconds)" max_length="40" name="http_retry_interval_increment" type="integer"/>
-        <element attributes="edge_encryption_enabled=true" default="300" label="HTTP Retry interval max (seconds)" max_length="40" name="http_retry_interval_max" type="integer"/>
+        <element default="5" label="HTTP Retry Count" max_length="40" name="http_retry_count" type="integer"/>
+        <element default="30" label="HTTP Retry interval increment (seconds)" max_length="40" name="http_retry_interval_increment" type="integer"/>
+        <element default="300" label="HTTP Retry interval max (seconds)" max_length="40" name="http_retry_interval_max" type="integer"/>
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" default="ip_address" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="IP Address" max_length="80" name="ip_address" type="field_name" use_dependent_field="true"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Enable Limits" max_length="40" name="limits_on_workloads_and_labels_changes_per_sync" type="boolean"/>
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Location" max_length="80" name="location" type="field_name" use_dependent_field="true"/>
@@ -32,9 +32,9 @@
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Role" max_length="80" name="role" type="field_name" use_dependent_field="true"/>
         <element attributes="no_data_replicate=true,edge_encryption_enabled=true" label="Secret Key" mandatory="true" max_length="255" name="secret_key" type="password2"/>
         <element active="false" attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" choice_field="business_unit" label="Source Table" mandatory="true" max_length="80" name="servicenow_source_table" type="table_name"/>
-        <element attributes="edge_encryption_enabled=true" label="Enable Limit on New Label Creation" max_length="40" name="set_limit_on_new_label_creation" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true" label="Enable limit on workload deletion" max_length="40" name="set_limit_on_workload_deletion" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true" label="Enable Limit on Workload Modifications" max_length="40" name="set_limit_on_workload_label_modifications" type="boolean"/>
+        <element label="Enable Limit on New Label Creation" max_length="40" name="set_limit_on_new_label_creation" type="boolean"/>
+        <element label="Enable limit on workload deletion" max_length="40" name="set_limit_on_workload_deletion" type="boolean"/>
+        <element label="Enable Limit on Workload Modifications" max_length="40" name="set_limit_on_workload_label_modifications" type="boolean"/>
         <element label="API Key" mandatory="true" max_length="255" name="username" type="password2"/>
         <element label="Workload Deletion Limit" max_length="40" name="workload_deletion_limit" type="string"/>
         <element label="Workload Modifications Limit" max_length="40" name="workload_label_modifications_limit" type="string"/>

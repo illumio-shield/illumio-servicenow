@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="ab5f4fb0dbfce9102fcecafc13961916" label="Illumio PCE Workloads" max_length="40" name="x_illu2_illumio_illumio_servicenow_servers" type="collection">
+    <element db_object_id="4fb245a79300021062233f018bba1065" label="Illumio PCE Workloads" max_length="40" name="x_illu2_illumio_illumio_servicenow_servers" type="collection">
         <element attributes="edge_encryption_enabled=true" default="true" label="IP Address" max_length="40" name="add_ip_address" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false,readonly_clickthrough=true" label="ServiceNow Record Identifier" max_length="40" name="cmdb_reference_field" reference="cmdb_ci" type="reference"/>
+        <element attributes="readonly_clickthrough=true" label="ServiceNow Record Identifier" max_length="40" name="cmdb_reference_field" reference="cmdb_ci" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Label Conflicts" max_length="40" name="conflicts" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true" label="Deleted from PCE" max_length="40" name="deleted_from_pce" read_only="true" type="boolean"/>
+        <element label="Deleted from PCE" max_length="40" name="deleted_from_pce" read_only="true" type="boolean"/>
         <element label="Discovered Applications" max_length="1000" name="discovered_applications" type="string"/>
         <element label="Discovered Environments" max_length="500" name="discovered_environments" type="string"/>
         <element label="Discovered Locations" max_length="500" name="discovered_locations" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="Duplicate" max_length="40" name="duplicate" type="boolean"/>
+        <element label="Duplicate" max_length="40" name="duplicate" type="boolean"/>
         <element attributes="edge_encryption_enabled=true, readonly_clickthrough=true" label="Primary Workload" max_length="32" name="duplicate_of" reference="x_illu2_illumio_illumio_servicenow_servers" type="reference"/>
         <element label="Hide Application" max_length="100" name="hide_application" type="string"/>
         <element label="Hide Environment" max_length="100" name="hide_environment" type="string"/>
         <element label="Hide Location" max_length="100" name="hide_location" type="string"/>
         <element display="true" label="Hostname" max_length="100" name="hostname" type="string"/>
         <element active="false" attributes="edge_encryption_enabled=true" label="PCE Interface IP Address" max_length="40" name="interface_ip_address" type="string"/>
-        <element active="false" attributes="edge_encryption_enabled=true" label="IP Conflict" max_length="40" name="ipconflict" type="boolean"/>
+        <element active="false" label="IP Conflict" max_length="40" name="ipconflict" type="boolean"/>
         <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
             <choice>
                 <element inactive_on_update="false" label="Managed" sequence="100" value="managed"/>
@@ -96,7 +96,7 @@
         <element label="CMDB Location" max_length="255" name="select_location" type="string"/>
         <element label="CMDB Role" max_length="255" name="select_role" type="string"/>
         <element label="Servicenow Record Identifier" max_length="32" name="server" type="string"/>
-        <element attributes="edge_encryption_enabled=true,no_sort=true,slushbucket_ref_no_expand=true" label="ServiceNow CMDB Identifiers List" max_length="4000" name="servicenow_cmdb_identifiers_list" reference="cmdb_ci" type="glide_list"/>
+        <element label="ServiceNow CMDB Identifiers List" max_length="4000" name="servicenow_cmdb_identifiers_list" reference="cmdb_ci" type="glide_list"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Application Label" max_length="40" name="update_application" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Environment Label" max_length="40" name="update_environment" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="IP Address" max_length="40" name="update_ip_address" type="boolean"/>
@@ -106,10 +106,22 @@
             <element name="cmdb_reference_field"/>
         </index>
         <index name="index2">
+            <element name="deleted_from_pce"/>
             <element name="duplicate"/>
+            <element name="conflicts"/>
+            <element name="known_to_pce"/>
         </index>
         <index name="index3">
+            <element name="duplicate"/>
+        </index>
+        <index name="index4">
+            <element name="duplicate"/>
+        </index>
+        <index name="index5">
             <element name="duplicate_of"/>
+        </index>
+        <index name="index6">
+            <element name="server"/>
         </index>
     </element>
 </database>

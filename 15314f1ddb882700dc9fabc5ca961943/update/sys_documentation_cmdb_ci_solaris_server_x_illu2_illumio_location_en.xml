@@ -11,11 +11,14 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2018-11-02 03:00:07</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>Location</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_documentation_cmdb_ci_solaris_server_x_illu2_illumio_location_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-02 03:00:07</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

@@ -48,12 +48,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>45850893db8ce4d0223ef5361d961948</sys_id>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>Illumio prevent duplicate mapping table</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_45850893db8ce4d0223ef5361d961948</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-11-02 07:06:00</sys_updated_on>
         <template/>
         <when>before</when>
     </sys_script>
