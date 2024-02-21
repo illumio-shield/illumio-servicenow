@@ -744,7 +744,6 @@ IllumioUtils.prototype = {
 	 * @returns {object} the response object returned by the API
 	 */
 	makeRestCall: function(restMessage, httpMethod, stringParams, headers, body, midServer) {
-		var i;
 		var apiCall = new sn_ws.RESTMessageV2(restMessage, httpMethod);
 		if (!gs.nil(stringParams)) {
 			Object.keys(stringParams).forEach(function(key) {
@@ -781,7 +780,6 @@ IllumioUtils.prototype = {
 
 			if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
 				gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
-				returnDict["status"] = false;
 				return returnDict;
 			}
 			
@@ -801,7 +799,6 @@ IllumioUtils.prototype = {
 			returnDict["status"] = true;
 		} catch (exc) {
 			gs.error("Exception while making the API call to get the label dimensions for PCE configuration " + pceConfig.getValue("name") + ". Error - " + exc);
-			return returnDict;
 		}
 		return returnDict;
 	},
@@ -812,22 +809,26 @@ IllumioUtils.prototype = {
 	 * @param {object} GlideRecord of PCE Configuration
 	 */
 	createOrUpdateLabelDimensionRecord: function(details, pceConfig) {
-		var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
-		labelDimensionGr.addQuery("key", details["key"]);
-		labelDimensionGr.query();
-		if(!labelDimensionGr.next()) {
-			labelDimensionGr.initialize();
-			labelDimensionGr.setValue("key", details["key"]);
-		}
-		labelDimensionGr.setValue("display_name_singular", details["display_name"]);
-		labelDimensionGr.setValue("display_name_plural", details["display_info"]["display_name_plural"]);
-		labelDimensionGr.setValue("href", details["href"]);
-		labelDimensionGr.setValue("label_type_initial", details["display_info"]["initial"]);
-		labelDimensionGr.setValue("illumio_pce_configuration", pceConfig.getUniqueValue());
-		labelDimensionGr.setValue("isdeleted", false);
+		try {
+			var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+			labelDimensionGr.addQuery("key", details["key"]);
+			labelDimensionGr.query();
+			if(!labelDimensionGr.next()) {
+				labelDimensionGr.initialize();
+				labelDimensionGr.setValue("key", details["key"]);
+			}
+			labelDimensionGr.setValue("display_name_singular", details["display_name"]);
+			labelDimensionGr.setValue("display_name_plural", details["display_info"]["display_name_plural"]);
+			labelDimensionGr.setValue("href", details["href"]);
+			labelDimensionGr.setValue("label_type_initial", details["display_info"]["initial"]);
+			labelDimensionGr.setValue("illumio_pce_configuration", pceConfig.getUniqueValue());
+			labelDimensionGr.setValue("isdeleted", false);
 
-		labelDimensionGr.setWorkflow(false);
-		labelDimensionGr.update();
+			labelDimensionGr.setWorkflow(false);
+			labelDimensionGr.update();
+		} catch (exc) {
+			gs.warn("Error occured while creating/updating the record for Label Dimension " + details["key"] + ". ");
+		}
 	},
 	
 	/**
@@ -881,7 +882,6 @@ IllumioUtils.prototype = {
 			if(pceConfig.get(pceConfigSysId)) {
 				var responseDict = this.getLabelDimensions(pceConfig);
 				if (!responseDict["status"]) {
-					matchFound = false;
 					return matchFound;
 				}
 				response = responseDict["response"];
@@ -913,13 +913,15 @@ IllumioUtils.prototype = {
 	
 	/**
 	 * Retry failed label dimension creation
+	 * When the label dimensions creation fails on PCE, this method is to be called with the next scheduled script execution while fetching the label dimensions.
+	 * This method would retry creating the label dimensions aaded on ServiceNow onto the coorelating Illumio PCE tenant.
 	 */
 	retryFailedLabelDimensionCreation: function () {
-		try {
-			var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
-			labelDimensionGr.addNullQuery("href");
-			labelDimensionGr.query();
-			while (labelDimensionGr.next()) {
+		var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+		labelDimensionGr.addNullQuery("href");
+		labelDimensionGr.query();
+		while (labelDimensionGr.next()) {
+			try {
 				var details = {
 					"key": labelDimensionGr.getValue("key"),
 					"display_name_singular": labelDimensionGr.getValue("display_name_singular"),
@@ -939,9 +941,9 @@ IllumioUtils.prototype = {
 				labelDimensionGr.setValue("isdeleted", false);
 				labelDimensionGr.setWorkflow(false);
 				labelDimensionGr.update();
+			} catch (exc) {
+				gs.error("Error while retrying to create the label dimension " + labelDimensionGr.getValue("key") + ". Error - " + exc);
 			}
-		} catch (exc) {
-			gs.error("Error while retrying failed label dimension creation. Error - " + exc);
 		}
 	},
 	
@@ -984,7 +986,7 @@ IllumioUtils.prototype = {
 				var response = this.makeRestCall("IllumioFetchLabelDimensions", "CreateLabelDimension", stringParams, headers, requestBody, midServer);
 				var response_status = response.getStatusCode();
 				
-				if (response_status >= 201 && response_status < 300) {
+				if (response_status >= 200 && response_status < 300) {
 					response = JSON.parse(response.getBody());
 					returnDict["href"] = response["href"];
 					gs.debug("Label dimension " + labelDimensionData["key"] + " created successfully on Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ".");
@@ -1009,14 +1011,12 @@ IllumioUtils.prototype = {
 	 * @returns {Boolean} containing status
 	 */
 	updateLabelDimension: function(labelDimensionData) {
-		var status = false;
 		try {
 			var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
 			if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
 				if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
 					gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
-					status = false;
-					return status;
+					return false;
 				}
 				
 				var stringParams = {
@@ -1039,19 +1039,18 @@ IllumioUtils.prototype = {
 				var response = this.makeRestCall("IllumioFetchLabelDimensions", "UpdateLabelDimension", stringParams, headers, body, midServer);
 				var response_status = response.getStatusCode();
 
-				if (response_status >= 204 && response_status < 300) {
+				if (response_status >= 200 && response_status < 300) {
 					gs.debug("Label Dimension " + labelDimensionData["key"] + " updated successfully on Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ".");
-					status = true;
+					return true;
 				} else {
 					gs.error("Error while updating label dimension " + labelDimensionData["key"] + " on Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ". Status code - " + response_status + ". Response - " + JSON.stringify(response));
-					status = false;
+					return false;
 				}
 			}
 		} catch (exc) {
 			gs.error("Exception while updating label dimension on Illumio PCE. " + exc);
-			return false;
 		}
-		return status;
+		return false;
 	},
 
     type: "IllumioUtils",
@@ -1060,13 +1059,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>339</sys_mod_count>
+        <sys_mod_count>341</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-19 08:49:11</sys_updated_on>
+        <sys_updated_on>2024-02-21 07:54:49</sys_updated_on>
     </sys_script_include>
 </record_update>

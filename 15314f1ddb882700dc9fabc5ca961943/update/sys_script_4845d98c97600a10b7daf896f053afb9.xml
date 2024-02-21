@@ -33,10 +33,10 @@
         <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
     // Fetch the label dimensions from Illumio PCE for this configuration
     try {
-		var IlUtils = new x_illu2_illumio.IllumioUtils();
+        var IllumioUtils = new x_illu2_illumio.IllumioUtils();
         var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
         if (pceConfig.get(current.getValue("illumio_pce_configuration"))) {
-            var responseDict = IlUtils.getLabelDimensions(pceConfig);
+            var responseDict = IllumioUtils.getLabelDimensions(pceConfig);
             if (!responseDict["status"]) {
                 gs.error("Failed fetching of Label Dimensions from Illumio PCE for PCE configuration" + pceConfig.getValue("name") + ".");
             } else {
@@ -48,7 +48,7 @@
 
                     // Iterate over each dimension and intialize record, if not already present, and update it.
                     for (var i = 0; i < response.length; i++) {
-                        IlUtils.createOrUpdateLabelDimensionRecord(response[i], pceConfig);
+                        IllumioUtils.createOrUpdateLabelDimensionRecord(response[i], pceConfig);
                     }
                 } else {
                     gs.error("Error while fetching the label dimensions for the PCE configuration " + pceConfig.getValue("name") + ". Status code - " + response_status + ". Response - " + JSON.stringify(response));
@@ -66,7 +66,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4845d98c97600a10b7daf896f053afb9</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>Initial fetch of label dimensions</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -74,7 +74,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_4845d98c97600a10b7daf896f053afb9</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-19 07:12:44</sys_updated_on>
+        <sys_updated_on>2024-02-21 08:01:44</sys_updated_on>
         <template/>
         <when>async_always</when>
     </sys_script>
