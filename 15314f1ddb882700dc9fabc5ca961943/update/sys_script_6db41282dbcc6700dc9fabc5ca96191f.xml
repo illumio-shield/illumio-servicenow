@@ -48,8 +48,12 @@ function updateJob(sys_id) {
         // If status is ready_to_map, dump data to mapping table from staging table
         if (current.job_status + "" == 'ready_to_map') {
             var data = [];
+            var configSysId = utils.getConfigurationId(current.illumio_job_id);
             var mappingTableGr = new GlideRecord(current.mapping_table_name + "");
+            mappingTableGr.addQuery('illumio_pce_configuration', configSysId);
+            mappingTableGr.query();
             var stagingTableGr = new GlideRecord(current.result_table_name + "");
+            stagingTableGr.addQuery('illumio_pce_configuration', configSysId);
             stagingTableGr.query();
 
             while (stagingTableGr.next()) {
@@ -70,10 +74,12 @@ function updateJob(sys_id) {
                         for (var key in keysToMap) {
                             mappingTableGr[keysToMap[key]] = data[index][keysToMap[key]] + "";
                         }
+                        mappingTableGr.setValue('illumio_pce_configuration', configSysId);
                         mappingTableGr.insert();
                     }
 
                     stagingTableGr.initialize();
+                    stagingTableGr.addQuery('illumio_pce_configuration', configSysId);
                     stagingTableGr.deleteMultiple();
                     updateJob(current.sys_id);
                 } catch (ex) {
@@ -116,7 +122,7 @@ function updateJob(sys_id) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6db41282dbcc6700dc9fabc5ca96191f</sys_id>
-        <sys_mod_count>75</sys_mod_count>
+        <sys_mod_count>76</sys_mod_count>
         <sys_name>Illumio Poll PCE Async Job Status</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -124,7 +130,7 @@ function updateJob(sys_id) {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_6db41282dbcc6700dc9fabc5ca96191f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-10 11:31:16</sys_updated_on>
+        <sys_updated_on>2024-03-05 05:22:14</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

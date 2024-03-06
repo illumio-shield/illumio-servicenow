@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_illu2_illumio_illumio_pce_conf">
+    <x_illu2_illumio_illumio_pce_conf action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <application/>
+        <auto_synchronization>false</auto_synchronization>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <create_unmanaged_workloads_on_pce_from_cmdb_records>false</create_unmanaged_workloads_on_pce_from_cmdb_records>
+        <critical_label_group_application/>
+        <critical_label_group_environment/>
+        <critical_label_group_location/>
+        <critical_label_group_role/>
+        <enable_proxy_between_pce_and_mid_server>false</enable_proxy_between_pce_and_mid_server>
+        <entered_time/>
+        <environment/>
+        <host_name/>
+        <http_retry_count>5</http_retry_count>
+        <http_retry_interval_increment>30</http_retry_interval_increment>
+        <http_retry_interval_max>300</http_retry_interval_max>
+        <ip_address>ip_address</ip_address>
+        <limits_on_workloads_and_labels_changes_per_sync>true</limits_on_workloads_and_labels_changes_per_sync>
+        <location/>
+        <max_drift/>
+        <mid_server display_value="MID_DGP_ONE">c916234597700210b7daf896f053af4c</mid_server>
+        <name>Dummy PCE Configuration</name>
+        <new_label_creation_limit/>
+        <new_workloads_to_create_at_a_time>0</new_workloads_to_create_at_a_time>
+        <number_of_workloads_to_be_created_from_servicenow/>
+        <offset/>
+        <offset_type>0</offset_type>
+        <organization_id>138</organization_id>
+        <pce_url>https://poc1.illum.io</pce_url>
+        <role/>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2024-03-06 06:37:41</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[var startDiscovery = new x_illu2_illumio.IllumioStartDiscovery(); startDiscovery.process(current.getUniqueValue());]]></script>
+        <secret_key>﷞﷟﷒04c8a98097e00a10b7daf896f053af1e﷬﷔1﷬﷭rMrPCso6CNdX7QOUYnG8Mg==hSVN9eRibJSAJqAe2CebSqVNa-_7XV9530MlaM7t4zJs1SV9iyg2tPv3atlCj9zIMXHrQT4t-ihbDwZBwnpJq-hmp6KsdJjrUYbHkdLXiyM=﷮﷯</secret_key>
+        <servicenow_source_table/>
+        <set_limit_on_new_label_creation>false</set_limit_on_new_label_creation>
+        <set_limit_on_workload_deletion>false</set_limit_on_workload_deletion>
+        <set_limit_on_workload_label_modifications>false</set_limit_on_workload_label_modifications>
+        <sys_class_name>x_illu2_illumio_illumio_pce_conf</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-06 06:39:58</sys_created_on>
+        <sys_id>08f623c597700210b7daf896f053afda</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Dummy PCE Configuration</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>x_illu2_illumio_illumio_pce_conf_08f623c597700210b7daf896f053afda</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-06 07:43:15</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+        <username>﷞﷟﷒04c8a98097e00a10b7daf896f053af1e﷬﷔1﷬﷭ZOXIWBQPtf3fPrsffa9w4Q==7Lg6kJVrIFm2ciO_3kLIog_iWphAjGUMBZ9HOdU151rMnZRWEQ==﷮﷯</username>
+        <workload_deletion_limit/>
+        <workload_label_modifications_limit/>
+    </x_illu2_illumio_illumio_pce_conf>
+</record_update>

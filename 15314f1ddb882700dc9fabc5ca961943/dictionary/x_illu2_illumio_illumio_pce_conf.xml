@@ -27,7 +27,7 @@
             </choice>
         </element>
         <element label="Unmanaged Workloads Creation Limit" max_length="40" name="number_of_workloads_to_be_created_from_servicenow" type="string"/>
-        <element label="Organization ID" max_length="6" name="organization_id" type="string"/>
+        <element label="Organization ID" max_length="40" name="organization_id" type="string"/>
         <element label="PCE URL" mandatory="true" max_length="100" name="pce_url" type="string"/>
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Role" max_length="80" name="role" type="field_name" use_dependent_field="true"/>
         <element attributes="no_data_replicate=true,edge_encryption_enabled=true" label="Secret Key" mandatory="true" max_length="255" name="secret_key" type="password2"/>

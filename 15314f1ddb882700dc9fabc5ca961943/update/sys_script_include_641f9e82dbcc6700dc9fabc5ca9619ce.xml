@@ -10,7 +10,9 @@
         <script><![CDATA[var IllumioStartDiscovery = Class.create();
 IllumioStartDiscovery.prototype = {
     initialize: function() {
-        this.scheduledJobsGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
+		this.scheduledJobsGr = new GlideRecord(
+            'x_illu2_illumio_illumio_scheduled_jobs'
+        );
         this.utils = new x_illu2_illumio.IllumioUtils();
     },
 
@@ -18,64 +20,121 @@ IllumioStartDiscovery.prototype = {
      * Starts the discovery process
      * @returns {Boolean} true if the job is successfully created else false
      */
-    process: function() {
-
-		var userName = gs.getUser().getID();
+    process: function(configSysId) {
+        var userName = gs.getUser().getID();
         // Check if any job is already in running state
-        gs.info("Initiating Discovery");
+        gs.info('Initiating Discovery');
 
-        var gr = new GlideRecord('x_illu2_illumio_illumio_pce_field_mapping');
-        gr.setLimit(1);
-        gr.query();
-        if (!gr.hasNext()) {
-            gs.error('Can not start the discovery as there is no PCE field mapping configured');
-            this.scheduledJobsGr.job_started = new GlideDateTime();
-            this.scheduledJobsGr.job_status = 'failed';
-            this.scheduledJobsGr.current_operation = 'PCE Field Mapping Missing';
-            this.scheduledJobsGr.job_type = 'data collection';
-            this.scheduledJobsGr.job_completed = new GlideDateTime();
-            this.scheduledJobsGr.logs = '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Can not start the discovery as there is no PCE field mapping configured';
-            this.scheduledJobsGr.insert();
-            return false;
-        }
-        var runningJobsCount = new GlideAggregate("x_illu2_illumio_illumio_scheduled_jobs");
-        runningJobsCount.addQuery('job_status', 'running');
-        runningJobsCount.addAggregate('COUNT');
-        runningJobsCount.query();
-        if (runningJobsCount.next()) {
-
-            this.scheduledJobsGr.initialize();
-            this.scheduledJobsGr.job_owner = userName;
-            if (runningJobsCount.getAggregate('COUNT') > 0) {
-                gs.info('Can not start discovery as there is already one discovery job in running status');
+        var configClassGr = new GlideRecord(
+            'x_illu2_illumio_illumio_config_class_mapping'
+        );
+        configClassGr.addActiveQuery();
+        configClassGr.addQuery(
+            'illumio_pce_configuration',
+            configSysId
+        );
+        configClassGr.query();
+        while (configClassGr.next()) {
+            var fieldMappingGr = new GlideRecord(
+                'x_illu2_illumio_illumio_class_field_mapping'
+            );
+            fieldMappingGr.addQuery('type', 'host_name');
+            fieldMappingGr.addActiveQuery();
+            fieldMappingGr.setLimit(1);
+            fieldMappingGr.query();
+            if (!fieldMappingGr.hasNext()) {
+                gs.error(
+                    'Can not start the discovery as there is no PCE field mapping configured.'
+                );
+                this.scheduledJobsGr.illumio_pce_configuration = configSysId;
                 this.scheduledJobsGr.job_started = new GlideDateTime();
                 this.scheduledJobsGr.job_status = 'failed';
-                this.scheduledJobsGr.current_operation = 'Already running';
+                this.scheduledJobsGr.current_operation =
+                    'PCE Field Mapping Missing';
                 this.scheduledJobsGr.job_type = 'data collection';
                 this.scheduledJobsGr.job_completed = new GlideDateTime();
-                this.scheduledJobsGr.logs = '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Can not start discovery as there is already one discovery job in running status';
+                this.scheduledJobsGr.logs =
+                    '[' +
+                    new Date(
+                        new GlideDateTime().getNumericValue()
+                    ).toISOString() +
+                    '] Can not start the discovery as there is no PCE field mapping configured.';
                 this.scheduledJobsGr.insert();
                 return false;
-            } else {
-                // Create new job
-                this.scheduledJobsGr.job_started = new GlideDateTime();
-                this.scheduledJobsGr.job_status = 'running';
-                this.scheduledJobsGr.current_operation = 'Fetching PCE data';
-                this.scheduledJobsGr.logs = '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Illumio data collection started';
-                this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Fetching PCE data';
-                this.scheduledJobsGr.job_type = 'data collection';
-                var jobSysId = this.scheduledJobsGr.insert();
+            }
+            var runningJobsCount = new GlideAggregate(
+                'x_illu2_illumio_illumio_scheduled_jobs'
+            );
+            runningJobsCount.addQuery('illumio_pce_configuration', configSysId);
+            runningJobsCount.addQuery('job_status', 'running');
+            runningJobsCount.addAggregate('COUNT');
+            runningJobsCount.query();
+            if (runningJobsCount.next()) {
+                this.scheduledJobsGr.initialize();
+                this.scheduledJobsGr.job_owner = userName;
+                if (runningJobsCount.getAggregate('COUNT') > 0) {
+                    gs.info(
+                        'Can not start discovery as there is already one discovery job in running status.'
+                    );
+                    this.scheduledJobsGr.illumio_pce_configuration = configSysId;
+                    this.scheduledJobsGr.job_started = new GlideDateTime();
+                    this.scheduledJobsGr.job_status = 'failed';
+                    this.scheduledJobsGr.current_operation = 'Already running';
+                    this.scheduledJobsGr.job_type = 'data collection';
+                    this.scheduledJobsGr.job_completed = new GlideDateTime();
+                    this.scheduledJobsGr.logs =
+                        '[' +
+                        new Date(
+                            new GlideDateTime().getNumericValue()
+                        ).toISOString() +
+                        '] Can not start discovery as there is already one discovery job in running status.';
+                    this.scheduledJobsGr.insert();
+                    return false;
+                } else {
+                    // Create new job
+                    this.scheduledJobsGr.illumio_pce_configuration = configSysId;
+                    this.scheduledJobsGr.job_started = new GlideDateTime();
+                    this.scheduledJobsGr.job_status = 'running';
+                    this.scheduledJobsGr.current_operation =
+                        'Fetching PCE data';
+                    this.scheduledJobsGr.logs =
+                        '[' +
+                        new Date(
+                            new GlideDateTime().getNumericValue()
+                        ).toISOString() +
+                        '] Illumio data collection started';
+                    this.scheduledJobsGr.logs +=
+                        '\n[' +
+                        new Date(
+                            new GlideDateTime().getNumericValue()
+                        ).toISOString() +
+                        '] Fetching PCE data';
+                    this.scheduledJobsGr.job_type = 'data collection';
+                    var jobSysId = this.scheduledJobsGr.insert();
 
-                var discoveryStartStatus = this.createAsyncJobs(jobSysId);
-                if (!discoveryStartStatus) {
-                    this.utis.handleFailure(jobSysId, 'Discovery start error', 'Adding to ECC queue failed');
+                    var discoveryStartStatus = this.createAsyncJobs(jobSysId, configSysId);
+                    if (!discoveryStartStatus) {
+                        this.utils.handleFailure(
+                            jobSysId,
+                            'Discovery start error',
+                            'Adding to ECC queue failed',
+							configSysId
+                        );
+                    }
                 }
             }
         }
     },
 
     WORKLOAD_PARAMS: {
-        keys_to_map: ['href', 'hostname', 'labels', 'agent', 'public_ip', 'interfaces'],
+        keys_to_map: [
+            'href',
+            'hostname',
+            'labels',
+            'agent',
+            'public_ip',
+            'interfaces',
+        ],
         primary_key_to_map: 'hostname',
     },
     LABEL_PARAMS: {
@@ -88,94 +147,92 @@ IllumioStartDiscovery.prototype = {
      * @param {String} jobSysId - Job sys id
      * @returns {Boolean} true if the job is successfully created else false
      */
-    createAsyncJobs: function(jobSysId) {
-
+    createAsyncJobs: function(jobSysId, configSysId) {
         gs.info('Creating async jobs on PCE');
-        var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
+        var pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
         var types = ['workload', 'label'];
         if (pceConfig) {
-
             try {
                 for (var typeIndex in types) {
                     var type = types[typeIndex];
                     var params = this[type.toUpperCase() + '_PARAMS'];
                     var parametersToSend = {
+                        illumio_pce_configuration_id: configSysId,
                         pce_url: pceConfig.pceUrl,
-                        pce_authorization: gs.base64Encode(pceConfig.pceUsername + ':' + pceConfig.pceSecret),
-                        pce_endpoint: '/api/v2/orgs/' + (pceConfig.pceOrganizationID || '1') + '/' + type + 's',
+                        pce_authorization: gs.base64Encode(
+                            pceConfig.pceUsername + ':' + pceConfig.pceSecret
+                        ),
+                        pce_endpoint: '/api/v2/orgs/' +
+                            (pceConfig.pceOrganizationID || '1') +
+                            '/' +
+                            type +
+                            's',
                         operation: 'create_async_job',
                         mapping_table_name: 'x_illu2_illumio_illumio_pce_' + type + 's_mapping',
-                        result_table_name: 'x_illu2_illumio_illumio_pce_' + type + 's_mapping_stage',
+                        result_table_name: 'x_illu2_illumio_illumio_pce_' +
+                            type +
+                            's_mapping_stage',
                         keys_to_map: JSON.stringify(params['keys_to_map']),
                         primary_key_to_map: params['primary_key_to_map'],
                         illumio_scheduled_job_id: jobSysId,
                         job_identifier: type + 's',
                         time_zone: gs.getSession().getTimeZoneName(),
                         pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
-						retry_params: JSON.stringify(pceConfig.retry_params)
+                        retry_params: JSON.stringify(pceConfig.retry_params),
                     };
-                    var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioManageAsyncJobs', pceConfig.midServer, parametersToSend);
+                    var illumioAddToECCQueue = new IllumioAddToECCQueue(
+                        'IllumioManageAsyncJobs',
+                        pceConfig.midServer,
+                        parametersToSend
+                    );
                     var addToECCQueue = illumioAddToECCQueue.insert();
 
                     if (!addToECCQueue) {
-                        this.utis.handleFailure(jobSysId, 'Adding to ECC queue', 'Adding task for async job of fetching ' + type + 's to ECC queue failed');
+                        this.utils.handleFailure(
+                            jobSysId,
+                            'Adding to ECC queue',
+                            'Adding task for async job of fetching ' +
+                            type +
+                            's to ECC queue failed', configSysId
+                        );
                         return false;
                     }
                     gs.info('Started async job to fetch PCE ' + type + 's');
                 }
                 return true;
-
             } catch (e) {
-                this.utis.handleFailure(jobSysId, 'Adding to ECC queue failed', 'Exception occurred while adding to ECC queue. Exception: ' + e);
+                this.utils.handleFailure(
+                    jobSysId,
+                    'Adding to ECC queue failed',
+                    'Exception occurred while adding to ECC queue. Exception: ' +
+                    e, configSysId
+					
+                );
                 return false;
             }
-
-
         } else {
-
-            this.utis.handleFailure(jobSysId, 'No PCE configuration found', 'No PCE configurations available');
+            this.utils.handleFailure(
+                jobSysId,
+                'No PCE configuration found',
+                'No PCE configurations available', configSysId
+            );
             return false;
         }
     },
 
-
-    /**
-     * To handle the failure of the job
-     * @param {String} jobSysId - Job sys id
-     * @param {String} operation - Operation of the job
-     * @param {String} message - message to add 
-     **/
-    handleFailure: function(jobSysId, operation, message) {
-        this.scheduledJobsGr.initialize();
-        this.scheduledJobsGr.addQuery('sys_id', jobSysId);
-        this.scheduledJobsGr.query();
-
-        if (this.scheduledJobsGr.next()) {
-            this.scheduledJobsGr.job_status = 'failed';
-
-            this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + operation;
-            this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Data discovery failed';
-
-
-            this.scheduledJobsGr.job_completed = new GlideDateTime();
-            this.scheduledJobsGr.update();
-        }
-        gs.error(message);
-    },
-
-    type: 'IllumioStartDiscovery'
+    type: 'IllumioStartDiscovery',
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:20:29</sys_created_on>
         <sys_id>641f9e82dbcc6700dc9fabc5ca9619ce</sys_id>
-        <sys_mod_count>111</sys_mod_count>
+        <sys_mod_count>113</sys_mod_count>
         <sys_name>IllumioStartDiscovery</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_641f9e82dbcc6700dc9fabc5ca9619ce</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-08-17 14:00:33</sys_updated_on>
+        <sys_updated_on>2024-03-05 05:13:29</sys_updated_on>
     </sys_script_include>
 </record_update>

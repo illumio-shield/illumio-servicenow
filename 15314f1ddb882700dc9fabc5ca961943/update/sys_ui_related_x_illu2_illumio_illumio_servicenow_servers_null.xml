@@ -2,7 +2,7 @@
     <sys_ui_related sys_domain="global" table="x_illu2_illumio_illumio_servicenow_servers" version="2" view="">
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
-            <list_id display_value="Illumio PCE Workloads - Default view" name="x_illu2_illumio_illumio_servicenow_servers" related_list="NULL" sys_domain="global" view="Default view">c1b2b5b9db98a0d01206fd641d961930</list_id>
+            <list_id display_value="Illumio PCE Workload [Deprecated] - Default view" name="x_illu2_illumio_illumio_servicenow_servers" related_list="NULL" sys_domain="global" view="Default view">c1b2b5b9db98a0d01206fd641d961930</list_id>
             <order_by/>
             <position>0</position>
             <related_list>REL:9ef0b179db98a0d01206fd641d9619da</related_list>
@@ -15,7 +15,7 @@
             <sys_updated_on>2020-11-06 08:26:58</sys_updated_on>
         </sys_ui_related_list_entry>
         <sys_ui_related_list action="INSERT_OR_UPDATE">
-            <calculated_name>Illumio PCE Workloads - Default view</calculated_name>
+            <calculated_name>Illumio PCE Workload [Deprecated] - Default view</calculated_name>
             <filter/>
             <name>x_illu2_illumio_illumio_servicenow_servers</name>
             <order_by/>

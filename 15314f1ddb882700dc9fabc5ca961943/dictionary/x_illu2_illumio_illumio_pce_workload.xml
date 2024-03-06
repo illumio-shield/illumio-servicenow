@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="05d9ae6497700210b7daf896f053af19" label="Illumio PCE Workload" max_length="40" name="x_illu2_illumio_illumio_pce_workload" type="collection">
+        <element label="Conflicts" max_length="40" name="conflicts" type="boolean"/>
+        <element display="true" label="Hostname" max_length="100" name="hostname" type="string"/>
+        <element label="Illumio PCE Configuration" mandatory="true" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
+        <element label="Interfaces" max_length="4000" name="interfaces" type="string"/>
+        <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Managed" sequence="0" value="managed"/>
+                <element inactive_on_update="false" label="Unmanaged" sequence="1" value="unmanaged"/>
+                <element inactive_on_update="false" label="Unknown" sequence="2" value="unknown"/>
+            </choice>
+        </element>
+        <element label="Href" max_length="2048" name="pce_workload_href" type="string"/>
+        <element label="PCE Public IP Address" max_length="80" name="public_ip_address" type="string"/>
+        <element label="ServiceNow CMDB Identifiers List" max_length="4000" name="servicenow_cmdb_identifiers_list" reference="cmdb_ci" type="glide_list"/>
+        <index name="index">
+            <element name="illumio_pce_configuration"/>
+        </index>
+    </element>
+</database>

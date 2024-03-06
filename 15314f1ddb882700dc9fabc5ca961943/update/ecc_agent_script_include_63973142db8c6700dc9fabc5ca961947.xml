@@ -60,6 +60,7 @@ IllumioManageAsyncJobs.prototype = {
     run: function() {
 
         this.requiredOperation = probe.getParameter('glide.jms.operation');
+		this.configSysId = probe.getParameter('glide.jms.illumio_pce_configuration_id');
 
         // perform required async job operation
         if (this.requiredOperation == 'create_async_job') {
@@ -68,7 +69,7 @@ IllumioManageAsyncJobs.prototype = {
 
         } else if (this.requiredOperation == 'get_async_job_status') {
             this.logger._info('IllumioManageAsyncJobs - Getting async job status from PCE');
-            this.getAsyncJobStatus();
+            this.getAsyncJobStatus(this.configSysId);
 
         } else {
             this.logger._error('IllumioManageAsyncJobs - No async operation provided.');
@@ -136,7 +137,7 @@ IllumioManageAsyncJobs.prototype = {
      * Get status of async job running on PCE
      * @return {Boolean} whether status was successful or not.
      */
-    getAsyncJobStatus: function() {
+    getAsyncJobStatus: function(configSysId) {
 
         try {
             var jobStatus = 'failed';
@@ -161,7 +162,7 @@ IllumioManageAsyncJobs.prototype = {
                     this.logger._error('IllumioManageAsyncJobs - Job completed but datafiles url is not present in response. Setting job status to failed.');
                     jobStatus = 'failed';
                 } else {
-                    isResultsAvailable = this.getAsyncJobResults(resultUrl);
+                    isResultsAvailable = this.getAsyncJobResults(resultUrl,configSysId);
                 }
             }
 
@@ -199,7 +200,7 @@ IllumioManageAsyncJobs.prototype = {
      * @param {String} resultsLocation location of the result.
      * @return {Boolean} whether request was successful or not.
      */
-    getAsyncJobResults: function(resultsLocation) {
+    getAsyncJobResults: function(resultsLocation,configSysId) {
 
         try {
             this.logger._info('IllumioManageAsyncJobs - Getting async job results');
@@ -273,6 +274,7 @@ IllumioManageAsyncJobs.prototype = {
 
             var mappingGR = new GlideRecord(resultTable);
             mappingGR.initialize();
+			mappingGR.setValue("illumio_pce_configuration",configSysId);
             mappingGR.setValue("json_data", JSON.stringify(resultData));
             if (!mappingGR.insert()) {
                 this.logger._error("Cannot insert the data in staging table");
@@ -355,7 +357,7 @@ IllumioManageAsyncJobs.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>63973142db8c6700dc9fabc5ca961947</sys_id>
-        <sys_mod_count>6</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>IllumioManageAsyncJobs</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -363,6 +365,6 @@ IllumioManageAsyncJobs.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_63973142db8c6700dc9fabc5ca961947</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-10-19 06:54:32</sys_updated_on>
+        <sys_updated_on>2024-03-05 05:20:56</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
