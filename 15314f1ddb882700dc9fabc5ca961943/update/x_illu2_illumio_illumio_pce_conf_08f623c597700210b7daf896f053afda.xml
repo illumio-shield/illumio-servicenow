@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="x_illu2_illumio_illumio_pce_conf">
-    <x_illu2_illumio_illumio_pce_conf action="INSERT_OR_UPDATE">
+    <x_illu2_illumio_illumio_pce_conf action="DELETE">
         <active>true</active>
         <application/>
         <auto_synchronization>false</auto_synchronization>
@@ -41,7 +41,7 @@
         <run_time>1970-01-01 08:00:00</run_time>
         <run_type>daily</run_type>
         <script><![CDATA[var startDiscovery = new x_illu2_illumio.IllumioStartDiscovery(); startDiscovery.process(current.getUniqueValue());]]></script>
-        <secret_key>﷞﷟﷒04c8a98097e00a10b7daf896f053af1e﷬﷔1﷬﷭rMrPCso6CNdX7QOUYnG8Mg==hSVN9eRibJSAJqAe2CebSqVNa-_7XV9530MlaM7t4zJs1SV9iyg2tPv3atlCj9zIMXHrQT4t-ihbDwZBwnpJq-hmp6KsdJjrUYbHkdLXiyM=﷮﷯</secret_key>
+        <secret_key/>
         <servicenow_source_table/>
         <set_limit_on_new_label_creation>false</set_limit_on_new_label_creation>
         <set_limit_on_workload_deletion>false</set_limit_on_workload_deletion>
@@ -60,7 +60,7 @@
         <sys_updated_on>2024-03-06 07:43:15</sys_updated_on>
         <time_zone/>
         <upgrade_safe>false</upgrade_safe>
-        <username>﷞﷟﷒04c8a98097e00a10b7daf896f053af1e﷬﷔1﷬﷭ZOXIWBQPtf3fPrsffa9w4Q==7Lg6kJVrIFm2ciO_3kLIog_iWphAjGUMBZ9HOdU151rMnZRWEQ==﷮﷯</username>
+        <username/>
         <workload_deletion_limit/>
         <workload_label_modifications_limit/>
     </x_illu2_illumio_illumio_pce_conf>
