@@ -3,7 +3,7 @@
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
         <element label="Advanced" max_length="40" name="advanced" type="boolean"/>
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="source_table" dependent_on_field="source_table" label="Field" max_length="80" name="ci_field" type="field_name" use_dependent_field="true"/>
-        <element label="Illumio Config Class Mapping" max_length="32" name="illumio_config_class_mapping" read_only="true" reference="x_illu2_illumio_illumio_config_class_mapping" type="reference"/>
+        <element label="Illumio Config Class Mapping" max_length="32" name="illumio_config_class_mapping" read_only="true" reference="x_illu2_illumio_illumio_config_class_mapping" reference_cascade_rule="delete" type="reference"/>
         <element attributes="javascript:&quot;illumio_pce_configuration=&quot; + current.illumio_config_class_mapping.illumio_pce_configuration" label="Illumio Label Dimension" max_length="32" name="illumio_label_dimension" reference="x_illu2_illumio_illumio_label_dimension" type="reference"/>
         <element label="Is Multiple" max_length="40" name="is_multiple" type="boolean"/>
         <element label="Order" max_length="100" name="order" type="integer"/>

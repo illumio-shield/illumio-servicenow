@@ -524,7 +524,8 @@ IllumioUtils.prototype = {
      * @returns true if there is any conflict else false
      */
     checkConflict: function(current, mappedFields) {
-        try {
+         try {
+
             if (!current || !mappedFields) {
                 return false;
             }
@@ -534,43 +535,39 @@ IllumioUtils.prototype = {
             if (current.known_to_pce == 'unknown') {
                 return true;
             }
-            var labels = ['application', 'location', 'environment', 'role'];
-            // Set conflicts to true if any label mismatch present
-            for (var label in labels) {
-                var currentLabel = labels[label];
-                if ((((current["select_" + currentLabel] + "").trim()) != ((current["pce_" + currentLabel] + "").trim()) && mappedFields[currentLabel])) {
-                    return true;
-                }
+            var sourceTable = current.getValue("source_table");
+            var workloadFieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
+            workloadFieldValueGr.addQuery('illumio_pce_workload', current.getUniqueValue());
+            workloadFieldValueGr.addEncodedQuery('cmdb_valueNSAMEASpce_value');
+            workloadFieldValueGr.addEncodedQuery('illumio_label_dimension.keyIN' + mappedFields[sourceTable]);
+            workloadFieldValueGr.setLimit(1);
+            workloadFieldValueGr.query();
+
+            if (workloadFieldValueGr.next()) {
+                return true;
             }
-            if (current.known_to_pce == "unmanaged") {
-                if (
-                    mappedFields.ip_address && current.pce_ip_address != current.select_ip_address
-                ) {
+
+            if (current.getValue("known_to_pce") == "unmanaged") {
+				var interfaces = JSON.parse(current.getValue("interfaces"));
+                var visitedIPs = {}, key;
+
+                if (!gs.nil(interfaces["umw0"]["cmdb_value"]) && interfaces["umw0"]["cmdb_value"] != interfaces["umw0"]["pce_value"])
                     return true;
+            
+                for (key in interfaces) {
+                    if (!gs.nil(interfaces[key]["pce_value"]))
+                        visitedIPs[interfaces[key]["pce_value"]] = true;
                 }
 
-                var pceIP = {};
-                for (var ip = 0; ip < MAX_IP_ADDRESSES; ip++) {
-                    var pceIPAddress = ip > 0 ? "pce_ip_address_" + (ip + 1) : "pce_ip_address";
-                    if (!gs.nil(current[pceIPAddress])) {
-                        pceIP[current[pceIPAddress]] = true;
-                    }
-                }
-
-                if (Object.keys(pceIP).length == MAX_IP_ADDRESSES) {
-                    return false;
-                }
-
-                for (var cmdbIP = 1; cmdbIP < MAX_IP_ADDRESSES; cmdbIP++) {
-                    var ipAddress = "select_ip_address_" + (cmdbIP + 1);
-                    if (!gs.nil(current[ipAddress]) && !pceIP[current[ipAddress]]) {
+                for (key in interfaces) {
+                    if (!gs.nil(interfaces[key]["cmdb_value"]) && !visitedIPs[interfaces[key]["cmdb_value"]])
                         return true;
-                    }
                 }
-            }
+
+			}
             return false;
         } catch (ex) {
-            gs.error("Exception while checking conflicts: " + ex);
+            gs.error("Exception while checking conflicts", ex);
         }
     },
 
@@ -1073,7 +1070,7 @@ IllumioUtils.prototype = {
      * @returns {String} sys_id of the label dimension
      */
     fetchLabelDimensionSysId: function(labelDimensionKey, pceConfigId) {
-        var ldGr = new GlideRecord("x_illu2_illumio_illumio_label_dimensions");
+        var ldGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
         ldGr.addQuery("illumio_pce_configuration", pceConfigId);
         ldGr.addQuery("key", labelDimensionKey);
         ldGr.setLimit(1);
@@ -1089,13 +1086,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>343</sys_mod_count>
+        <sys_mod_count>351</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-06 05:55:58</sys_updated_on>
+        <sys_updated_on>2024-03-14 10:59:51</sys_updated_on>
     </sys_script_include>
 </record_update>

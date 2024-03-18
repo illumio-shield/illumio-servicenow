@@ -29,11 +29,11 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
     _processTable: function(pceConfig) {
         var workloads = {},
             retiredWorkloads = {},
-            duplicateWorkloads = [];
+            duplicateWorkloads = [],
+            processedHosts = {};
         var maxRecords = gs.getProperty("x_illu2_illumio.maximum_ci_records") || 25000;
 
         for (var table in pceConfig.source) {
-            var processedHosts = {};
             retiredWorkloads[table] = 0;
             gs.info("Started mapping CMDB Servers with PCE from table {0}", table);
 
@@ -65,8 +65,8 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
                 while (sourceTableGr.next()) {
                     // check the condition for retired wotkloads and delete
-                    if (!gs.nil(pceConfig.source[table].condition)) {
-                        var condition = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].condition, true);
+                    if (!gs.nil(pceConfig.source[table].exclude_condition)) {
+                        var condition = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].exclude_condition, true);
                         if (condition) {
                             // condition matched
                             retiredWorkloads[table]++;
@@ -93,7 +93,8 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
                         // create PCE Workload object
                         var tempWorkload = this._evaluateClassFieldMapping(pceConfig, sourceTableGr, toDeleteWorkload, table);
-
+                        tempWorkload["source_table"] = table;
+						tempWorkload["host_name"] = hostname;
                         // check if workload is duplicate
                         if (processedHosts[hostname]) {
 
@@ -137,7 +138,6 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
         // initialize object
         var tempWorkload = {
-            identifiers: [],
             labelDimesion: {},
             ipAddress: {
                 cmdb_value: []
@@ -170,7 +170,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         }
 
         // set cmdb identifiers
-        tempWorkload["identifiers"].push(sourceTableGr.sys_id.getDisplayValue());
+        tempWorkload["identifier"] = sourceTableGr.sys_id.getDisplayValue();
 
         return tempWorkload;
     },
@@ -430,17 +430,16 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         interfaceObject["umw0"]["cmdb_value"] = sourceTableGr.ipAddress.public_ip_address;
 
         // set cmdb ip address
-        var cmdbIndex = 0,
-            cmdbValuesLength = sourceTableGr.ipAddress.cmdb_value.length;
-        for (var keyCount = 1; keyCount <= MAX_IP_ADDRESSES && cmdbIndex < cmdbValuesLength; keyCount++) {
+        var cmdbValuesLength = sourceTableGr.ipAddress.cmdb_value.length;
+        for (var keyCount = 1; keyCount <= MAX_IP_ADDRESSES && keyCount - 1 < cmdbValuesLength; keyCount++) {
             var key = "umw" + keyCount;
-            var cmdbVal = sourceTableGr.ipAddress.cmdb_value[cmdbIndex];
-            if (gs.nil(interfaceObject[key]) && !gs.nil(cmdbVal)) {
-                interfaceObject[key] = {
-                    cmdb_value: cmdbVal,
-                    pce_value: ""
-                };
-                cmdbIndex++;
+            var cmdbVal = sourceTableGr.ipAddress.cmdb_value[keyCount - 1];
+            if (!gs.nil(cmdbVal)) {
+                if (gs.nil(interfaceObject[key]))
+                    interfaceObject[key] = {
+                        pce_value: ""
+                    };
+                interfaceObject[key]["cmdb_value"] = cmdbVal;
             }
         }
 
@@ -523,19 +522,19 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         workloadsMappingGr
     ) {
         illumioServersGr.initialize();
-        illumioServersGr.servicenow_cmdb_identifiers_list = sourceTableGr.identifiers + "";
-        illumioServersGr.server = hostname;
-        illumioServersGr.hostname = hostname;
-        illumioServersGr.illumio_pce_configuration = this.pceConfigId;
+        illumioServersGr.setValue("servicenow_cmdb_identifier", sourceTableGr.identifier + "");
+        illumioServersGr.setValue("hostname", hostname);
+        illumioServersGr.setValue("illumio_pce_configuration", this.pceConfigId);
+        illumioServersGr.setValue("source_table", sourceTableGr["source_table"]);
 
         illumioServersGr.conflicts = false;
-        illumioServersGr.known_to_pce = "unknown";
+        illumioServersGr.setValue("known_to_pce", "unknown");
         if (!gs.nil(workload)) {
-            illumioServersGr.known_to_pce = workload;
+            illumioServersGr.setValue("known_to_pce", workload);
             if (workload == "unmanaged") {
                 illumioServersGr.deleted_from_pce = sourceTableGr["deleted_from_pce"];
             }
-            illumioServersGr.pce_workload_href = workloadsMappingGr.getValue("href");
+            illumioServersGr.setValue("pce_workload_href", workloadsMappingGr.getValue("href"));
         }
         return illumioServersGr;
     },
@@ -550,7 +549,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         hostNamePart = hostNamePart.toLowerCase();
 
         if (!gs.nil(this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart])) {
-            illumioServersGr.duplicate_of = this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart];
+            illumioServersGr.setValue("duplicate_of", this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart]);
             illumioServersGr.duplicate = true;
             illumioServersGr.insert();
             return illumioServersGr;
@@ -683,13 +682,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>361</sys_mod_count>
+        <sys_mod_count>369</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-06 05:55:08</sys_updated_on>
+        <sys_updated_on>2024-03-18 06:23:15</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="illumio_config_class_mapping" table="x_illu2_illumio_illumio_class_field_mapping">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="source_table" table="x_illu2_illumio_illumio_pce_workload">
         <active>true</active>
         <array>false</array>
         <attributes/>
@@ -13,7 +13,7 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Illumio Config Class Mapping</column_label>
+        <column_label>Source Table</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -26,22 +26,22 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>illumio_config_class_mapping</element>
+        <element>source_table</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="Reference">reference</internal_type>
+        <internal_type display_value="String">string</internal_type>
         <mandatory>false</mandatory>
-        <max_length>32</max_length>
-        <name>x_illu2_illumio_illumio_class_field_mapping</name>
+        <max_length>80</max_length>
+        <name>x_illu2_illumio_illumio_pce_workload</name>
         <next_element/>
         <primary>false</primary>
-        <read_only>true</read_only>
+        <read_only>false</read_only>
         <read_roles/>
-        <reference display_value="" name="x_illu2_illumio_illumio_config_class_mapping">x_illu2_illumio_illumio_config_class_mapping</reference>
-        <reference_cascade_rule>delete</reference_cascade_rule>
+        <reference/>
+        <reference_cascade_rule/>
         <reference_floats>false</reference_floats>
         <reference_key/>
         <reference_qual/>
@@ -51,14 +51,14 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-03-05 06:32:14</sys_created_on>
-        <sys_name>Illumio Config Class Mapping</sys_name>
+        <sys_created_on>2024-03-13 07:45:18</sys_created_on>
+        <sys_name>Source Table</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_dictionary_x_illu2_illumio_illumio_class_field_mapping_illumio_config_class_mapping</sys_update_name>
+        <sys_update_name>sys_dictionary_x_illu2_illumio_illumio_pce_workload_source_table</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-13 07:34:31</sys_updated_on>
+        <sys_updated_on>2024-03-13 07:45:18</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
