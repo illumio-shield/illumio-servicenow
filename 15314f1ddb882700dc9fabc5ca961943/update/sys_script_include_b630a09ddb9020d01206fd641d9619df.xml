@@ -538,20 +538,19 @@ IllumioUtils.prototype = {
             var sourceTable = current.getValue("source_table");
             var workloadFieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
             workloadFieldValueGr.addQuery('illumio_pce_workload', current.getUniqueValue());
-            workloadFieldValueGr.addEncodedQuery('cmdb_valueNSAMEASpce_value');
             workloadFieldValueGr.addEncodedQuery('illumio_label_dimension.keyIN' + mappedFields[sourceTable]);
-            workloadFieldValueGr.setLimit(1);
             workloadFieldValueGr.query();
 
-            if (workloadFieldValueGr.next()) {
-                return true;
+            while (workloadFieldValueGr.next()) {
+				if (workloadFieldValueGr.getValue("cmdb_value") != workloadFieldValueGr.getValue("pce_value"))
+					return true;
             }
 
             if (current.getValue("known_to_pce") == "unmanaged") {
 				var interfaces = JSON.parse(current.getValue("interfaces"));
                 var visitedIPs = {}, key;
 
-                if (!gs.nil(interfaces["umw0"]["cmdb_value"]) && interfaces["umw0"]["cmdb_value"] != interfaces["umw0"]["pce_value"])
+                if (!gs.nil(interfaces["umw0"]) && !gs.nil(interfaces["umw0"]["cmdb_value"]) && interfaces["umw0"]["cmdb_value"] != interfaces["umw0"]["pce_value"])
                     return true;
             
                 for (key in interfaces) {
@@ -831,7 +830,6 @@ IllumioUtils.prototype = {
 
     /**
      * Fetch the details of label dimensions from PCE
-     * @returns {Boolean} true if the request was successfull else false
      */
     fetchLabelDimensionsFromPCE: function() {
         try {
@@ -899,7 +897,7 @@ IllumioUtils.prototype = {
                     }
                 } else {
                     gs.error("Error while validating the creation of label dimension with key - " + key + " for the PCE configuration " + pceConfig.getValue("name") + ". Status code - " + response_status + ". Response - " + JSON.stringify(response));
-                    return false;
+                    matchFound = false;
                 }
             }
         } catch (exc) {
@@ -928,7 +926,7 @@ IllumioUtils.prototype = {
                     "illumio_pce_configuration": labelDimensionGr.getValue("illumio_pce_configuration")
                 };
 
-                gs.debug("Trying to create label dimension " + labelDimensionGr.getValue("key") + " on Illumio PCE for PCE configuration " + labelDimensionGr.getValue("illumio_pce_configuration") + ".");
+                gs.debug("Trying to create label dimension " + details["key"] + " on Illumio PCE for PCE configuration " + details["illumio_pce_configuration"] + ".");
 
                 var responseDict = this.createLabelDimensionsInPCE(details);
                 if (responseDict["status"] && !gs.nil(responseDict["href"])) {
@@ -1086,13 +1084,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>351</sys_mod_count>
+        <sys_mod_count>356</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-14 10:59:51</sys_updated_on>
+        <sys_updated_on>2024-03-22 09:13:24</sys_updated_on>
     </sys_script_include>
 </record_update>
