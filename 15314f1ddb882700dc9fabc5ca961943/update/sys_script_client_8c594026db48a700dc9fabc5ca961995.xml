@@ -4,7 +4,7 @@
         <applies_extended>false</applies_extended>
         <condition/>
         <description>Set choices for servicenow labels while loading the form</description>
-        <field>update_application</field>
+        <field/>
         <global>true</global>
         <isolate_script>false</isolate_script>
         <messages/>
@@ -12,31 +12,9 @@
         <order/>
         <script><![CDATA[function onLoad() {
 
-	var known_to_pce = g_form.getValue('known_to_pce').trim();
-	var conflicts = g_form.getValue('conflicts').trim();
-	var duplicate = g_form.getValue('duplicate').trim();
-
 	g_form.showFieldMsg("conflicts", "A workload is marked \"Label Conflicts\" if any of the PCE labels conflict with the corresponding CMDB value.");
 	g_form.showFieldMsg("duplicate", "Host name of this record matches the hostname of another record. If marked \"Duplicate\", this record will not be used.");
 	g_form.showFieldMsg("duplicate_of", "In case of a \"Duplicate\" workload, this field displays the primary workload.");
-
-	// For unknown or managed/unmanaged workload with no conflicts hide Update to PCE section
-	if (known_to_pce == "unknown" || (known_to_pce != "unknown" && conflicts == "false") || duplicate == "true") {
-		g_form.setSectionDisplay("sync_servertopce", false);
-	}
-
-	// Enable Add to PCE section only for unknown workloads with non-empty CMDB IP Address
-	if (known_to_pce != "unknown" || duplicate == "true") {
-		g_form.setSectionDisplay("sync_topce", false);
-	}
-	if(known_to_pce == "managed"){
-		g_form.setDisplay('update_ip_address', false);
-	}
-
-	// Hide all labels having JSON value and hidden value fields
-
-	g_form.setDisplay('pce_workload_href', false);
-	g_form.setDisplay('hostname', false);
 }]]></script>
         <sys_class_name>sys_script_client</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -44,7 +22,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8c594026db48a700dc9fabc5ca961995</sys_id>
-        <sys_mod_count>106</sys_mod_count>
+        <sys_mod_count>109</sys_mod_count>
         <sys_name>Illumio Update Label Choices</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -52,8 +30,8 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_client_8c594026db48a700dc9fabc5ca961995</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-06-08 07:21:18</sys_updated_on>
-        <table>x_illu2_illumio_illumio_servicenow_servers</table>
+        <sys_updated_on>2024-03-15 07:12:57</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_workload</table>
         <type>onLoad</type>
         <ui_type>10</ui_type>
         <view/>
