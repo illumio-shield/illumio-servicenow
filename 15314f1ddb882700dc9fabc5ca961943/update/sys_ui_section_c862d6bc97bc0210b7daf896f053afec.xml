@@ -4,13 +4,13 @@
             <element>illumio_pce_workload</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-05 06:19:46</sys_created_on>
-            <sys_id>b73916b497fc0210b7daf896f053afe0</sys_id>
+            <sys_created_on>2024-03-28 05:39:50</sys_created_on>
+            <sys_id>93aca81c9715ca50b7daf896f053af96</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_pce_workload_field_value" sys_domain="global" view="Default view">c862d6bc97bc0210b7daf896f053afec</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-05 06:19:46</sys_updated_on>
+            <sys_updated_on>2024-03-28 05:39:50</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,13 +18,41 @@
             <element>illumio_label_dimension</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-05 06:19:46</sys_created_on>
-            <sys_id>3b3916b497fc0210b7daf896f053afe0</sys_id>
+            <sys_created_on>2024-03-28 05:39:50</sys_created_on>
+            <sys_id>1baca81c9715ca50b7daf896f053af96</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_pce_workload_field_value" sys_domain="global" view="Default view">c862d6bc97bc0210b7daf896f053afec</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-05 06:19:46</sys_updated_on>
+            <sys_updated_on>2024-03-28 05:39:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>cmdb_value</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-28 05:39:50</sys_created_on>
+            <sys_id>9baca81c9715ca50b7daf896f053af96</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_pce_workload_field_value" sys_domain="global" view="Default view">c862d6bc97bc0210b7daf896f053afec</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-28 05:39:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>pce_value</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-28 05:39:50</sys_created_on>
+            <sys_id>1faca81c9715ca50b7daf896f053af96</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_pce_workload_field_value" sys_domain="global" view="Default view">c862d6bc97bc0210b7daf896f053afec</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-28 05:39:50</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

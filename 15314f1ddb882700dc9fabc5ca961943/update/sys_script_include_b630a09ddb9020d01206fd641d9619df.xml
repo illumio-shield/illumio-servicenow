@@ -43,181 +43,153 @@ IllumioUtils.prototype = {
     },
 
     /**
-     * Get critical label group of given type
-     * @param {String} label Type of critical label group
+     * Get critical label group name for given configuration
+     * @param {String} configSysId SysId of PCE Configuration
      * @returns value of the critical label group
      **/
-    getCritical: function(label) {
-        var gr = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
-        gr.query();
-        if (gr.next()) {
-            if (label == "role") {
-                if (!gs.nil(gr.critical_label_group_role)) {
-                    return gr.critical_label_group_role + "";
-                } else {
-                    return null;
-                }
-            }
-            if (label == "loc") {
-                if (!gs.nil(gr.critical_label_group_location)) {
-                    return gr.critical_label_group_location + "";
-                } else {
-                    return null;
-                }
-            }
-
-            if (label == "env") {
-                if (!gs.nil(gr.critical_label_group_environment)) {
-                    return gr.critical_label_group_environment + "";
-                } else {
-                    return null;
-                }
-            }
-            if (label == "app") {
-                if (!gs.nil(gr.critical_label_group_application)) {
-                    return gr.critical_label_group_application + "";
-                } else {
-                    return null;
-                }
-            }
+    getCritical: function(configSysId) {
+        var criticalGroupConfig = {};
+        var criticalConfigGr = new GlideRecord('x_illu2_illumio_illumio_critical_label_group_configuration');
+        criticalConfigGr.addQuery('illumio_pce_configuration', configSysId);
+        criticalConfigGr.query();
+        while (criticalConfigGr.next()) {
+            criticalGroupConfig[criticalConfigGr.illumio_label_dimension.key] = {
+                groupName: criticalConfigGr.getValue('label_group'),
+                visited: false,
+            };
         }
+
+        return criticalGroupConfig;
     },
 
     /**
-     * Parse label information in the label group table 
-     * @param {string} type Type of the label
-     * @param {JSON} response Check if the critical label group is present in the response and insert the record in label group mappings
+     * Parse label information in the label group table
+     * @param {Object} criticalGroupConfig JSON containing critical label group configuration
+     * @param {Object} response Label Group details from PCE
+     * @param {GlideRecord} pceConfig GlideRecord of PCE Configuration
+     * @returns 
      */
-    parseLabelsInResponse: function(type, response) {
-        var gr, i;
-        var checkFlag = false;
-        var criticalGroup = this.getCritical(type);
-        if (!gs.nil(criticalGroup)) {
-            for (i = 0; i < response.length; i++) {
-                if (
-                    criticalGroup.toUpperCase() == response[i].name.toUpperCase() &&
-                    response[i].key == type
-                ) {
-                    checkFlag = true;
-                    for (var j = 0; j < response[i].labels.length; j++) {
-                        gr = new GlideRecord(
-                            "x_illu2_illumio_illumio_pce_label_group_details"
+    parseLabelsInResponse: function(criticalGroupConfig, response, pceConfig) {
+        var labelGroupGr;
+
+        for (var resIndex = 0; resIndex < response.length; resIndex++) {
+            if (
+                criticalGroupConfig[response[resIndex].key] &&
+                criticalGroupConfig[response[resIndex].key]["groupName"].toUpperCase() ==
+                response[resIndex].name.toUpperCase()
+            ) {
+                criticalGroupConfig[response[resIndex].key]['visited'] = true;
+                for (var labelIndex = 0; labelIndex < response[resIndex].labels.length; labelIndex++) {
+                    labelGroupGr = new GlideRecord('x_illu2_illumio_illumio_pce_label_group_details');
+                    labelGroupGr.label_group_name = response[resIndex].name;
+                    labelGroupGr.label_group_path = response[resIndex].href;
+                    labelGroupGr.label_group_type = response[resIndex].key;
+                    labelGroupGr.label_name = response[resIndex].labels[labelIndex].value;
+                    labelGroupGr.label_path = response[resIndex].labels[labelIndex].href;
+                    labelGroupGr.illumio_pce_configuration = pceConfig.getUniqueValue();
+                    if (!labelGroupGr.insert()) {
+                        gs.error(
+                            '[parseLabelsInResponse] Error while inserting the record'
                         );
-                        gr.label_group_name = response[i].name;
-                        gr.label_group_path = response[i].href;
-                        gr.label_group_type = response[i].key;
-                        gr.label_name = response[i].labels[j].value;
-                        gr.label_path = response[i].labels[j].href;
-                        if (!gr.insert()) {
-                            gs.error(
-                                "[parseLabelsInResponse] Error while inserting the record"
-                            );
-                        }
                     }
-                    break;
                 }
             }
-            if (i == response.length && !checkFlag) {
-                gs.info(
-                    "The Critical Label Group (" + criticalGroup + ") in the Configuration does not match any label groups at PCE"
-                );
+        }
+        for (var type in criticalGroupConfig) {
+            if (!criticalGroupConfig[type]['visited']) {
+                gs.info('The Critical Label Group ({0}) for the Configuration named {1} does not match any label groups at PCE', [criticalGroupConfig[type]['groupName'], pceConfig.getDisplayValue()]);
             }
         }
         return;
     },
 
+
     /**
      * Fetch the details of label group from PCE
+     * @param {GlideRecord} pceConfig GlideRecord of PCE Configuration
      * @returns {Boolean} true if the request was successfull else false
      */
-    fetchLabelGroupsAndLabelsFromPCE: function() {
+    fetchLabelGroupsAndLabelsFromPCE: function(pceConfig) {
         try {
-            var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
-            var gr = new GlideRecord(
-                "x_illu2_illumio_illumio_pce_label_group_details"
-            );
-            var cRole, cEnv, cLoc, cApp;
+            var lgDetailsGr = new GlideRecord('x_illu2_illumio_illumio_pce_label_group_details');
+            lgDetailsGr.addQuery('illumio_pce_configuration', pceConfig.getUniqueValue());
+            lgDetailsGr.query();
+            lgDetailsGr.deleteMultiple();
 
-            gr.deleteMultiple();
-            pceConfig.query();
+            var criticalGroupConfig = this.getCritical(pceConfig.getUniqueValue());
 
-            cRole = this.getCritical("role");
-            cEnv = this.getCritical("env");
-            cLoc = this.getCritical("loc");
-            cApp = this.getCritical("app");
+            if (!gs.nil(criticalGroupConfig)) {
+                var fetchLabelGroups = new sn_ws.RESTMessageV2(
+                    'IllumioFetchLabelGroups',
+                    'GetLabelGroups'
+                );
+                var pce_authorization = gs.base64Encode(
+                    pceConfig.username.getDecryptedValue() +
+                    ':' +
+                    pceConfig.secret_key.getDecryptedValue()
+                );
 
-            if (!gs.nil(cApp) || !gs.nil(cRole) || !gs.nil(cEnv) || !gs.nil(cLoc)) {
-                if (pceConfig.next()) {
-                    var fetchLabelGroups = new sn_ws.RESTMessageV2(
-                        "IllumioFetchLabelGroups",
-                        "GetLabelGroups"
+                fetchLabelGroups.setRequestHeader(
+                    'Authorization',
+                    'Basic ' + pce_authorization
+                );
+
+                fetchLabelGroups.setStringParameter(
+                    'url',
+                    pceConfig.pce_url + ''
+                );
+                fetchLabelGroups.setStringParameter(
+                    'orgID',
+                    (pceConfig.organization_id || '1') + ''
+                );
+
+                fetchLabelGroups.setMIDServer(pceConfig.mid_server.name + '');
+
+                fetchLabelGroups.setEccParameter('skip_sensor', 'true');
+                if (pceConfig.mid_server.status + '' == 'down') {
+                    return false;
+                }
+                var response = fetchLabelGroups.executeAsync();
+                var response_status = response.getStatusCode();
+
+                if (response_status == 200 || response_status == 201) {
+                    response = JSON.parse(response.getBody());
+
+                    this.parseLabelsInResponse(
+                        criticalGroupConfig,
+                        response,
+                        pceConfig
                     );
-                    var pce_authorization = gs.base64Encode(
-                        pceConfig.username.getDecryptedValue() + ":" + pceConfig.secret_key.getDecryptedValue()
-                    );
-
-                    fetchLabelGroups.setRequestHeader(
-                        "Authorization",
-                        "Basic " + pce_authorization
-                    );
-
-                    fetchLabelGroups.setStringParameter("url", pceConfig.pce_url + "");
-                    fetchLabelGroups.setStringParameter(
-                        "orgID",
-                        (pceConfig.organization_id || "1") + ""
-                    );
-
-                    fetchLabelGroups.setMIDServer(pceConfig.mid_server.name + "");
-
-                    fetchLabelGroups.setEccParameter("skip_sensor", "true");
-                    if (pceConfig.mid_server.status + "" == "down") {
-                        return false;
-                    }
-                    var response = fetchLabelGroups.executeAsync();
-                    var response_status = response.getStatusCode();
-
-                    if (response_status == 200 || response_status == 201) {
-                        response = JSON.parse(response.getBody());
-                        this.parseLabelsInResponse("role", response);
-                        this.parseLabelsInResponse("env", response);
-                        this.parseLabelsInResponse("loc", response);
-                        this.parseLabelsInResponse("app", response);
-                    }
                 }
             }
             return true;
-        } catch (exc) {
-            gs.error("Exception while fetching data from PCE" + exc);
+        } catch (ex) {
+            gs.error('Exception while fetching data from PCE. Error', ex);
         }
     },
 
     /**
-     * Fetch the details of label group from label groups table   
-     * @param {String} type type of the label
+     * Fetch the details of label group from label groups table
+     * @param {String} pceConfigSysId SysId of the PCE Configuration
      * @returns {JSON} JSON object of the critical label group and its labels
      */
-    getDataFromTable: function(type) {
-        var name = this.getCritical(type);
-        if (!gs.nil(name)) {
-            var gr = new GlideRecord(
-                "x_illu2_illumio_illumio_pce_label_group_details"
-            );
-            gr.addQuery("label_group_name", name);
-            gr.addQuery("label_group_type", type);
-            gr.query();
-            var labels = [],
-                retVal;
-            while (gr.next()) {
-                labels.push(gr.label_name + "");
+    getDataFromTable: function(pceConfigSysId) {
+        var criticalGroupConfig = this.getCritical(pceConfigSysId);
+        var dataObj = {};
+        if (!gs.nil(criticalGroupConfig)) {
+            for (var type in criticalGroupConfig) {
+                dataObj[type] = [];
+                var labelGroupGr = new GlideRecord('x_illu2_illumio_illumio_pce_label_group_details');
+                labelGroupGr.addQuery('illumio_pce_configuration', pceConfigSysId);
+                labelGroupGr.addQuery('label_group_name', criticalGroupConfig[type]['groupName']);
+                labelGroupGr.addQuery('label_group_type', type);
+                labelGroupGr.query();
+                while (labelGroupGr.next()) {
+                    dataObj[type].push(labelGroupGr.getValue("label_name"));
+                }
             }
-            retVal = {
-                labels: labels,
-                type: type,
-            };
-            return retVal;
-        } else {
-            return null;
         }
+        return dataObj;
     },
 
     /**
@@ -237,137 +209,107 @@ IllumioUtils.prototype = {
 
     /**
      * Get the count of label groups
-     * @returns {int} Number of label groups
+     * @param {Object} configSysIds List of config sys Ids
+     * @returns {object} Count object with number of label groups for each configuration
      */
-    countLabelGroups: function() {
+    countLabelGroups: function(configSysIds) {
+        var countObject = {};
         try {
-            var count = 0;
-            var grLabelGroups = new GlideAggregate('x_illu2_illumio_illumio_pce_label_group_details');
-            grLabelGroups.addAggregate('COUNT', 'label_group_name');
-            grLabelGroups.query();
-            while (grLabelGroups.next()) {
-                count++;
+
+            for (var configIndex in configSysIds) {
+                var countGa = new GlideAggregate('x_illu2_illumio_illumio_pce_label_group_details');
+                countGa.addQuery("illumio_pce_configuration", configSysIds[configIndex]);
+                countGa.groupBy("label_group_name");
+                countGa.query();
+                countObject[configSysIds[configIndex]] = countGa.getRowCount();
             }
-            return count;
         } catch (err) {
-            gs.error("Error while fetching the count of labels:" + err);
+            gs.error("Error while fetching the count of labels", err);
+        } finally {
+            return countObject;
         }
     },
+
     /**
-     * Modify the Array after removing workloads 
+     * Modify the Array after removing workloads
      * @param {Array} arrRecords Array of workloads
      * @returns Modified array after removing workloads that should be skipped
      */
-    skipRecordsForSync: function(arrRecords) {
+    skipRecordsForSync: function(selectedRecordsObject) {
         try {
-            var j = 0,
-                i = 0,
-                grWorkloads,
-                retRoleLabels,
-                flag = false,
-                retEnvLabels,
-                retLocLabels,
-                retAppLabels,
+            var arrRecords, flag = false,
+                retRec = [],
+                retObject = {},
+                totalRecords = 0;
+
+            // for each configuration fetch critical label data
+            for (var configSysId in selectedRecordsObject) {
+                var labelData = this.getDataFromTable(configSysId);
+                arrRecords = selectedRecordsObject[configSysId];
                 retRec = [];
 
-            retRoleLabels = this.getDataFromTable("role");
+                // for each workload check if it contains critical label
+                for (var arrIndex = 0; arrIndex < arrRecords.length; arrIndex++) {
+                    flag = false;
 
-            retEnvLabels = this.getDataFromTable("env");
+                    // loop through all label dimensions
+                    for (var type in labelData) {
+						
+						if(gs.nil(labelData[type]) || labelData[type].length == 0)
+							continue;
 
-            retLocLabels = this.getDataFromTable("loc");
-
-            retAppLabels = this.getDataFromTable("app");
-
-            for (i = 0; i < arrRecords.length; i++) {
-                flag = false;
-                if ((!gs.nil(retRoleLabels)) && (retRoleLabels.labels.length != 0)) {
-                    for (j = 0; j < retRoleLabels.labels.length; j++) {
-                        grWorkloads = new GlideRecord(
-                            "x_illu2_illumio_illumio_servicenow_servers"
+                        var fieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
+                        fieldValueGr.addQuery('illumio_pce_workload', arrRecords[arrIndex]);
+                        fieldValueGr.addQuery('illumio_label_dimension.key', type);
+                        fieldValueGr.addQuery(
+                            'pce_value',
+                            'IN',
+                            labelData[type]
                         );
-                        grWorkloads.addQuery("sys_id", arrRecords[i]);
-                        grWorkloads.query();
+                        fieldValueGr.query();
 
-                        if (grWorkloads.next()) {
-                            if ((grWorkloads.getValue("pce_role") + '') == (retRoleLabels.labels[j] + '') && (grWorkloads.getValue("pce_role") + '') != (grWorkloads.getValue("select_role") + '')) {
-
+                        while (fieldValueGr.next()) {
+                            if (fieldValueGr.getValue("cmdb_value") != fieldValueGr.getValue("pce_value")) {
                                 flag = true;
+                                break;
                             }
                         }
-                    }
-                }
-                if ((!gs.nil(retLocLabels)) && (retLocLabels.labels.length != 0)) {
-                    for (j = 0; j < retLocLabels.labels.length; j++) {
-                        grWorkloads = new GlideRecord(
-                            "x_illu2_illumio_illumio_servicenow_servers"
-                        );
-                        grWorkloads.addQuery("sys_id", arrRecords[i]);
-                        grWorkloads.query();
 
-                        if (grWorkloads.next()) {
-                            if (
-                                (grWorkloads.getValue("pce_location") + '') == (retLocLabels.labels[j] + '') && (grWorkloads.getValue("pce_location") + '') != (grWorkloads.getValue("select_location") + '')
-                            ) {
-                                flag = true;
-                            }
-                        }
+                        if (flag)
+                            break;
                     }
-                }
-                if ((!gs.nil(retEnvLabels)) && (retEnvLabels.labels.length != 0)) {
-                    for (j = 0; j < retEnvLabels.labels.length; j++) {
-                        grWorkloads = new GlideRecord(
-                            "x_illu2_illumio_illumio_servicenow_servers"
-                        );
-                        grWorkloads.addQuery("sys_id", arrRecords[i]);
 
-                        grWorkloads.query();
+                    if (!flag) {
+                        retRec.push(arrRecords[arrIndex] + '');
+                        totalRecords += 1;
+                    } else {
+                        gs.info('Skipped workload as label is critical (sys_id: {0})', arrRecords[arrIndex]);
+                    }
 
-                        if (grWorkloads.next()) {
-                            if (
-                                (grWorkloads.getValue("pce_environment") + '') == (retEnvLabels.labels[j] + '') && (grWorkloads.getValue("pce_environment") + '') != (grWorkloads.getValue("select_environment") + '')
-                            ) {
-                                flag = true;
-                            }
-                        }
-                    }
                 }
-                if ((!gs.nil(retAppLabels)) && (retAppLabels.labels.length != 0)) {
-                    for (j = 0; j < retAppLabels.labels.length; j++) {
-                        grWorkloads = new GlideRecord(
-                            "x_illu2_illumio_illumio_servicenow_servers"
-                        );
-                        grWorkloads.addQuery("sys_id", arrRecords[i]);
-                        grWorkloads.query();
-                        if (grWorkloads.next()) {
-                            if (
-                                (grWorkloads.getValue("pce_application") + '') == (retAppLabels.labels[j] + '') && (grWorkloads.getValue("pce_application") + '') != (grWorkloads.getValue("select_application") + '')
-                            ) {
-                                flag = true;
-                            }
-                        }
-                    }
-                }
-                if (flag == false) {
-                    retRec.push(arrRecords[i] + '');
-                } else {
-                    gs.info("Skipped workload as label is critical (sys_id: " + arrRecords[i] + ")");
-                }
+                retObject[configSysId] = retRec;
             }
-            return retRec;
         } catch (exc) {
-            gs.error("Exception occurred while checking critical records:" + exc);
+            gs.error('Exception occurred while checking critical records', exc);
+        } finally {
+            return {
+                filteredRecords: retObject,
+                totalRecords: totalRecords
+            };
         }
     },
 
     /**
      * Get the total number of records
      * @param {String} tableName Name of the table
+	 * @param {String} configuration SysID
      * @returns Count of rows in the table
      */
-    getTotalRecords: function(tableName) {
+    getTotalRecords: function(tableName, configSysId) {
         try {
 
             var count = new GlideAggregate(tableName);
+            count.addQuery("illumio_pce_configuration", configSysId);
             count.addAggregate('count');
             count.query();
             var result = 0;
@@ -376,9 +318,10 @@ IllumioUtils.prototype = {
             return result;
 
         } catch (ex) {
-            gs.error("Exception occurred while getting total number of records:" + ex);
+            gs.error("Exception occurred while getting total number of records", ex);
         }
     },
+
 
     /**
      * Get the interfaces object that can be synced
@@ -386,83 +329,100 @@ IllumioUtils.prototype = {
      * @param {JSON} mappedFields object of Mapping fields
      * @returns {JSON} object with the details of interfaces to sync
      */
-    getInterfacesObject: function(workloadSysId, mappedFields) {
+    getInterfacesObject: function(workloadGr) {
+
+        var visitedIps = {},
+            interfaces = [],
+            state = {},
+            key, cmdbKey, cmdbValue, publicIP;
         try {
-            var interfaces = [];
-            var pceIps = {};
-            var emptyIndexes = [];
-            var ipAddress;
-            var grWorkloadsForInterfaces = new GlideRecord(
-                "x_illu2_illumio_illumio_servicenow_servers"
-            );
-            var state = {};
+            var interfaceObject = JSON.parse(workloadGr.getValue("interfaces"));
+            var hostname = workloadGr.getValue("hostname");
 
-            if (grWorkloadsForInterfaces.get(workloadSysId)) {
-                var hostname = grWorkloadsForInterfaces.getValue("hostname");
-                for (var i = 0; i <= MAX_IP_ADDRESSES; i++) {
-                    if (i == 1)
-                        continue;
-                    var currColumn = i ? "select_ip_address_" + i : "select_ip_address";
-                    state[currColumn] = this.getState(i, grWorkloadsForInterfaces.getValue(currColumn), mappedFields);
-                }
-                if (!this.canSyncIP(0, state['select_ip_address'], hostname)) {
-                    gs.info("Skipping interfaces of workload with hostname: " + hostname + " as the public IP address is invalid/not mapped");
-                    return [];
+            // get state of mapped cmdb ip addresses
+            for (var index = 0; index <= MAX_IP_ADDRESSES; index++) {
+                key = "umw" + index;
+                if (!gs.nil(interfaceObject[key]))
+                    state[key] = this.getState(interfaceObject[key]["cmdb_value"]);
+            }
 
-                } else {
-                    var publicIpAddress = grWorkloadsForInterfaces.getValue('select_ip_address');
-                    pceIps[publicIpAddress] = true;
-                    interfaces.push({
-                        "name": 'umw0',
-                        "address": publicIpAddress
-                    });
+            // set umw0 as public ip address
+            if (this.canSyncIP("umw0", state["umw0"], hostname)) {
+                // gs.info("Skipping interfaces of workload with hostname: {0} as the public IP address is invalid/not mapped", hostname);
+                // return [];
+                interfaces.push({
+                    name: "umw0",
+                    address: interfaceObject["umw0"]["cmdb_value"]
+                });
 
-                }
-                for (i = 1; i < MAX_IP_ADDRESSES; i++) {
-                    var pceIpColumn = "pce_ip_address_" + (i + 1);
-                    ipAddress = grWorkloadsForInterfaces.getValue(pceIpColumn);
-                    if (!gs.nil(ipAddress)) {
-                        pceIps[ipAddress] = true;
+                publicIP = interfaceObject["umw0"]["cmdb_value"];
+                visitedIps[interfaceObject["umw0"]["cmdb_value"]] = true;
+
+            }
+
+
+            // set pce umw1 to umw32 ip addresses
+
+            var cmdbIndex = 1;
+            for (var index = 1; index < MAX_IP_ADDRESSES; index++) {
+
+                key = "umw" + index;
+
+                // set pce value
+                if (!gs.nil(interfaceObject[key])) {
+                    var pceValue = interfaceObject[key]["pce_value"];
+                    if (!gs.nil(pceValue)) {
+                        visitedIps[pceValue] = true;
                         interfaces.push({
-                            "name": 'umw' + i,
-                            "address": ipAddress
+                            name: key,
+                            address: pceValue
                         });
-                    } else {
-                        emptyIndexes.push(i);
+                        continue;
                     }
                 }
-                var checkIndex = 0;
-                var cmdbIndex = 1;
-                var cmdbColumn = "";
-                while (checkIndex < emptyIndexes.length && cmdbIndex < MAX_IP_ADDRESSES) {
-                    cmdbColumn = "select_ip_address_" + (cmdbIndex + 1);
-                    if (this.canSyncIP(cmdbIndex, state[cmdbColumn], hostname)) {
-                        ipAddress = grWorkloadsForInterfaces.getValue(cmdbColumn);
-                        if (!pceIps[ipAddress]) {
-                            pceIps[ipAddress] = true;
-                            interfaces.push({
-                                "name": 'umw' + emptyIndexes[checkIndex],
-                                "address": ipAddress
-                            });
-                            checkIndex++;
-                        }
 
-                    }
-                    cmdbIndex++;
-                }
-                //Check for more IP addresses in the cmdb if exist then add logs
+                // set valid cmdb value
                 while (cmdbIndex < MAX_IP_ADDRESSES) {
-                    cmdbColumn = "select_ip_address_" + (cmdbIndex + 1);
-                    ipAddress = grWorkloadsForInterfaces.getValue(cmdbColumn);
-                    if (gs.nil(pceIps[ipAddress]) && this.canSyncIP(cmdbIndex, state[cmdbColumn], hostname)) {
-                        gs.info("Skipping IP address " + ipAddress + " for workload with hostname " + grWorkloadsForInterfaces.getValue('hostname') + " as there are already " + MAX_IP_ADDRESSES + " IP addresses in the PCE");
+                    cmdbKey = "umw" + cmdbIndex
+                    if (gs.nil(interfaceObject[cmdbKey])) {
+                        cmdbIndex++;
+                        continue;
+                    }
+
+                    cmdbValue = interfaceObject[cmdbKey]["cmdb_value"];
+                    if (this.canSyncIP(cmdbKey, state[cmdbKey], hostname) && !visitedIps[cmdbValue]) {
+                        interfaces.push({
+                            name: key,
+                            address: cmdbValue
+                        });
+                        visitedIps[cmdbValue] = true;
+                        cmdbIndex++;
+                        break;
                     }
                     cmdbIndex++;
                 }
             }
-            return interfaces;
+
+            // check for more IP addresses in the cmdb if exist then add logs
+            while (cmdbIndex < MAX_IP_ADDRESSES) {
+                cmdbKey = "umw" + cmdbIndex;
+
+                if (gs.nil(interfaceObject[cmdbKey]))
+                    break;
+
+                cmdbValue = interfaceObject[cmdbKey]["cmdb_value"];
+                if (gs.nil(visitedIps[cmdbValue]) && this.canSyncIP(cmdbKey, state[cmdbKey], hostname))
+                    gs.info("Skipping IP address {0} for workload with hostname {1} as there are already {2} IP addresses in the PCE", [cmdbKey, hostname, MAX_IP_ADDRESSES]);
+
+                cmdbIndex++;
+            }
         } catch (ex) {
-            gs.error("[getInterfacesObject] Exception occured while generating valid interfaces object. Exception: " + ex);
+            gs.error("[getInterfacesObject] Exception occured while generating valid interfaces object. Exception", ex);
+        } finally {
+            return {
+                interfaces: interfaces,
+                publicIP: publicIP
+            };
         }
     },
 
@@ -473,21 +433,13 @@ IllumioUtils.prototype = {
      * @param {json} mappedFields Field Mapping from the configuration
      * @returns boolean
      */
-    getState: function(index, ipAddress, mappedFields) {
-        if (gs.nil(ipAddress))
+    getState: function(cmdbValue) {
+        if (gs.nil(cmdbValue))
             return STATES.EMPTY;
-        var ipField = index > 0 ? "ip_address_" + index : "ip_address";
-        var isValid = ipAddress.match(this.VALID_IP_REGEX);
-        var isMapped = mappedFields[ipField] ? true : false;
-
-        if (isMapped) {
-            if (isValid)
-                return STATES.VALID;
-            else
-                return STATES.INVALID;
-        }
+        var isValid = cmdbValue.match(this.VALID_IP_REGEX);
         if (isValid)
-            return STATES.NOT_MAPPED_AND_VALID;
+            return STATES.VALID;
+        return STATES.INVALID;
     },
 
     /**
@@ -497,17 +449,17 @@ IllumioUtils.prototype = {
      * @param {string} hostname Hostname of the workload
      * @returns boolean
      **/
-    canSyncIP: function(index, state, hostname) {
+    canSyncIP: function(key, state, hostname) {
         switch (state) {
             case STATES.INVALID:
-                if (index != 0)
-                    gs.error("Skipping IP address " + (index + 1) + " for workload with hostname " + hostname + " as there is an invalid IP address");
+                if (key != "umw0")
+                    gs.error("Skipping IP address " + key + " for workload with hostname " + hostname + " as there is an invalid IP address");
                 else
                     gs.error("Skipping Public IP address for workload with hostname " + hostname + " as there is an invalid IP address");
                 return false;
             case STATES.NOT_MAPPED_AND_VALID:
-                if (index != 0)
-                    gs.error("Skipping IP address " + (index + 1) + " for workload with hostname " + hostname + " as it is not mapped in field mapping");
+                if (key != "umw0")
+                    gs.error("Skipping IP address " + key + " for workload with hostname " + hostname + " as it is not mapped in field mapping");
                 else
                     gs.error("Skipping Public IP address for workload with hostname " + hostname + " as it is not mapped in field mapping");
                 return false;
@@ -524,7 +476,7 @@ IllumioUtils.prototype = {
      * @returns true if there is any conflict else false
      */
     checkConflict: function(current, mappedFields) {
-         try {
+        try {
 
             if (!current || !mappedFields) {
                 return false;
@@ -542,17 +494,18 @@ IllumioUtils.prototype = {
             workloadFieldValueGr.query();
 
             while (workloadFieldValueGr.next()) {
-				if (workloadFieldValueGr.getValue("cmdb_value") != workloadFieldValueGr.getValue("pce_value"))
-					return true;
+                if (workloadFieldValueGr.getValue("cmdb_value") != workloadFieldValueGr.getValue("pce_value"))
+                    return true;
             }
 
             if (current.getValue("known_to_pce") == "unmanaged") {
-				var interfaces = JSON.parse(current.getValue("interfaces"));
-                var visitedIPs = {}, key;
+                var interfaces = JSON.parse(current.getValue("interfaces"));
+                var visitedIPs = {},
+                    key;
 
                 if (!gs.nil(interfaces["umw0"]) && !gs.nil(interfaces["umw0"]["cmdb_value"]) && interfaces["umw0"]["cmdb_value"] != interfaces["umw0"]["pce_value"])
                     return true;
-            
+
                 for (key in interfaces) {
                     if (!gs.nil(interfaces[key]["pce_value"]))
                         visitedIPs[interfaces[key]["pce_value"]] = true;
@@ -563,13 +516,12 @@ IllumioUtils.prototype = {
                         return true;
                 }
 
-			}
+            }
             return false;
         } catch (ex) {
             gs.error("Exception while checking conflicts", ex);
         }
     },
-
     /**
      * Handles the error generated while any operation is in progress 
      * @param {integer} type Type of the error Client Side or Server side
@@ -703,6 +655,7 @@ IllumioUtils.prototype = {
     queryCaseSensitiveGr: function(tableGr, key, value, targetField) {
 
         while (tableGr.next()) {
+            gs.info("Key in the IllumioUtils QueryCaseSesnsitive" + key);
             if (tableGr.getValue(key) == value) {
                 return {
                     found: true,
@@ -1078,19 +1031,89 @@ IllumioUtils.prototype = {
         return "";
     },
 
+    getWorkloadData: function(checkedRecords) {
+        var retObject = {},
+            count = 0,
+            configUtil = new IllumioGetPCEConfiguration();
+
+        // for each configuration fetch field mapping
+        for (var configSysId in checkedRecords) {
+            var workloadGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+            var arrRecords = checkedRecords[configSysId],
+                retVal = [];
+            var mappedFields = configUtil.getMappedFields(configSysId);
+
+            // for each sys_id prepare workload object
+            for (var arrIndex = 0, len = arrRecords.length; arrIndex < len; arrIndex++) {
+                workloadGr.initialize();
+                if (workloadGr.get(arrRecords[arrIndex]) && workloadGr.getValue("duplicate") == "0") {
+                    try {
+                        count++;
+                        retVal.push(this.prepareWorkloadObject(workloadGr, mappedFields));
+                    } catch (err) {
+                        gs.info("Exception occured while preparing workload object. Error", err);
+                    }
+                }
+            }
+
+            retObject[configSysId] = retVal;
+        }
+
+        return {
+            filteredRecords: retObject,
+            totalRecords: count
+        };
+    },
+
+    prepareWorkloadObject: function(workloadGr, mappedFields) {
+        var workloadFields = ["sys_id", "hostname", "known_to_pce", "conflicts", "duplicate", "pce_workload_href", "source_table"];
+        var workloadObject = {},
+            labelData = {};
+
+        for (var fieldIndex in workloadFields) {
+            workloadObject[workloadFields[fieldIndex]] = workloadGr.getValue(workloadFields[fieldIndex]);
+        }
+        // set update fields
+        workloadObject["updateFields"] = mappedFields[workloadObject["source_table"]];
+
+        // add label dimension details
+        var labelGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+        labelGr.addQuery("illumio_pce_workload", workloadObject["sys_id"]);
+        labelGr.query();
+        while (labelGr.next()) {
+            var labelDimensionKey = labelGr.illumio_label_dimension.key + "";
+            if (workloadObject["updateFields"].indexOf(labelDimensionKey) > -1) {
+                if (!gs.nil(labelGr.getValue("cmdb_value")))
+                    labelData[labelDimensionKey] = labelGr.getValue("cmdb_value");
+            } else
+                labelData[labelDimensionKey] = labelGr.getValue("pce_value");
+        }
+
+        workloadObject["label_data"] = labelData;
+
+        // add interface data
+        if (workloadObject["known_to_pce"] != "managed") {
+            var interfaceObject = this.getInterfacesObject(workloadGr);
+            workloadObject["interfaces"] = interfaceObject.interfaces;
+            workloadObject["ip_address"] = interfaceObject.publicIP;
+        }
+
+        return workloadObject;
+    },
+
     type: "IllumioUtils",
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>356</sys_mod_count>
+        <sys_mod_count>368</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-22 09:13:24</sys_updated_on>
+        <sys_updated_on>2024-03-28 12:02:16</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -6,7 +6,7 @@
         <element label="Primary Workload" max_length="32" name="duplicate_of" reference="x_illu2_illumio_illumio_pce_workload" type="reference"/>
         <element label="Enforcement Mode" max_length="40" name="enforcement_mode" type="string"/>
         <element display="true" label="Hostname" max_length="100" name="hostname" type="string"/>
-        <element label="Illumio PCE Configuration" mandatory="true" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
+        <element label="Illumio PCE Configuration" mandatory="true" max_length="32" name="illumio_pce_configuration" read_only="true" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <element label="Interfaces" max_length="4000" name="interfaces" type="string"/>
         <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
             <choice>

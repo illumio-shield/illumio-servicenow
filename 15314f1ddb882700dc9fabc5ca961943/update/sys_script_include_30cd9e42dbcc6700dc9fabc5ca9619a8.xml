@@ -14,41 +14,42 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
      * @return {String} href.
      */
     getHrefs: function() {
-        var utils = new IllumioUtils();
-        var retVal = []; // Return value       
-        var labels = JSON.parse(this.getParameter('sysparm_labels_to_map'));
-        var workload = JSON.parse(this.getParameter('sysparm_workload'));
-
-        var labelsGr = new GlideRecord('x_illu2_illumio_illumio_pce_labels_mapping');
-        for (var labelType in labels) {
-            labelsGr.initialize();
-            labelsGr.addQuery('key', labelType);
-            labelsGr.addQuery('value', labels[labelType]);
-            labelsGr.query();
-            var resp = utils.queryCaseSensitiveGr(labelsGr, 'value', labels[labelType], 'href');
-            if (resp.found) {
-                retVal.push({
-                    status: 'success',
-                    href: resp.returnValue,
-                    key: labelType,
-                    value: labels[labelType]
-                });
-            } else {
-                retVal.push({
-                    status: 'failed',
-                    key: labelType,
-                    value: labels[labelType]
-                });
+        try {
+            var utils = new IllumioUtils();
+            var workload = JSON.parse(this.getParameter('sysparm_workload'));
+            workload.labels = [];
+            workload.createlabels = [];
+            var configSysId = this.getParameter('sysparm_config_sys_id');
+            var labels = workload.label_data;
+            var labelsGr = new GlideRecord('x_illu2_illumio_illumio_pce_labels_mapping');
+            for (var labelType in labels) {
+                labelsGr.initialize();
+                labelsGr.addQuery('key', labelType);
+                labelsGr.addQuery('value', labels[labelType]);
+                labelsGr.addQuery('illumio_pce_configuration', configSysId);
+                labelsGr.query();
+                var resp = utils.queryCaseSensitiveGr(labelsGr, 'value', labels[labelType], 'href');
+                if (resp.found) {
+                    workload.labels.push({
+                        href: resp.returnValue
+                    });
+                } else if (!gs.nil(labels[labelType])) {
+                    workload.createlabels.push({
+                        key: labelType,
+                        value: labels[labelType]
+                    });
+                }
             }
+            var instanceURL = gs.getProperty('glide.servlet.uri');
+            instanceURL = instanceURL.replace('https://', '');
+            var result = {
+                "workload": workload,
+                "instanceURL": instanceURL.replace('/', '')
+            };
+            return JSON.stringify(result);
+        } catch (e) {
+            gs.error("[getHrefs]Exception in getting Hrefs:" + e);
         }
-        var instanceURL = gs.getProperty('glide.servlet.uri');
-        instanceURL = instanceURL.replace('https://', '');
-        var result = {
-            "workload": workload,
-            "retVal": retVal,
-            "instanceURL": instanceURL.replace('/', '')
-        };
-        return JSON.stringify(result);
     },
 
     /**
@@ -56,23 +57,23 @@ IllumioPrepareWorkload.prototype = Object.extendsObject(global.AbstractAjaxProce
      * @return {String} mapped fields.
      */
     getMappedFields: function() {
-        var mappedFields = new IllumioGetPCEConfiguration().getMappedFields();
+        var configSysId = this.getParameter("sysparm_config_sys_id");
+        var mappedFields = new IllumioGetPCEConfiguration().getMappedFields(configSysId);
         return JSON.stringify(mappedFields);
     },
-
     type: 'IllumioPrepareWorkload'
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:14:22</sys_created_on>
         <sys_id>30cd9e42dbcc6700dc9fabc5ca9619a8</sys_id>
-        <sys_mod_count>26</sys_mod_count>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>IllumioPrepareWorkload</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_30cd9e42dbcc6700dc9fabc5ca9619a8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-10-19 21:57:47</sys_updated_on>
+        <sys_updated_on>2024-03-27 06:52:59</sys_updated_on>
     </sys_script_include>
 </record_update>

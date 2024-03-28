@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="05a8b3b797418a50b7daf896f053afa1" label="Illumio Critical Label Group Configuration" max_length="40" name="x_illu2_illumio_illumio_critical_label_group_configuration" type="collection">
+        <element label="Illumio Label Dimension" max_length="32" name="illumio_label_dimension" reference="x_illu2_illumio_illumio_label_dimension" reference_qual="javascript:&quot;illumio_pce_configuration=&quot; + current.illumio_pce_configuration" type="reference" use_reference_qualifier="advanced"/>
+        <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" read_only="true" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
+        <element label="Label Group" max_length="255" name="label_group" type="string"/>
+        <index name="index">
+            <element name="illumio_label_dimension"/>
+        </index>
+        <index name="index2">
+            <element name="illumio_pce_configuration"/>
+        </index>
+    </element>
+</database>

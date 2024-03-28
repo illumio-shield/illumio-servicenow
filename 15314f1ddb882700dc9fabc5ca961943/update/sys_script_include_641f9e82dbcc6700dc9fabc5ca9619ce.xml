@@ -38,6 +38,7 @@ IllumioStartDiscovery.prototype = {
             var fieldMappingGr = new GlideRecord(
                 'x_illu2_illumio_illumio_class_field_mapping'
             );
+			fieldMappingGr.addQuery('illumio_config_class_mapping',configClassGr.getUniqueValue());
             fieldMappingGr.addQuery('type', 'host_name');
             fieldMappingGr.addActiveQuery();
             fieldMappingGr.setLimit(1);
@@ -231,13 +232,13 @@ IllumioStartDiscovery.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:20:29</sys_created_on>
         <sys_id>641f9e82dbcc6700dc9fabc5ca9619ce</sys_id>
-        <sys_mod_count>115</sys_mod_count>
+        <sys_mod_count>116</sys_mod_count>
         <sys_name>IllumioStartDiscovery</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_641f9e82dbcc6700dc9fabc5ca9619ce</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 06:57:23</sys_updated_on>
+        <sys_updated_on>2024-03-27 09:32:05</sys_updated_on>
     </sys_script_include>
 </record_update>

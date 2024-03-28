@@ -10,18 +10,18 @@
         <script><![CDATA[var IllumioThresholdLimit = Class.create();
 IllumioThresholdLimit.prototype = {
     initialize: function() {},
-	
-	/**
+
+    /**
      * Starts the authentication via MID server for check PCE configuration
      * @params {String} labelsToCreate labels to create.
-	 * @params {String} wlToModify workloads to modify.
+     * @params {String} wlToModify workloads to modify.
      * @params {String} wlTocreate workloads to create.
-	 * @params {String} wlTodelete workloads to delete.
-	 * @return {JSON} if has errors and if limit has exceeded.
+     * @params {String} wlTodelete workloads to delete.
+     * @return {JSON} if has errors and if limit has exceeded.
      */
-    checkThresholdLimit: function(labelsToCreate, wlToModify, wlTocreate,wlTodelete) {
+    checkThresholdLimit: function(configSysId, labelsToCreate, wlToModify, wlTocreate, wlTodelete) {
         try {
-            var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
+            var pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
             labelsToCreate = parseInt(labelsToCreate);
             wlToModify = parseInt(wlToModify);
             wlTocreate = parseInt(wlTocreate);
@@ -31,16 +31,15 @@ IllumioThresholdLimit.prototype = {
             var flag = false;
 
             if (pceConfig.enable_limit) {
-                var totalWorkloads = utils.getTotalRecords("x_illu2_illumio_illumio_servicenow_servers");
+                var totalWorkloads = utils.getTotalRecords("x_illu2_illumio_illumio_pce_workload", configSysId);
                 if (pceConfig.limit_on_label_creation) {
                     if (!gs.nil(pceConfig.label_creation_limit)) {
-                        var totalLabels = utils.getTotalRecords("x_illu2_illumio_illumio_pce_labels_mapping");
+                        var totalLabels = utils.getTotalRecords("x_illu2_illumio_illumio_pce_labels_mapping", configSysId);
                         var labelLimit = pceConfig.label_creation_limit;
                         if (pceConfig.label_creation_limit.includes("%")) {
-
                             labelLimit = Math.floor((totalLabels * parseInt(pceConfig.label_creation_limit) / 100));
-
                         }
+
                         if (parseInt(labelLimit) < labelsToCreate) {
                             flag = true;
                             message.push("label creation");
@@ -68,13 +67,12 @@ IllumioThresholdLimit.prototype = {
                         }
                         if (parseInt(ukwLimit) < wlTocreate) {
                             flag = true;
-							if(message.length == 2){
-								message.push("and workload creation");
-							}
-							else{
-								message.push("workload creation");
-							}
-                            
+                            if (message.length == 2) {
+                                message.push("and workload creation");
+                            } else {
+                                message.push("workload creation");
+                            }
+
                         }
                     }
                 }
@@ -86,44 +84,45 @@ IllumioThresholdLimit.prototype = {
                         }
                         if (parseInt(delLimit) < wlTodelete) {
                             flag = true;
-							if(message.length == 2){
-								message.push("and workload deletion");
-							}
-							else{
-								message.push("workload deletion");
-							}
-                            
+                            if (message.length == 2) {
+                                message.push("and workload deletion");
+                            } else {
+                                message.push("workload deletion");
+                            }
+
                         }
                     }
                 }
-                
+
             }
             if (flag) {
-				var description;
-				if(message.length == 1){
-					description = "Sync stopped as " + (message + '').split(',').join(', ') + " limit has exceeded";
-				}
-				else{
-					description = "Sync stopped as " + (message + '').split(',').join(', ') + " limits have exceeded";
-				}
+                var description;
+                if (message.length == 1) {
+                    description = "Sync stopped as " + (message + '').split(',').join(', ') + " limit has exceeded for PCE Configuration with sys_id: " + configSysId;
+                } else {
+                    description = "Sync stopped as " + (message + '').split(',').join(', ') + " limits have exceeded for PCE Configuration with sys_id: " + configSysId;
+                }
+
+                gs.info(description);
                 return {
                     hasError: false,
                     limitExceed: true,
-                    description: description
+                    description: description,
                 };
             }
             return {
                 hasError: false,
-                limitExceed: false
+                limitExceed: false,
+                configSysId: configSysId,
+                wlToModify: wlToModify,
+                wlToCreate: wlTocreate
             };
 
-
-
         } catch (ex) {
-            gs.error("[IllumioThresholdLimit] Exception occured while checking threshold limit. Exception: " + ex);
+            gs.error("[IllumioThresholdLimit] Exception occured while checking threshold limit. Exception", ex);
             return {
                 hasError: true,
-                description: "Error occured while checking threshold limit."
+                description: "Error occured while checking threshold limit for PCE Configuration with sys_id: " + configSysId
             };
         }
 
@@ -135,13 +134,13 @@ IllumioThresholdLimit.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-24 12:30:31</sys_created_on>
         <sys_id>5ff69b63dbacac901206fd641d961959</sys_id>
-        <sys_mod_count>49</sys_mod_count>
+        <sys_mod_count>50</sys_mod_count>
         <sys_name>IllumioThresholdLimit</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_5ff69b63dbacac901206fd641d961959</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-01 06:12:12</sys_updated_on>
+        <sys_updated_on>2024-03-27 08:41:56</sys_updated_on>
     </sys_script_include>
 </record_update>
