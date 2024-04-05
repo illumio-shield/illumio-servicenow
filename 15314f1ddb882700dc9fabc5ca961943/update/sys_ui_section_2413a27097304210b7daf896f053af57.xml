@@ -3,11 +3,11 @@
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:43</sys_created_on>
-            <sys_id>fd9daf7b97018a50b7daf896f053afbb</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>b10b795a47d5461066773e7d826d436b</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:43</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <text>&lt;html&gt;&#13;
 &#13;
 &lt;head&gt;&#13;
@@ -24,7 +24,7 @@
             margin-top: 1 em;&#13;
             margin-left: 0;&#13;
             margin-right: 0;&#13;
-            padding-left: 40px;&#13;
+      &#13;
         }&#13;
     &lt;/style&gt;&#13;
 &lt;/head&gt;&#13;
@@ -37,8 +37,8 @@
     &lt;ol&gt;&#13;
         &lt;li&gt;&lt;b&gt;Source Table:&lt;/b&gt; ServiceNow CMDB table to use as source for workloads.&lt;/li&gt;&#13;
         &lt;li&gt;&lt;b&gt;User Configurable Sort Order:&lt;/b&gt; Whether to use sort order or not to identify the primary workload.&#13;
-                &lt;ol&gt;&#13;
-                    &lt;li&gt;&lt;b&gt;Order:&lt;/b&gt; Ascending or Descending&lt;/li&gt;&#13;
+                &lt;ol style="list-style-type: circle;"&gt;&#13;
+                    &lt;li&gt;&lt;b&gt;Order:&lt;/b&gt; Ascending or Descending.&lt;/li&gt;&#13;
                     &lt;li&gt;&lt;b&gt;Order By Column Name:&lt;/b&gt; Column on which the CI records will be sorted to identify the primary workload.&lt;/li&gt;&#13;
                 &lt;/ol&gt;&#13;
         &lt;/li&gt;&#13;
@@ -53,16 +53,16 @@
             <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
         </sys_ui_annotation>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>fd9daf7b97018a50b7daf896f053afbb</element>
+            <element>b10b795a47d5461066773e7d826d436b</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>759daf7b97018a50b7daf896f053afc3</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>ca0b3d5a47d5461066773e7d826d4313</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type>annotation</type>
         </sys_ui_element>
@@ -70,13 +70,13 @@
             <element>illumio_pce_configuration</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>f99daf7b97018a50b7daf896f053afc3</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>c20b3d5a47d5461066773e7d826d4314</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -84,13 +84,13 @@
             <element>.begin_split</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>7d9daf7b97018a50b7daf896f053afc3</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>c60b3d5a47d5461066773e7d826d4314</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type>.begin_split</type>
         </sys_ui_element>
@@ -98,13 +98,13 @@
             <element>source_table</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>fd9daf7b97018a50b7daf896f053afc3</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>ca0b3d5a47d5461066773e7d826d4314</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -112,13 +112,13 @@
             <element>user_configurable_sort_order</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>719daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>ce0b3d5a47d5461066773e7d826d4314</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -126,13 +126,13 @@
             <element>order</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>f19daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>c20b3d5a47d5461066773e7d826d4315</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -140,13 +140,13 @@
             <element>.split</element>
             <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>759daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>c60b3d5a47d5461066773e7d826d4315</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
@@ -154,13 +154,13 @@
             <element>active</element>
             <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>f59daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>ca0b3d5a47d5461066773e7d826d4315</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -168,13 +168,13 @@
             <element>order_by_column_name</element>
             <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>799daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>ce0b3d5a47d5461066773e7d826d4315</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -182,13 +182,13 @@
             <element>.end_split</element>
             <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>f99daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>c20b3d5a47d5461066773e7d826d4316</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
@@ -196,13 +196,13 @@
             <element>conditions_for_deleting_workloads</element>
             <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>7d9daf7b97018a50b7daf896f053afc4</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>c60b3d5a47d5461066773e7d826d4316</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -210,13 +210,13 @@
             <element>conditions_for_excluding_workloads</element>
             <position>11</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-27 06:25:44</sys_created_on>
-            <sys_id>bd9d6bbb97018a50b7daf896f053af4f</sys_id>
+            <sys_created_on>2024-04-03 16:30:01</sys_created_on>
+            <sys_id>ca0b3d5a47d5461066773e7d826d4316</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_config_class_mapping" sys_domain="global" view="Default view">2413a27097304210b7daf896f053af57</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-27 06:25:44</sys_updated_on>
+            <sys_updated_on>2024-04-03 16:30:01</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

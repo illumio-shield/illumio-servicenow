@@ -38,6 +38,10 @@
     currentTableGa.addAggregate('COUNT');
     currentTableGa.query();
     var count;
+	var utils=new IllumioUtils();
+	
+	if(utils.getCancelledJobStatus(illumioJobId)) return;
+	
 
     if (currentTableGa.next()) {
         count = currentTableGa.getAggregate('COUNT');
@@ -76,7 +80,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>425ee9ae878a8510d7a34046cebb3535</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Illumio start mapping when job is done</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -84,7 +88,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_425ee9ae878a8510d7a34046cebb3535</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-08 08:19:42</sys_updated_on>
+        <sys_updated_on>2024-04-04 04:40:24</sys_updated_on>
         <template/>
         <when>before</when>
     </sys_script>

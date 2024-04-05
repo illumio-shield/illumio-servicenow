@@ -7,11 +7,12 @@
         <element label="Job Started" max_length="40" name="job_started" type="glide_date_time"/>
         <element choice="1" label="Job Status" mandatory="true" max_length="20" name="job_status" type="string">
             <choice>
-                <element inactive_on_update="false" label="Completed" value="completed"/>
-                <element inactive_on_update="false" label="Completed with errors" value="completed_with_error"/>
-                <element inactive_on_update="false" label="Failed" value="failed"/>
-                <element inactive_on_update="false" label="Partial Success" value="partial_success"/>
-                <element inactive_on_update="false" label="Running" value="running"/>
+                <element inactive_on_update="false" label="Completed" sequence="0" value="completed"/>
+                <element inactive_on_update="false" label="Completed with errors" sequence="1" value="completed_with_error"/>
+                <element inactive_on_update="false" label="Failed" sequence="2" value="failed"/>
+                <element inactive_on_update="false" label="Partial Success" sequence="3" value="partial_success"/>
+                <element inactive_on_update="false" label="Running" sequence="4" value="running"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="cancelled"/>
             </choice>
         </element>
         <element choice="1" label="Job Type" max_length="40" name="job_type" type="choice">

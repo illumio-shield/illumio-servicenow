@@ -11,6 +11,17 @@ IllumioAuthenticateToPCE.prototype = {
 
         // set the parameters here
         this.logger = new IllumioLogUtil();
+		
+		//
+		var url = String(ms.getConfigParameter("url"));
+        if (url.charAt(url.length - 1) == '/') {
+            url = url.substring(0, url.length - 1);
+        }
+        this.SNOWurl = url;
+        this.SNOWusername = ms.getConfigParameter("mid.instance.username");
+        this.SNOWpassword = ms.getConfigParameter("mid.instance.password");
+		//
+		
 
 
         this.pceUrl = probe.getParameter('glide.jms.pce_url');
@@ -49,6 +60,12 @@ IllumioAuthenticateToPCE.prototype = {
     },
 
     run: function() {
+		
+		if(this.utils.checkCancelledJobStatus(this.illumio_job_id,this.SNOWurl,this.SNOWusername,this.SNOWpassword))
+					return false;
+				
+		
+		
         if (this.utils.getMidConfigParam("mid.proxy.use_proxy")) {
             if (this.pceMIDProxy == "true") {
                 this.utils._updateJobRecord(this.illumio_job_id, {
@@ -79,14 +96,20 @@ IllumioAuthenticateToPCE.prototype = {
         // Authenticating using given authorization
 
         try {
+			
+			if(this.utils.checkCancelledJobStatus(this.illumio_job_id,this.SNOWurl,this.SNOWusername,this.SNOWpassword))
+					return false;
+			
             var response = this.pceHttpClient.get(this.pceEndpoint, '');
             this.logger._debug("Response code of authorization is: " + response.status);
 
             if (response.status != "200" && response.status != "202") {
                 this.logger._error("Could not connect to PCE.");
                 if (response.status == "401") {
-                    this.utils.handleException("Authentication failed with PCE. Message: Invalid API Key/Secret", this.illumio_job_id);
-                } else if (response.status == "0") {
+                    this.utils.handleException("Authentication failed with PCE. Message: Invalid API Key/Secret/Organisation ID", this.illumio_job_id);
+                } else if(response.status == "403") {
+                    this.utils.handleException("Authentication failed with PCE. Message: Invalid Organisation ID", this.illumio_job_id);
+                }else if (response.status == "0") {
                     this.utils.handleException("Authentication failed with PCE. Message: Cannot find PCE " + this.pceUrl, this.illumio_job_id);
                 } else {
                     this.utils.handleException("Connectivity check to PCE failed. Response status code: " + response.status, this.illumio_job_id);
@@ -94,11 +117,10 @@ IllumioAuthenticateToPCE.prototype = {
                 return false;
             }
 
-            var pce_version = response.data.version;
             var payload = {
                 job_status: 'completed',
                 current_operation: 'Connectivity check successful',
-                logs: ["Successfully authenticated the PCE credentials", "PCE is running on " + pce_version + " version"],
+                logs: ["Successfully authenticated the PCE credentials"],
                 job_completed: this.snowDateFormat.format(new Date()) + ""
             };
             this.utils._updateJobRecord(this.illumio_job_id, payload);
@@ -118,7 +140,7 @@ IllumioAuthenticateToPCE.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>e1ecfc601b64301046dba9f6624bcb49</sys_id>
-        <sys_mod_count>80</sys_mod_count>
+        <sys_mod_count>83</sys_mod_count>
         <sys_name>IllumioAuthenticateToPCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -126,6 +148,6 @@ IllumioAuthenticateToPCE.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_e1ecfc601b64301046dba9f6624bcb49</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-10-19 06:42:26</sys_updated_on>
+        <sys_updated_on>2024-04-04 13:19:27</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

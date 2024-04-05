@@ -204,6 +204,22 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                 gs.error("[getConfigurationDetails] Exception occured while getting configuration details. Exception: " + ex);
             }
         },
+		
+	updateScheduledJobStatus: function() {
+           
+            var jobSysId = this.getParameter("sysparm_job_sys_id");
+        
+            var scheduledJobGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
+            if (scheduledJobGr.get("sys_id", jobSysId)) {
+                scheduledJobGr.setValue("job_status", "cancelled");
+				scheduledJobGr.setValue("job_completed",new GlideDateTime()) 
+				scheduledJobGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + ']  The Job is Cancelled';
+				scheduledJobGr.update();
+                return true;
+            } else {
+                return false;
+            }
+        },
         type: "GetLabelGroupsAjax",
     }
 );]]></script>
@@ -211,13 +227,13 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-10-29 15:02:03</sys_created_on>
         <sys_id>e83ebd53db84e4901206fd641d9619bd</sys_id>
-        <sys_mod_count>175</sys_mod_count>
+        <sys_mod_count>183</sys_mod_count>
         <sys_name>GetLabelGroupsAjax</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_e83ebd53db84e4901206fd641d9619bd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-28 11:59:52</sys_updated_on>
+        <sys_updated_on>2024-04-02 12:51:32</sys_updated_on>
     </sys_script_include>
 </record_update>

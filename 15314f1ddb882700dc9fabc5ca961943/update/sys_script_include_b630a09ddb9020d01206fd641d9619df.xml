@@ -22,6 +22,9 @@ IllumioUtils.prototype = {
         var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
 
         if (jobGr.get(jobId)) {
+			
+			if(jobGr.job_status=="cancelled")return;
+			
             // Update only if job is not invalidated
             if (jobGr.job_status != 'failed') {
                 for (var key in jobContent) {
@@ -254,9 +257,9 @@ IllumioUtils.prototype = {
 
                     // loop through all label dimensions
                     for (var type in labelData) {
-						
-						if(gs.nil(labelData[type]) || labelData[type].length == 0)
-							continue;
+
+                        if (gs.nil(labelData[type]) || labelData[type].length == 0)
+                            continue;
 
                         var fieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
                         fieldValueGr.addQuery('illumio_pce_workload', arrRecords[arrIndex]);
@@ -302,7 +305,7 @@ IllumioUtils.prototype = {
     /**
      * Get the total number of records
      * @param {String} tableName Name of the table
-	 * @param {String} configuration SysID
+     * @param {String} configuration SysID
      * @returns Count of rows in the table
      */
     getTotalRecords: function(tableName, configSysId) {
@@ -617,6 +620,9 @@ IllumioUtils.prototype = {
      **/
     handleFailure: function(jobSysId, operation, message) {
         if (this.scheduledJobsGr.get(jobSysId)) {
+			
+			if(this.scheduledJobsGr.job_status=="cancelled") return;
+			
             this.scheduledJobsGr.job_status = 'failed';
             this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + operation;
             this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Authentication failed';
@@ -693,6 +699,9 @@ IllumioUtils.prototype = {
      * @returns {object} the response object returned by the API
      */
     makeRestCall: function(restMessage, httpMethod, stringParams, headers, body, midServer) {
+		
+		
+		
         var apiCall = new sn_ws.RESTMessageV2(restMessage, httpMethod);
         if (!gs.nil(stringParams)) {
             Object.keys(stringParams).forEach(function(key) {
@@ -985,6 +994,8 @@ IllumioUtils.prototype = {
                 };
                 var midServer = pceConfig.mid_server.name + "";
 
+				
+				
                 var response = this.makeRestCall("IllumioFetchLabelDimensions", "UpdateLabelDimension", stringParams, headers, body, midServer);
                 var response_status = response.getStatusCode();
 
@@ -1100,6 +1111,39 @@ IllumioUtils.prototype = {
 
         return workloadObject;
     },
+    getCancelledJobStatus: function(jobSysId) {
+
+        var scheduledJobGr = new GlideRecord(
+            'x_illu2_illumio_illumio_scheduled_jobs'
+        );
+        scheduledJobGr.get(jobSysId);
+
+        var job_status = scheduledJobGr.getValue('job_status');
+        if (job_status == 'cancelled')
+            return true;
+
+        return false;
+    },
+	 /**
+     * Get require parameter to create HttpClient object for given configuration
+     * @param {String} configSysId SysId of PCE Configuration
+     * @returns {Object} of Required parameters
+     **/
+	
+		getHttpConfiguration: function (configSysId) {
+        var pceConfig = new GlideRecord('x_illu2_illumio_illumio_pce_conf');
+        if (pceConfig.get(configSysId)) {
+
+            return {
+                illumio_pce_configuration_id: configSysId,
+                pce_url: String(pceConfig.pce_url),
+                pce_authorization: gs.base64Encode(pceConfig.username.getDecryptedValue() + ':' + pceConfig.secret_key.getDecryptedValue()),
+                time_zone: gs.getSession().getTimeZoneName(),
+                enable_pce_mid_proxy: pceConfig.enable_proxy_between_pce_and_mid_server,
+				org_id: pceConfig.getValue("organization_id")
+            };
+        }
+    },
 
     type: "IllumioUtils",
 };]]></script>
@@ -1107,13 +1151,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>368</sys_mod_count>
+        <sys_mod_count>378</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-28 12:02:16</sys_updated_on>
+        <sys_updated_on>2024-04-04 16:16:15</sys_updated_on>
     </sys_script_include>
 </record_update>
