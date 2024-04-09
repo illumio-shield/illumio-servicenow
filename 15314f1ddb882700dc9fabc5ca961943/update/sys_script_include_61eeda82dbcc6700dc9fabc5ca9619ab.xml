@@ -31,6 +31,7 @@ IllumioGetPCEConfiguration.prototype = {
                 autoSync: pceConfig.auto_synchronization,
                 create_workload_limit: pceConfig.new_workloads_to_create_at_a_time,
                 enable_limit: pceConfig.limits_on_workloads_and_labels_changes_per_sync,
+                cancel_job_on_limit_exceed: pceConfig.cancel_job_on_limit_exceed,
                 limit_on_label_creation: pceConfig.set_limit_on_new_label_creation,
                 label_creation_limit: pceConfig.new_label_creation_limit,
                 limit_on_wl_modification: pceConfig.set_limit_on_workload_label_modifications,
@@ -152,13 +153,13 @@ IllumioGetPCEConfiguration.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:18:42</sys_created_on>
         <sys_id>61eeda82dbcc6700dc9fabc5ca9619ab</sys_id>
-        <sys_mod_count>65</sys_mod_count>
+        <sys_mod_count>66</sys_mod_count>
         <sys_name>IllumioGetPCEConfiguration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_61eeda82dbcc6700dc9fabc5ca9619ab</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-27 07:07:19</sys_updated_on>
+        <sys_updated_on>2024-04-05 10:16:35</sys_updated_on>
     </sys_script_include>
 </record_update>

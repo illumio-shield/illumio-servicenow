@@ -12,8 +12,8 @@
         <order/>
         <script><![CDATA[function onLoad() {
 
-	g_form.showFieldMsg("conflicts", "A workload is marked \"Conflicts\" if any of the PCE value conflicts with the corresponding CMDB value.");
-	g_form.showFieldMsg("duplicate", "Host name of this record matches the hostname of another record. If marked \"Duplicate\", this record will not be used.");
+	g_form.showFieldMsg("conflicts", "If there is any update in the CMDB value then \"Conflicts\" in the workload will be enabled.");
+	g_form.showFieldMsg("duplicate", "If the Hostname of this record matches the Hostname of another record and marked \"Duplicate\", this record will not be used.");
 	g_form.showFieldMsg("duplicate_of", "In case of a \"Duplicate\" workload, this field displays the primary workload.");
 }]]></script>
         <sys_class_name>sys_script_client</sys_class_name>
@@ -22,7 +22,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8c594026db48a700dc9fabc5ca961995</sys_id>
-        <sys_mod_count>110</sys_mod_count>
+        <sys_mod_count>112</sys_mod_count>
         <sys_name>Illumio Update Label Choices</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -30,7 +30,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_client_8c594026db48a700dc9fabc5ca961995</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 05:56:49</sys_updated_on>
+        <sys_updated_on>2024-04-08 05:37:02</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <type>onLoad</type>
         <ui_type>10</ui_type>

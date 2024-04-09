@@ -35,7 +35,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>bfdc77c2475d061066773e7d826d43cd</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>x_illu2_illumio_illumio_config_class_mapping</sys_name>
         <sys_overrides display_value="">global</sys_overrides>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -43,6 +43,6 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_list_control_bfdc77c2475d061066773e7d826d43cd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-03 07:18:58</sys_updated_on>
+        <sys_updated_on>2024-04-08 09:19:25</sys_updated_on>
     </sys_ui_list_control>
 </record_update>

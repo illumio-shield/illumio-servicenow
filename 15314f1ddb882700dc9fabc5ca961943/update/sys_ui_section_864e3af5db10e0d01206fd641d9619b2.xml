@@ -3,11 +3,11 @@
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>966d311e47d5461066773e7d826d43f9</sys_id>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>afdfba7a47d10a1066773e7d826d43fe</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
             <text>&lt;html&gt;&#13;
 &lt;head&gt;&#13;
 &lt;style&gt;&#13;
@@ -54,181 +54,223 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>limits_on_workloads_and_labels_changes_per_sync</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>de6d791e47d5461066773e7d826d4305</sys_id>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>67dffa7a47d10a1066773e7d826d4305</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>.begin_split</element>
-            <position>1</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>d26d791e47d5461066773e7d826d4306</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type>.begin_split</type>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>set_limit_on_new_label_creation</element>
-            <position>2</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>d66d791e47d5461066773e7d826d4306</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>set_limit_on_workload_label_modifications</element>
-            <position>3</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>da6d791e47d5461066773e7d826d4306</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>create_unmanaged_workloads_on_pce_from_cmdb_records</element>
-            <position>4</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>de6d791e47d5461066773e7d826d4306</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>set_limit_on_workload_deletion</element>
-            <position>5</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>d26d791e47d5461066773e7d826d4307</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>6</position>
+            <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>d66d791e47d5461066773e7d826d4307</sys_id>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6bdffa7a47d10a1066773e7d826d4305</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>new_label_creation_limit</element>
-            <position>7</position>
+            <element>cancel_job_on_limit_exceed</element>
+            <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>da6d791e47d5461066773e7d826d4307</sys_id>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6fdffa7a47d10a1066773e7d826d4305</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>workload_label_modifications_limit</element>
-            <position>8</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>de6d791e47d5461066773e7d826d4307</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>number_of_workloads_to_be_created_from_servicenow</element>
-            <position>9</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>d26d791e47d5461066773e7d826d4308</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>workload_deletion_limit</element>
-            <position>10</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>d66d791e47d5461066773e7d826d4308</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.end_split</element>
-            <position>11</position>
+            <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>da6d791e47d5461066773e7d826d4308</sys_id>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>63dffa7a47d10a1066773e7d826d4306</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>966d311e47d5461066773e7d826d43f9</element>
-            <position>12</position>
+            <element>.begin_split</element>
+            <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 16:40:25</sys_created_on>
-            <sys_id>de6d791e47d5461066773e7d826d4308</sys_id>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>67dffa7a47d10a1066773e7d826d4306</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 16:40:25</sys_updated_on>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>set_limit_on_new_label_creation</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6bdffa7a47d10a1066773e7d826d4306</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>set_limit_on_workload_label_modifications</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6fdffa7a47d10a1066773e7d826d4306</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>create_unmanaged_workloads_on_pce_from_cmdb_records</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>63dffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>set_limit_on_workload_deletion</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>67dffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6bdffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>new_label_creation_limit</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6fdffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>workload_label_modifications_limit</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>63dffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number_of_workloads_to_be_created_from_servicenow</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>67dffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>workload_deletion_limit</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6bdffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>6fdffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>afdfba7a47d10a1066773e7d826d43fe</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
+            <sys_id>63dffa7a47d10a1066773e7d826d4309</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
             <sys_user/>
             <type>annotation</type>
         </sys_ui_element>

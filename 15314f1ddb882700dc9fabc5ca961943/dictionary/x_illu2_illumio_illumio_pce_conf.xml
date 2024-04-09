@@ -2,6 +2,7 @@
     <element db_object_id="2bb285a79300021062233f018bba106a" extends="sysauto_script" label="Illumio PCE Configuration" max_length="40" name="x_illu2_illumio_illumio_pce_conf" type="collection">
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>
         <element attributes="edge_encryption_enabled=true" label="Auto Sync to PCE" max_length="40" name="auto_synchronization" type="boolean"/>
+        <element label="Cancel Job on Limit Exceed" max_length="40" name="cancel_job_on_limit_exceed" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Create Unmanaged Workloads on PCE from CMDB records" max_length="40" name="create_unmanaged_workloads_on_pce_from_cmdb_records" type="boolean"/>
         <element label="Application" max_length="255" name="critical_label_group_application" type="string"/>
         <element label="Environment" max_length="255" name="critical_label_group_environment" type="string"/>

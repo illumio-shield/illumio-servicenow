@@ -44,9 +44,13 @@ IllumioManageJobs.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
                 job_type = this.getParameter('sysparm_type_flag');
                 if (job_type == 'true') {
                     count = this.getParameter('sysparm_count');
-                    logs += '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Total critical label groups fetched : ' + parseInt(count);
+                    logs += '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] Total critical label groups fetched : ' + parseInt(count) +'\n';
                 }
-                logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + this.getParameter('sysparm_logs');
+                logs += '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + this.getParameter('sysparm_logs');
+
+                var thresoldLogs = this.getParameter('sysparm_thresold_logs');
+                if (!gs.nil(thresoldLogs))
+                    logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + thresoldLogs;
                 scheduledJobGr.logs = logs;
                 var jobSysId = scheduledJobGr.insert();
                 return jobSysId;
@@ -61,13 +65,13 @@ IllumioManageJobs.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-21 05:28:20</sys_created_on>
         <sys_id>c454535edb83045015543cae7c9619aa</sys_id>
-        <sys_mod_count>50</sys_mod_count>
+        <sys_mod_count>52</sys_mod_count>
         <sys_name>IllumioManageJobs</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_c454535edb83045015543cae7c9619aa</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-27 06:53:08</sys_updated_on>
+        <sys_updated_on>2024-04-08 14:10:54</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -12,118 +12,82 @@ IllumioThresholdLimit.prototype = {
     initialize: function() {},
 
     /**
-     * Starts the authentication via MID server for check PCE configuration
-     * @params {String} labelsToCreate labels to create.
-     * @params {String} wlToModify workloads to modify.
-     * @params {String} wlTocreate workloads to create.
-     * @params {String} wlTodelete workloads to delete.
-     * @return {JSON} if has errors and if limit has exceeded.
+     * Get the workload limit object for given Illumio PCE Configuration
+     * @params {String} configSysId Illumio PCE Configuration sys_id.
+     * @return {JSON} workload limit object
      */
-    checkThresholdLimit: function(configSysId, labelsToCreate, wlToModify, wlTocreate, wlTodelete) {
+    getThresholdLimit: function(configSysId) {
         try {
             var pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
-            labelsToCreate = parseInt(labelsToCreate);
-            wlToModify = parseInt(wlToModify);
-            wlTocreate = parseInt(wlTocreate);
-
             var utils = new IllumioUtils();
-            var message = [];
-            var flag = false;
+
+            var wlLimitObject = {
+                "limitEnabled": false,
+                isLimitEnabled: {
+                    "update": false,
+                    "create": false,
+                    "delete": false,
+                    "labelCreate": false
+                },
+                wlLimit: {
+                    "update": 0,
+                    "create": 0,
+                    "delete": 0,
+                    "labelCreate": 0
+                },
+                cancelJobOnLimitExceed: pceConfig.cancel_job_on_limit_exceed
+            };
 
             if (pceConfig.enable_limit) {
+                wlLimitObject["limitEnabled"] = true;
                 var totalWorkloads = utils.getTotalRecords("x_illu2_illumio_illumio_pce_workload", configSysId);
                 if (pceConfig.limit_on_label_creation) {
-                    if (!gs.nil(pceConfig.label_creation_limit)) {
-                        var totalLabels = utils.getTotalRecords("x_illu2_illumio_illumio_pce_labels_mapping", configSysId);
-                        var labelLimit = pceConfig.label_creation_limit;
-                        if (pceConfig.label_creation_limit.includes("%")) {
-                            labelLimit = Math.floor((totalLabels * parseInt(pceConfig.label_creation_limit) / 100));
-                        }
 
-                        if (parseInt(labelLimit) < labelsToCreate) {
-                            flag = true;
-                            message.push("label creation");
-                        }
+                    var totalLabels = utils.getTotalRecords("x_illu2_illumio_illumio_pce_labels_mapping", configSysId);
+                    var labelLimit = parseInt(pceConfig.label_creation_limit);
+                    if (pceConfig.label_creation_limit.includes("%")) {
+                        labelLimit = Math.floor((totalLabels * parseInt(pceConfig.label_creation_limit) / 100));
                     }
+
+                    wlLimitObject["isLimitEnabled"]["labelCreate"] = true;
+                    wlLimitObject["wlLimit"]["labelCreate"] = labelLimit;
                 }
                 if (pceConfig.limit_on_wl_modification) {
 
-                    if (!gs.nil(pceConfig.wl_modification_limit)) {
-                        var workloadLimit = pceConfig.wl_modification_limit;
-                        if (pceConfig.wl_modification_limit.includes("%")) {
-                            workloadLimit = Math.floor((totalWorkloads * parseInt(pceConfig.wl_modification_limit) / 100));
-                        }
-                        if (parseInt(workloadLimit) < wlToModify) {
-                            flag = true;
-                            message.push("workload modification");
-                        }
+                    var workloadLimit = parseInt(pceConfig.wl_modification_limit);
+                    if (pceConfig.wl_modification_limit.includes("%")) {
+                        workloadLimit = Math.floor((totalWorkloads * parseInt(pceConfig.wl_modification_limit) / 100));
                     }
+
+                    wlLimitObject["isLimitEnabled"]["update"] = true;
+                    wlLimitObject["wlLimit"]["update"] = workloadLimit;
+
                 }
                 if (pceConfig.limit_on_wl_creation) {
-                    if (!gs.nil(pceConfig.wl_creation_limit)) {
-                        var ukwLimit = pceConfig.wl_creation_limit;
-                        if (pceConfig.wl_creation_limit.includes("%")) {
-                            ukwLimit = Math.floor((totalWorkloads * parseInt(pceConfig.wl_creation_limit) / 100));
-                        }
-                        if (parseInt(ukwLimit) < wlTocreate) {
-                            flag = true;
-                            if (message.length == 2) {
-                                message.push("and workload creation");
-                            } else {
-                                message.push("workload creation");
-                            }
-
-                        }
+                    var ukwLimit = parseInt(pceConfig.wl_creation_limit);
+                    if (pceConfig.wl_creation_limit.includes("%")) {
+                        ukwLimit = Math.floor((totalWorkloads * parseInt(pceConfig.wl_creation_limit) / 100));
                     }
+
+                    wlLimitObject["isLimitEnabled"]["create"] = true;
+                    wlLimitObject["wlLimit"]["create"] = ukwLimit;
                 }
                 if (pceConfig.limit_on_wl_deletion) {
-                    if (!gs.nil(pceConfig.wl_deletion_limit)) {
-                        var delLimit = pceConfig.wl_deletion_limit;
-                        if (pceConfig.wl_deletion_limit.includes("%")) {
-                            delLimit = Math.floor((totalWorkloads * parseInt(pceConfig.wl_deletion_limit) / 100));
-                        }
-                        if (parseInt(delLimit) < wlTodelete) {
-                            flag = true;
-                            if (message.length == 2) {
-                                message.push("and workload deletion");
-                            } else {
-                                message.push("workload deletion");
-                            }
-
-                        }
+                    var delLimit = parseInt(pceConfig.wl_deletion_limit);
+                    if (pceConfig.wl_deletion_limit.includes("%")) {
+                        delLimit = Math.floor((totalWorkloads * parseInt(pceConfig.wl_deletion_limit) / 100));
                     }
+
+                    wlLimitObject["isLimitEnabled"]["delete"] = true;
+                    wlLimitObject["wlLimit"]["delete"] = delLimit;
+
                 }
 
             }
-            if (flag) {
-                var description;
-                if (message.length == 1) {
-                    description = "Sync stopped as " + (message + '').split(',').join(', ') + " limit has exceeded for PCE Configuration with sys_id: " + configSysId;
-                } else {
-                    description = "Sync stopped as " + (message + '').split(',').join(', ') + " limits have exceeded for PCE Configuration with sys_id: " + configSysId;
-                }
-
-                gs.info(description);
-                return {
-                    hasError: false,
-                    limitExceed: true,
-                    description: description,
-                };
-            }
-            return {
-                hasError: false,
-                limitExceed: false,
-                configSysId: configSysId,
-                wlToModify: wlToModify,
-                wlToCreate: wlTocreate
-            };
-
         } catch (ex) {
             gs.error("[IllumioThresholdLimit] Exception occured while checking threshold limit. Exception", ex);
-            return {
-                hasError: true,
-                description: "Error occured while checking threshold limit for PCE Configuration with sys_id: " + configSysId
-            };
+        } finally {
+            return wlLimitObject;
         }
 
     },
@@ -134,13 +98,13 @@ IllumioThresholdLimit.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-24 12:30:31</sys_created_on>
         <sys_id>5ff69b63dbacac901206fd641d961959</sys_id>
-        <sys_mod_count>50</sys_mod_count>
+        <sys_mod_count>51</sys_mod_count>
         <sys_name>IllumioThresholdLimit</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_5ff69b63dbacac901206fd641d961959</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-27 08:41:56</sys_updated_on>
+        <sys_updated_on>2024-04-05 10:20:57</sys_updated_on>
     </sys_script_include>
 </record_update>

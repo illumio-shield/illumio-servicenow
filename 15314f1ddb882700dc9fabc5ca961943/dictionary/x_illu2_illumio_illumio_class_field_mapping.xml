@@ -11,7 +11,7 @@
         <element attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" label="Source Table" max_length="80" name="source_table" read_only="true" type="table_name"/>
         <element choice="3" default="label_dimension" label="Type" max_length="40" name="type" type="choice">
             <choice>
-                <element inactive_on_update="false" label="Host Name" value="host_name"/>
+                <element inactive_on_update="false" label="Hostname" value="host_name"/>
                 <element inactive_on_update="false" label="IP Address" value="ip_address"/>
                 <element inactive_on_update="false" label="Label Dimension" value="label_dimension"/>
                 <element inactive_on_update="false" label="Public IP Address" value="public_ip_address"/>

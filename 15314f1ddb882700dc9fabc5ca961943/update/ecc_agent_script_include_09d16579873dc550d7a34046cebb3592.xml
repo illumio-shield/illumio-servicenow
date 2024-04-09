@@ -16,6 +16,8 @@ var METHOD_CLASSES = {
     PUT: PutMethod,
     DELETE: DeleteMethod
 };
+var WORKLOAD_FIELD_VALUE_ENDPOINT = "/api/x_illu2_illumio/illumioupdateworkloadfieldvalue/update_label_dimension";
+var AUTOSYNC_JOB_TABLE="x_illu2_illumio_illumio_autosync_payload";
 var RETRY_CODES = [429];
 var MAX_IP_ADDRESSES = 32;
 var MAX_RETRY_COUNTS = 3;
@@ -37,7 +39,7 @@ var DEFAULT_RETRY_PARAMS = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>09d16579873dc550d7a34046cebb3592</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>18</sys_mod_count>
         <sys_name>IllumioMIDConstants</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -45,6 +47,6 @@ var DEFAULT_RETRY_PARAMS = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_09d16579873dc550d7a34046cebb3592</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-03 11:14:32</sys_updated_on>
+        <sys_updated_on>2024-04-09 07:35:03</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

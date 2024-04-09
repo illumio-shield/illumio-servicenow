@@ -188,35 +188,27 @@ IllumioUpdateWorkloads.prototype = {
 
                     if (this.autoSync == 'true') {	
 					
-						if(totalSysIds.length>0){
-							var snowGetUrl =
-                            TABLE_API +
-                            AUTOSYNC_PAYLOAD_TABLE +
-                            '?sysparm_query=sys_id=' +
-                            totalSysIds[counter];
-
-                        var response = this.snHttpClient.get(snowGetUrl, '');	
-                        if (response.data.result.length == 0) {
-                            this.logger._error(
-                                'No Results Found for the Query'
+						var grPayload = new GlideRecord(AUTOSYNC_JOB_TABLE);
+                        if (grPayload.get(totalSysIds[counter])) {
+                            payload = JSON.parse(grPayload.payload);
+                            var deletePayloadUrl =
+                                TABLE_API +
+                                AUTOSYNC_PAYLOAD_TABLE +
+                                '/' +
+                                totalSysIds[counter];
+                            this.snHttpClient.deleteMethod(
+                                deletePayloadUrl,
+                                ''
                             );
-                            return false;
+                            counter++;
+                        } else {
+                            this.logger._error(
+                                'Could not get the autosync payload having sys id: ' +
+                                    totalSysIds[counter]
+                            );
+                            counter++;
                         }
-                        var jobRecord = response.data.result[0];
-						payload=jobRecord.payload;
-						payload=payload.replaceAll("\\","");
-						payload=JSON.parse(payload);
 						
-                        var deletePayloadUrl =
-                            TABLE_API +
-                            AUTOSYNC_PAYLOAD_TABLE +
-                            '/' +
-                            totalSysIds[counter];
-                        this.snHttpClient.deleteMethod(deletePayloadUrl, '');
-                        counter++;
-					}
-						
-					
                     } else {
                         payload = JSON.parse(this.payload);
                     }
@@ -545,7 +537,7 @@ IllumioUpdateWorkloads.prototype = {
                     "labels": snowUpdateQueueFinal[p].payloadPut
                 };
 
-                var fieldValueEndpoint = "/api/x_illu2_illumio/illumioupdateworkloadfieldvalue/update_label_dimension";
+                var fieldValueEndpoint = WORKLOAD_FIELD_VALUE_ENDPOINT;
 
                 var snowHttpFieldValueResponse = this.snHttpClient.post(fieldValueEndpoint, '', null, payloadFieldValue);
 
@@ -804,7 +796,7 @@ IllumioUpdateWorkloads.prototype = {
                     "labels": snowUpdateQueueFinal[p].payloadPut
                 };
 
-                var fieldValueEndpoint = "/api/x_illu2_illumio/illumioupdateworkloadfieldvalue/update_label_dimension";
+                var fieldValueEndpoint = WORKLOAD_FIELD_VALUE_ENDPOINT;
 
                 var snowHttpFieldValueResponse = this.snHttpClient.post(fieldValueEndpoint, '', null, payloadFieldValue);
 
@@ -1110,9 +1102,10 @@ IllumioUpdateWorkloads.prototype = {
 					if (key != 'logs') {
                         jobRecord[key] = jobContent[key];
                     } else {
-						jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n", "\n");
+						jobRecord["logs"]=jobRecord["logs"].replaceAll("\\\"", "\"");
+						jobRecord["logs"]=jobRecord["logs"].replaceAll("\\'", "'");
+						jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n","\n");
 						jobRecord["logs"]+='\n'+ '[' +this.illumioDateFormat.format(new Date())+ ']'+jobContent["logs"];	
-
                     }  
 				}
                 }
@@ -1146,7 +1139,7 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>63</sys_mod_count>
+        <sys_mod_count>72</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1154,6 +1147,6 @@ IllumioUpdateWorkloads.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 13:36:32</sys_updated_on>
+        <sys_updated_on>2024-04-09 07:34:59</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

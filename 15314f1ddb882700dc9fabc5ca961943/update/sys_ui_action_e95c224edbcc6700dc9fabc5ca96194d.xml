@@ -40,7 +40,8 @@
             sys_id = [],
             configSysId = [],
             selectedRecordObject = {},
-            totalRecordsToSync;
+            totalRecordsToSync,
+            instanceURL;
         var userName = g_user.firstName + " " + g_user.lastName;
         sys_id = g_form.getUniqueValue();
         configSysId = g_form.getValue('illumio_pce_configuration');
@@ -52,7 +53,6 @@
         loadingDialog.renderWithContent(
             '<html><body><div class="row loading-container" id="loadingDialog"><label style="font-size: medium;">Validating Sync process...</label><br /><div class="loading-indicator icon-loading icon-lg"></div></div></html>'
         );
-        loadingDialog.destroy();
         interfaces = g_form.getValue('interfaces');
         var snowIP = interfaces['umw0'] ? interfaces['umw0']['cmdb_value'].trim() : "";
         if (snowIP == "" && interfaces == "") {
@@ -70,12 +70,22 @@
         function gaParseTableResponse(response) {
             answer = response.responseXML.documentElement.getAttribute("answer");
             answer = JSON.parse(answer);
-            checkedRecordsData = answer.filteredRecords;
-            totalRecordsToSync = answer.totalRecords;
+            checkedRecordsData = answer.data.filteredRecords;
+            totalRecordsToSync = answer.data.totalRecords;
+            instanceURL = answer.instanceURL;
+
+            if (answer.data.limitExceeded) {
+                loadingDialog.destroy();
+                dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                dialog.setTitle("Workload creation or label creation limit has exceeded.");
+                dialog.render();
+                return false;
+            }
             preparePayloadForWorkload();
         }
 
         function preparePayloadForWorkload() {
+            loadingDialog.destroy();
 
             if (totalRecordsToSync == 0) {
                 dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
@@ -83,33 +93,14 @@
                 dialog.render();
                 return false;
             }
-            var ga_labels = new GlideAjax("IllumioPrepareWorkload");
-            ga_labels.addParam("sysparm_name", "getHrefs");
-            ga_labels.addParam("sysparm_workload", JSON.stringify(checkedRecordsData[configSysId][0]));
-            ga_labels.addParam("sysparm_config_sys_id", configSysId);
 
-            ga_labels.getXML(function(response) {
-                gaParseLabelsResponse(response);
-            });
+            gaParseLabelsResponse(checkedRecordsData[configSysId][0]);
 
             /**
              * Fetch the label details and send the workload object to server script
              */
-            function gaParseLabelsResponse(response) {
+            function gaParseLabelsResponse(workloadObject) {
                 var jobSysId;
-                answer = JSON.parse(
-                    response.responseXML.documentElement.getAttribute("answer")
-                );
-
-                var workloadObject = {
-                    hostname: answer.workload.hostname,
-                    ip_address: answer.workload.ip_address,
-                    sys_id: answer.workload.sys_id,
-                    labels: answer.workload.labels,
-                    createlabels: answer.workload.createlabels,
-                    interfaces: answer.workload.interfaces
-                };
-                var instanceURL = answer.instanceURL;
                 workloadObject["description"] =
                     "Created by " +
                     userName +
@@ -177,7 +168,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>e95c224edbcc6700dc9fabc5ca96194d</sys_id>
-        <sys_mod_count>134</sys_mod_count>
+        <sys_mod_count>135</sys_mod_count>
         <sys_name>Sync to PCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -185,7 +176,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_e95c224edbcc6700dc9fabc5ca96194d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-27 11:01:17</sys_updated_on>
+        <sys_updated_on>2024-04-05 09:54:40</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>

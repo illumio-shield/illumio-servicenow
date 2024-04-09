@@ -18,7 +18,14 @@ IllumioGetCustomTableRecord.prototype = Object.extendsObject(global.AbstractAjax
     getData: function() {
         var checkedRecords = JSON.parse(this.getParameter("sysparm_checked_records_object"));
         var utils = new x_illu2_illumio.IllumioUtils();
-        return JSON.stringify(utils.getWorkloadData(checkedRecords));
+        var instanceURL = gs.getProperty('glide.servlet.uri');
+        instanceURL = instanceURL.replace('https://', '');
+        instanceURL.replace('/', '');
+
+        return JSON.stringify({
+            data: utils.getWorkloadData(checkedRecords),
+            instanceURL: instanceURL
+        });
     },
     type: 'IllumioGetCustomTableRecord'
 });]]></script>
@@ -26,13 +33,13 @@ IllumioGetCustomTableRecord.prototype = Object.extendsObject(global.AbstractAjax
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:12:51</sys_created_on>
         <sys_id>c01dd286dbcc6700dc9fabc5ca96191e</sys_id>
-        <sys_mod_count>63</sys_mod_count>
+        <sys_mod_count>64</sys_mod_count>
         <sys_name>IllumioGetCustomTableRecord</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_c01dd286dbcc6700dc9fabc5ca96191e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-27 06:52:49</sys_updated_on>
+        <sys_updated_on>2024-04-05 10:15:22</sys_updated_on>
     </sys_script_include>
 </record_update>

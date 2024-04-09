@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="07b245a79300021062233f018bba1042" label="Illumio Scheduled Jobs" max_length="40" name="x_illu2_illumio_illumio_scheduled_jobs" type="collection">
-        <element label="Current Operation" mandatory="true" max_length="40" name="current_operation" type="string"/>
+        <element label="Current Operation" max_length="40" name="current_operation" type="string"/>
         <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <element label="Job Completed" max_length="40" name="job_completed" type="glide_date_time"/>
         <element label="Job Owner" max_length="32" name="job_owner" reference="sys_user" type="reference"/>
         <element label="Job Started" max_length="40" name="job_started" type="glide_date_time"/>
-        <element choice="1" label="Job Status" mandatory="true" max_length="20" name="job_status" type="string">
+        <element choice="1" label="Job Status" max_length="20" name="job_status" type="string">
             <choice>
                 <element inactive_on_update="false" label="Completed" sequence="0" value="completed"/>
                 <element inactive_on_update="false" label="Completed with errors" sequence="1" value="completed_with_error"/>

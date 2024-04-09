@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="job_status" table="x_illu2_illumio_illumio_scheduled_jobs">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="cancel_job_on_limit_exceed" table="x_illu2_illumio_illumio_pce_conf">
         <active>true</active>
         <array>false</array>
         <attributes/>
@@ -10,10 +10,10 @@
 	return '';  // return the calculated value
 
 })(current);]]></calculation>
-        <choice>1</choice>
+        <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Job Status</column_label>
+        <column_label>Cancel Job on Limit Exceed</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -26,16 +26,16 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>job_status</element>
+        <element>cancel_job_on_limit_exceed</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="String">string</internal_type>
+        <internal_type display_value="">boolean</internal_type>
         <mandatory>false</mandatory>
-        <max_length>20</max_length>
-        <name>x_illu2_illumio_illumio_scheduled_jobs</name>
+        <max_length>40</max_length>
+        <name>x_illu2_illumio_illumio_pce_conf</name>
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
@@ -51,14 +51,14 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-22 09:37:33</sys_created_on>
-        <sys_name>Job Status</sys_name>
+        <sys_created_on>2024-04-05 10:45:55</sys_created_on>
+        <sys_name>Cancel Job on Limit Exceed</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_dictionary_x_illu2_illumio_illumio_scheduled_jobs_job_status</sys_update_name>
+        <sys_update_name>sys_dictionary_x_illu2_illumio_illumio_pce_conf_cancel_job_on_limit_exceed</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-08 07:50:15</sys_updated_on>
+        <sys_updated_on>2024-04-05 10:45:55</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

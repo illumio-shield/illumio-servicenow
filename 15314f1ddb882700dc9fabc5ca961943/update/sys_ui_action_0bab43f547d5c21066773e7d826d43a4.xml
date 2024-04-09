@@ -35,22 +35,33 @@
     var jobSysId = g_form.getUniqueValue();
 
     var dialog;
-
+	
     dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
     dialog.setTitle("Validating cancelled job...");
     dialog.render();
 	
-    var updateRecord = new GlideAjax("x_illu2_illumio.GetLabelGroupsAjax");
-    updateRecord.addParam("sysparm_name", "updateScheduledJobStatus");
-    updateRecord.addParam("sysparm_job_sys_id", jobSysId);
-	updateRecord.getXMLAnswer(handleStatusUpdate);
+    var getJobRecordStatus = new GlideAjax("x_illu2_illumio.GetLabelGroupsAjax");
+    getJobRecordStatus.addParam("sysparm_name", "getCancelledJobStatus");
+    getJobRecordStatus.addParam("sysparm_job_sys_id", jobSysId);
+    getJobRecordStatus.getXMLAnswer(getJobStatus);
 
-    function handleStatusUpdate(response) {
-        if (response) {
-            dialog.setTitle("Scheduled job is cancelled");
-        }
-		return;
-		
+    function getJobStatus(resp) {
+		console.log()
+        if (resp=="true") {
+            var updateRecord = new GlideAjax("x_illu2_illumio.GetLabelGroupsAjax");
+            updateRecord.addParam("sysparm_name", "updateScheduledJobStatus");
+            updateRecord.addParam("sysparm_job_sys_id", jobSysId);
+            updateRecord.getXMLAnswer(handleStatusUpdate);
+
+            function handleStatusUpdate(response) {
+                if (response=="true") 
+                    dialog.setTitle("Scheduled job is cancelled");
+                else
+					dialog.setTitle("Error in updating scheduled job status to cancel");	
+            }
+        } 
+		else 
+            dialog.setTitle("Scheduled job status cannot be cancelled");
     }
 }]]></script>
         <show_insert>false</show_insert>
@@ -63,7 +74,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>0bab43f547d5c21066773e7d826d43a4</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>15</sys_mod_count>
         <sys_name>Cancel Scheduled Job</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -71,7 +82,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_0bab43f547d5c21066773e7d826d43a4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-02 09:06:23</sys_updated_on>
+        <sys_updated_on>2024-04-08 10:03:31</sys_updated_on>
         <table>x_illu2_illumio_illumio_scheduled_jobs</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

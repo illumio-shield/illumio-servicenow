@@ -19,14 +19,14 @@ IllumioAutoSyncWithPCE.prototype = {
         this.workloadsToDelete = 0;
         this.maxSizeOfWorkloadPayload = parseInt(gs.getProperty("x_illu2_illumio.max_workloads_in_each_payload_for_autosync", 10000));
     },
+
     /**
      * Starts the process of auto sync
      * @params {string} illumioJobId Job Id of the scheduled job
      **/
     process: function(illumioJobId) {
 
-        var labelsToCreate = 0,
-            utils = new IllumioUtils(),
+        var utils = new IllumioUtils(),
             skippedWorkloads = 0,
             partial_success = "false",
             countObject, sysIds = [],
@@ -34,10 +34,15 @@ IllumioAutoSyncWithPCE.prototype = {
             selectedRecordsObject = {};
 
         try {
-			
-			if (utils.getCancelledJobStatus(illumioJobId))
-                    return;
 
+            if (utils.getCancelledJobStatus(illumioJobId)) {
+                return;
+            }
+
+            // prepare instance URL
+            var instanceURL = gs.getProperty('glide.servlet.uri');
+            instanceURL = instanceURL.replace('https://', '');
+            instanceURL = instanceURL.replace('/', '');
 
             // fetch scheduled job record
             var illumioScheduledJobsGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
@@ -57,7 +62,6 @@ IllumioAutoSyncWithPCE.prototype = {
 
             var userName = userGr.first_name + " " + userGr.last_name,
                 pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
-            var creationLimit = parseInt(pceConfig.create_workload_limit);
 
             // get all the workload sysIds
             var allWorkloads = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
@@ -93,16 +97,153 @@ IllumioAutoSyncWithPCE.prototype = {
             // process all workloads
             response = utils.getWorkloadData(checkedRecordsObject);
             totalRecords = response.totalRecords;
+            var cancelJobOnLimitExceed = response.cancelJobOnLimitExceed;
             var checkedRecordsData = response.filteredRecords[configSysId];
+            var thresholdLimitLog = response.logMessage[configSysId];
 
-            //delete retired worklaods 
-            var retiredWorkloads = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
-            retiredWorkloads.addQuery('deleted_from_pce', true);
-            retiredWorkloads.addQuery("illumio_pce_configuration", configSysId);
-            retiredWorkloads.query();
+            if (!cancelJobOnLimitExceed) {
+
+                //delete retired worklaods 
+                var retiredWorkloads = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+                retiredWorkloads.addQuery('deleted_from_pce', true);
+                retiredWorkloads.addQuery("illumio_pce_configuration", configSysId);
+                retiredWorkloads.query();
+
+                // Generate the managed and unmanaged workloads' list
+                for (var index = 0, len = checkedRecordsData.length; index < len; index++) {
+
+                    var workloadObject = checkedRecordsData[index];
+
+                    if (checkedRecordsData[index]["known_to_pce"] == "managed") {
+                        // If the workload is managed and has conflicts
+                        workloadObject["href"] = checkedRecordsData[index]["pce_workload_href"];
+
+                        // Add note about update
+                        workloadObject["description"] =
+                            "Updated by " +
+                            userName +
+                            " [" + instanceURL + "] at " +
+                            new Date().toLocaleString();
+
+                        this.managedWorkloadsList.push(workloadObject);
+                        counter = this.addObjectToPayload(false, counter);
+                    } else if (checkedRecordsData[index]["known_to_pce"] == "unmanaged") {
+                        // If the workload is unmanaged and has conflicts
+                        workloadObject["href"] = checkedRecordsData[index]["pce_workload_href"];
+
+                        // Add note about update
+                        workloadObject["description"] =
+                            "Updated by " +
+                            userName +
+                            " [" + instanceURL + "] at " +
+                            new Date().toLocaleString();
+
+                        this.unManagedWorkloadsList.push(workloadObject);
+                        counter = this.addObjectToPayload(false, counter);
+
+                    } else {
+                        workloadObject["description"] =
+                            "Created by " +
+                            userName +
+                            " [" + instanceURL + "] at " +
+                            new Date().toLocaleString();
+
+                        this.unknownWorkloadsList.push(workloadObject);
+                        counter = this.addObjectToPayload(false, counter);
+                    }
+                }
+
+                // get workload limit object
+                var thresholdLimit = new IllumioThresholdLimit();
+                var wlLimitObject = thresholdLimit.getThresholdLimit(configSysId);
+                var deleteLimitExceeded = false;
+
+                //process retired workloads
+                var retiredWorkloadsObject = {};
+                while (retiredWorkloads.next()) {
+                    var markDeleteAsFalse = true;
+
+                    var retiredSysId = retiredWorkloads.getUniqueValue();
+                    var retiredHostName = retiredWorkloads.getValue("hostname").trim();
+                    var mappingTableGr = new GlideRecord("x_illu2_illumio_illumio_pce_workloads_mapping");
+                    mappingTableGr.addQuery('hostname', retiredHostName);
+                    mappingTableGr.addQuery("illumio_pce_configuration", configSysId);
+                    mappingTableGr.addQuery('agent', false);
+                    mappingTableGr.setLimit(1);
+                    mappingTableGr.query();
+                    if (mappingTableGr.next()) {
+                        if (!wlLimitObject["limitEnabled"] || !wlLimitObject["isLimitEnabled"]["delete"] || wlLimitObject["wlLimit"]["delete"] > 0) {
+                            markDeleteAsFalse = false;
+                            this.workloadsToDelete++;
+                            wlLimitObject["wlLimit"]["delete"] -= 1;
+                            retiredWorkloadsObject[mappingTableGr.getValue("href")] = retiredSysId;
+                        } else {
+                            deleteLimitExceeded = true;
+                            if (wlLimitObject.cancelJobOnLimitExceed) {
+                                cancelJobOnLimitExceed = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (markDeleteAsFalse) {
+                        // mark deleted from pce as false
+                        retiredWorkloads.setValue("deleted_from_pce", false);
+                        retiredWorkloads.update();
+                    }
+                }
+
+                // log the info message
+                if (deleteLimitExceeded) {
+                    if (!cancelJobOnLimitExceed) {
+                        if (thresholdLimitLog)
+                            thresholdLimitLog += " and one or more workloads won't be deleted as workload deletion limit has exceeded";
+                        else
+                            thresholdLimitLog = "One or more workloads won't be deleted as workload deletion limit has exceeded";
+                        gs.info("One or more workloads won't be deleted as workload deletion limit has exceeded for Illumio PCE Configuration with sys_id " + configSysId);
+                    } else {
+                        thresholdLimitLog = "Cancelled the job as workload deletion limit has exceeded";
+                        gs.info(thresholdLimitLog + " for Illumio PCE Configuration with sys_id " + configSysId);
+                    }
+
+                }
+            }
+
+            // check thresold limit
+            if (cancelJobOnLimitExceed) {
+                var notDeletedworkload = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+                notDeletedworkload.addQuery('deleted_from_pce', true);
+                notDeletedworkload.query();
+                while (notDeletedworkload.next()) {
+                    notDeletedworkload['deleted_from_pce'] = false;
+                    notDeletedworkload.update();
+                }
+
+                illumioScheduledJobsGr.logs +=
+                    "\n[" +
+                    new Date(new GlideDateTime().getNumericValue()).toISOString() +
+                    "] " + thresholdLimitLog;
+
+                illumioScheduledJobsGr.job_status = "cancelled";
+
+                illumioScheduledJobsGr.job_completed = new GlideDateTime();
+                if (!illumioScheduledJobsGr.update()) {
+                    gs.error("Error while updating process monitor.");
+                }
+                return;
+            } else if (!gs.nil(thresholdLimitLog)) {
+                partial_success = "true";
+                illumioScheduledJobsGr.logs +=
+                    "\n[" +
+                    new Date(new GlideDateTime().getNumericValue()).toISOString() +
+                    "] " + thresholdLimitLog;
+
+                if (!illumioScheduledJobsGr.update()) {
+                    gs.error("Error while updating process monitor.");
+                }
+            }
 
             // check if there is unknown or inconsistent or retired workload
-            if (totalRecords == 0 && !retiredWorkloads.hasNext()) {
+            if (totalRecords == 0 && this.workloadsToDelete == 0) {
                 // Table is empty
                 gs.info("Auto synchronization : No unknown or inconsistent or retired workload found.");
                 illumioScheduledJobsGr.logs +=
@@ -126,146 +267,6 @@ IllumioAutoSyncWithPCE.prototype = {
                 return;
             }
 
-            // Generate the managed and unmanaged workloads' list
-            var unknownWorkloadsSelected = 0,
-                unmanagedworkloadSelected = 0,
-                managedworkloadSelected = 0;
-            for (var index = 0, len = checkedRecordsData.length; index < len; index++) {
-
-                // Workload object with common items
-                var workload_object = {
-                    source_table: checkedRecordsData[index].source_table,
-                    hostname: checkedRecordsData[index]["hostname"],
-                    sys_id: checkedRecordsData[index]["sys_id"],
-                    updateFields: checkedRecordsData[index].updateFields,
-                    labels: [],
-                    createlabels: []
-                };
-
-                // Populate the labels and createLabels lists
-                workload_object = this.getUseCreateLabelsList(
-                    configSysId,
-                    workload_object,
-                    checkedRecordsData[index]["label_data"]
-                );
-                var instanceURL = gs.getProperty('glide.servlet.uri');
-                instanceURL = instanceURL.replace('https://', '');
-                instanceURL = instanceURL.replace('/', '');
-
-                labelsToCreate += workload_object.createlabels.length;
-                if (checkedRecordsData[index]["known_to_pce"] == "managed") {
-                    // If the workload is managed and has conflicts
-                    workload_object["href"] = checkedRecordsData[index]["pce_workload_href"];
-
-                    // Add note about update
-                    workload_object["description"] =
-                        "Updated by " +
-                        userName +
-                        " [" + instanceURL + "] at " +
-                        new Date().toLocaleString();
-
-                    managedworkloadSelected += 1;
-                    this.managedWorkloadsList.push(workload_object);
-                    counter = this.addObjectToPayload(false, counter);
-                } else if (checkedRecordsData[index]["known_to_pce"] == "unmanaged") {
-                    // If the workload is unmanaged and has conflicts
-                    workload_object["href"] = checkedRecordsData[index]["pce_workload_href"];
-
-                    // Add note about update
-                    workload_object["description"] =
-                        "Updated by " +
-                        userName +
-                        " [" + instanceURL + "] at " +
-                        new Date().toLocaleString();
-
-                    workload_object["known_to_pce"] = checkedRecordsData[index]["known_to_pce"];
-                    workload_object["interfaces"] = checkedRecordsData[index]["interfaces"];
-                    gs.info("Unknown Workload Interfaces: " + JSON.stringify(workload_object["interfaces"]));
-                    if (checkedRecordsData[index]["conflicts"] == "1") {
-                        unmanagedworkloadSelected += 1;
-                        this.unManagedWorkloadsList.push(workload_object);
-                        counter = this.addObjectToPayload(false, counter);
-                    }
-                } else if (creationLimit == 0 || (creationLimit != 0 && this.unknownWorkloadsList.length < creationLimit)) {
-                    workload_object["description"] =
-                        "Created by " +
-                        userName +
-                        " [" + instanceURL + "] at " +
-                        new Date().toLocaleString();
-                    if (checkedRecordsData[index]["ip_address"] != "") {
-                        workload_object["ip_address"] = checkedRecordsData[index]["ip_address"];
-                    }
-                    workload_object.interfaces = checkedRecordsData[index]["interfaces"];
-                    this.unknownWorkloadsList.push(workload_object);
-                    counter = this.addObjectToPayload(false, counter);
-                    unknownWorkloadsSelected += 1;
-                }
-            }
-
-            //process retired workloads
-            var retiredWorkloadsObject = {};
-            while (retiredWorkloads.next()) {
-                var retiredSysId = retiredWorkloads.getUniqueValue();
-                var retiredHostName = retiredWorkloads.getValue("hostname").trim();
-                var mappingTableGr = new GlideRecord("x_illu2_illumio_illumio_pce_workloads_mapping");
-                mappingTableGr.addQuery('hostname', retiredHostName);
-                mappingTableGr.addQuery("illumio_pce_configuration", configSysId);
-                mappingTableGr.addQuery('agent', false);
-                mappingTableGr.setLimit(1);
-                mappingTableGr.query();
-                if (mappingTableGr.next()) {
-                    this.workloadsToDelete++;
-                    retiredWorkloadsObject[mappingTableGr.getValue("href")] = retiredSysId;
-                } else {
-                    // mark deleted from pce as false
-                    retiredWorkloads.setValue("deleted_from_pce", false);
-                    retiredWorkloads.update();
-                }
-            }
-
-            // check thresold limit
-            var wlToModify = unmanagedworkloadSelected + managedworkloadSelected;
-            var checkThreshold = new IllumioThresholdLimit().checkThresholdLimit(configSysId, labelsToCreate, wlToModify, unknownWorkloadsSelected, this.workloadsToDelete);
-            if (!checkThreshold.hasError && checkThreshold.limitExceed) {
-                var notDeletedworkload = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
-                notDeletedworkload.addQuery('deleted_from_pce', true);
-                notDeletedworkload.query();
-                while (notDeletedworkload.next()) {
-                    notDeletedworkload['deleted_from_pce'] = false;
-                    notDeletedworkload.update();
-                }
-
-                gs.error(checkThreshold.description);
-                illumioScheduledJobsGr.logs +=
-                    "\n[" +
-                    new Date(new GlideDateTime().getNumericValue()).toISOString() +
-                    "] " + checkThreshold.description;
-
-                illumioScheduledJobsGr.job_status = "failed";
-
-                illumioScheduledJobsGr.job_completed = new GlideDateTime();
-                if (!illumioScheduledJobsGr.update()) {
-                    gs.error("Error while updating process monitor.");
-                }
-                return;
-            } else if (checkThreshold.hasError) {
-                illumioScheduledJobsGr.logs +=
-                    "\n[" +
-                    new Date(new GlideDateTime().getNumericValue()).toISOString() +
-                    "] " + checkThreshold.description;
-                illumioScheduledJobsGr.current_operation =
-                    "Synchronization with PCE Failed";
-
-                illumioScheduledJobsGr.job_status = "failed";
-
-                illumioScheduledJobsGr.job_completed = new GlideDateTime();
-                if (!illumioScheduledJobsGr.update()) {
-                    gs.error("Error while updating process monitor.");
-                }
-
-                return;
-            }
-
             gs.info("Sync process started for PCE Configuration: {0}", configGr.getValue("name"));
             try {
                 // Skip the operation if no workload to process
@@ -280,7 +281,7 @@ IllumioAutoSyncWithPCE.prototype = {
                     illumioScheduledJobsGr.logs +=
                         "\n[" +
                         new Date(new GlideDateTime().getNumericValue()).toISOString() +
-                        '] Total critical label groups fetched : ' + count;
+                        '] Total critical label groups fetched : ' + countObject[configSysId];
                     illumioScheduledJobsGr.logs +=
                         "\n[" +
                         new Date(new GlideDateTime().getNumericValue()).toISOString() +
@@ -328,10 +329,8 @@ IllumioAutoSyncWithPCE.prototype = {
                     pceConfig.midServer,
                     parameters
                 );
-               var resp= illumioAddToECCQueue.insert();
-				if(!resp)
-					return;
-				
+                illumioAddToECCQueue.insert();
+
                 gs.info("Started auto synchronization for PCE Configuration {0}", configGr.getValue("name"));
             } catch (ex) {
                 gs.error("Exception occurred while preparing request data. Exception", ex);
@@ -343,12 +342,17 @@ IllumioAutoSyncWithPCE.prototype = {
     },
 
     /**
-     * 
-     * @param {JSON} workload_object Object of the workload
-     * @param {JSON} labelsToMap Object of the labels to map
+     * Updated workload object with label details
+     * @param {String} configSysId Illumio PCE Configuration sys_id
+     * @param {Object} workloadObject Object of the workload
+     * @param {Object} labelData Object of the labels to map
      * @returns updated object of the workload
      */
     getUseCreateLabelsList: function(configSysId, workloadObject, labelData) {
+
+        workloadObject.labels = [];
+        workloadObject.createlabels = [];
+
         var utils = new IllumioUtils();
         for (var labelType in labelData) {
             var labelCMDBValue = labelData[labelType];
@@ -363,17 +367,16 @@ IllumioAutoSyncWithPCE.prototype = {
                 workloadObject.labels.push({
                     href: resp.returnValue,
                 });
-            } else {
-                if (!gs.nil(labelCMDBValue)) {
-                    workloadObject.createlabels.push({
-                        key: labelType,
-                        value: labelCMDBValue,
-                    });
-                }
+            } else if (!gs.nil(labelCMDBValue)) {
+                workloadObject.createlabels.push({
+                    key: labelType,
+                    value: labelCMDBValue,
+                });
             }
         }
         return workloadObject;
     },
+
     /**
      * this function will add the workload payload to table if couter exceeds or if its a last batch
      * @param {boolean} pushBundle
@@ -425,13 +428,13 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>327</sys_mod_count>
+        <sys_mod_count>335</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-02 09:55:11</sys_updated_on>
+        <sys_updated_on>2024-04-09 09:36:38</sys_updated_on>
     </sys_script_include>
 </record_update>

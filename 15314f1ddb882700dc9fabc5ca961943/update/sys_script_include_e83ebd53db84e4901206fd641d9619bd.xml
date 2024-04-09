@@ -70,9 +70,9 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
 
             try {
                 var retObject = {
-					data: {},
-					count: 0
-				};
+                    data: {},
+                    count: 0
+                };
                 var sysIds = this.getParameter("sysparm_sys_ids");
                 var pceGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
                 pceGr.addQuery("sys_id", "IN", sysIds);
@@ -85,7 +85,7 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                     } else {
                         retObject["data"][config].push(pceGr.getUniqueValue());
                     }
-					retObject["count"] += 1;
+                    retObject["count"] += 1;
                 }
                 return JSON.stringify(retObject);
             } catch (e) {
@@ -204,17 +204,29 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                 gs.error("[getConfigurationDetails] Exception occured while getting configuration details. Exception: " + ex);
             }
         },
-		
-	updateScheduledJobStatus: function() {
-           
+
+        getCancelledJobStatus: function() {
+
             var jobSysId = this.getParameter("sysparm_job_sys_id");
-        
+
+            var scheduledJobGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
+            if (scheduledJobGr.get("sys_id", jobSysId)) {
+               if(scheduledJobGr.job_status=="running")
+                return true;
+            }
+			return false;
+        },
+
+        updateScheduledJobStatus: function() {
+
+            var jobSysId = this.getParameter("sysparm_job_sys_id");
+
             var scheduledJobGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
             if (scheduledJobGr.get("sys_id", jobSysId)) {
                 scheduledJobGr.setValue("job_status", "cancelled");
-				scheduledJobGr.setValue("job_completed",new GlideDateTime()) 
-				scheduledJobGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + ']  The Job is Cancelled';
-				scheduledJobGr.update();
+                scheduledJobGr.setValue("job_completed", new GlideDateTime());
+                scheduledJobGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + ']  The Job is Cancelled';
+                scheduledJobGr.update();
                 return true;
             } else {
                 return false;
@@ -227,13 +239,13 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-10-29 15:02:03</sys_created_on>
         <sys_id>e83ebd53db84e4901206fd641d9619bd</sys_id>
-        <sys_mod_count>183</sys_mod_count>
+        <sys_mod_count>187</sys_mod_count>
         <sys_name>GetLabelGroupsAjax</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_e83ebd53db84e4901206fd641d9619bd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-02 12:51:32</sys_updated_on>
+        <sys_updated_on>2024-04-08 08:44:35</sys_updated_on>
     </sys_script_include>
 </record_update>
