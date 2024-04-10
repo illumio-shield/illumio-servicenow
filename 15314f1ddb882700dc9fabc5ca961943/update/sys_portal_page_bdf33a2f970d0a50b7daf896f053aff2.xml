@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><record_update node_type="sys_portal_page" unload_date="2024-03-27 05:44:18">
+<?xml version="1.0" encoding="UTF-8"?><record_update node_type="sys_portal_page" unload_date="2024-04-10 13:27:01">
     <sys_portal_page action="INSERT_OR_UPDATE">
         <layout display_value="layout_3_across_only">4127db33d7111100f2d224837e610336</layout>
-        <order/>
+        <order>4000</order>
         <read_roles>x_illu2_illumio.illumio_user</read_roles>
         <roles>x_illu2_illumio.illumio_admin</roles>
         <selectable>false</selectable>
@@ -11,23 +11,23 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>bdf33a2f970d0a50b7daf896f053aff2</sys_id>
-        <sys_mod_count>3</sys_mod_count>
-        <sys_name>PA Illumio home</sys_name>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>PA Illumio Home</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_portal_page_bdf33a2f970d0a50b7daf896f053aff2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 09:26:32</sys_updated_on>
-        <title>PA Illumio home</title>
+        <sys_updated_on>2024-04-10 10:11:36</sys_updated_on>
+        <title>PA Illumio Home</title>
         <user/>
         <view>pa_illumio_[deprecated]_-_new_tab</view>
         <related_items_node>
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Total unique workloads</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:06:08</sys_created_on>
@@ -129,7 +129,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Total PCE configurations</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:03:44</sys_created_on>
@@ -198,7 +198,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Managed workloads by active VEN versions</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:20:37</sys_created_on>
@@ -267,7 +267,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Workloads by enforcement mode</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:14:26</sys_created_on>
@@ -336,7 +336,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Total duplicate workloads</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:07:00</sys_created_on>
@@ -438,7 +438,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Unique workloads</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:07:33</sys_created_on>
@@ -507,7 +507,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Managed workloads by VEN status</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:18:30</sys_created_on>
@@ -576,7 +576,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Managed workloads by os</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:23:03</sys_created_on>
@@ -645,7 +645,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Total unique workloads with conflicts</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:06:37</sys_created_on>
@@ -747,7 +747,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Label dimensions</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:12:39</sys_created_on>
@@ -816,7 +816,7 @@
             <sys_portal action="INSERT_OR_UPDATE">
                 <dropzone/>
                 <offset/>
-                <page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</page>
+                <page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</page>
                 <summary>Scheduled job history</summary>
                 <sys_created_by>admin</sys_created_by>
                 <sys_created_on>2024-03-26 08:25:02</sys_created_on>

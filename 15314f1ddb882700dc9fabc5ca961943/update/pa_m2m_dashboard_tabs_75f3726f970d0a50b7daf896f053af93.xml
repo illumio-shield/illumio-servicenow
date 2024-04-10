@@ -2,7 +2,7 @@
     <pa_m2m_dashboard_tabs action="INSERT_OR_UPDATE">
         <dashboard display_value="Illumio">edf33a2f970d0a50b7daf896f053afef</dashboard>
         <home>false</home>
-        <homepage display_value="Illumio [Deprecated]">28de8caadb48a700dc9fabc5ca9619ed</homepage>
+        <homepage display_value="Illumio">28de8caadb48a700dc9fabc5ca9619ed</homepage>
         <order>1</order>
         <sys_class_name>pa_m2m_dashboard_tabs</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -19,6 +19,6 @@
         <sys_update_name>pa_m2m_dashboard_tabs_75f3726f970d0a50b7daf896f053af93</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-03-26 07:35:30</sys_updated_on>
-        <tab display_value="Illumio home">7df33a2f970d0a50b7daf896f053aff6</tab>
+        <tab display_value="Illumio Home">7df33a2f970d0a50b7daf896f053aff6</tab>
     </pa_m2m_dashboard_tabs>
 </record_update>

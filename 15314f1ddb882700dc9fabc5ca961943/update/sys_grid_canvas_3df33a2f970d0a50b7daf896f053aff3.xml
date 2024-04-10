@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_grid_canvas">
     <sys_grid_canvas action="INSERT_OR_UPDATE">
-        <legacy_page display_value="PA Illumio home">bdf33a2f970d0a50b7daf896f053aff2</legacy_page>
+        <legacy_page display_value="PA Illumio Home">bdf33a2f970d0a50b7daf896f053aff2</legacy_page>
         <name>PA Illumio [Deprecated] - New Tab</name>
         <sys_class_name>sys_grid_canvas</sys_class_name>
         <sys_created_by>admin</sys_created_by>
