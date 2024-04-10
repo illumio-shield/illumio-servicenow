@@ -48,7 +48,7 @@
         <field/>
         <field_list>display_name_singular,display_name_plural,key,label_type_initial,illumio_pce_configuration</field_list>
         <filter/>
-        <formatting_configuration>{"table":"incident","stringFormattingProperties":{},"durationFormattingProperties":{},"dateFormattingProperties":{},"numberFormattingProperties":{}}</formatting_configuration>
+        <formatting_configuration>{"table":"incident","stringFormattingProperties":{},"durationFormattingProperties":{},"dateFormattingProperties":{},"numberFormattingProperties":{"$COUNT_FIELD$,AGGREGATION":{"decimalPrecision":2,"groupingUsed":true,"roundingMode":"HALF_UP","metricPrefixSymbolUsed":false,"showOriginalNumberInTooltip":true,"addValueInTooltip":true}}}</formatting_configuration>
         <from/>
         <funnel_neck_percent>30</funnel_neck_percent>
         <gauge_autoscale>true</gauge_autoscale>
@@ -78,7 +78,7 @@
         <pivot_expanded>true</pivot_expanded>
         <report_drilldown/>
         <report_source/>
-        <roles>x_illu2_illumio.illumio_user,public</roles>
+        <roles>public,x_illu2_illumio.illumio_user</roles>
         <row/>
         <sc_groupby_item_id/>
         <sc_groupby_variable_id/>
@@ -86,7 +86,7 @@
         <sc_stackby_variable_id/>
         <score_color display_value="Black">65b30218a9fe3dba0120df8611520d97</score_color>
         <series_name_text/>
-        <set_color>one_color</set_color>
+        <set_color>null</set_color>
         <show_chart_border>false</show_chart_border>
         <show_chart_data_label>false</show_chart_data_label>
         <show_chart_title>report</show_chart_title>
@@ -106,16 +106,16 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:43:26</sys_created_on>
         <sys_id>d1838b6f974d0a50b7daf896f053afbb</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_name>Total unique label dimension</sys_name>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Total Label Dimensions</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_d1838b6f974d0a50b7daf896f053afbb</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 10:14:47</sys_updated_on>
+        <sys_updated_on>2024-04-10 10:38:17</sys_updated_on>
         <table>x_illu2_illumio_illumio_label_dimension</table>
-        <title>Total unique label dimension</title>
+        <title>Total Label Dimensions</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>

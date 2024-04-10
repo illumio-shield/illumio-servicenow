@@ -206,7 +206,7 @@ function createConfigClass(configSysId) {
 }
 
 // insert class field mappings for cross class configuration support 
-function insertClassFieldMap(type, configClassSysId, script, labelDimensionSysId) {
+function insertClassFieldMap(type, configClassSysId, scriptContent, labelDimensionSysId) {
     
     var classFieldMapGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
     classFieldMapGr.setValue("advanced", true);
@@ -215,7 +215,7 @@ function insertClassFieldMap(type, configClassSysId, script, labelDimensionSysId
     classFieldMapGr.setValue("illumio_config_class_mapping", configClassSysId);
     if (type == "label_dimension")
         classFieldMapGr.setValue("illumio_label_dimension", labelDimensionSysId);
-    classFieldMapGr.setValue("script", script);
+    classFieldMapGr.setValue("script", scriptContent);
     classFieldMapGr.insert();
 }
 
@@ -279,6 +279,9 @@ function startMigration() {
             createConfigClass(configGr.getUniqueValue());
 
             evaluateConfigClassObject();
+			
+			configGr.setValue("cancel_job_on_limit_exceed", true);
+			configGr.update();
 
             gs.info("[FIX SCRIPT] Completed migration of all configurations");
         } else {
@@ -295,14 +298,14 @@ startMigration();
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-29 08:02:10</sys_created_on>
         <sys_id>67b61ea097d90e50b7daf896f053afb1</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Migrate configurations</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_fix_67b61ea097d90e50b7daf896f053afb1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-01 06:24:22</sys_updated_on>
+        <sys_updated_on>2024-04-09 10:03:25</sys_updated_on>
         <unloadable>false</unloadable>
     </sys_script_fix>
 </record_update>

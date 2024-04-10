@@ -3,50 +3,61 @@
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>afdfba7a47d10a1066773e7d826d43fe</sys_id>
+            <sys_created_on>2024-04-09 16:32:13</sys_created_on>
+            <sys_id>3815bc1047a18e1066773e7d826d43aa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:13</sys_updated_on>
             <text>&lt;html&gt;&#13;
-&lt;head&gt;&#13;
-&lt;style&gt;&#13;
-       ol {&#13;
-           list-style-type: disc;&#13;
-           margin-top: 1 em;&#13;
-           margin-left: 0;&#13;
-           margin-right: 0;&#13;
-           padding-left: 40px;&#13;
-       }&#13;
 &#13;
-       p {&#13;
-           padding-left: 20px;&#13;
-       }&#13;
-&lt;/style&gt;&#13;
+&lt;head&gt;&#13;
+    &lt;style&gt;&#13;
+        ol {&#13;
+            list-style-type: disc;&#13;
+            margin-top: 1 em;&#13;
+            margin-left: 0;&#13;
+            margin-right: 0;&#13;
+            padding-left: 40px;&#13;
+        }&#13;
+&#13;
+        p {&#13;
+            padding-left: 20px;&#13;
+        }&#13;
+        .indent{&#13;
+            list-style: circle;&#13;
+        }&#13;
+    &lt;/style&gt;&#13;
 &lt;/head&gt;&#13;
+&#13;
 &lt;body&gt;&#13;
-&lt;p&gt;&lt;/p&gt;&#13;
-&lt;p&gt;&lt;b&gt;Enable Limits:&lt;/b&gt; Enables limits on number of manual or auto changes per sync.&#13;
-&lt;ol&gt;&#13;
-&lt;li&gt;Sets limits as a number (e.g., 300) or percentage (e.g., 20%).&lt;/li&gt;&#13;
-&lt;li&gt;&#13;
-Rounds up the number of workloads calculated from percentage.&#13;
-&lt;/li&gt;&#13;
-&lt;li&gt;&#13;
-Stops the entire sync if any of the configured limit is exceeded.&#13;
-&lt;/li&gt;&#13;
-&lt;/ol&gt;&#13;
-&lt;/p&gt;&#13;
-&lt;p&gt;&lt;b&gt;Description:&lt;/b&gt; &lt;/p&gt;&#13;
-&lt;ol&gt;&lt;li&gt;&lt;b&gt;Enable Limit on New Label Creation:&lt;/b&gt; Limit on creation of new labels on the PCE in a sync.&lt;/li&gt;&#13;
-&lt;li&gt;&lt;b&gt;Enable Limit on Workload Modifications:&lt;/b&gt; Limit on number of workloads with label modifications in a sync.&lt;/li&gt;&#13;
-&lt;li&gt;&lt;b&gt;Create Unmanaged Workloads on PCE from CMDB Records:&lt;/b&gt; Limit on creation of number of unmanaged workloads on the PCE in a sync.&lt;/li&gt;&#13;
-&lt;/ol&gt;&#13;
-       &#13;
+    &lt;p&gt;&lt;/p&gt;&#13;
+    &lt;p&gt;&#13;
+    &lt;ol&gt;&lt;li&gt;&lt;b&gt;Enable Limits:&lt;/b&gt; Enables limits on number of manual or auto changes per sync.&lt;/li&gt;&#13;
+        &lt;ol class="indent"&gt;&#13;
+        &lt;li &gt;Sets limits as a number (e.g., 300) or percentage (e.g., 20%).&lt;/li&gt;&#13;
+        &lt;li &gt;&#13;
+            Rounds up the number of workloads calculated from percentage.&#13;
+        &lt;/li&gt;&#13;
+        &lt;/ol&gt;&#13;
+        &lt;li&gt;&#13;
+            &lt;b&gt;Enable Limit on New Label Creation:&lt;/b&gt; Limit on creation of new labels on the PCE in a sync.&#13;
+        &lt;/li&gt;&#13;
+        &lt;li&gt;&lt;b&gt;Enable Limit on Workload Modifications:&lt;/b&gt; Limit on number of workloads with label modifications in a&#13;
+            sync.&#13;
+        &lt;/li&gt;&#13;
+        &lt;li&gt;&lt;b&gt;Create Unmanaged Workloads on PCE from CMDB Records:&lt;/b&gt; Limit on creation of number of unmanaged&#13;
+            workloads on the PCE in a sync.&lt;/li&gt;&#13;
+        &lt;li&gt;&lt;b&gt;Enable Limit on Workload Deletion: &lt;/b&gt; Limit on deletion of workloads on PCE in a sync.&lt;/li&gt;&#13;
+        &lt;li&gt;&lt;b&gt;Cancel Job on Limit Exceed: &lt;/b&gt; If it is marked true then it will cancel the entire sync in case any of the configured limit is exceeded, else it will sync the N number of workloads provided the limit is N and rest will be ignored.&lt;/li&gt;&#13;
+        &#13;
+    &lt;/ol&gt;&#13;
+    &lt;/p&gt;&#13;
+&#13;
 &#13;
 &#13;
 &#13;
 &lt;/body&gt;&#13;
+&#13;
 &lt;/html&gt;</text>
             <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
         </sys_ui_annotation>
@@ -54,13 +65,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>limits_on_workloads_and_labels_changes_per_sync</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>67dffa7a47d10a1066773e7d826d4305</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7015bc9847a18e1066773e7d826d43d7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -68,13 +79,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>.split</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6bdffa7a47d10a1066773e7d826d4305</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7815bc9847a18e1066773e7d826d43d7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
@@ -82,13 +93,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>cancel_job_on_limit_exceed</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6fdffa7a47d10a1066773e7d826d4305</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7c15bc9847a18e1066773e7d826d43d7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -96,13 +107,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>.end_split</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>63dffa7a47d10a1066773e7d826d4306</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7015bc9847a18e1066773e7d826d43d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
@@ -110,13 +121,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>.begin_split</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>67dffa7a47d10a1066773e7d826d4306</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7415bc9847a18e1066773e7d826d43d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type>.begin_split</type>
         </sys_ui_element>
@@ -124,13 +135,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>set_limit_on_new_label_creation</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6bdffa7a47d10a1066773e7d826d4306</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7815bc9847a18e1066773e7d826d43d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -138,13 +149,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>set_limit_on_workload_label_modifications</element>
             <position>6</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6fdffa7a47d10a1066773e7d826d4306</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7c15bc9847a18e1066773e7d826d43d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -152,13 +163,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>create_unmanaged_workloads_on_pce_from_cmdb_records</element>
             <position>7</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>63dffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7015bc9847a18e1066773e7d826d43d9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -166,13 +177,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>set_limit_on_workload_deletion</element>
             <position>8</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>67dffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7415bc9847a18e1066773e7d826d43d9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -180,13 +191,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>.split</element>
             <position>9</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6bdffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7815bc9847a18e1066773e7d826d43d9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
@@ -194,13 +205,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>new_label_creation_limit</element>
             <position>10</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6fdffa7a47d10a1066773e7d826d4307</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7c15bc9847a18e1066773e7d826d43d9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -208,13 +219,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>workload_label_modifications_limit</element>
             <position>11</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>63dffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7015bc9847a18e1066773e7d826d43da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -222,13 +233,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>number_of_workloads_to_be_created_from_servicenow</element>
             <position>12</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>67dffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7415bc9847a18e1066773e7d826d43da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -236,13 +247,13 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>workload_deletion_limit</element>
             <position>13</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6bdffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7815bc9847a18e1066773e7d826d43da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -250,27 +261,27 @@ Stops the entire sync if any of the configured limit is exceeded.&#13;
             <element>.end_split</element>
             <position>14</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>6fdffa7a47d10a1066773e7d826d4308</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7c15bc9847a18e1066773e7d826d43da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>afdfba7a47d10a1066773e7d826d43fe</element>
+            <element>3815bc1047a18e1066773e7d826d43aa</element>
             <position>15</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-05 10:47:44</sys_created_on>
-            <sys_id>63dffa7a47d10a1066773e7d826d4309</sys_id>
+            <sys_created_on>2024-04-09 16:32:14</sys_created_on>
+            <sys_id>7015bc9847a18e1066773e7d826d43db</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-05 10:47:44</sys_updated_on>
+            <sys_updated_on>2024-04-09 16:32:14</sys_updated_on>
             <sys_user/>
             <type>annotation</type>
         </sys_ui_element>

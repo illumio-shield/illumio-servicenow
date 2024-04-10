@@ -80,7 +80,7 @@
         <pivot_expanded>true</pivot_expanded>
         <report_drilldown/>
         <report_source/>
-        <roles>x_illu2_illumio.illumio_user,public</roles>
+        <roles>public,x_illu2_illumio.illumio_user</roles>
         <row/>
         <sc_groupby_item_id/>
         <sc_groupby_variable_id/>
@@ -108,16 +108,16 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:19:52</sys_created_on>
         <sys_id>ff1ef62b974d0a50b7daf896f053afaa</sys_id>
-        <sys_mod_count>3</sys_mod_count>
-        <sys_name>Managed workloads by VEN status</sys_name>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Managed Workloads by VEN Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_ff1ef62b974d0a50b7daf896f053afaa</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 10:07:23</sys_updated_on>
+        <sys_updated_on>2024-04-10 10:17:02</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
-        <title>Managed workloads by VEN status</title>
+        <title>Managed Workloads by VEN Status</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>

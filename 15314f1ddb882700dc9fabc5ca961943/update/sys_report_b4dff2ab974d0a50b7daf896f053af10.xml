@@ -78,7 +78,7 @@
         <pivot_expanded>true</pivot_expanded>
         <report_drilldown display_value="Scheduled job type">b3478ba3978d0a50b7daf896f053afc0</report_drilldown>
         <report_source/>
-        <roles>x_illu2_illumio.illumio_user,public</roles>
+        <roles>public,x_illu2_illumio.illumio_user</roles>
         <row/>
         <sc_groupby_item_id/>
         <sc_groupby_variable_id/>
@@ -106,16 +106,16 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:27:17</sys_created_on>
         <sys_id>b4dff2ab974d0a50b7daf896f053af10</sys_id>
-        <sys_mod_count>3</sys_mod_count>
-        <sys_name>Scheduled job history</sys_name>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Scheduled Job History</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_b4dff2ab974d0a50b7daf896f053af10</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 10:12:02</sys_updated_on>
+        <sys_updated_on>2024-04-10 10:34:16</sys_updated_on>
         <table>x_illu2_illumio_illumio_scheduled_jobs</table>
-        <title>Scheduled job history</title>
+        <title>Scheduled Job History</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>
@@ -135,7 +135,7 @@
         <x_axis_label_size>11</x_axis_label_size>
         <x_axis_label_tilt>0</x_axis_label_tilt>
         <x_axis_opposite>false</x_axis_opposite>
-        <x_axis_title/>
+        <x_axis_title>Time</x_axis_title>
         <x_axis_title_bold>true</x_axis_title_bold>
         <x_axis_title_color display_value="Black">65b30218a9fe3dba0120df8611520d97</x_axis_title_color>
         <x_axis_title_size>12</x_axis_title_size>

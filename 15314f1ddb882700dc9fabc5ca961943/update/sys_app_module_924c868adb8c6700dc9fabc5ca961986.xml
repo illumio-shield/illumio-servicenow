@@ -17,14 +17,14 @@
         <override_menu_roles>false</override_menu_roles>
         <query/>
         <report/>
-        <roles>x_illu2_illumio.illumio_admin</roles>
+        <roles>x_illu2_illumio.illumio_user</roles>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 09:57:55</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>924c868adb8c6700dc9fabc5ca961986</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Configuration</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -32,7 +32,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_app_module_924c868adb8c6700dc9fabc5ca961986</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-22 09:57:55</sys_updated_on>
+        <sys_updated_on>2024-04-10 10:26:54</sys_updated_on>
         <timeline_page/>
         <title>Configuration</title>
         <uncancelable>false</uncancelable>

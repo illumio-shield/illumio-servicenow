@@ -103,7 +103,6 @@ IllumioUtils.prototype = {
                 gs.info('The Critical Label Group ({0}) for the Configuration named {1} does not match any label groups at PCE', [criticalGroupConfig[type]['groupName'], pceConfig.getDisplayValue()]);
             }
         }
-        return;
     },
 
 
@@ -351,8 +350,7 @@ IllumioUtils.prototype = {
 
             // set umw0 as public ip address
             if (this.canSyncIP("umw0", state["umw0"], hostname)) {
-                // gs.info("Skipping interfaces of workload with hostname: {0} as the public IP address is invalid/not mapped", hostname);
-                // return [];
+
                 interfaces.push({
                     name: "umw0",
                     address: interfaceObject["umw0"]["cmdb_value"]
@@ -367,9 +365,9 @@ IllumioUtils.prototype = {
             // set pce umw1 to umw32 ip addresses
 
             var cmdbIndex = 1;
-            for (var index = 1; index < MAX_IP_ADDRESSES; index++) {
+            for (var ipindex = 1; ipindex < MAX_IP_ADDRESSES; ipindex++) {
 
-                key = "umw" + index;
+                key = "umw" + ipindex;
 
                 // set pce value
                 if (!gs.nil(interfaceObject[key])) {
@@ -777,10 +775,13 @@ IllumioUtils.prototype = {
                 labelDimensionGr.setValue("key", details["key"]);
                 labelDimensionGr.setValue("illumio_pce_configuration", pceConfig.getUniqueValue());
             }
-            labelDimensionGr.setValue("display_name_singular", details["display_name"]);
-            labelDimensionGr.setValue("display_name_plural", details["display_info"]["display_name_plural"]);
+			if(!gs.nil(details["display_info"])){
+			labelDimensionGr.setValue("label_type_initial", details["display_info"]["initial"]);
+			labelDimensionGr.setValue("display_name_plural", details["display_info"]["display_name_plural"]);
+			}
+			labelDimensionGr.setValue("display_name_singular", details["display_name"]); 
             labelDimensionGr.setValue("href", details["href"]);
-            labelDimensionGr.setValue("label_type_initial", details["display_info"]["initial"]);
+            
             labelDimensionGr.setValue("isdeleted", false);
 
             labelDimensionGr.setWorkflow(false);
@@ -815,7 +816,7 @@ IllumioUtils.prototype = {
                     for (var i = 0; i < response.length; i++) {
                         this.createOrUpdateLabelDimensionRecord(response[i], pceConfig);
                     }
-                    gs.debug("Successfully fetched " + response.length + " label dimensions from Illumio PCE for PCE configuration " + pceConfig.getValue("name")) + ".";
+                    gs.debug("Successfully fetched " + response.length + " label dimensions from Illumio PCE for PCE configuration " + pceConfig.getValue("name")+ ".") ;
                 } else {
                     gs.error("Error while fetching label dimensions from Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ". Status code - " + response_status + ". Response - " + JSON.stringify(response));
                     this.persistLabelDimensions(pceConfig);
@@ -859,7 +860,6 @@ IllumioUtils.prototype = {
                     }
                 } else {
                     gs.error("Error while validating the creation of label dimension with key - " + key + " for the PCE configuration " + pceConfig.getValue("name") + ". Status code - " + response_status + ". Response - " + JSON.stringify(response));
-                    matchFound = false;
                 }
             }
         } catch (exc) {
@@ -1220,20 +1220,30 @@ IllumioUtils.prototype = {
 
         return workloadObject;
     },
+	
+
+	/**
+     * Returns the job status in boolean for the current job SysId
+     * @param {sys_id} jobSysId
+     * @returns {Boolean} job status is cancelled or not
+     **/
 
     getCancelledJobStatus: function(jobSysId) {
 
         var scheduledJobGr = new GlideRecord(
             'x_illu2_illumio_illumio_scheduled_jobs'
         );
-        scheduledJobGr.get(jobSysId);
-
-        var job_status = scheduledJobGr.getValue('job_status');
-        if (job_status == 'cancelled')
-            return true;
-
+		
+		if(scheduledJobGr.next()){
+			scheduledJobGr.get(jobSysId);
+			var job_status = scheduledJobGr.getValue('job_status');
+			if (job_status == 'cancelled')
+				return true;
+		}
+        
         return false;
     },
+	
     /**
      * Get require parameter to create HttpClient object for given configuration
      * @param {String} configSysId SysId of PCE Configuration
@@ -1261,13 +1271,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>386</sys_mod_count>
+        <sys_mod_count>398</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-08 13:53:22</sys_updated_on>
+        <sys_updated_on>2024-04-10 09:58:51</sys_updated_on>
     </sys_script_include>
 </record_update>

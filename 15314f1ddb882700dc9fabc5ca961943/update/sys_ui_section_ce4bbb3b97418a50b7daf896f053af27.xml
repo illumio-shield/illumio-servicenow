@@ -3,11 +3,11 @@
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-28 12:36:26</sys_created_on>
-            <sys_id>b50c4edc9799ca50b7daf896f053afac</sys_id>
+            <sys_created_on>2024-04-09 10:58:15</sys_created_on>
+            <sys_id>a0a8e70c472d4e1066773e7d826d4364</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-28 12:36:26</sys_updated_on>
+            <sys_updated_on>2024-04-09 10:58:15</sys_updated_on>
             <text>&lt;html&gt;&#13;
 &lt;head&gt;&#13;
 &lt;style&gt;&#13;
@@ -26,9 +26,9 @@
 &lt;/head&gt;&#13;
 &lt;body&gt;&#13;
 &lt;p&gt;&lt;/p&gt;&#13;
-&lt;p&gt;&lt;b&gt;Critical Label Groups:&lt;/b&gt; &lt;/p&gt;&#13;
+&lt;p&gt;&lt;/p&gt;&#13;
 &lt;p&gt;This is an exclusion rule for workloads that can be synced.&#13;
-&lt;br/&gt;&lt;b&gt;Example:&lt;/b&gt; The customer doesn't want to accidentally change workloads in production, they can add a critical group containing the Prod env label. &lt;/p&gt;&#13;
+&lt;br/&gt;&lt;b&gt;Example:&lt;/b&gt; The customer doesn't want to accidentally change workloads in production, they can add a critical group containing the production environment label.&lt;/p&gt;&#13;
 &lt;ol&gt;&lt;li&gt;Critical label groups are configured on the PCE for each label type.&lt;/li&gt;&#13;
 &lt;li&gt;Labels in a critical label group are not overwritten for a workload. The entire workload record is skipped.&lt;/li&gt;&#13;
 &lt;li&gt;If critical label groups are not specified, any label on the PCE can be modified.&lt;/li&gt;&#13;
@@ -40,16 +40,16 @@
             <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
         </sys_ui_annotation>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>b50c4edc9799ca50b7daf896f053afac</element>
+            <element>a0a8e70c472d4e1066773e7d826d4364</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-28 12:36:26</sys_created_on>
-            <sys_id>f10c4edc9799ca50b7daf896f053afb1</sys_id>
+            <sys_created_on>2024-04-09 10:58:15</sys_created_on>
+            <sys_id>e0a8274c472d4e1066773e7d826d4386</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_critical_label_group_configuration" sys_domain="global" view="Default view">ce4bbb3b97418a50b7daf896f053af27</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-28 12:36:26</sys_updated_on>
+            <sys_updated_on>2024-04-09 10:58:15</sys_updated_on>
             <sys_user/>
             <type>annotation</type>
         </sys_ui_element>
@@ -57,13 +57,13 @@
             <element>illumio_pce_configuration</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-28 12:36:26</sys_created_on>
-            <sys_id>790c4edc9799ca50b7daf896f053afb1</sys_id>
+            <sys_created_on>2024-04-09 10:58:15</sys_created_on>
+            <sys_id>e4a8274c472d4e1066773e7d826d4386</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_critical_label_group_configuration" sys_domain="global" view="Default view">ce4bbb3b97418a50b7daf896f053af27</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-28 12:36:26</sys_updated_on>
+            <sys_updated_on>2024-04-09 10:58:15</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -71,13 +71,13 @@
             <element>label_group</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-28 12:36:26</sys_created_on>
-            <sys_id>f90c4edc9799ca50b7daf896f053afb1</sys_id>
+            <sys_created_on>2024-04-09 10:58:15</sys_created_on>
+            <sys_id>e8a8274c472d4e1066773e7d826d4386</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_critical_label_group_configuration" sys_domain="global" view="Default view">ce4bbb3b97418a50b7daf896f053af27</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-28 12:36:26</sys_updated_on>
+            <sys_updated_on>2024-04-09 10:58:15</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -85,13 +85,13 @@
             <element>illumio_label_dimension</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-03-28 12:36:26</sys_created_on>
-            <sys_id>7d0c4edc9799ca50b7daf896f053afb1</sys_id>
+            <sys_created_on>2024-04-09 10:58:15</sys_created_on>
+            <sys_id>eca8274c472d4e1066773e7d826d4386</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_critical_label_group_configuration" sys_domain="global" view="Default view">ce4bbb3b97418a50b7daf896f053af27</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-28 12:36:26</sys_updated_on>
+            <sys_updated_on>2024-04-09 10:58:15</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

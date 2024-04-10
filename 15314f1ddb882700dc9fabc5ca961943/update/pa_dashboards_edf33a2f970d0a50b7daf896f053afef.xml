@@ -2,7 +2,7 @@
     <pa_dashboards action="INSERT_OR_UPDATE">
         <active>true</active>
         <breakdown_source/>
-        <color>#000000</color>
+        <color>#ffffff</color>
         <disable_multiple_element>false</disable_multiple_element>
         <group/>
         <groups/>
@@ -23,7 +23,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>edf33a2f970d0a50b7daf896f053afef</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Illumio</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -31,7 +31,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>pa_dashboards_edf33a2f970d0a50b7daf896f053afef</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 09:25:44</sys_updated_on>
+        <sys_updated_on>2024-04-09 12:36:09</sys_updated_on>
         <users/>
         <visible_to>2</visible_to>
     </pa_dashboards>

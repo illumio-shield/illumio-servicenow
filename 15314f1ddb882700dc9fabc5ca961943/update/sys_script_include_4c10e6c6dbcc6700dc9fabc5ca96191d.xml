@@ -86,6 +86,16 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                             gs.info('Deleting workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
                         }
                     }
+                    
+                    // Check the condition for creating incident for workload
+                    var createIncident = false;
+                    if(!gs.nil(pceConfig.source[table].incident_condition)) {
+                        var incidentConditionAvail = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].incident_condition, true);
+                        if(incidentConditionAvail){
+                            createIncident = true;
+                            gs.info('Creating incident'); 
+                        }
+                    }
 
                     /* Process the record and get the label values */
                     var hostname = this.getValueFromCMDB(sourceTableGr, pceConfig.source[table].host_name);
@@ -97,10 +107,10 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 						tempWorkload["host_name"] = hostname;
                         // check if workload is duplicate
                         if (processedHosts[hostname]) {
-
+                            tempWorkload['create_incident'] = false; // duplicate workload cannot create incident (if duplicateworkloads and workloads sharing same function in future)
                             duplicateWorkloads.push(tempWorkload);
                         } else {
-
+                            tempWorkload['create_incident']  = createIncident; 
                             workloads[hostname] = tempWorkload;
                             processedHosts[hostname] = true;
                         }
@@ -529,6 +539,12 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
         illumioServersGr.conflicts = false;
         illumioServersGr.setValue("known_to_pce", "unknown");
+
+        //creation of new incident
+        if(sourceTableGr['create_incident']){
+            illumioServersGr.incident = this.createNewIncident(workloadsMappingGr, workload); //creating new incident for given workload
+        }
+
         if (!gs.nil(workload)) {
             illumioServersGr.setValue("known_to_pce", workload);
             if (workload == "unmanaged") {
@@ -542,6 +558,31 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             illumioServersGr.os_id = workloadsMappingGr.getValue("os_id");
         }
         return illumioServersGr;
+    },
+
+    /**
+     * Create new incident for workload
+     * @param {GlideRecord} workloadsMappingGr GlideRecord of the workloads mapping table
+     * @param {boolean} workload true if the workload is managed, false if unmanaged, null if unknown
+     * @returns sys_id of incident record
+     */
+    createNewIncident: function(workloadsMappingGr, workload){
+        var incidentGr = new GlideRecord('incident');
+        var isManaged;
+        if(workload!=null){
+            isManaged = (workload) ? "managed" : "unmanaged" ;
+        }
+        else {
+            isManaged = "unknown";
+        }
+        var information =   "Hostname: " + workloadsMappingGr.hostname +"\n" + "Href: " + workloadsMappingGr.href + "\n" + "Public IP Address: " + workloadsMappingGr.public_ip + "\n" + "Known to PCE: " + isManaged;
+
+        incidentGr.setValue("short_description", workloadsMappingGr.hostname);
+        incidentGr.setValue("description", information);
+        incidentGr.insert();
+
+        return incidentGr.getUniqueValue();
+
     },
 
     /**
@@ -687,13 +728,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>370</sys_mod_count>
+        <sys_mod_count>375</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 07:12:04</sys_updated_on>
+        <sys_updated_on>2024-04-10 11:01:33</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -61,8 +61,10 @@ IllumioAuthenticateToPCE.prototype = {
 
     run: function() {
 		
-		if(this.utils.checkCancelledJobStatus(this.illumio_job_id,this.SNOWurl,this.SNOWusername,this.SNOWpassword))
-					return false;
+		if(this.utils.checkCancelledJobStatus(this.illumio_job_id,this.SNOWurl,this.SNOWusername,this.SNOWpassword)){
+			return false;
+}
+					
 				
 		
 		
@@ -97,8 +99,10 @@ IllumioAuthenticateToPCE.prototype = {
 
         try {
 			
-			if(this.utils.checkCancelledJobStatus(this.illumio_job_id,this.SNOWurl,this.SNOWusername,this.SNOWpassword))
-					return false;
+			if(this.utils.checkCancelledJobStatus(this.illumio_job_id,this.SNOWurl,this.SNOWusername,this.SNOWpassword)){
+				return false;
+			}
+					
 			
             var response = this.pceHttpClient.get(this.pceEndpoint, '');
             this.logger._debug("Response code of authorization is: " + response.status);
@@ -140,14 +144,14 @@ IllumioAuthenticateToPCE.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>e1ecfc601b64301046dba9f6624bcb49</sys_id>
-        <sys_mod_count>83</sys_mod_count>
+        <sys_mod_count>85</sys_mod_count>
         <sys_name>IllumioAuthenticateToPCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_e1ecfc601b64301046dba9f6624bcb49</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 13:19:27</sys_updated_on>
+        <sys_updated_on>2024-04-10 10:47:46</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

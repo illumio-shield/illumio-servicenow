@@ -163,6 +163,16 @@ IllumioPCEUtils.prototype = {
         var port = parseInt(url.substring(url.lastIndexOf(':') + 1));
         return isNaN(port) ? 443 : port;
     },
+	
+	
+    /**
+     * Returns the job status in boolean
+     * @param {sys_id} jobSysId
+     * @param {String} SNOWurl
+     * @param {String} SNOWusername
+     * @param {Password} SNOWpassword
+     * @returns {Boolean} value for cancelled job status
+     **/
     checkCancelledJobStatus: function(jobSysId, SNOWurl, SNOWusername, SNOWpassword) {
 
         this.snHttpClient = new IllumioHTTPClient(
@@ -195,14 +205,14 @@ IllumioPCEUtils.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>93966d1f1b20381046dba9f6624bcb74</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>38</sys_mod_count>
         <sys_name>IllumioPCEUtils</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_93966d1f1b20381046dba9f6624bcb74</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-08 13:58:13</sys_updated_on>
+        <sys_updated_on>2024-04-10 11:14:29</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

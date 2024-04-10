@@ -13,7 +13,7 @@
         <description/>
         <ih_action>false</ih_action>
         <internal_name>create_async_jobs</internal_name>
-        <label_cache>[{"name":"{{action._}}","label":"action➛","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.pce_configuration}}","label":"action➛PCE Configuration","type":"action","ref":"","reference_display":"Illumio PCE Configuration","base_type":"reference","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.type}}","label":"action➛Type","type":"action","ref":"","reference_display":"","base_type":"choice","parent_table_name":"","column_name":"","choices":[{"label":"Workload","value":"workload","order":0.0},{"label":"Label","value":"label","order":1.0}],"attributes":{"uiTypeLabel":"Choice","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"choice","uiUniqueId":"2bfa1ab6-ef18-460b-8305-a7e6db4e80f8"}},{"name":"{{action.pce_configuration.sys_id}}","label":"action➛PCE Configuration➛Sys ID","type":"action","ref":"","reference_display":"Sys ID","base_type":"GUID","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"sys_id","choices":null,"attributes":{}},{"name":"{{action.pce_configuration.mid_server}}","label":"action➛PCE Configuration➛MID Server","type":"action","ref":"ecc_agent","reference_display":"MID Server","base_type":"reference","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"mid_server","choices":null,"attributes":{}},{"name":"{{action.query_parameters}}","label":"action➛Query Parameters","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{step[469b1b2b-265a-4b30-ad2d-82864d4301d3].parameters}}","label":"step➛Script step➛parameters","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","sourceUiUniqueId":"","sourceType":"","uiType":"json","uiUniqueId":"584ed81c-ab2d-4b58-96ab-36597164a280"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].status}}","label":"step➛Mid Script step➛Status","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].response}}","label":"step➛Mid Script step➛Response","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"json","uiUniqueId":"761a0fb9-e3d3-447a-a21c-feb575e4d9b9"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].headers}}","label":"step➛Mid Script step➛Headers","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].job_location}}","label":"step➛Mid Script step➛Job Location","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}}]</label_cache>
+        <label_cache>[{"name":"{{action._}}","label":"action➛","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.pce_configuration}}","label":"action➛PCE Configuration","type":"action","ref":"","reference_display":"Illumio PCE Configuration","base_type":"reference","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.type}}","label":"action➛Type","type":"action","ref":"","reference_display":"","base_type":"choice","parent_table_name":"","column_name":"","choices":[{"label":"Workload","value":"workload","order":0.0},{"label":"Label","value":"label","order":1.0}],"attributes":{"uiTypeLabel":"Choice","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"choice","uiUniqueId":"2bfa1ab6-ef18-460b-8305-a7e6db4e80f8"}},{"name":"{{action.pce_configuration.sys_id}}","label":"action➛PCE Configuration➛Sys ID","type":"action","ref":"","reference_display":"Sys ID","base_type":"GUID","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"sys_id","choices":null,"attributes":{}},{"name":"{{action.pce_configuration.mid_server}}","label":"action➛PCE Configuration➛MID Server","type":"action","ref":"ecc_agent","reference_display":"MID Server","base_type":"reference","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"mid_server","choices":null,"attributes":{}},{"name":"{{action.query_parameters}}","label":"action➛Query Parameters","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{step[469b1b2b-265a-4b30-ad2d-82864d4301d3].parameters}}","label":"step➛Script step➛parameters","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","sourceUiUniqueId":"","sourceType":"","uiType":"json","uiUniqueId":"584ed81c-ab2d-4b58-96ab-36597164a280"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].status}}","label":"step➛Mid Script step➛Status","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].response}}","label":"step➛Mid Script step➛Response","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"json","uiUniqueId":"761a0fb9-e3d3-447a-a21c-feb575e4d9b9"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].headers}}","label":"step➛Mid Script step➛Headers","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].job_location}}","label":"step➛Mid Script step➛Job Location","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"uiTypeLabel":"String","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"string","uiUniqueId":"08121eda-345b-4c40-8b5a-968b4bfe5c8c"}}]</label_cache>
         <master_snapshot>02fddd664719861066773e7d826d4383</master_snapshot>
         <name>Create Async Jobs</name>
         <natlang/>
@@ -27,7 +27,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6c1f38da4791461066773e7d826d4347</sys_id>
-        <sys_mod_count>34</sys_mod_count>
+        <sys_mod_count>39</sys_mod_count>
         <sys_name>Create Async Jobs</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -35,7 +35,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_6c1f38da4791461066773e7d826d4347</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:10</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:49</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -161,10 +161,10 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 12:22:38</sys_created_on>
         <sys_id>42628d1247d1461066773e7d826d4371</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:45:09</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:37</sys_updated_on>
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=42628d1247d1461066773e7d826d4371"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
@@ -189,9 +189,9 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 12:22:38</sys_created_on>
         <sys_id>4a628d1247d1461066773e7d826d438c</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:45:09</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:37</sys_updated_on>
         <value>(function execute(inputs, outputs) {&#13;
 // ... code ...&#13;
     ms.include("IllumioMIDConstants");&#13;
@@ -223,7 +223,11 @@
     outputs.status = response["status"];&#13;
     outputs.response =response["data"];&#13;
     outputs.headers = response["headers"];&#13;
-    outputs.job_location = response["headers"]["Location"];&#13;
+&#13;
+    if(response["headers"]["Location"]){&#13;
+        outputs.job_location = response["headers"]["Location"];&#13;
+    }&#13;
+    &#13;
     &#13;
 })(inputs, outputs);&#13;
 </value>
@@ -638,14 +642,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 12:22:38</sys_created_on>
         <sys_id>82628d1247d1461066773e7d826d4377</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:06</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:46</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -1029,7 +1033,7 @@
         <hint/>
         <internal_type display_value="String">string</internal_type>
         <label>Job Location</label>
-        <mandatory>true</mandatory>
+        <mandatory>false</mandatory>
         <max_length>8000</max_length>
         <model display_value="Mid Script step">42628d1247d1461066773e7d826d4371</model>
         <model_id>42628d1247d1461066773e7d826d4371</model_id>
@@ -1054,14 +1058,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 12:35:33</sys_created_on>
         <sys_id>5f55895647d1461066773e7d826d435f</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-03 12:35:33</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:37</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -1521,14 +1525,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 12:11:19</sys_created_on>
         <sys_id>5cdf305e4791461066773e7d826d43ff</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>37</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:06</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:45</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -2037,14 +2041,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 12:11:24</sys_created_on>
         <sys_id>65df705e4791461066773e7d826d43a3</sys_id>
-        <sys_mod_count>31</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:07</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:46</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -2502,17 +2506,17 @@
     <sys_hub_action_plan action="INSERT_OR_UPDATE">
         <action_id display_value="Create Async Jobs">6c1f38da4791461066773e7d826d4347</action_id>
         <plan>{"persistor":{"@class":".ChunkingPlanPersistor","table":"sys_hub_action_plan","id":"3efd51a64719861066773e7d826d4375","name":"plan","plan_signature":null}}</plan>
-        <snapshot>e3e3d93247d9c61066773e7d826d4323</snapshot>
+        <snapshot>bf1b1b7247950a1066773e7d826d43f4</snapshot>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:01:35</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>3efd51a64719861066773e7d826d4375</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_overrides/>
         <sys_scope/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:12</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:51</sys_updated_on>
     </sys_hub_action_plan>
     <sys_hub_action_type_snapshot action="INSERT_OR_UPDATE">
         <access>public</access>
@@ -2526,7 +2530,7 @@
         <copied_from_name/>
         <description/>
         <internal_name>create_async_jobs</internal_name>
-        <label_cache>[{"name":"{{action._}}","label":"action➛","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.pce_configuration}}","label":"action➛PCE Configuration","type":"action","ref":"","reference_display":"Illumio PCE Configuration","base_type":"reference","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.type}}","label":"action➛Type","type":"action","ref":"","reference_display":"","base_type":"choice","parent_table_name":"","column_name":"","choices":[{"label":"Workload","value":"workload","order":0.0},{"label":"Label","value":"label","order":1.0}],"attributes":{"uiTypeLabel":"Choice","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"choice","uiUniqueId":"2bfa1ab6-ef18-460b-8305-a7e6db4e80f8"}},{"name":"{{action.pce_configuration.sys_id}}","label":"action➛PCE Configuration➛Sys ID","type":"action","ref":"","reference_display":"Sys ID","base_type":"GUID","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"sys_id","choices":null,"attributes":{}},{"name":"{{action.pce_configuration.mid_server}}","label":"action➛PCE Configuration➛MID Server","type":"action","ref":"ecc_agent","reference_display":"MID Server","base_type":"reference","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"mid_server","choices":null,"attributes":{}},{"name":"{{action.query_parameters}}","label":"action➛Query Parameters","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{step[469b1b2b-265a-4b30-ad2d-82864d4301d3].parameters}}","label":"step➛Script step➛parameters","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","sourceUiUniqueId":"","sourceType":"","uiType":"json","uiUniqueId":"584ed81c-ab2d-4b58-96ab-36597164a280"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].status}}","label":"step➛Mid Script step➛Status","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].response}}","label":"step➛Mid Script step➛Response","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"json","uiUniqueId":"761a0fb9-e3d3-447a-a21c-feb575e4d9b9"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].headers}}","label":"step➛Mid Script step➛Headers","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].job_location}}","label":"step➛Mid Script step➛Job Location","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}}]</label_cache>
+        <label_cache>[{"name":"{{action._}}","label":"action➛","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.pce_configuration}}","label":"action➛PCE Configuration","type":"action","ref":"","reference_display":"Illumio PCE Configuration","base_type":"reference","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{action.type}}","label":"action➛Type","type":"action","ref":"","reference_display":"","base_type":"choice","parent_table_name":"","column_name":"","choices":[{"label":"Workload","value":"workload","order":0.0},{"label":"Label","value":"label","order":1.0}],"attributes":{"uiTypeLabel":"Choice","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"choice","uiUniqueId":"2bfa1ab6-ef18-460b-8305-a7e6db4e80f8"}},{"name":"{{action.pce_configuration.sys_id}}","label":"action➛PCE Configuration➛Sys ID","type":"action","ref":"","reference_display":"Sys ID","base_type":"GUID","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"sys_id","choices":null,"attributes":{}},{"name":"{{action.pce_configuration.mid_server}}","label":"action➛PCE Configuration➛MID Server","type":"action","ref":"ecc_agent","reference_display":"MID Server","base_type":"reference","parent_table_name":"x_illu2_illumio_illumio_pce_conf","column_name":"mid_server","choices":null,"attributes":{}},{"name":"{{action.query_parameters}}","label":"action➛Query Parameters","type":"action","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{}},{"name":"{{step[469b1b2b-265a-4b30-ad2d-82864d4301d3].parameters}}","label":"step➛Script step➛parameters","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","sourceUiUniqueId":"","sourceType":"","uiType":"json","uiUniqueId":"584ed81c-ab2d-4b58-96ab-36597164a280"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].status}}","label":"step➛Mid Script step➛Status","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].response}}","label":"step➛Mid Script step➛Response","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"uiTypeLabel":"JSON","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"json","uiUniqueId":"761a0fb9-e3d3-447a-a21c-feb575e4d9b9"}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].headers}}","label":"step➛Mid Script step➛Headers","type":"step","ref":"","reference_display":"","base_type":"json","parent_table_name":"","column_name":"","choices":null,"attributes":{"sourceId":"","sourceUiUniqueId":"","sourceType":""}},{"name":"{{step[659791dc-8e7e-4802-93bb-bda718cefeec].job_location}}","label":"step➛Mid Script step➛Job Location","type":"step","ref":"","reference_display":"","base_type":"string","parent_table_name":"","column_name":"","choices":null,"attributes":{"uiTypeLabel":"String","element_mapping_provider":"com.glide.flow_design.action.data.FlowDesignVariableMapper","uiType":"string","uiUniqueId":"08121eda-345b-4c40-8b5a-968b4bfe5c8c"}}]</label_cache>
         <master>true</master>
         <name>Create Async Jobs</name>
         <natlang/>
@@ -2539,7 +2543,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>02fddd664719861066773e7d826d4383</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package/>
@@ -2547,7 +2551,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:09</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:48</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_snapshot>
@@ -2673,10 +2677,10 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:01:32</sys_created_on>
         <sys_id>86fddd664719861066773e7d826d43f4</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:48:08</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:49</sys_updated_on>
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=86fddd664719861066773e7d826d43f4"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
@@ -2729,9 +2733,9 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:01:33</sys_created_on>
         <sys_id>9efd11a64719861066773e7d826d4354</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:48:08</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:49</sys_updated_on>
         <value>(function execute(inputs, outputs) {&#13;
 // ... code ...&#13;
     ms.include("IllumioMIDConstants");&#13;
@@ -2763,7 +2767,11 @@
     outputs.status = response["status"];&#13;
     outputs.response =response["data"];&#13;
     outputs.headers = response["headers"];&#13;
-    outputs.job_location = response["headers"]["Location"];&#13;
+&#13;
+    if(response["headers"]["Location"]){&#13;
+        outputs.job_location = response["headers"]["Location"];&#13;
+    }&#13;
+    &#13;
     &#13;
 })(inputs, outputs);&#13;
 </value>
@@ -3541,7 +3549,7 @@
         <hint/>
         <internal_type display_value="String">string</internal_type>
         <label>Job Location</label>
-        <mandatory>true</mandatory>
+        <mandatory>false</mandatory>
         <max_length>8000</max_length>
         <model display_value="Mid Script step">86fddd664719861066773e7d826d43f4</model>
         <model_id>86fddd664719861066773e7d826d43f4</model_id>
@@ -3566,14 +3574,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:01:33</sys_created_on>
         <sys_id>dafd11a64719861066773e7d826d434c</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 09:01:33</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:49</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -4033,14 +4041,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:01:32</sys_created_on>
         <sys_id>46fddd664719861066773e7d826d4398</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:09</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:48</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -4462,14 +4470,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:01:33</sys_created_on>
         <sys_id>52fd11a64719861066773e7d826d4386</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-05 02:56:09</sys_updated_on>
+        <sys_updated_on>2024-04-05 12:46:49</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

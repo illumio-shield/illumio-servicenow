@@ -96,11 +96,13 @@ IllumioUpdateWorkloads.prototype = {
             try {
                 var updateResult = this.update(this.payload);
                 var payloadToUpdate = JSON.parse(this.payload);
-				
-				if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
+
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                     return;
-				
-				
+
+                }
+
+
                 if (updateResult.count && updateResult.count != 0) {
                     jobContent = {
                         job_status: 'completed',
@@ -133,10 +135,11 @@ IllumioUpdateWorkloads.prototype = {
             try {
                 var createResult = this.create(this.payload);
                 var payloadToCreate = JSON.parse(this.payload);
-				
-				if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
+
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
                     return;
-				
+                }
+
                 if (createResult.count && createResult.count != 0) {
                     jobContent = {
                         job_status: 'completed',
@@ -182,13 +185,14 @@ IllumioUpdateWorkloads.prototype = {
                 var totalSysIds = (this.payloadSysIds + '').split(',');
                 var counter = 0;
                 do {
-					
-					if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-						break;
 
-                    if (this.autoSync == 'true') {	
-					
-						var grPayload = new GlideRecord(AUTOSYNC_JOB_TABLE);
+                    if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                        break;
+					}
+
+                    if (this.autoSync == 'true') {
+
+                        var grPayload = new GlideRecord(AUTOSYNC_JOB_TABLE);
                         if (grPayload.get(totalSysIds[counter])) {
                             payload = JSON.parse(grPayload.payload);
                             var deletePayloadUrl =
@@ -204,16 +208,16 @@ IllumioUpdateWorkloads.prototype = {
                         } else {
                             this.logger._error(
                                 'Could not get the autosync payload having sys id: ' +
-                                    totalSysIds[counter]
+                                totalSysIds[counter]
                             );
                             counter++;
                         }
-						
+
                     } else {
                         payload = JSON.parse(this.payload);
                     }
                     var count = parseInt(this.count);
-										
+
                     if (payload.createUnknown) {
                         totalWorkloads = totalWorkloads + payload.createUnknown.length;
                         // If there are unknown workloads to create
@@ -229,7 +233,7 @@ IllumioUpdateWorkloads.prototype = {
                             createdUnknownWorkloads = createdUnknownWorkloads + createdResult.count;
                         }
                     }
-					
+
                     if (payload.updateManaged) {
                         totalWorkloads = totalWorkloads + payload.updateManaged.length;
                         // If there are managed workloads to update
@@ -245,7 +249,7 @@ IllumioUpdateWorkloads.prototype = {
                             updatedManagedWorkloads = updatedManagedWorkloads + updatedManagedResult.count;
                         }
                     }
-				
+
 
                     if (payload.updateUnManaged) {
                         totalWorkloads = totalWorkloads + payload.updateUnManaged.length;
@@ -262,13 +266,14 @@ IllumioUpdateWorkloads.prototype = {
                             updatedUnManagedWorkloads = updatedUnManagedWorkloads + updatedUnManagedResult.count;
                         }
                     }
-					
-					
+
+
                 } while (counter < totalSysIds.length && this.autoSync == 'true');
 
-				if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-						return;
-				
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                    return;
+				}
+
                 //DELETE THE RETIRED WORKLOADS
                 if (this.autoSync == 'true') {
                     this.logger._debug("Process of deleting retired workloads started");
@@ -284,10 +289,11 @@ IllumioUpdateWorkloads.prototype = {
                     totalWorkloads = totalWorkloads + deletedWorkloads;
                     var notDeletedWorkloads = 0;
                     if (allHref.length > 0) {
-						
-						if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
+
+                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
                             return;
-						
+                        }
+
                         var url = "/api/v2/orgs/" + this.pceOrgId + "/workloads/bulk_delete";
                         var putResponse = this.pceHttpClient.put(url, '', null, allHref);
                         if (putResponse.hasError) {
@@ -310,7 +316,6 @@ IllumioUpdateWorkloads.prototype = {
                                     "exception": 'ServiceNow. Response status code: ' + snowHttpPutResponse.status
                                 };
                             }
-                            //                         delete this.retiredWorkloads[respObj["href"] + ''];
                         }
                     }
 
@@ -374,11 +379,12 @@ IllumioUpdateWorkloads.prototype = {
 
         var payloadBody = [];
         var snowUpdateQueue = []; // List of payloads for updating snow tables
-		
-		if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-            return;
 
-		
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            return;
+        }
+
+
         // Filtered list acc to workloads status after PCE REST Call
 
         for (var payloadIndex = 0; payloadIndex < payloadList.length; payloadIndex++) {
@@ -492,10 +498,11 @@ IllumioUpdateWorkloads.prototype = {
         }
         var payloadBody_chunked_length = payloadBody_chunked.length;
         for (var i = 0; i < payloadBody_chunked_length; i++) {
-			
-			if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
+
+            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
                 break;
-			
+            }
+
             this.logger._info("IllumioUpdateWorkloads: Creating workloads. Batch: " + (i + 1));
             var snowUpdateQueueFinal = [];
             var url = "/api/v2/orgs/" + this.pceOrgId + "/workloads/bulk_create";
@@ -591,9 +598,10 @@ IllumioUpdateWorkloads.prototype = {
             }
         }
 
-		if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-         return;
-		
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            return;
+        }
+
         this.logger._info("IllumioUpdateWorkloads: Workload creation complete");
         return {
             "status": true,
@@ -607,9 +615,10 @@ IllumioUpdateWorkloads.prototype = {
      * @return {JSON} Object with status and count of workload uploaded.
      */
     update: function(payload) {
-		
-		if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
+
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
             return;
+        }
 
         this.logger._info("IllumioUpdateWorkloads: Initiating updating the workloads on PCE ");
 
@@ -648,10 +657,11 @@ IllumioUpdateWorkloads.prototype = {
                 this.logger._debug("IllumioUpdateWorkloads: Creating required labels.");
             }
             if (!this.createLabels(labelsToCreate, labelsToUse)) {
-				
-				if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-						break;
-				
+
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                    break;
+                }
+
                 // Create the unknown labels
                 this.logger._error("IllumioUpdateWorkloads: Failed to update workload. Reason : Failed to create required labels " + href);
                 continue;
@@ -660,7 +670,6 @@ IllumioUpdateWorkloads.prototype = {
             snowUpdateObject["href"] = href;
             snowUpdateObject["labels"] = labelsToUse;
             snowUpdateObject["hostname"] = payload.hostname;
-            // snowUpdateObject["interfaces"] = payload.interfaces;
 
             snowUpdateObject["payloadPut"] = {};
 
@@ -755,10 +764,11 @@ IllumioUpdateWorkloads.prototype = {
         }
         var payloadBody_chunked_length = payloadBody_chunked.length;
         for (var i = 0; i < payloadBody_chunked_length; i++) {
-			
-			
-			if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-					break;
+
+
+            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                break;
+            }
 
             this.logger._info("IllumioUpdateWorkloads: Updating workloads. Batch: " + (i + 1));
 
@@ -863,10 +873,11 @@ IllumioUpdateWorkloads.prototype = {
                 }
             }
         }
-		
-		if(this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-                return;
-		
+
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            return;
+        }
+
         this.logger._info("IllumioUpdateWorkloads: Workload updation complete");
         return {
             "status": true,
@@ -883,11 +894,12 @@ IllumioUpdateWorkloads.prototype = {
         for (var l = 0, labelLen = labelsToCreate.length; l < labelLen; l++) {
             var label = labelsToCreate[l];
             var storedLabelValue = label.value + "";
-			
-			if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
+
+            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
                 break;
-			
-			
+            }
+
+
             // If the label was created recently use that instead of attempting to create again
             if (this.newLabelsCreated[label.key] && this.newLabelsCreated[label.key][label.value]) {
                 this.logger._debug("Label already exist : " + label.key + " -> " + label.value);
@@ -963,11 +975,12 @@ IllumioUpdateWorkloads.prototype = {
                 return false;
             }
         }
-		
-		
-		if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword))
-                return false;
-		
+
+
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            return false;
+        }
+
         return true;
     },
 
@@ -977,7 +990,7 @@ IllumioUpdateWorkloads.prototype = {
      * @param {string} href 
      */
     collectLabelDetails: function(href) {
-		
+
         var labelGetUrl =
             TABLE_API +
             PCE_LABELS_MAPPING_TABLE +
@@ -1000,9 +1013,9 @@ IllumioUpdateWorkloads.prototype = {
                 key: mappingRecord.key + '',
                 value: mappingRecord.value + '',
             };
-        
-		}
-	},
+
+        }
+    },
 
     /**
      * Fetch and return the details of the labels from PCE
@@ -1035,7 +1048,7 @@ IllumioUpdateWorkloads.prototype = {
      * @return {Boolean} running job was invalidated or not.
      */
     _checkInvalidatedJob: function() {
-		
+
         var snowGetUrl =
             TABLE_API +
             SCHEDULED_JOB_TABLE +
@@ -1053,8 +1066,7 @@ IllumioUpdateWorkloads.prototype = {
                 '[run] Given job is invalidated. Aborting further actions.'
             );
             return true;
-        }
-		else if(jobRecord.job_status=="cancelled")return false;
+        } else if (jobRecord.job_status == "cancelled") return false;
 
     },
 
@@ -1066,12 +1078,12 @@ IllumioUpdateWorkloads.prototype = {
      *
      */
     _updateJobRecord: function(jobSysId, jobContent) {
-		
-		
-	
-		
+
+
+
+
         if (!this._checkInvalidatedJob()) {
-			
+
             var snowGetUrl =
                 TABLE_API +
                 SCHEDULED_JOB_TABLE +
@@ -1097,19 +1109,19 @@ IllumioUpdateWorkloads.prototype = {
 
             if (jobRecord.job_status != 'failed') {
                 for (var key in jobContent) {
-                   if (jobContent.hasOwnProperty(key)) {
-                 
-					if (key != 'logs') {
-                        jobRecord[key] = jobContent[key];
-                    } else {
-						jobRecord["logs"]=jobRecord["logs"].replaceAll("\\\"", "\"");
-						jobRecord["logs"]=jobRecord["logs"].replaceAll("\\'", "'");
-						jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n","\n");
-						jobRecord["logs"]+='\n'+ '[' +this.illumioDateFormat.format(new Date())+ ']'+jobContent["logs"];	
-                    }  
-				}
+                    if (jobContent.hasOwnProperty(key)) {
+
+                        if (key != 'logs') {
+                            jobRecord[key] = jobContent[key];
+                        } else {
+                            jobRecord["logs"] = jobRecord["logs"].replaceAll("\\\"", "\"");
+                            jobRecord["logs"] = jobRecord["logs"].replaceAll("\\'", "'");
+                            jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n", "\n");
+                            jobRecord["logs"] += '\n' + '[' + this.illumioDateFormat.format(new Date()) + ']' + jobContent["logs"];
+                        }
+                    }
                 }
-				jobRecord["illumio_pce_configuration"]=jobRecord.illumio_pce_configuration.value;
+                jobRecord["illumio_pce_configuration"] = jobRecord.illumio_pce_configuration.value;
 
                 var putResponse = this.snHttpClient.put(
                     putUrl,
@@ -1139,14 +1151,14 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>72</sys_mod_count>
+        <sys_mod_count>79</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-09 07:34:59</sys_updated_on>
+        <sys_updated_on>2024-04-10 10:55:51</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
