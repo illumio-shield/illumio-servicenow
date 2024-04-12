@@ -14,7 +14,7 @@
         <chart_border_radius>0</chart_border_radius>
         <chart_border_width>1</chart_border_width>
         <chart_height>450</chart_height>
-        <chart_size>medium</chart_size>
+        <chart_size>small</chart_size>
         <chart_subtitle/>
         <chart_subtitle_color/>
         <chart_subtitle_size>14</chart_subtitle_size>
@@ -46,7 +46,7 @@
         <end_time/>
         <exp_report_attrs>true</exp_report_attrs>
         <field>job_type</field>
-        <field_list>number,opened_at,short_description,caller_id,priority,state,category,assignment_group,assigned_to,sys_updated_on,sys_updated_by</field_list>
+        <field_list>number,opened_at,short_description,caller_id,priority,state,category,assignment_group,assigned_to,sys_updated_on,sys_updated_by,cmdb_ci</field_list>
         <filter/>
         <formatting_configuration>{"table":"incident","stringFormattingProperties":{},"durationFormattingProperties":{},"dateFormattingProperties":{},"numberFormattingProperties":{}}</formatting_configuration>
         <from/>
@@ -55,7 +55,7 @@
         <group/>
         <import_table/>
         <interval>year</interval>
-        <is_published>false</is_published>
+        <is_published>true</is_published>
         <is_real_time>false</is_real_time>
         <is_scheduled>false</is_scheduled>
         <legend_align_columns>true</legend_align_columns>
@@ -78,7 +78,7 @@
         <pivot_expanded>true</pivot_expanded>
         <report_drilldown/>
         <report_source/>
-        <roles>x_illu2_illumio.illumio_user</roles>
+        <roles>public,x_illu2_illumio.illumio_user</roles>
         <row/>
         <sc_groupby_item_id/>
         <sc_groupby_variable_id/>
@@ -86,7 +86,7 @@
         <sc_stackby_variable_id/>
         <score_color display_value="Black">65b30218a9fe3dba0120df8611520d97</score_color>
         <series_name_text/>
-        <set_color>several_colors</set_color>
+        <set_color>color_palette</set_color>
         <show_chart_border>false</show_chart_border>
         <show_chart_data_label>true</show_chart_data_label>
         <show_chart_title>report</show_chart_title>
@@ -94,7 +94,7 @@
         <show_data_label_position_middle>false</show_data_label_position_middle>
         <show_empty>false</show_empty>
         <show_geographical_label>false</show_geographical_label>
-        <show_legend>false</show_legend>
+        <show_legend>true</show_legend>
         <show_legend_border>false</show_legend_border>
         <show_marker>false</show_marker>
         <show_zero>false</show_zero>
@@ -104,18 +104,18 @@
         <sumfield/>
         <sys_class_name>sys_report_drill</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-03-26 09:00:00</sys_created_on>
-        <sys_id>b3478ba3978d0a50b7daf896f053afc0</sys_id>
+        <sys_created_on>2024-04-11 12:13:09</sys_created_on>
+        <sys_id>45fcc2f847ad025066773e7d826d438e</sys_id>
         <sys_mod_count>1</sys_mod_count>
-        <sys_name>Scheduled job type</sys_name>
+        <sys_name>Scheduled Job History by Job Type</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_report_drill_b3478ba3978d0a50b7daf896f053afc0</sys_update_name>
+        <sys_update_name>sys_report_drill_45fcc2f847ad025066773e7d826d438e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 09:16:57</sys_updated_on>
+        <sys_updated_on>2024-04-11 12:18:12</sys_updated_on>
         <table>x_illu2_illumio_illumio_scheduled_jobs</table>
-        <title>Scheduled job type</title>
+        <title>Scheduled Job History by Job Type</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>

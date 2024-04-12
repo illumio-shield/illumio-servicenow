@@ -86,14 +86,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                             gs.info('Deleting workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
                         }
                     }
-                    
+
                     // Check the condition for creating incident for workload
                     var createIncident = false;
-                    if(!gs.nil(pceConfig.source[table].incident_condition)) {
+                    if (!gs.nil(pceConfig.source[table].incident_condition)) {
                         var incidentConditionAvail = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].incident_condition, true);
-                        if(incidentConditionAvail){
+                        if (incidentConditionAvail) {
                             createIncident = true;
-                            gs.info('Creating incident'); 
                         }
                     }
 
@@ -104,13 +103,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                         // create PCE Workload object
                         var tempWorkload = this._evaluateClassFieldMapping(pceConfig, sourceTableGr, toDeleteWorkload, table);
                         tempWorkload["source_table"] = table;
-						tempWorkload["host_name"] = hostname;
+                        tempWorkload["host_name"] = hostname;
                         // check if workload is duplicate
                         if (processedHosts[hostname]) {
                             tempWorkload['create_incident'] = false; // duplicate workload cannot create incident (if duplicateworkloads and workloads sharing same function in future)
                             duplicateWorkloads.push(tempWorkload);
                         } else {
-                            tempWorkload['create_incident']  = createIncident; 
+                            tempWorkload['create_incident'] = createIncident;
                             workloads[hostname] = tempWorkload;
                             processedHosts[hostname] = true;
                         }
@@ -394,7 +393,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 illumioServersGr.public_ip_address = mappingIP;
             }
 
-            illumioServersGr = this._insertObject(hostNamePart, illumioServersGr);
+            illumioServersGr = this._insertObject(hostNamePart, illumioServersGr, sourceTableGr);
 
             // add field values for configured Label Dimensions
             try {
@@ -540,50 +539,88 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         illumioServersGr.conflicts = false;
         illumioServersGr.setValue("known_to_pce", "unknown");
 
-        //creation of new incident
-        if(sourceTableGr['create_incident']){
-            illumioServersGr.incident = this.createNewIncident(workloadsMappingGr, workload); //creating new incident for given workload
-        }
-
         if (!gs.nil(workload)) {
             illumioServersGr.setValue("known_to_pce", workload);
             if (workload == "unmanaged") {
                 illumioServersGr.deleted_from_pce = sourceTableGr["deleted_from_pce"];
             }
             illumioServersGr.setValue("pce_workload_href", workloadsMappingGr.getValue("href"));
-			illumioServersGr.ven_href = workloadsMappingGr.getValue("ven_href");
+            illumioServersGr.ven_href = workloadsMappingGr.getValue("ven_href");
             illumioServersGr.ven_status = workloadsMappingGr.getValue("ven_status");
             illumioServersGr.enforcement_mode = workloadsMappingGr.getValue("enforcement_mode");
             illumioServersGr.ven_version = workloadsMappingGr.getValue("ven_version");
             illumioServersGr.os_id = workloadsMappingGr.getValue("os_id");
         }
+
         return illumioServersGr;
     },
 
     /**
-     * Create new incident for workload
-     * @param {GlideRecord} workloadsMappingGr GlideRecord of the workloads mapping table
-     * @param {boolean} workload true if the workload is managed, false if unmanaged, null if unknown
+     * Create or update incident for workload
+     * @param {GlideRecord} illumioServersGr GlideRecord of the workloads table
      * @returns sys_id of incident record
      */
-    createNewIncident: function(workloadsMappingGr, workload){
+    createOrUpdateIncident: function(illumioServersGr, incidentSysId) {
+
         var incidentGr = new GlideRecord('incident');
-        var isManaged;
-        if(workload!=null){
-            isManaged = (workload) ? "managed" : "unmanaged" ;
+        if (!incidentGr.get(incidentSysId)) {
+            incidentGr.initialize();
         }
-        else {
-            isManaged = "unknown";
+        
+        var information = "Hostname: " + illumioServersGr.getValue("hostname");
+        if (!gs.nil(illumioServersGr.getValue("pce_workload_href"))) {
+            information += "\n" + "Href: " + illumioServersGr.getValue("pce_workload_href"); 
         }
-        var information =   "Hostname: " + workloadsMappingGr.hostname +"\n" + "Href: " + workloadsMappingGr.href + "\n" + "Public IP Address: " + workloadsMappingGr.public_ip + "\n" + "Known to PCE: " + isManaged;
 
-        incidentGr.setValue("short_description", workloadsMappingGr.hostname);
+        if (!gs.nil(illumioServersGr.getValue("public_ip_address"))) {
+            information += "\n" + "Public IP Address: " + illumioServersGr.getValue("public_ip_address"); 
+        }
+        
+        if (!gs.nil(illumioServersGr.getValue("known_to_pce"))) {
+            information += "\n" + "Known to PCE: " + illumioServersGr.getValue("known_to_pce"); 
+        }
+        
+         
+        incidentGr.setValue("short_description", illumioServersGr.getValue("hostname"));
         incidentGr.setValue("description", information);
-        incidentGr.insert();
+        incidentGr.setValue("cmdb_ci",illumioServersGr.getValue("servicenow_cmdb_identifier"));
+        incidentGr.update();
 
+        if (gs.nil(incidentSysId)) {
+            incidentMappingGr = new GlideRecord("x_illu2_illumio_illumio_incident_mapping");
+            incidentMappingGr.initialize();
+            incidentMappingGr.setValue("href", illumioServersGr.getValue("pce_workload_href"));
+            incidentMappingGr.setValue("hostname", illumioServersGr.getValue("hostname"));
+            incidentMappingGr.setValue("incident", incidentGr.getUniqueValue());
+            incidentMappingGr.setValue("illumio_pce_configuration", this.pceConfigId);
+            incidentMappingGr.insert();
+            return incidentGr.getUniqueValue();
+        }
         return incidentGr.getUniqueValue();
-
     },
+
+    /**
+     * Populate incident if it's already created
+     * @param {GlideRecord} illumioServerGr 
+     */
+    getIncident: function(illumioServerGr) {
+        var incidentMappingGr = new GlideRecord("x_illu2_illumio_illumio_incident_mapping");
+        incidentMappingGr.addQuery("illumio_pce_configuration", this.pceConfigId);
+        var href = illumioServerGr.getValue("pce_workload_href");
+        if (gs.nil(href)){
+            incidentMappingGr.addNullQuery("href");
+        }
+        else{
+            incidentMappingGr.addQuery("href", href);
+        }
+        incidentMappingGr.addQuery("hostname", illumioServerGr.getValue("hostname"));
+        incidentMappingGr.setLimit(1);
+        incidentMappingGr.query();
+        if (incidentMappingGr.next()) {
+            return incidentMappingGr.getValue("incident");
+        }
+    },
+
 
     /**
      * Insert PCE Workload record
@@ -591,7 +628,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      * @param {GlideRecord} illumioServersGr GlideRecord of the workload
      * @returns GlideRecord of the Workload
      */
-    _insertObject: function(hostNamePart, illumioServersGr) {
+    _insertObject: function(hostNamePart, illumioServersGr, sourceTableGr) {
         hostNamePart = hostNamePart.toLowerCase();
 
         if (!gs.nil(this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart])) {
@@ -600,6 +637,15 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             illumioServersGr.insert();
             return illumioServersGr;
         }
+
+        // Check if incident already exists
+        var incidentSysId = this.getIncident(illumioServersGr);
+       
+        //creation of new incident
+        if (sourceTableGr['create_incident'] || !gs.nil(incidentSysId)) {
+            illumioServersGr.setValue("incident", this.createOrUpdateIncident(illumioServersGr, incidentSysId)); //creating new incident for given workload
+        }
+
         illumioServersGr.duplicate = false;
         var sysId = illumioServersGr.insert();
         this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart] = sysId;
@@ -659,7 +705,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         );
 
         this._setInterfaceObject(illumioServersGr, sourceTableGr, []);
-        this._insertObject(hostNamePart, illumioServersGr);
+        this._insertObject(hostNamePart, illumioServersGr, sourceTableGr);
         this._createWorkloadFieldValue(illumioServersGr, sourceTableGr);
     },
 
@@ -728,13 +774,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>375</sys_mod_count>
+        <sys_mod_count>399</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 11:01:33</sys_updated_on>
+        <sys_updated_on>2024-04-11 11:29:09</sys_updated_on>
     </sys_script_include>
 </record_update>

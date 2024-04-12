@@ -4,7 +4,7 @@
         <element dependent="source_table" dependent_on_field="source_table" label="Conditions for Creating Incidents" max_length="1000" name="conditions_for_creating_incidents" type="conditions" use_dependent_field="true"/>
         <element dependent="source_table" dependent_on_field="source_table" label="Conditions for Deleting Workloads" max_length="4000" name="conditions_for_deleting_workloads" type="conditions" use_dependent_field="true"/>
         <element dependent="source_table" dependent_on_field="source_table" label="Conditions for Excluding Workloads" max_length="4000" name="conditions_for_excluding_workloads" type="conditions" use_dependent_field="true"/>
-        <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" read_only="true" reference="x_illu2_illumio_illumio_pce_conf" reference_cascade_rule="delete" type="reference"/>
+        <element attributes="readonly_clickthrough=true" label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" read_only="true" reference="x_illu2_illumio_illumio_pce_conf" reference_cascade_rule="delete" type="reference"/>
         <element choice="3" default="ASC" label="Order" max_length="40" name="order" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Ascending" value="ASC"/>

@@ -35,7 +35,7 @@
         <created_by_user display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</created_by_user>
         <custom_chart_size>false</custom_chart_size>
         <custom_chart_title_position>false</custom_chart_title_position>
-        <custom_config>{"transforms":[{"transform":{"transform":"Reference","name":"chart-subjects"}}]}</custom_config>
+        <custom_config/>
         <decimal_precision>2</decimal_precision>
         <description/>
         <direction>minimize</direction>
@@ -46,7 +46,7 @@
         <end_time/>
         <exp_report_attrs>true</exp_report_attrs>
         <field>job_status</field>
-        <field_list>job_type,current_operation,job_status,job_started,logs,sys_created_on,sys_updated_on</field_list>
+        <field_list>number,opened_at,short_description,caller_id,priority,state,category,assignment_group,assigned_to,sys_updated_on,sys_updated_by,cmdb_ci</field_list>
         <filter/>
         <formatting_configuration>{"table":"incident","stringFormattingProperties":{},"durationFormattingProperties":{},"dateFormattingProperties":{},"numberFormattingProperties":{}}</formatting_configuration>
         <from/>
@@ -76,7 +76,7 @@
         <others>true</others>
         <page_hdrftr/>
         <pivot_expanded>true</pivot_expanded>
-        <report_drilldown display_value="Scheduled job type">b3478ba3978d0a50b7daf896f053afc0</report_drilldown>
+        <report_drilldown display_value="Scheduled Job History by Job Type">f8632ef44761425066773e7d826d439b</report_drilldown>
         <report_source/>
         <roles>public,x_illu2_illumio.illumio_user</roles>
         <row/>
@@ -96,7 +96,7 @@
         <show_geographical_label>false</show_geographical_label>
         <show_legend>true</show_legend>
         <show_legend_border>false</show_legend_border>
-        <show_marker>true</show_marker>
+        <show_marker>false</show_marker>
         <show_zero>false</show_zero>
         <source_type>table</source_type>
         <start_time/>
@@ -106,21 +106,21 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:27:17</sys_created_on>
         <sys_id>b4dff2ab974d0a50b7daf896f053af10</sys_id>
-        <sys_mod_count>5</sys_mod_count>
-        <sys_name>Scheduled Job History</sys_name>
+        <sys_mod_count>33</sys_mod_count>
+        <sys_name>Scheduled Job History [Weekly]</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_b4dff2ab974d0a50b7daf896f053af10</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 10:34:16</sys_updated_on>
+        <sys_updated_on>2024-04-11 13:52:28</sys_updated_on>
         <table>x_illu2_illumio_illumio_scheduled_jobs</table>
-        <title>Scheduled Job History</title>
+        <title>Scheduled Job History [Weekly]</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>
-        <trend_field>sys_created_on</trend_field>
-        <type>line</type>
+        <trend_field>job_completed</trend_field>
+        <type>line_bar</type>
         <upper_limit/>
         <use_color_heatmap>false</use_color_heatmap>
         <use_null_in_trend>false</use_null_in_trend>
@@ -135,7 +135,7 @@
         <x_axis_label_size>11</x_axis_label_size>
         <x_axis_label_tilt>0</x_axis_label_tilt>
         <x_axis_opposite>false</x_axis_opposite>
-        <x_axis_title>Time</x_axis_title>
+        <x_axis_title>Weeks</x_axis_title>
         <x_axis_title_bold>true</x_axis_title_bold>
         <x_axis_title_color display_value="Black">65b30218a9fe3dba0120df8611520d97</x_axis_title_color>
         <x_axis_title_size>12</x_axis_title_size>

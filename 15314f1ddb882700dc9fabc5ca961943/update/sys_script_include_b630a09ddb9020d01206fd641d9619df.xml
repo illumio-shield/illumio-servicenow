@@ -136,6 +136,8 @@ IllumioUtils.prototype = {
                     'Basic ' + pce_authorization
                 );
 
+                fetchLabelGroups.setRequestHeader('User-Agent', 'servicenow');
+
                 fetchLabelGroups.setStringParameter(
                     'url',
                     pceConfig.pce_url + ''
@@ -701,6 +703,9 @@ IllumioUtils.prototype = {
 
 
         var apiCall = new sn_ws.RESTMessageV2(restMessage, httpMethod);
+
+        apiCall.setRequestHeader('User-Agent', 'servicenow');
+
         if (!gs.nil(stringParams)) {
             Object.keys(stringParams).forEach(function(key) {
                 apiCall.setStringParameter(key, stringParams[key]);
@@ -775,13 +780,13 @@ IllumioUtils.prototype = {
                 labelDimensionGr.setValue("key", details["key"]);
                 labelDimensionGr.setValue("illumio_pce_configuration", pceConfig.getUniqueValue());
             }
-			if(!gs.nil(details["display_info"])){
-			labelDimensionGr.setValue("label_type_initial", details["display_info"]["initial"]);
-			labelDimensionGr.setValue("display_name_plural", details["display_info"]["display_name_plural"]);
-			}
-			labelDimensionGr.setValue("display_name_singular", details["display_name"]); 
+            if (!gs.nil(details["display_info"])) {
+                labelDimensionGr.setValue("label_type_initial", details["display_info"]["initial"]);
+                labelDimensionGr.setValue("display_name_plural", details["display_info"]["display_name_plural"]);
+            }
+            labelDimensionGr.setValue("display_name_singular", details["display_name"]);
             labelDimensionGr.setValue("href", details["href"]);
-            
+
             labelDimensionGr.setValue("isdeleted", false);
 
             labelDimensionGr.setWorkflow(false);
@@ -816,7 +821,7 @@ IllumioUtils.prototype = {
                     for (var i = 0; i < response.length; i++) {
                         this.createOrUpdateLabelDimensionRecord(response[i], pceConfig);
                     }
-                    gs.debug("Successfully fetched " + response.length + " label dimensions from Illumio PCE for PCE configuration " + pceConfig.getValue("name")+ ".") ;
+                    gs.debug("Successfully fetched " + response.length + " label dimensions from Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ".");
                 } else {
                     gs.error("Error while fetching label dimensions from Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ". Status code - " + response_status + ". Response - " + JSON.stringify(response));
                     this.persistLabelDimensions(pceConfig);
@@ -1059,7 +1064,8 @@ IllumioUtils.prototype = {
                 "unknown": "create"
             },
             cancelJobOnLimitExceed = false,
-            limitExceeded = false, logMessage = {};
+            limitExceeded = false,
+            logMessage = {};
 
         // for each configuration fetch field mapping
         for (var configSysId in checkedRecords) {
@@ -1068,7 +1074,7 @@ IllumioUtils.prototype = {
                 retVal = [];
             var mappedFields = configUtil.getMappedFields(configSysId);
             var wlLimitObject = thresholdLimit.getThresholdLimit(configSysId);
-            var isLimitExceed = false ;
+            var isLimitExceed = false;
 
             // for each sys_id prepare workload object
             for (var arrIndex = 0, len = arrRecords.length; arrIndex < len; arrIndex++) {
@@ -1097,7 +1103,7 @@ IllumioUtils.prototype = {
                                 retVal.push(wlObject);
                             } else {
                                 isLimitExceed = true;
-                                wlLimitObject["wlLimit"]["labelCreate"] = -1;
+                                wlLimitObject["wlLimit"]["labelCreateLimitExceeded"] = true;
 
                                 if (wlLimitObject.cancelJobOnLimitExceed) {
                                     retVal = [];
@@ -1107,7 +1113,7 @@ IllumioUtils.prototype = {
                             }
                         } else {
                             isLimitExceed = true;
-                            wlLimitObject["wlLimit"][operation] = -1;
+                            wlLimitObject["wlLimit"][operation + "LimitExceeded"] = true;
 
                             if (wlLimitObject.cancelJobOnLimitExceed) {
                                 retVal = [];
@@ -1147,19 +1153,19 @@ IllumioUtils.prototype = {
     logLimitExceedMessage: function(wlLimitObject, configSysId) {
         var message = [];
 
-        if (wlLimitObject["wlLimit"]["create"] < 0) {
+        if (wlLimitObject["wlLimit"]["createLimitExceeded"]) {
             message.push("workload creation");
         }
 
-        if (wlLimitObject["wlLimit"]["update"] < 0) {
+        if (wlLimitObject["wlLimit"]["updateLimitExceeded"]) {
             message.push("workload modification");
         }
 
-        if (wlLimitObject["wlLimit"]["delete"] < 0) {
+        if (wlLimitObject["wlLimit"]["deleteLimitExceeded"]) {
             message.push("workload deletion");
         }
 
-        if (wlLimitObject["wlLimit"]["labelCreate"] < 0) {
+        if (wlLimitObject["wlLimit"]["labelCreateLimitExceeded"]) {
             message.push("label creation");
         }
 
@@ -1171,7 +1177,7 @@ IllumioUtils.prototype = {
         }
 
         if (!wlLimitObject.cancelJobOnLimitExceed)
-            message = "One or more workloads are skipped as "+ message +" exceeded";
+            message = "One or more workloads are skipped as " + message + " exceeded";
         else
             message = "Cancelled the job as " + message + " exceeded";
 
@@ -1220,9 +1226,9 @@ IllumioUtils.prototype = {
 
         return workloadObject;
     },
-	
 
-	/**
+
+    /**
      * Returns the job status in boolean for the current job SysId
      * @param {sys_id} jobSysId
      * @returns {Boolean} job status is cancelled or not
@@ -1233,17 +1239,19 @@ IllumioUtils.prototype = {
         var scheduledJobGr = new GlideRecord(
             'x_illu2_illumio_illumio_scheduled_jobs'
         );
-		
-		if(scheduledJobGr.next()){
-			scheduledJobGr.get(jobSysId);
-			var job_status = scheduledJobGr.getValue('job_status');
-			if (job_status == 'cancelled')
-				return true;
-		}
-        
+
+        if (scheduledJobGr.next()) {
+            if (scheduledJobGr.get(jobSysId)) {
+                var job_status = scheduledJobGr.getValue('job_status');
+                if (job_status == 'cancelled')
+                    return true;
+            }
+
+        }
+
         return false;
     },
-	
+
     /**
      * Get require parameter to create HttpClient object for given configuration
      * @param {String} configSysId SysId of PCE Configuration
@@ -1271,13 +1279,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>398</sys_mod_count>
+        <sys_mod_count>404</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 09:58:51</sys_updated_on>
+        <sys_updated_on>2024-04-11 14:28:44</sys_updated_on>
     </sys_script_include>
 </record_update>

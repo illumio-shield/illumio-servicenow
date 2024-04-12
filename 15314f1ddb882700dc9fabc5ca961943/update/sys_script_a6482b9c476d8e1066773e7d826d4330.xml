@@ -33,13 +33,14 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
 
-    var grSysProp = gs.getProperty("x_illu2_illumio.incident.creation.for.job");
+    var grSysProp = gs.getProperty("x_illu2_illumio.incident_creation_for_scheduled_job","true");
     var grIncidentResponse = new GlideRecord("incident");
 
     if (grSysProp=="true") {
-        grIncidentResponse.description = "Job Type: " + current.job_type +"\nCurrent Operation: " + current.current_operation+"\nJob Status: " + current.job_status;
-        grIncidentResponse.short_description ="Illumio PCE Configuration SydId: " +current.getValue("illumio_pce_configuration");
-        grIncidentResponse.insert();
+        grIncidentResponse.description = "Job Type: " + current.getValue("job_type") +"\nCurrent Operation: " + current.getValue("current_operation")+"\nJob Status: " + current.getValue("job_status");
+        grIncidentResponse.short_description =current.getValue("job_type")+ " " +current.getValue("job_status") +" for "+ current.illumio_pce_configuration.name;
+        current.setValue("incident",grIncidentResponse.insert());
+		current.update();
     }
 
 })(current, previous);]]></script>
@@ -49,15 +50,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a6482b9c476d8e1066773e7d826d4330</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>30</sys_mod_count>
         <sys_name>Scheduled Job Incident Creation</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_a6482b9c476d8e1066773e7d826d4330</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 10:41:31</sys_updated_on>
+        <sys_updated_on>2024-04-12 05:33:20</sys_updated_on>
         <template/>
         <when>after</when>
     </sys_script>

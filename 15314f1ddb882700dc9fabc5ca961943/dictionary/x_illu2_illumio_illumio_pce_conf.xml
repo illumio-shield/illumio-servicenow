@@ -34,7 +34,7 @@
         <element attributes="no_data_replicate=true,edge_encryption_enabled=true" label="Secret Key" mandatory="true" max_length="255" name="secret_key" type="password2"/>
         <element active="false" attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" choice_field="business_unit" label="Source Table" mandatory="true" max_length="80" name="servicenow_source_table" type="table_name"/>
         <element label="Enable Limit on New Label Creation" max_length="40" name="set_limit_on_new_label_creation" type="boolean"/>
-        <element label="Enable limit on workload deletion" max_length="40" name="set_limit_on_workload_deletion" type="boolean"/>
+        <element label="Enable Limit on Workload Deletion" max_length="40" name="set_limit_on_workload_deletion" type="boolean"/>
         <element label="Enable Limit on Workload Modifications" max_length="40" name="set_limit_on_workload_label_modifications" type="boolean"/>
         <element label="API Key" mandatory="true" max_length="255" name="username" type="password2"/>
         <element label="Workload Deletion Limit" max_length="40" name="workload_deletion_limit" type="string"/>
