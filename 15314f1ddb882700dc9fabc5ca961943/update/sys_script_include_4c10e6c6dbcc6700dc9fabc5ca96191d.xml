@@ -581,7 +581,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         }
         
          
-        incidentGr.setValue("short_description", illumioServersGr.getValue("hostname"));
+        incidentGr.setValue("short_description",illumioServersGr.getDisplayValue("illumio_pce_configuration") +": "+ illumioServersGr.getValue("hostname"));
         incidentGr.setValue("description", information);
         incidentGr.setValue("cmdb_ci",illumioServersGr.getValue("servicenow_cmdb_identifier"));
         incidentGr.update();
@@ -592,7 +592,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             incidentMappingGr.setValue("href", illumioServersGr.getValue("pce_workload_href"));
             incidentMappingGr.setValue("hostname", illumioServersGr.getValue("hostname"));
             incidentMappingGr.setValue("incident", incidentGr.getUniqueValue());
-            incidentMappingGr.setValue("illumio_pce_configuration", this.pceConfigId);
+            incidentMappingGr.setValue("illumio_pce_configuration", illumioServersGr.getValue("illumio_pce_configuration"));
             incidentMappingGr.insert();
             return incidentGr.getUniqueValue();
         }
@@ -774,13 +774,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>399</sys_mod_count>
+        <sys_mod_count>402</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-11 11:29:09</sys_updated_on>
+        <sys_updated_on>2024-04-13 07:45:36</sys_updated_on>
     </sys_script_include>
 </record_update>

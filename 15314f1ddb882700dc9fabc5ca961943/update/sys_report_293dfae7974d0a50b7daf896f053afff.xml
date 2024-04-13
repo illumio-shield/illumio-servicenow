@@ -14,7 +14,7 @@
         <chart_border_radius>0</chart_border_radius>
         <chart_border_width>1</chart_border_width>
         <chart_height>450</chart_height>
-        <chart_size>medium</chart_size>
+        <chart_size>small</chart_size>
         <chart_subtitle/>
         <chart_subtitle_color/>
         <chart_subtitle_size>14</chart_subtitle_size>
@@ -106,14 +106,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:15:53</sys_created_on>
         <sys_id>293dfae7974d0a50b7daf896f053afff</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>Workloads by Enforcement Mode</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_293dfae7974d0a50b7daf896f053afff</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 10:16:18</sys_updated_on>
+        <sys_updated_on>2024-04-12 10:00:41</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <title>Workloads by Enforcement Mode</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
@@ -124,7 +124,7 @@
         <upper_limit/>
         <use_color_heatmap>false</use_color_heatmap>
         <use_null_in_trend>false</use_null_in_trend>
-        <user>6816f79cc0a8016401c5a33be04be441</user>
+        <user>GLOBAL</user>
         <x_axis_allow_decimals>true</x_axis_allow_decimals>
         <x_axis_display_grid>false</x_axis_display_grid>
         <x_axis_grid_color display_value="LightGrey">65b30308a9fe3dba01ebaa03e87e7cd3</x_axis_grid_color>

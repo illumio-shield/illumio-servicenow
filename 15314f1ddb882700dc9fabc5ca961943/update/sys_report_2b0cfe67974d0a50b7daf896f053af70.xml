@@ -14,7 +14,7 @@
         <chart_border_radius>0</chart_border_radius>
         <chart_border_width>1</chart_border_width>
         <chart_height>450</chart_height>
-        <chart_size>medium</chart_size>
+        <chart_size>small</chart_size>
         <chart_subtitle/>
         <chart_subtitle_color/>
         <chart_subtitle_size>14</chart_subtitle_size>
@@ -108,14 +108,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:10:49</sys_created_on>
         <sys_id>2b0cfe67974d0a50b7daf896f053af70</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>Unique Workloads</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_2b0cfe67974d0a50b7daf896f053af70</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 10:14:49</sys_updated_on>
+        <sys_updated_on>2024-04-12 10:02:32</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <title>Unique Workloads</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
