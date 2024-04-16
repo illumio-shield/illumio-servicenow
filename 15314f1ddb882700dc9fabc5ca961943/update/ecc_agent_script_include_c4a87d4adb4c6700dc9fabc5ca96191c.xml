@@ -136,7 +136,7 @@ IllumioUpdateWorkloads.prototype = {
                 var createResult = this.create(this.payload);
                 var payloadToCreate = JSON.parse(this.payload);
 
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                     return;
                 }
 
@@ -186,9 +186,9 @@ IllumioUpdateWorkloads.prototype = {
                 var counter = 0;
                 do {
 
-                    if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                    if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                         break;
-					}
+                    }
 
                     if (this.autoSync == 'true') {
 
@@ -270,9 +270,9 @@ IllumioUpdateWorkloads.prototype = {
 
                 } while (counter < totalSysIds.length && this.autoSync == 'true');
 
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                     return;
-				}
+                }
 
                 //DELETE THE RETIRED WORKLOADS
                 if (this.autoSync == 'true') {
@@ -290,7 +290,7 @@ IllumioUpdateWorkloads.prototype = {
                     var notDeletedWorkloads = 0;
                     if (allHref.length > 0) {
 
-                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                             return;
                         }
 
@@ -380,7 +380,7 @@ IllumioUpdateWorkloads.prototype = {
         var payloadBody = [];
         var snowUpdateQueue = []; // List of payloads for updating snow tables
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
             return;
         }
 
@@ -438,7 +438,12 @@ IllumioUpdateWorkloads.prototype = {
             if (public_ip != "" && public_ip != undefined) {
                 workloadBody.public_ip = public_ip;
             }
-            snowUpdateObject["interfaces"] = this.interfaces.length > 0 ? this.interfaces : [];
+            snowUpdateObject["payloadPut"]["interfaces"] = JSON.stringify({
+                "umw0": {
+                    "pce_value": "",
+                    "cmdb_value": ""
+                }
+            });
             workloadBody.interfaces = this.interfaces.length > 0 ? this.interfaces : [];
             payloadBody.push(workloadBody);
 
@@ -499,7 +504,7 @@ IllumioUpdateWorkloads.prototype = {
         var payloadBody_chunked_length = payloadBody_chunked.length;
         for (var i = 0; i < payloadBody_chunked_length; i++) {
 
-            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                 break;
             }
 
@@ -578,6 +583,7 @@ IllumioUpdateWorkloads.prototype = {
 
                 this.logger._debug("IllumioUpdateWorkloads: Creating entry in the workload mapping table");
                 var payloadPost = {
+                    "illumio_pce_configuration": this.configSysId,
                     "hostname": snowUpdateQueueFinal[p].hostname,
                     "public_ip": snowUpdateQueueFinal[p].public_ip,
                     "href": putResponseObject[p]['href'],
@@ -598,7 +604,7 @@ IllumioUpdateWorkloads.prototype = {
             }
         }
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
             return;
         }
 
@@ -616,7 +622,7 @@ IllumioUpdateWorkloads.prototype = {
      */
     update: function(payload) {
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
             return;
         }
 
@@ -658,7 +664,7 @@ IllumioUpdateWorkloads.prototype = {
             }
             if (!this.createLabels(labelsToCreate, labelsToUse)) {
 
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                     break;
                 }
 
@@ -688,7 +694,12 @@ IllumioUpdateWorkloads.prototype = {
                     }
                     workloadBody["interfaces"] = interfaces;
                     snowUpdateObject["interfaces"] = interfaces;
-                    snowUpdateObject.payloadPut["interfaces"] = {};
+                    snowUpdateObject["payloadPut"]["interfaces"] = JSON.stringify({
+                        "umw0": {
+                            "pce_value": "",
+                            "cmdb_value": ""
+                        }
+                    });
 
                     var interfacesLength = interfaces.length;
                     var snowInterface = {};
@@ -766,7 +777,7 @@ IllumioUpdateWorkloads.prototype = {
         for (var i = 0; i < payloadBody_chunked_length; i++) {
 
 
-            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                 break;
             }
 
@@ -874,7 +885,7 @@ IllumioUpdateWorkloads.prototype = {
             }
         }
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
             return;
         }
 
@@ -895,7 +906,7 @@ IllumioUpdateWorkloads.prototype = {
             var label = labelsToCreate[l];
             var storedLabelValue = label.value + "";
 
-            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
                 break;
             }
 
@@ -977,7 +988,7 @@ IllumioUpdateWorkloads.prototype = {
         }
 
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)){
+        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
             return false;
         }
 
@@ -1151,7 +1162,7 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>83</sys_mod_count>
+        <sys_mod_count>85</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1159,6 +1170,6 @@ IllumioUpdateWorkloads.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-13 16:19:55</sys_updated_on>
+        <sys_updated_on>2024-04-16 10:27:56</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
