@@ -90,18 +90,16 @@ IllumioUpdateWorkloads.prototype = {
         var jobContent;
         this.payload = decodeURI(this.payload);
 
-
         // Call respective method according to the operation requested
         if (this.operation == "update") {
             try {
                 var updateResult = this.update(this.payload);
                 var payloadToUpdate = JSON.parse(this.payload);
 
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                if (!updateResult) {
+                    this.logger._debug("[update]: Job is cancelled");
                     return;
-
                 }
-
 
                 if (updateResult.count && updateResult.count != 0) {
                     jobContent = {
@@ -136,7 +134,8 @@ IllumioUpdateWorkloads.prototype = {
                 var createResult = this.create(this.payload);
                 var payloadToCreate = JSON.parse(this.payload);
 
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                if (!createResult) {
+                    this.logger._debug("[create]: Job is cancelled");
                     return;
                 }
 
@@ -186,10 +185,6 @@ IllumioUpdateWorkloads.prototype = {
                 var counter = 0;
                 do {
 
-                    if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-                        break;
-                    }
-
                     if (this.autoSync == 'true') {
 
                         var grPayload = new GlideRecord(AUTOSYNC_JOB_TABLE);
@@ -229,6 +224,11 @@ IllumioUpdateWorkloads.prototype = {
                         };
                         this._updateJobRecord(this.jobSysId, jobContent);
                         var createdResult = this.create(unknownWorkloads);
+                        if (!createdResult) {
+                            this.logger._debug("[updateCreate]: Job is cancelled");
+                            return;
+                        }
+
                         if (createdResult.status) {
                             createdUnknownWorkloads = createdUnknownWorkloads + createdResult.count;
                         }
@@ -245,6 +245,11 @@ IllumioUpdateWorkloads.prototype = {
                         this._updateJobRecord(this.jobSysId, jobContent);
                         managedWorkloads = JSON.stringify(payload.updateManaged);
                         var updatedManagedResult = this.update(managedWorkloads);
+                        if (!updatedManagedResult) {
+                            this.logger._debug("[updateCreate]: Job is cancelled");
+                            return;
+                        }
+
                         if (updatedManagedResult.status) {
                             updatedManagedWorkloads = updatedManagedWorkloads + updatedManagedResult.count;
                         }
@@ -262,6 +267,10 @@ IllumioUpdateWorkloads.prototype = {
                         this._updateJobRecord(this.jobSysId, jobContent);
                         unmanagedWorkloads = JSON.stringify(payload.updateUnManaged);
                         var updatedUnManagedResult = this.update(unmanagedWorkloads);
+                        if (!updatedUnManagedResult) {
+                            this.logger._debug("[updateCreate]: Job is cancelled");
+                            return;
+                        }
                         if (updatedUnManagedResult.status) {
                             updatedUnManagedWorkloads = updatedUnManagedWorkloads + updatedUnManagedResult.count;
                         }
@@ -269,10 +278,6 @@ IllumioUpdateWorkloads.prototype = {
 
 
                 } while (counter < totalSysIds.length && this.autoSync == 'true');
-
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-                    return;
-                }
 
                 //DELETE THE RETIRED WORKLOADS
                 if (this.autoSync == 'true') {
@@ -291,6 +296,7 @@ IllumioUpdateWorkloads.prototype = {
                     if (allHref.length > 0) {
 
                         if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                            this.logger._debug("[delete]: Job is cancelled");
                             return;
                         }
 
@@ -379,11 +385,6 @@ IllumioUpdateWorkloads.prototype = {
 
         var payloadBody = [];
         var snowUpdateQueue = []; // List of payloads for updating snow tables
-
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-            return;
-        }
-
 
         // Filtered list acc to workloads status after PCE REST Call
 
@@ -505,7 +506,7 @@ IllumioUpdateWorkloads.prototype = {
         for (var i = 0; i < payloadBody_chunked_length; i++) {
 
             if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-                break;
+                return;
             }
 
             this.logger._info("IllumioUpdateWorkloads: Creating workloads. Batch: " + (i + 1));
@@ -604,10 +605,6 @@ IllumioUpdateWorkloads.prototype = {
             }
         }
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-            return;
-        }
-
         this.logger._info("IllumioUpdateWorkloads: Workload creation complete");
         return {
             "status": true,
@@ -621,10 +618,6 @@ IllumioUpdateWorkloads.prototype = {
      * @return {JSON} Object with status and count of workload uploaded.
      */
     update: function(payload) {
-
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-            return;
-        }
 
         this.logger._info("IllumioUpdateWorkloads: Initiating updating the workloads on PCE ");
 
@@ -663,10 +656,6 @@ IllumioUpdateWorkloads.prototype = {
                 this.logger._debug("IllumioUpdateWorkloads: Creating required labels.");
             }
             if (!this.createLabels(labelsToCreate, labelsToUse)) {
-
-                if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-                    break;
-                }
 
                 // Create the unknown labels
                 this.logger._error("IllumioUpdateWorkloads: Failed to update workload. Reason : Failed to create required labels " + href);
@@ -778,7 +767,7 @@ IllumioUpdateWorkloads.prototype = {
 
 
             if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-                break;
+                return;
             }
 
             this.logger._info("IllumioUpdateWorkloads: Updating workloads. Batch: " + (i + 1));
@@ -885,10 +874,6 @@ IllumioUpdateWorkloads.prototype = {
             }
         }
 
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-            return;
-        }
-
         this.logger._info("IllumioUpdateWorkloads: Workload updation complete");
         return {
             "status": true,
@@ -905,11 +890,6 @@ IllumioUpdateWorkloads.prototype = {
         for (var l = 0, labelLen = labelsToCreate.length; l < labelLen; l++) {
             var label = labelsToCreate[l];
             var storedLabelValue = label.value + "";
-
-            if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-                break;
-            }
-
 
             // If the label was created recently use that instead of attempting to create again
             if (this.newLabelsCreated[label.key] && this.newLabelsCreated[label.key][label.value]) {
@@ -985,11 +965,6 @@ IllumioUpdateWorkloads.prototype = {
                 this.logger._error("IllumioUpdateWorkloads: Error while creating label. Status : " + status);
                 return false;
             }
-        }
-
-
-        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
-            return false;
         }
 
         return true;
@@ -1162,7 +1137,7 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>85</sys_mod_count>
+        <sys_mod_count>87</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1170,6 +1145,6 @@ IllumioUpdateWorkloads.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-16 10:27:56</sys_updated_on>
+        <sys_updated_on>2024-04-18 07:03:29</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
