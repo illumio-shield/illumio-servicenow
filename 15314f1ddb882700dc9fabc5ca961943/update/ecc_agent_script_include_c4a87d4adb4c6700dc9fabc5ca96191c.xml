@@ -214,11 +214,15 @@ IllumioUpdateWorkloads.prototype = {
                     var count = parseInt(this.count);
 
                     if (payload.createUnknown) {
+                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                            this.logger._debug("[updateCreate]: Job is cancelled");
+                            return;
+                        }
+
                         totalWorkloads = totalWorkloads + payload.createUnknown.length;
                         // If there are unknown workloads to create
                         unknownWorkloads = JSON.stringify(payload.createUnknown);
                         jobContent = {
-                            job_status: 'running',
                             logs: 'Creating ' + payload.createUnknown.length + ' unknown workload(s)',
                             current_operation: 'Creating unknown workloads'
                         };
@@ -235,10 +239,15 @@ IllumioUpdateWorkloads.prototype = {
                     }
 
                     if (payload.updateManaged) {
+
+                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                            this.logger._debug("[updateCreate]: Job is cancelled");
+                            return;
+                        }
+
                         totalWorkloads = totalWorkloads + payload.updateManaged.length;
                         // If there are managed workloads to update
                         jobContent = {
-                            job_status: 'running',
                             logs: 'Total critical label groups fetched : ' + count + '\n[' + this.illumioDateFormat.format(new Date()) + '] ' + 'Updating ' + payload.updateManaged.length + ' managed workload(s)',
                             current_operation: 'Updating managed workloads'
                         };
@@ -257,10 +266,15 @@ IllumioUpdateWorkloads.prototype = {
 
 
                     if (payload.updateUnManaged) {
+
+                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                            this.logger._debug("[updateCreate]: Job is cancelled");
+                            return;
+                        }
+
                         totalWorkloads = totalWorkloads + payload.updateUnManaged.length;
                         // If there are ummanaged workloads to update
                         jobContent = {
-                            job_status: 'running',
                             logs: 'Total critical label groups fetched : ' + count + '\n[' + this.illumioDateFormat.format(new Date()) + '] ' + 'Updating ' + payload.updateUnManaged.length + ' unmanaged workload(s)',
                             current_operation: 'Updating unmanaged workloads'
                         };
@@ -1149,7 +1163,7 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>88</sys_mod_count>
+        <sys_mod_count>90</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1157,6 +1171,6 @@ IllumioUpdateWorkloads.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-18 16:16:06</sys_updated_on>
+        <sys_updated_on>2024-04-21 10:14:19</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
