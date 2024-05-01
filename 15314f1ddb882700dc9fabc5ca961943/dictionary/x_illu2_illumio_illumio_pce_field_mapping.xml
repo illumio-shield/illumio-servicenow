@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="f2b205a79300021062233f018bba10d1" label="Illumio PCE Field Mapping" max_length="40" name="x_illu2_illumio_illumio_pce_field_mapping" type="collection">
+    <element db_object_id="f2b205a79300021062233f018bba10d1" label="Illumio PCE Field Mapping [Deprecated]" max_length="40" name="x_illu2_illumio_illumio_pce_field_mapping" type="collection">
         <element attributes="allow_null=true,allow_references=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>
         <element dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Conditions for Deleting Workloads" max_length="4000" name="conditions_for_deleting_workloads" type="conditions" use_dependent_field="true"/>
         <element dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Conditions for Excluding Workloads" max_length="4000" name="conditions_for_retired_workloads" type="conditions" use_dependent_field="true"/>

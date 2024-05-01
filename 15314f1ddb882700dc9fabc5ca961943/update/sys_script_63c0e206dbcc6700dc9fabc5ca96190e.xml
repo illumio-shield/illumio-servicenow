@@ -29,20 +29,27 @@
         <role_conditions/>
         <script><![CDATA[gs.include('IllumioConstants');
 (function executeRule(current, previous /*null when async*/ ) {
-
+	
+	var pceConfigGr = new GlideRecord('x_illu2_illumio_illumio_pce_conf');
+    pceConfigGr.addQuery('name', current.getValue('name'));
+    pceConfigGr.addQuery('sys_id', '!=', current.getUniqueValue());
+    pceConfigGr.query();
+    if (pceConfigGr.next()) {
+        gs.addErrorMessage('PCE configuration with this name already exists.');
+        current.setAbortAction(true);
+		return;
+    }
+	
     // set default organization id to 1 if not present
     if (current.organization_id == '') {
         current.organization_id = '1';
     }
 
-    // there must be a single configuration, so deleting existing configuration while adding new one
+
     if (current.operation() == 'insert') {
-        var configurationGr = new GlideRecord('x_illu2_illumio_illumio_pce_conf');
-        configurationGr.query();
-        configurationGr.deleteMultiple();
-        gs.info('New configuration added by {0}({1})', gs.getUserName(), gs.getUserID());
+        gs.info('New configuration {0} added by {1}({2})', current.name , gs.getUserName(), gs.getUserID());
     } else {
-        gs.info('{0}({1}) updated configuration', gs.getUserName(), gs.getUserID());
+        gs.info('{0}({1}) updated configuration {2}', gs.getUserName(), gs.getUserID(), current.name);
     }
 
     // Trimming threshold limit values
@@ -73,11 +80,6 @@
         }
 
     }
-    // trimming critical label group values
-    current.critical_label_group_application = (current.critical_label_group_application + '').trim();
-    current.critical_label_group_location = (current.critical_label_group_location + '').trim();
-    current.critical_label_group_environment = (current.critical_label_group_environment + '').trim();
-    current.critical_label_group_role = (current.critical_label_group_role + '').trim();
 
     //Retry mechanism Validations
     try {
@@ -114,16 +116,16 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>63c0e206dbcc6700dc9fabc5ca96190e</sys_id>
-        <sys_mod_count>62</sys_mod_count>
+        <sys_mod_count>68</sys_mod_count>
         <sys_name>Update PCE Configuration</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_63c0e206dbcc6700dc9fabc5ca96190e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-10-20 03:07:22</sys_updated_on>
-        <template>name=Illumio PCE Configuration^active=true^script=var startDiscovery = new x_illu2_illumio.IllumioStartDiscovery(); startDiscovery.process();^EQ</template>
+        <sys_updated_on>2024-04-09 11:25:56</sys_updated_on>
+        <template>active=true^script=var startDiscovery = new x_illu2_illumio.IllumioStartDiscovery(); startDiscovery.process(current.getUniqueValue());^EQ</template>
         <when>before</when>
     </sys_script>
     <sys_translated_text action="delete_multiple" query="documentkey=63c0e206dbcc6700dc9fabc5ca96190e"/>

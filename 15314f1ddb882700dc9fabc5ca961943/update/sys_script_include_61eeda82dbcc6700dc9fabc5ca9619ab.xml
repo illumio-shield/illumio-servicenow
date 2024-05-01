@@ -10,25 +10,18 @@
         <script><![CDATA[gs.include("IllumioConstants");
 var IllumioGetPCEConfiguration = Class.create();
 IllumioGetPCEConfiguration.prototype = {
-    initialize: function() {
-	},
+    initialize: function() {},
 
     /**
      * To get current PCE configuration stored in configuration table
-	 * @return {JSON} Object of configuration details.
+     * @return {JSON} Object of configuration details.
      */
-    getConfiguration: function() {
-
+    getConfiguration: function(configSysId) {
         var pceConfig = new GlideRecord('x_illu2_illumio_illumio_pce_conf');
-        pceConfig.query();
-
-        if (pceConfig.next()) {
-
-            var fieldmapping = this.getFieldMapping();
-
-
-            // considering single configuration will be stored in configurations table
+        if (pceConfig.get(configSysId)) {
+            var fieldmapping = this.getFieldMapping(configSysId);
             return {
+                name: pceConfig.name,
                 midServer: String(pceConfig.mid_server.name),
                 pceUsername: pceConfig.username.getDecryptedValue(),
                 pceSecret: pceConfig.secret_key.getDecryptedValue(),
@@ -38,6 +31,7 @@ IllumioGetPCEConfiguration.prototype = {
                 autoSync: pceConfig.auto_synchronization,
                 create_workload_limit: pceConfig.new_workloads_to_create_at_a_time,
                 enable_limit: pceConfig.limits_on_workloads_and_labels_changes_per_sync,
+                cancel_job_on_limit_exceed: pceConfig.cancel_job_on_limit_exceed,
                 limit_on_label_creation: pceConfig.set_limit_on_new_label_creation,
                 label_creation_limit: pceConfig.new_label_creation_limit,
                 limit_on_wl_modification: pceConfig.set_limit_on_workload_label_modifications,
@@ -47,11 +41,11 @@ IllumioGetPCEConfiguration.prototype = {
                 limit_on_wl_deletion: pceConfig.set_limit_on_workload_deletion,
                 wl_deletion_limit: pceConfig.workload_deletion_limit,
                 enable_pce_mid_proxy: pceConfig.enable_proxy_between_pce_and_mid_server,
-				retry_params: {
-					http_retry_count: parseInt(pceConfig.getValue('http_retry_count')),
-					http_retry_interval_increment: parseInt(pceConfig.getValue('http_retry_interval_increment')),
-					http_retry_interval_max: parseInt(pceConfig.getValue('http_retry_interval_max'))
-				}
+                retry_params: {
+                    http_retry_count: parseInt(pceConfig.getValue('http_retry_count')),
+                    http_retry_interval_increment: parseInt(pceConfig.getValue('http_retry_interval_increment')),
+                    http_retry_interval_max: parseInt(pceConfig.getValue('http_retry_interval_max'))
+                }
             };
 
         } else {
@@ -61,89 +55,98 @@ IllumioGetPCEConfiguration.prototype = {
 
     },
 
-    /**
-     * get the field mapping labels from PCE field mapping table
-	 * @return {JSON} Object of field mapping labels.
-     */
-    getFieldMapping: function() {
+    getFieldMapping: function(configSysId) {
+        try {
+            var result = {};
+            var configClassGr = new GlideRecord('x_illu2_illumio_illumio_config_class_mapping');
+            configClassGr.addQuery('illumio_pce_configuration', configSysId);
+            configClassGr.addActiveQuery();
+            configClassGr.query();
 
-        var fields = ['host_name', 'application', 'environment', 'role', 'location'];
-		for(var i=0;i<MAX_IP_ADDRESSES;i++){
-			var ipAddressName = (i > 0) ? 'ip_address_'+(i+1) : 'ip_address';
-			fields.push(ipAddressName);
-		}
-        var result = {};
-        var gr = new GlideRecord('x_illu2_illumio_illumio_pce_field_mapping');
-        gr.query();
+            while (configClassGr.next()) {
+                var mappedFields = this.createMappedFields(configClassGr);
+                var mappingGr = new GlideRecord('x_illu2_illumio_illumio_class_field_mapping');
+                mappingGr.addActiveQuery();
+                mappingGr.addQuery('illumio_config_class_mapping', configClassGr.getUniqueValue());
+                mappingGr.orderBy('order');
+                mappingGr.query();
 
-        if (gr.hasNext()) {
-            while (gr.next()) {
-                var labels = new Object();
-                for (i = 0; i < fields.length; i++) {
-                    if (!gs.nil(gr[fields[i]])) {
-                        labels[fields[i]] = gr[fields[i]].getDisplayValue();
+                while (mappingGr.next()) {
+                    var isAdvanced = mappingGr.getValue('advanced') == "1";
+                    var recordSysId = mappingGr.getUniqueValue();
+                    var type = mappingGr.getValue('type');
+                    var fieldMapping = {};
+
+                    if (type == 'host_name' || type == 'public_ip_address') {
+                        var key = type == 'host_name' ? 'host_name' : 'public_ip';
+                        mappedFields[key]['value'] = isAdvanced ? mappingGr.getValue('script') : mappingGr['ci_field'].getDisplayValue();
+                        mappedFields[key]['advanced'] = isAdvanced;
+                        mappedFields[key]['mappingSysId'] = recordSysId;
+                    } else if (type == 'ip_address') {
+                        fieldMapping['value'] = isAdvanced ? mappingGr.getValue('script') : mappingGr['ci_field'].getDisplayValue();
+                        fieldMapping['advanced'] = isAdvanced;
+                        fieldMapping['is_multiple'] = mappingGr.getValue('is_multiple') == "1";
+                        fieldMapping['mappingSysId'] = recordSysId;
+                        if (!mappedFields['ip_address']) {
+                            mappedFields['ip_address'] = [];
+                        }
+                        mappedFields['ip_address'].push(fieldMapping);
+                    } else {
+                        var dimension = mappingGr['illumio_label_dimension']['key'];
+                        fieldMapping['label_dimension_sys_id'] = mappingGr.getValue('illumio_label_dimension');
+                        fieldMapping['value'] = isAdvanced ? mappingGr.getValue('script') : mappingGr['ci_field'].getDisplayValue();
+                        fieldMapping['advanced'] = isAdvanced;
+                        fieldMapping['mappingSysId'] = recordSysId;
+                        mappedFields['label_dimensions'][dimension] = fieldMapping;
                     }
                 }
-                var conditionForRetiredWorkload = gr.getValue('conditions_for_retired_workloads');
-                var sortOrder = gr['set_user_configurable_sort_order'] ? gr['order_by_column_name'].getDisplayValue() : gr['sys_updated_on'].getDisplayValue();
-                var orderBy = gr['order'];
-                var conditionForDeletingWorkload = gr.getValue('conditions_for_deleting_workloads');
-                result[gr.servicenow_source_table] = {
-                    labels: labels,
-                    condition: conditionForRetiredWorkload,
-                    delete_condition: conditionForDeletingWorkload,
-                    sort_order: sortOrder,
-                    order_by: orderBy
-                };
+                result[configClassGr['source_table'].getDisplayValue()] = mappedFields;
             }
             return result;
+        } catch (ex) {
+            gs.error("[getFieldMapping]Exception in Field Mapping:" + ex);
         }
-        return null;
     },
 
-	/**
+    createMappedFields: function(configClassGr) {
+        var mappedFields = {};
+        mappedFields['exclude_condition'] = configClassGr.getValue('conditions_for_excluding_workloads');
+        mappedFields['delete_condition'] = configClassGr.getValue('conditions_for_deleting_workloads');
+		mappedFields['incident_condition'] = configClassGr.getValue('conditions_for_creating_incidents');
+        mappedFields['sort_order'] = configClassGr['user_configurable_sort_order'] ? configClassGr['order_by_column_name'].getDisplayValue() : configClassGr['sys_updated_on'].getDisplayValue();
+        mappedFields['order_by'] = configClassGr.getValue('order');
+        mappedFields['host_name'] = {};
+        mappedFields['public_ip'] = {};
+        mappedFields['label_dimensions'] = {};
+        mappedFields['ip_address'] = [];
+        return mappedFields;
+    },
+
+    /**
      * get list of fields which are mapped
-	 * @return {JSON} Object of field that are mapped.
+     * @return {JSON} Object of field that are mapped.
      */
-    getMappedFields: function() {
-        var fields = ['application', 'environment', 'role', 'location'];
-        var mappedFields = {
-            'application': false,
-            'environment': false,
-            'role': false,
-            'location': false,
-        };
-		for(var i=0;i< MAX_IP_ADDRESSES;i++){
-			var ipAddressName = (i > 0) ? 'ip_address_'+(i+1) : 'ip_address';
-			mappedFields[ipAddressName] = false;
-			fields.push(ipAddressName);
-		}
-        var grMapping = new GlideRecord('x_illu2_illumio_illumio_pce_field_mapping');
-        grMapping.query();
-        while (grMapping.next()) {
-            for (i = 0; i < fields.length; i++) {	
-                if (!gs.nil(grMapping.getValue(fields[i]))) {
-                    mappedFields[fields[i]] = true;
-                }
+    getMappedFields: function(configSysId) { // MAS Update
+
+        var mappedFieldsObject = {};
+        var configClassGr = new GlideRecord("x_illu2_illumio_illumio_config_class_mapping");
+        configClassGr.addActiveQuery();
+        configClassGr.addQuery("illumio_pce_configuration", configSysId);
+        configClassGr.query();
+        while (configClassGr.next()) {
+            var mappedLabelDimensions = [];
+            var classFieldMappingGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+            classFieldMappingGr.addActiveQuery();
+            classFieldMappingGr.addQuery("illumio_config_class_mapping", configClassGr.getUniqueValue());
+            classFieldMappingGr.addQuery("type", "label_dimension");
+            classFieldMappingGr.query();
+            while (classFieldMappingGr.next()) {
+                mappedLabelDimensions.push(classFieldMappingGr.illumio_label_dimension.key + "");
             }
+            mappedFieldsObject[configClassGr.getValue("source_table")] = mappedLabelDimensions;
         }
-        var updateFields = [];
-        if (mappedFields.application) {
-            updateFields.push('app');
-        }
-        if (mappedFields.location) {
-            updateFields.push('loc');
-        }
-        if (mappedFields.environment) {
-            updateFields.push('env');
-        }
-        if (mappedFields.role) {
-            updateFields.push('role');
-        }
-        return {
-            fields: mappedFields,
-            updateFields: updateFields
-        };
+
+        return mappedFieldsObject;
     },
     type: 'IllumioGetPCEConfiguration'
 };]]></script>
@@ -151,13 +154,13 @@ IllumioGetPCEConfiguration.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:18:42</sys_created_on>
         <sys_id>61eeda82dbcc6700dc9fabc5ca9619ab</sys_id>
-        <sys_mod_count>60</sys_mod_count>
+        <sys_mod_count>68</sys_mod_count>
         <sys_name>IllumioGetPCEConfiguration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_61eeda82dbcc6700dc9fabc5ca9619ab</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-08-18 06:25:02</sys_updated_on>
+        <sys_updated_on>2024-04-10 08:17:11</sys_updated_on>
     </sys_script_include>
 </record_update>

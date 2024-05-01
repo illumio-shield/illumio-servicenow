@@ -48,8 +48,12 @@ function updateJob(sys_id) {
         // If status is ready_to_map, dump data to mapping table from staging table
         if (current.job_status + "" == 'ready_to_map') {
             var data = [];
+            var configSysId = utils.getConfigurationId(current.illumio_job_id);
             var mappingTableGr = new GlideRecord(current.mapping_table_name + "");
+            mappingTableGr.addQuery('illumio_pce_configuration', configSysId);
+            mappingTableGr.query();
             var stagingTableGr = new GlideRecord(current.result_table_name + "");
+            stagingTableGr.addQuery('illumio_pce_configuration', configSysId);
             stagingTableGr.query();
 
             while (stagingTableGr.next()) {
@@ -68,12 +72,23 @@ function updateJob(sys_id) {
                     for (var index = 0, dataLength = data.length; index < dataLength; index++) {
                         mappingTableGr.initialize();
                         for (var key in keysToMap) {
-                            mappingTableGr[keysToMap[key]] = data[index][keysToMap[key]] + "";
+							if(keysToMap[key] == 'ven'){
+                                if(data[index][keysToMap[key]] == "null")
+                                    continue;
+                                var ven_data = JSON.parse(data[index][keysToMap[key]]);
+                                mappingTableGr['ven_href'] = ven_data.href;
+                                mappingTableGr['ven_version'] = ven_data.version;
+                                mappingTableGr['ven_status'] = ven_data.status;
+                                continue;
+                            }
+                            mappingTableGr[keysToMap[key]] = (data[index][keysToMap[key]]) == "null" ? "" : data[index][keysToMap[key]] + "";
                         }
+                        mappingTableGr.setValue('illumio_pce_configuration', configSysId);
                         mappingTableGr.insert();
                     }
 
                     stagingTableGr.initialize();
+                    stagingTableGr.addQuery('illumio_pce_configuration', configSysId);
                     stagingTableGr.deleteMultiple();
                     updateJob(current.sys_id);
                 } catch (ex) {
@@ -116,15 +131,15 @@ function updateJob(sys_id) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6db41282dbcc6700dc9fabc5ca96191f</sys_id>
-        <sys_mod_count>75</sys_mod_count>
+        <sys_mod_count>80</sys_mod_count>
         <sys_name>Illumio Poll PCE Async Job Status</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_6db41282dbcc6700dc9fabc5ca96191f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-03-10 11:31:16</sys_updated_on>
+        <sys_updated_on>2024-04-09 11:23:42</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>

@@ -53,6 +53,7 @@
 
     // Check if a label dimension with the same label type initial already exists on the table
     labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+	labelDimensionGr.addQuery("sys_id",'!=',current.getUniqueValue("sys_id"));
     labelDimensionGr.addQuery("label_type_initial", current.getValue("label_type_initial"));
     labelDimensionGr.addQuery("illumio_pce_configuration", current.illumio_pce_configuration);
     labelDimensionGr.setLimit(1);
@@ -77,15 +78,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>8bf595cc97600a10b7daf896f053affe</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>Validate Label Dimension</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_8bf595cc97600a10b7daf896f053affe</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-19 08:50:33</sys_updated_on>
+        <sys_updated_on>2024-04-09 11:26:17</sys_updated_on>
         <template/>
         <when>before</when>
     </sys_script>

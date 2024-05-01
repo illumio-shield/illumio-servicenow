@@ -9,207 +9,262 @@
         <name>GetLabelGroupsAjax</name>
         <script><![CDATA[var GetLabelGroupsAjax = Class.create();
 GetLabelGroupsAjax.prototype = Object.extendsObject(
-	global.AbstractAjaxProcessor, {
+    global.AbstractAjaxProcessor, {
+
+        /**
+         * Get label groups
+         * @returns {String} Stringified object of label groups
+         **/
+        fetchlabelGroups: function() {
+            var labelGroupGr = new GlideRecord("x_illu2_illumio_illumio_label_group_mapping");
+            labelGroupGr.query();
+            var labels = [];
+            while (labelGroupGr.next()) {
+                labels.push(labelGroupGr.name);
+            }
+            return JSON.stringify(labels);
+        },
+
+        /**
+         * Get Critical labels
+         **/
+        fetchCriticalLabels: function() {
+
+            var configSysIds = JSON.parse(this.getParameter("sysparm_config_sys_ids"));
+            var jobStatus = true;
+            var failedConfigurations = [];
+            for (var configIndex = 0; configIndex < configSysIds.length; configIndex++) {
+                var pceConfigGr = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+                if (pceConfigGr.get(configSysIds[configIndex])) {
+                    var utils = new x_illu2_illumio.IllumioUtils();
+                    var status = utils.fetchLabelGroupsAndLabelsFromPCE(pceConfigGr);
+                    if (!status) {
+                        failedConfigurations.push(pceConfigGr.getDisplayValue());
+                    }
+
+                    jobStatus = jobStatus && status;
+                }
+            }
+
+            return JSON.stringify({
+                "failedConfigurations": failedConfigurations,
+                "status": jobStatus,
+            });
+        },
+
+        /**
+         * Count Critical label Groups
+         * @returns {int} Count of critical label groups
+         **/
+        countCriticalGroupsFetched: function() {
+            var utils = new x_illu2_illumio.IllumioUtils();
+            var configSysIds = JSON.parse(this.getParameter("sysparm_config_sys_ids"));
+            return JSON.stringify(utils.countLabelGroups(configSysIds));
+        },
+
+        /**
+         * FilterRecords with conflicts and unknowns
+         * @returns {string} Stringified object of valid records
+         **/
+        filterRecords: function() {
+
+            try {
+                var retObject = {
+                    data: {},
+                    count: 0
+                };
+                var sysIds = this.getParameter("sysparm_sys_ids");
+                var pceGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+                pceGr.addQuery("sys_id", "IN", sysIds);
+                pceGr.addQuery("conflicts", true);
+                pceGr.query();
+                while (pceGr.next()) {
+                    var config = pceGr.getValue("illumio_pce_configuration");
+                    if (gs.nil(retObject["data"][config])) {
+                        retObject["data"][config] = [pceGr.getUniqueValue()];
+                    } else {
+                        retObject["data"][config].push(pceGr.getUniqueValue());
+                    }
+                    retObject["count"] += 1;
+                }
+                return JSON.stringify(retObject);
+            } catch (e) {
+                gs.error("[filterRecords]Exception in filtering records: ", e);
+            }
+        },
+
+        /**
+         * Fetches labels of valid label groups
+         * @returns {string} Stringified object of valid labels
+         **/
+        excludeWorkloadsWithCriticalLabels: function() {
+            var utils = new x_illu2_illumio.IllumioUtils();
+            var selectedRecordsObject = JSON.parse(this.getParameter("sysparm_selected_record_object"));
+            var retObject = utils.skipRecordsForSync(selectedRecordsObject);
+
+            return JSON.stringify(retObject);
+        },
+
+        /** 
+         * To count total number of labels to create on PCE
+         * @returns {String} Stringified object of total number of labels to create on PCE
+         **/
+        getCreateLabelCounter: function() {
+            try {
+                var autoSync = new IllumioAutoSyncWithPCE();
+                var selectedRecordsObject = JSON.parse(this.getParameter('sysparm_checkedRecordsData'));
+                var workloadObject = [];
+                var counterObject = {},
+                    counter;
+
+                for (var configSysId in selectedRecordsObject) {
+
+                    counter = 0;
+                    var selectedRecordsData = selectedRecordsObject[configSysId];
+                    for (var index = 0, len = selectedRecordsData.length; index < len; index++) {
+
+                        // Workload object with common items
+                        workloadObject = {
+                            hostname: selectedRecordsData[index]["hostname"],
+                            sys_id: selectedRecordsData[index]["sys_id"],
+                            labels: [],
+                            createlabels: [],
+                        };
+                        workloadObject = autoSync.getUseCreateLabelsList(
+                            configSysId,
+                            workloadObject,
+                            selectedRecordsData[index]["label_data"]
+                        );
+                        counter += workloadObject.createlabels.length;
+                    }
+
+                    counterObject[configSysId] = counter;
+                }
+                var instanceURL = gs.getProperty('glide.servlet.uri');
+                instanceURL = instanceURL.replace('https://', '');
+                return JSON.stringify({
+                    hasError: false,
+                    counterObject: counterObject,
+                    instanceURL: instanceURL.replace('/', '')
+
+                });
+            } catch (ex) {
+                gs.error("[getCreateLabelCounter] exception occured while counting labels to create. Exception", ex);
+                return JSON.stringify({
+                    hasError: true,
+                    message: "Error while counting labels."
+                });
+            }
+        },
+
+        /**
+         * To check if the threshold limit is exceeded or not
+         * @returns {String} Stringified object that denotes if the threshold limit is exceeded or not
+         **/
+        checkThresholdLimit: function() {
+            try {
+                var labelsToCreate = this.getParameter('sysparm_labelsToCreate');
+                var wlToModify = this.getParameter('sysparm_wlToModify');
+                var workloadToCreate = this.getParameter('sysparm_workloadToCreate');
+                var configSysId = this.getParameter('sysparm_pceConfigSysId');
+                var thresholdLimit = new IllumioThresholdLimit();
+                return JSON.stringify(thresholdLimit.checkThresholdLimit(configSysId, labelsToCreate, wlToModify, workloadToCreate));
+
+            } catch (ex) {
+                gs.error("[checkThresholdLimit] Exception occured while checking threshold limit. Exception: " + ex);
+            }
+        },
+
+
+        /**
+         * Get valid interfaces from Mappings
+         * @returns {String} Stringified object of valid interfaces
+         **/
+        getValidatedInterfaces: function() {
+            try {
+                var workloadSysId = this.getParameter("sysparm_sys_ids");
+                var utils = new x_illu2_illumio.IllumioUtils();
+                var mappedFields = new IllumioGetPCEConfiguration().getMappedFields();
+                var response = utils.getInterfacesObject(workloadSysId, mappedFields.fields);
+                return JSON.stringify(response);
+            } catch (ex) {
+                gs.error("[getValidatedInterfaces] Exception occured while generating valid interfaces object. Exception: " + ex);
+            }
+        },
+
+        /**
+         * Get configuration
+         * @returns {String} Stringified object of configuration
+         **/
+        getConfigurationDetails: function() {
+            try {
+                var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
+                return JSON.stringify(pceConfig);
+            } catch (ex) {
+                gs.error("[getConfigurationDetails] Exception occured while getting configuration details. Exception: " + ex);
+            }
+        },
 
 		/**
-		 * Get label groups
-		 * @returns {String} Stringified object of label groups
-		 **/
-		fetchlabelGroups: function () {
-			var gr = new GlideRecord("x_illu2_illumio_illumio_label_group_mapping");
-			gr.query();
-			var labels = [];
-			while (gr.next()) {
-				labels.push(gr.name);
-			}
-			return JSON.stringify(labels);
-		},
-
-		/**
-		 * Get Critical labels
-		 * @returns {boolean} true if the label fetch is successful else false
-		 **/
-		fetchCriticalLabels: function () {
-			var utils = new x_illu2_illumio.IllumioUtils();
-			var status = utils.fetchLabelGroupsAndLabelsFromPCE();
-			return status;
-		},
-
-		/**
-		 * Count Critical label Groups
-		 * @returns {int} Count of critical label groups
-		 **/
-		countCriticalGroupsFetched: function () {
-			var utils = new x_illu2_illumio.IllumioUtils();
-			var count = 0;
-			count = utils.countLabelGroups();
-			return count;
-		},
-
-		/**
-		 * FilterRecords with conflicts and unknowns
-		 * @returns {string} Stringified object of valid records
-		 **/
-		filterRecords: function () {
-			var val = [];
-			var sysIds = this.getParameter("sysparm_sys_ids").split(",");
-			var tableGr = new GlideRecord(
-				"x_illu2_illumio_illumio_servicenow_servers"
-			);
-			for (var i = 0; i < sysIds.length; i++) {
-				tableGr.initialize();
-				tableGr.addQuery("sys_id", sysIds[i]);
-				tableGr.addQuery("duplicate", false);
-				tableGr.query();
-				if (tableGr.next()) {
-					try {
-						if (
-							tableGr.conflicts == true ||
-							tableGr.known_to_pce + "" == "unknown"
-						) {
-							val.push(sysIds[i] + "");
-						}
-					} catch (err) {
-						gs.error("Err : " + err);
-					}
-				}
-			}
-			return JSON.stringify(val);
-		},
-
-		/**
-		 * Fetches labels of valid label groups
-		 * @returns {string} Stringified object of valid labels
-		 **/
-		fetchLabelsForLabelGroups: function () {
-			var arrRecords = [];
-			var retArr = [];
-			var utils = new x_illu2_illumio.IllumioUtils();
-			arrRecords = JSON.parse(this.getParameter("sysparm_sys_ids")).split(",");
-			retArr = utils.skipRecordsForSync(arrRecords);
-
-			return JSON.stringify(retArr);
-		},
-
-		/** 
-		 * To count total number of labels to create on PCE
-		 * @returns {String} Stringified object of total number of labels to create on PCE
-		 **/
-		getCreateLabelCounter: function () {
-			try {
-				var autoSync = new IllumioAutoSyncWithPCE();
-				var selectedRecordsData = this.getParameter('sysparm_selectedRecordsData');
-				var labelsToMap, workload_object = [];
-				var counter = 0;
-				selectedRecordsData = JSON.parse(selectedRecordsData);
-				for (var index = 0, len = selectedRecordsData.length; index < len; index++) {
-					labelsToMap = {};
-					var labelKeys = {
-						application: "app",
-						environment: "env",
-						location: "loc",
-						role: "role",
-					};
-
-					// Prepare the labelsToMap object
-					for (var labelKeyLong in labelKeys) {
-						var labelKey = labelKeys[labelKeyLong];
-						// Push to labelsToMap only if value is non-empty
-						if (selectedRecordsData[index][labelKeyLong]) {
-							labelsToMap[labelKey] = selectedRecordsData[index][labelKeyLong] + "";
-						}
-					}
-
-					// Workload object with common items
-					workload_object = {
-						hostname: selectedRecordsData[index]["hostname"],
-						sys_id: selectedRecordsData[index]["sys_id"],
-						labels: [],
-						createlabels: [],
-					};
-					workload_object = autoSync.getUseCreateLabelsList(
-						workload_object,
-						labelsToMap
-					);
-					counter += workload_object.createlabels.length;
-
-				}
-				var instanceURL = gs.getProperty('glide.servlet.uri');
-				instanceURL = instanceURL.replace('https://', '');
-				return JSON.stringify({
-					hasError: false,
-					counter: counter,
-					instanceURL: instanceURL.replace('/', '')
-
-				});
-			} catch (ex) {
-				gs.error("[getCreateLabelCounter] exception occured while counting labels to create. Exception: " + ex);
-				return JSON.stringify({
-					hasError: true,
-					message: "Error while counting labels."
-				});
-			}
-		},
-
-		/**
-		 * To check if the threshold limit is exceeded or not
-		 * @returns {String} Stringified object that denotes if the threshold limit is exceeded or not
-		 **/ 
-		checkThresholdLimit: function () {
-			try {
-				var labelsToCreate = this.getParameter('sysparm_labelsToCreate');
-				var wlToModify = this.getParameter('sysparm_wlToModify');
-				var workloadToCreate = this.getParameter('sysparm_workloadToCreate');
-				var thresholdLimit = new IllumioThresholdLimit();
-				return JSON.stringify(thresholdLimit.checkThresholdLimit(labelsToCreate + '', wlToModify + '', workloadToCreate + ''));
-
-			} catch (ex) {
-				gs.error("[checkThresholdLimit] Exception occured while checking threshold limit. Exception: " + ex);
-			}
-		},
+         * Returns an object having the status of the current job is available to update and if not it also returns currentJob Status
+         * @returns {JSON} with status and currJobStatus.
+         **/
 		
-		/**
-		 * Get valid interfaces from Mappings
-		 * @returns {String} Stringified object of valid interfaces
-		 **/ 
-		getValidatedInterfaces: function () {
-			try {
-				var workloadSysId = this.getParameter("sysparm_sys_ids");
-				var utils = new x_illu2_illumio.IllumioUtils();
-				var mappedFields = new IllumioGetPCEConfiguration().getMappedFields();
-				var response = utils.getInterfacesObject(workloadSysId, mappedFields.fields);
-				return JSON.stringify(response);
-			} catch (ex) {
-				gs.error("[getValidatedInterfaces] Exception occured while generating valid interfaces object. Exception: " + ex);
-			}
-		},
-		
-		/**
-		 * Get configuration
-		 * @returns {String} Stringified object of configuration
-		 **/ 		
-		getConfigurationDetails: function () {
-			try {
-				var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
-				return JSON.stringify(pceConfig);
-			} catch (ex) {
-				gs.error("[getConfigurationDetails] Exception occured while getting configuration details. Exception: " + ex);
-			}
-		},
-		type: "GetLabelGroupsAjax",
-	}
+        getCancelledJobStatus: function() {
+
+            var jobSysId = this.getParameter("sysparm_job_sys_id");
+
+            var scheduledJobGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
+            if (scheduledJobGr.get("sys_id", jobSysId)) {
+                if (scheduledJobGr.job_status == "running")
+                    return JSON.stringify({
+                        status: true
+                    });
+                else
+                    return JSON.stringify({
+                        status: false,
+                        currStatus: scheduledJobGr.getValue("job_status")
+                    });
+            }
+            return JSON.stringify({
+                status: false
+            });
+        },
+
+        /**
+         * Updates the scheduled job status and returns status of job update in boolean
+         * @returns {Boolean} status of job update completed successfully or not.
+         **/
+
+        updateScheduledJobStatus: function() {
+
+            var jobSysId = this.getParameter("sysparm_job_sys_id");
+
+            var scheduledJobGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
+            if (scheduledJobGr.get("sys_id", jobSysId)) {
+                scheduledJobGr.setValue("job_status", "cancelled");
+                scheduledJobGr.setValue("job_completed", new GlideDateTime());
+                scheduledJobGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + ']  The Job is Cancelled';
+                scheduledJobGr.update();
+                return true;
+            } else {
+                return false;
+            }
+        },
+        type: "GetLabelGroupsAjax",
+    }
 );]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-10-29 15:02:03</sys_created_on>
         <sys_id>e83ebd53db84e4901206fd641d9619bd</sys_id>
-        <sys_mod_count>167</sys_mod_count>
+        <sys_mod_count>195</sys_mod_count>
         <sys_name>GetLabelGroupsAjax</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_e83ebd53db84e4901206fd641d9619bd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2022-02-28 15:42:31</sys_updated_on>
+        <sys_updated_on>2024-04-10 08:44:39</sys_updated_on>
     </sys_script_include>
 </record_update>
