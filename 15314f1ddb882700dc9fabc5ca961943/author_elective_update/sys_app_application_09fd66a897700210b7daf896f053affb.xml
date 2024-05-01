@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_application">
+    <sys_app_application action="DELETE">
+        <active>true</active>
+        <category display_value="Custom Applications">e0355b31ef303000a61d5a3615c0fb78</category>
+        <description/>
+        <device_type>browser</device_type>
+        <hint/>
+        <name>Illumio PCE Workload Field Value</name>
+        <order>100</order>
+        <roles>x_illu2_illumio.illumio_pce_workload_field_value_user</roles>
+        <sys_class_name>sys_app_application</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-04 13:11:45</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>09fd66a897700210b7daf896f053affb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Illumio PCE Workload Field Value</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_app_application_09fd66a897700210b7daf896f053affb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-04 13:11:45</sys_updated_on>
+        <title>Illumio PCE Workload Field Value</title>
+        <view_name/>
+    </sys_app_application>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>5fba01a0db02a190387021c405961906</instance_id>
+        <instance_name>dev170179</instance_name>
+        <name>sys_app_application_09fd66a897700210b7daf896f053affb</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_application"><sys_app_application action="INSERT_OR_UPDATE"><active>true</active><category display_value="Custom Applications">e0355b31ef303000a61d5a3615c0fb78</category><description/><device_type>browser</device_type><hint/><name>Illumio PCE Workload Field Value</name><order>100</order><roles>x_illu2_illumio.illumio_pce_workload_field_value_user</roles><sys_class_name>sys_app_application</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-03-04 13:11:45</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>09fd66a897700210b7daf896f053affb</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Illumio PCE Workload Field Value</sys_name><sys_overrides/><sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package><sys_policy/><sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope><sys_update_name>sys_app_application_09fd66a897700210b7daf896f053affb</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-03-04 13:11:45</sys_updated_on><title>Illumio PCE Workload Field Value</title><view_name/></sys_app_application></record_update>]]></payload>
+        <payload_hash>1487097460</payload_hash>
+        <record_name>Illumio PCE Workload Field Value</record_name>
+        <reverted_from/>
+        <source>c9ed8fe897204210b7daf896f053af9b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-04 13:11:45</sys_created_on>
+        <sys_id>8dfd66a897700210b7daf896f053affe</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18e099778cb0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-04 13:11:45</sys_updated_on>
+        <type>Application Menu</type>
+        <update_guid>c1fd66a835700210a8a05ff3f09e7ffe</update_guid>
+        <update_guid_history>c1fd66a835700210a8a05ff3f09e7ffe:1487097460</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Illumio PCE Workload Field Value">110090cc97918a50b7daf896f053af3b</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-27 08:56:09</sys_created_on>
+        <sys_db_object display_value="" name="sys_app_application">sys_app_application</sys_db_object>
+        <sys_id>0f934be7ce054306846d7ddc17cc3ca4</sys_id>
+        <sys_metadata>09fd66a897700210b7daf896f053affb</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Illumio PCE Workload Field Value</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_app_application_09fd66a897700210b7daf896f053affb</sys_update_name>
+        <sys_update_version display_value="sys_app_application_09fd66a897700210b7daf896f053affb">8dfd66a897700210b7daf896f053affe</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-27 08:56:09</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -13,7 +13,7 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Enable limit on workload deletion</column_label>
+        <column_label>Enable Limit on Workload Deletion</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -52,13 +52,13 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-06-08 12:19:09</sys_created_on>
-        <sys_name>Enable limit on workload deletion</sys_name>
+        <sys_name>Enable Limit on Workload Deletion</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_dictionary_x_illu2_illumio_illumio_pce_conf_set_limit_on_workload_deletion</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-06-08 12:19:20</sys_updated_on>
+        <sys_updated_on>2024-04-10 19:30:15</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

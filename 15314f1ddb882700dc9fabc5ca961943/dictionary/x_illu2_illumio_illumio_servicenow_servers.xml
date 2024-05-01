@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element db_object_id="4fb245a79300021062233f018bba1065" label="Illumio PCE Workloads" max_length="40" name="x_illu2_illumio_illumio_servicenow_servers" type="collection">
+    <element db_object_id="4fb245a79300021062233f018bba1065" label="Illumio PCE Workload [Deprecated]" max_length="40" name="x_illu2_illumio_illumio_servicenow_servers" type="collection">
         <element attributes="edge_encryption_enabled=true" default="true" label="IP Address" max_length="40" name="add_ip_address" type="boolean"/>
         <element attributes="readonly_clickthrough=true" label="ServiceNow Record Identifier" max_length="40" name="cmdb_reference_field" reference="cmdb_ci" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Label Conflicts" max_length="40" name="conflicts" type="boolean"/>
