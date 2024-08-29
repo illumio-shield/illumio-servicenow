@@ -744,20 +744,18 @@ IllumioUtils.prototype = {
                 return returnDict;
             }
 
-            var stringParams = {
-                "url": pceConfig.pce_url + "",
-                "orgID": (pceConfig.organization_id || "1") + ""
-            };
-            var pce_authorization = gs.base64Encode(pceConfig.username.getDecryptedValue() + ":" + pceConfig.secret_key.getDecryptedValue());
-            var headers = {
-                "Authorization": "Basic " + pce_authorization
-            };
-            var midServer = pceConfig.mid_server.name + "";
-
-            // Make API call
-            returnDict["response"] = this.makeRestCall("IllumioFetchLabelDimensions", "GetLabelDimensions", stringParams, headers, {}, midServer);
-            returnDict["statusCode"] = returnDict["response"].getStatusCode();
+            var inputs = {};
+            inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
+                    
+            // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
+            var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_dimensions').inForeground().withInputs(inputs).run();
+            var outputs = result.getOutputs();
+    
+            // Get Outputs:
+            returnDict["statusCode"] = outputs['variable']; // String
+            returnDict["response"] = JSON.parse(outputs['variable1']); // JSON
             returnDict["status"] = true;
+                
         } catch (exc) {
             gs.error("Exception while making the API call to get the label dimensions for PCE configuration " + pceConfig.getValue("name") + ". Error - " + exc);
         }
@@ -815,7 +813,6 @@ IllumioUtils.prototype = {
                 response_status = responseDict["statusCode"];
 
                 if (response_status >= 200 && response_status < 300) {
-                    response = JSON.parse(response.getBody());
 
                     // Iterate over each dimension and intialize record, if not already present, and update it.
                     for (var i = 0; i < response.length; i++) {
@@ -852,7 +849,6 @@ IllumioUtils.prototype = {
                 response_status = responseDict["statusCode"];
 
                 if (response_status >= 200 && response_status < 300) {
-                    response = JSON.parse(response.getBody());
 
                     // Iterate over each dimension and intialize record, if not already present, and update it.
                     for (var i = 0; i < response.length; i++) {
@@ -928,14 +924,6 @@ IllumioUtils.prototype = {
                     return returnDict;
                 }
 
-                var stringParams = {
-                    "url": pceConfig.pce_url + "",
-                    "orgID": (pceConfig.organization_id || "1") + ""
-                };
-                var pce_authorization = gs.base64Encode(pceConfig.username.getDecryptedValue() + ":" + pceConfig.secret_key.getDecryptedValue());
-                var headers = {
-                    "Authorization": "Basic " + pce_authorization
-                };
                 var requestBody = {
                     "key": labelDimensionData["key"],
                     "display_name": labelDimensionData["display_name_singular"],
@@ -944,18 +932,25 @@ IllumioUtils.prototype = {
                         "display_name_plural": labelDimensionData["display_name_plural"]
                     }
                 };
-                var midServer = pceConfig.mid_server.name + "";
+                
+                var inputs = {};
+                inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
+                inputs['request_body'] = JSON.stringify(requestBody); // JSON 
 
-                var response = this.makeRestCall("IllumioFetchLabelDimensions", "CreateLabelDimension", stringParams, headers, requestBody, midServer);
-                var response_status = response.getStatusCode();
+                // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.create_label_dimensions').inForeground().withInputs(inputs).run();
+                var outputs = result.getOutputs();
+
+                // Get Outputs:
+                var response = JSON.parse(outputs['response']); // JSON
+                var response_status = outputs['status']; // String
 
                 if (response_status >= 200 && response_status < 300) {
-                    response = JSON.parse(response.getBody());
                     returnDict["href"] = response["href"];
                     gs.debug("Label dimension " + labelDimensionData["key"] + " created successfully on Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ".");
                     returnDict["status"] = true;
                 } else if (response_status == 406) {
-                    response = JSON.parse(response.getBody())[0];
+                    response = response[0];
                     gs.error("Error while creating label dimension " + labelDimensionData["key"] + " on Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ". " + response["message"] + "");
                     returnDict["status"] = false;
                 } else {
@@ -982,14 +977,6 @@ IllumioUtils.prototype = {
                     return false;
                 }
 
-                var stringParams = {
-                    "url": pceConfig.pce_url + "",
-                    "href": labelDimensionData["href"]
-                };
-                var pce_authorization = gs.base64Encode(pceConfig.username.getDecryptedValue() + ":" + pceConfig.secret_key.getDecryptedValue());
-                var headers = {
-                    "Authorization": "Basic " + pce_authorization
-                };
                 var body = {
                     "display_name": labelDimensionData["display_name_singular"],
                     "display_info": {
@@ -997,12 +984,19 @@ IllumioUtils.prototype = {
                         "display_name_plural": labelDimensionData["display_name_plural"]
                     },
                 };
-                var midServer = pceConfig.mid_server.name + "";
+                
+                var inputs = {};
+                inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
+                inputs['label_dimension_href'] = labelDimensionData["href"]; // String 
+                inputs['request_body'] = JSON.stringify(body); // JSON 
 
+                // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.update_label_dimensions').inForeground().withInputs(inputs).run();
+                var outputs = result.getOutputs();
 
-
-                var response = this.makeRestCall("IllumioFetchLabelDimensions", "UpdateLabelDimension", stringParams, headers, body, midServer);
-                var response_status = response.getStatusCode();
+                // Get Outputs:
+                var response_status = outputs['status']; // String
+                var response = JSON.parse(outputs['response']); // JSON
 
                 if (response_status >= 200 && response_status < 300) {
                     gs.debug("Label Dimension " + labelDimensionData["key"] + " updated successfully on Illumio PCE for PCE configuration " + pceConfig.getValue("name") + ".");
@@ -1267,7 +1261,7 @@ IllumioUtils.prototype = {
                 pce_url: String(pceConfig.pce_url),
                 pce_authorization: gs.base64Encode(pceConfig.username.getDecryptedValue() + ':' + pceConfig.secret_key.getDecryptedValue()),
                 time_zone: gs.getSession().getTimeZoneName(),
-                enable_pce_mid_proxy: pceConfig.enable_proxy_between_pce_and_mid_server,
+                enable_pce_mid_proxy: pceConfig.getValue("enable_proxy_between_pce_and_mid_server"),
                 org_id: pceConfig.getValue("organization_id") || "1"
             };
         }
@@ -1279,13 +1273,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>404</sys_mod_count>
+        <sys_mod_count>416</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-11 14:28:44</sys_updated_on>
+        <sys_updated_on>2024-08-09 09:14:55</sys_updated_on>
     </sys_script_include>
 </record_update>
