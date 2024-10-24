@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_register">
     <sysevent_register action="INSERT_OR_UPDATE">
         <caller_access/>
+        <derived_priority/>
         <description>Fired from business rule after specified time to poll async job status</description>
         <event_name>x_illu2_illumio.illumio_poll_async_statu</event_name>
         <fired_by>Illumio Poll PCE Async Job Status</fired_by>
+        <priority/>
         <queue/>
         <suffix>illumio_poll_async_status</suffix>
         <sys_class_name>sysevent_register</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 10:33:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>fb441e42dbcc6700dc9fabc5ca9619b1</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>x_illu2_illumio.illumio_poll_async_statu</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sysevent_register_fb441e42dbcc6700dc9fabc5ca9619b1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

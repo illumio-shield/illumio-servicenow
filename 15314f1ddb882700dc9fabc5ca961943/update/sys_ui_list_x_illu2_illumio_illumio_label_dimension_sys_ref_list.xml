@@ -3,7 +3,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>display_name_singular</element>
-            <list_id display_value="x_illu2_illumio_illumio_label_dimension" element="NULL" name="x_illu2_illumio_illumio_label_dimension" parent="NULL" relationship="NULL" sys_domain="global" view="e384f0717d31311076daf29f52070d7d">c9e362b097304210b7daf896f053afdb</list_id>
+            <list_id display_value="x_illu2_illumio_illumio_label_dimension" element="NULL" name="x_illu2_illumio_illumio_label_dimension" parent="NULL" relationship="NULL" sys_domain="global" view="5b2f0600db001300dc9fabc5ca961952">c9e362b097304210b7daf896f053afdb</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
@@ -28,6 +28,7 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2024-03-05 07:06:16</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>c9e362b097304210b7daf896f053afdb</sys_id>
@@ -35,12 +36,13 @@
             <sys_name>x_illu2_illumio_illumio_label_dimension</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_list_x_illu2_illumio_illumio_label_dimension_sys_ref_list</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-03-05 07:06:16</sys_updated_on>
             <sys_user/>
-            <view display_value="Reference List" name="sys_ref_list">e384f0717d31311076daf29f52070d7d</view>
+            <view display_value="Reference List" name="sys_ref_list">5b2f0600db001300dc9fabc5ca961952</view>
             <view_name/>
         </sys_ui_list>
     </sys_ui_list>

@@ -42,10 +42,11 @@
         <update_guid_history>67666767df014a50fa666599eaaa767b:-1072636803</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_illu2_illumio_illumio_pce_conf.x_illu2_illumio.illumio_user">c1b62b6797014a50b7daf896f053af25</sys_audit_delete>
+        <sys_audit_delete display_value="">c1b62b6797014a50b7daf896f053af25</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 11:17:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
         <sys_id>8eeab81d04bc4dfc952d284a63c392c4</sys_id>
         <sys_metadata>e4366b6797014a50b7daf896f053afa3</sys_metadata>
@@ -54,6 +55,7 @@
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_parent display_value="x_illu2_illumio_illumio_pce_conf">428bc81fdb5a7f80b5f0715a8c96191c</sys_parent>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
         <sys_update_name>sys_security_acl_role_e4366b6797014a50b7daf896f053afa3</sys_update_name>
