@@ -95,14 +95,14 @@ IllumioHTTPClient.prototype = {
         }
 
         try {
-			this.client.executeMethod(method);
+            this.client.executeMethod(method);
             var responseBody = method.getResponseBody();
-			
-			if (responseBody)
-				responseBody = IOUtils.toString(responseBody, "UTF-8");
-			else
-				responseBody = method.getResponseBodyAsString();
-			
+
+            if (responseBody)
+                responseBody = IOUtils.toString(responseBody, "UTF-8");
+            else
+                responseBody = method.getResponseBodyAsString();
+
             var responseCode = parseInt(method.getStatusCode());
             var getMethodResponseHeaders = method.getResponseHeaders();
             var responseHeaders = {};
@@ -134,7 +134,7 @@ IllumioHTTPClient.prototype = {
             lastSleepTime = lastSleepTime ? lastSleepTime : 0;
             lastSleepTime = Math.min(this.httpRetryIntervalMax, lastSleepTime + this.httpRetryIntervalIncrement);
             if (responseCode == 429) {
-				var retryAfterHeader = responseHeaders['retry-after'];
+                var retryAfterHeader = responseHeaders['retry-after'];
                 if (retryAfterHeader) {
                     lastSleepTime = this.parseRetryAfterHeader(retryAfterHeader) || lastSleepTime;
                 }
@@ -237,7 +237,7 @@ IllumioHTTPClient.prototype = {
         if (isNaN(retryAfterSeconds)) {
             var retryAfterDate = new Date(retryAfter);
             if (retryAfterDate) {
-                retryAfterSeconds = Math.floor((retryAfterDate.getTime() - new Date().getTime())/1000);
+                retryAfterSeconds = Math.floor((retryAfterDate.getTime() - new Date().getTime()) / 1000);
             }
         }
         return retryAfterSeconds || 0;
@@ -251,7 +251,7 @@ IllumioHTTPClient.prototype = {
         <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_id>6559a58adb4c6700dc9fabc5ca961943</sys_id>
-        <sys_mod_count>188</sys_mod_count>
+        <sys_mod_count>189</sys_mod_count>
         <sys_name>IllumioHTTPClient</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -260,7 +260,7 @@ IllumioHTTPClient.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_6559a58adb4c6700dc9fabc5ca961943</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-22 09:36:27</sys_updated_on>
+        <sys_updated_on>2024-11-22 15:07:53</sys_updated_on>
     </ecc_agent_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>6559a58adb4c6700dc9fabc5ca961943</id>
