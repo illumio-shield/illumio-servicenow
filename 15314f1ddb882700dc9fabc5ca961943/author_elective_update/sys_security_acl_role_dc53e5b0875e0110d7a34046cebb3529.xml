@@ -46,7 +46,6 @@
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-03-15 07:23:55</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
         <sys_id>55829834c6b148c8acf2a192e2a87219</sys_id>
         <sys_metadata>dc53e5b0875e0110d7a34046cebb3529</sys_metadata>
@@ -55,7 +54,6 @@
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_parent display_value="IllumioUtilsAJAX">844365b0875e0110d7a34046cebb35cf</sys_parent>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
         <sys_update_name>sys_security_acl_role_dc53e5b0875e0110d7a34046cebb3529</sys_update_name>

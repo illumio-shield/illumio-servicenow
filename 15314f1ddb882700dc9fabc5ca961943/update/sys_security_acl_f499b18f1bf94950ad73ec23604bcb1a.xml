@@ -3,11 +3,8 @@
         <active>true</active>
         <admin_overrides>false</admin_overrides>
         <advanced>true</advanced>
-        <applies_to/>
         <condition/>
-        <decision_type>allow</decision_type>
         <description>Allow write for ip_address_12 in x_illu2_illumio_illumio_pce_field_mapping, if the ACL script returns true.</description>
-        <local_or_existing/>
         <name>x_illu2_illumio_illumio_pce_field_mapping.ip_address_12</name>
         <operation display_value="write">write</operation>
         <script><![CDATA[var gr = new GlideRecord('x_illu2_illumio_illumio_pce_field_mapping');
@@ -20,17 +17,14 @@ if (gr.hasNext()) {
 } else {
     answer = true;
 }]]></script>
-        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-25 12:05:53</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>f499b18f1bf94950ad73ec23604bcb1a</sys_id>
         <sys_mod_count>2</sys_mod_count>
         <sys_name>x_illu2_illumio_illumio_pce_field_mapping.ip_address_12</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_security_acl_f499b18f1bf94950ad73ec23604bcb1a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

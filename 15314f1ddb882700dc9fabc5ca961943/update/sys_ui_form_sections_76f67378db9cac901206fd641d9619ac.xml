@@ -9,7 +9,7 @@
             <sys_id>76f67378db9cac901206fd641d9619d5</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
-            <sys_ui_form display_value="u_illumio_test_table" name="u_illumio_test_table" sys_domain="global" view="c2e9d850db62330033c1a026ca9619b7">76f67378db9cac901206fd641d9619ac</sys_ui_form>
+            <sys_ui_form display_value="u_illumio_test_table" name="u_illumio_test_table" sys_domain="global" view="3aa778757db1311076daf29f52070de0">76f67378db9cac901206fd641d9619ac</sys_ui_form>
             <sys_ui_section display_value="">7af67378db9cac901206fd641d9619cd</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2020-11-03 15:30:59</sys_updated_on>
@@ -23,7 +23,7 @@
             <sys_id>72f67378db9cac901206fd641d9619cd</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
-            <sys_ui_form display_value="u_illumio_test_table" name="u_illumio_test_table" sys_domain="global" view="c2e9d850db62330033c1a026ca9619b7">76f67378db9cac901206fd641d9619ac</sys_ui_form>
+            <sys_ui_form display_value="u_illumio_test_table" name="u_illumio_test_table" sys_domain="global" view="3aa778757db1311076daf29f52070de0">76f67378db9cac901206fd641d9619ac</sys_ui_form>
             <sys_ui_section display_value="">36f67378db9cac901206fd641d9619ae</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2020-11-03 15:30:59</sys_updated_on>
@@ -34,7 +34,6 @@
             <sys_class_name>sys_ui_form</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2020-11-03 15:30:58</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>76f67378db9cac901206fd641d9619ac</sys_id>
@@ -43,13 +42,12 @@
             <sys_overrides/>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_form_sections_76f67378db9cac901206fd641d9619ac</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2020-11-03 15:30:58</sys_updated_on>
             <sys_user/>
-            <view display_value="Workspace" name="workspace">c2e9d850db62330033c1a026ca9619b7</view>
+            <view display_value="Workspace" name="workspace">3aa778757db1311076daf29f52070de0</view>
             <view_name/>
         </sys_ui_form>
     </sys_ui_form_sections>

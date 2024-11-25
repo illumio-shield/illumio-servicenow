@@ -98,7 +98,6 @@
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-28 05:39:50</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
         <sys_id>2390fb541192408485a8c12e34cd2c90</sys_id>
         <sys_metadata>ef3916b497fc0210b7daf896f053af65</sys_metadata>
@@ -107,7 +106,6 @@
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_parent display_value="Illumio PCE Workload Field Value">acafa2a897700210b7daf896f053afb6</sys_parent>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
         <sys_update_name>sys_ui_section_ef3916b497fc0210b7daf896f053af65</sys_update_name>

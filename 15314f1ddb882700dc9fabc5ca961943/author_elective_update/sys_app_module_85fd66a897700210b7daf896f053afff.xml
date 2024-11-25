@@ -65,11 +65,10 @@
         <update_guid_history>09fda6a8ec7002101c1f4ffde7750a0e:-481857714</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="">878f622c97700210b7daf896f053af6e</sys_audit_delete>
+        <sys_audit_delete display_value="Illumio PCE Workload Field Values">878f622c97700210b7daf896f053af6e</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-04 13:18:43</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_db_object display_value="" name="sys_app_module">sys_app_module</sys_db_object>
         <sys_id>23faa1001f9b44cc86ae4c9ec2d4e7e4</sys_id>
         <sys_metadata>85fd66a897700210b7daf896f053afff</sys_metadata>
@@ -78,7 +77,6 @@
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_parent/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
         <sys_update_name>sys_app_module_85fd66a897700210b7daf896f053afff</sys_update_name>

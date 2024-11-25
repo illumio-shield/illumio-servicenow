@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
     <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
-        <dependency display_value="Automated Action Interface" source="com.snc.automation">0d5fc600db001300dc9fabc5ca9619a9</dependency>
+        <dependency display_value="Automated Action Interface" source="com.snc.automation">2da4f8717d31311076daf29f52070d09</dependency>
         <min_version>0.0.1</min_version>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-11 07:49:34</sys_created_on>
