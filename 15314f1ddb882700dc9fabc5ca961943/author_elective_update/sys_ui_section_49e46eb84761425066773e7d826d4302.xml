@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section action="DELETE" caption="New Section" section_id="49e46eb84761425066773e7d826d4302" sys_domain="global" table="x_illu2_illumio_illumio_pce_workload" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ven_status</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>d9e46eb84761425066773e7d826d43d0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>os_id</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>dde46eb84761425066773e7d826d43d0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>public_ip_address</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>d1e46eb84761425066773e7d826d43d1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>incident</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>d5e46eb84761425066773e7d826d43d1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>d9e46eb84761425066773e7d826d43d1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ven_version</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>dde46eb84761425066773e7d826d43d1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>enforcement_mode</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>d1e46eb84761425066773e7d826d43d2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>servicenow_cmdb_identifier</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_id>d5e46eb84761425066773e7d826d43d2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="DELETE">
+            <caption>New Section</caption>
+            <header>false</header>
+            <name>x_illu2_illumio_illumio_pce_workload</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>49e46eb84761425066773e7d826d4302</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_illu2_illumio_illumio_pce_workload</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_ui_section_49e46eb84761425066773e7d826d4302</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>379d10eadbf5e0582f68c597059619b2</instance_id>
+        <instance_name>dev105110</instance_name>
+        <name>sys_ui_section_49e46eb84761425066773e7d826d4302</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="New Section" section_id="49e46eb84761425066773e7d826d4302" sys_domain="global" table="x_illu2_illumio_illumio_pce_workload" version="3" view=""><sys_ui_element action="INSERT_OR_UPDATE"><element>ven_status</element><position>0</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>d9e46eb84761425066773e7d826d43d0</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>os_id</element><position>1</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>dde46eb84761425066773e7d826d43d0</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>public_ip_address</element><position>2</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>d1e46eb84761425066773e7d826d43d1</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>incident</element><position>3</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>d5e46eb84761425066773e7d826d43d1</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>4</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>d9e46eb84761425066773e7d826d43d1</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>ven_version</element><position>5</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>dde46eb84761425066773e7d826d43d1</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>enforcement_mode</element><position>6</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>d1e46eb84761425066773e7d826d43d2</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>servicenow_cmdb_identifier</element><position>7</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_id>d5e46eb84761425066773e7d826d43d2</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="New Section" display_value="New Section" name="x_illu2_illumio_illumio_pce_workload" sys_domain="global" view="Default view">49e46eb84761425066773e7d826d4302</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_section action="INSERT_OR_UPDATE"><caption>New Section</caption><header>false</header><name>x_illu2_illumio_illumio_pce_workload</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-11 13:57:44</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>49e46eb84761425066773e7d826d4302</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_illu2_illumio_illumio_pce_workload</sys_name><sys_overrides/><sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package><sys_policy/><sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope><sys_update_name>sys_ui_section_49e46eb84761425066773e7d826d4302</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-11 13:57:44</sys_updated_on><sys_user/><title>false</title><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+        <payload_hash>1087979772</payload_hash>
+        <record_name>Illumio PCE Workload</record_name>
+        <reverted_from/>
+        <source>8f5783794795c21066773e7d826d4332</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-11 13:57:44</sys_created_on>
+        <sys_id>1de46eb84761425066773e7d826d43d4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18ecd733ade0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-11 13:57:44</sys_updated_on>
+        <type>Form Layout</type>
+        <update_guid>91e46eb89f61425017a245b71977a6d4</update_guid>
+        <update_guid_history>91e46eb89f61425017a245b71977a6d4:1087979772</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-11 13:58:23</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
+        <sys_id>06f822eee1d040d4852d42b6383d5810</sys_id>
+        <sys_metadata>49e46eb84761425066773e7d826d4302</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>New Section</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent display_value="Illumio PCE Workload">05d9ae6497700210b7daf896f053af19</sys_parent>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_ui_section_49e46eb84761425066773e7d826d4302</sys_update_name>
+        <sys_update_version display_value="sys_ui_section_49e46eb84761425066773e7d826d4302">1de46eb84761425066773e7d826d43d4</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-11 13:58:23</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

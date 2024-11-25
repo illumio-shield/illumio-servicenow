@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-15 07:16:17</sys_created_on>
+        <sys_id>dc53e5b0875e0110d7a34046cebb3529</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_illu2_illumio.illumio_user</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_security_acl display_value="">844365b0875e0110d7a34046cebb35cf</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_dc53e5b0875e0110d7a34046cebb3529</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-15 07:16:17</sys_updated_on>
+        <sys_user_role display_value="x_illu2_illumio.illumio_user" name="x_illu2_illumio.illumio_user">3109ed4adb4c6700dc9fabc5ca9619bf</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>9c678a4fdb45c9101b813feb68961967</instance_id>
+        <instance_name>dev122125</instance_name>
+        <name>sys_security_acl_role_dc53e5b0875e0110d7a34046cebb3529</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-15 07:16:17</sys_created_on><sys_id>dc53e5b0875e0110d7a34046cebb3529</sys_id><sys_mod_count>0</sys_mod_count><sys_name>.x_illu2_illumio.illumio_user</sys_name><sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package><sys_policy/><sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope><sys_security_acl display_value="">844365b0875e0110d7a34046cebb35cf</sys_security_acl><sys_update_name>sys_security_acl_role_dc53e5b0875e0110d7a34046cebb3529</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-15 07:16:17</sys_updated_on><sys_user_role display_value="x_illu2_illumio.illumio_user" name="x_illu2_illumio.illumio_user">3109ed4adb4c6700dc9fabc5ca9619bf</sys_user_role><transaction_id/></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>665962038</payload_hash>
+        <record_name>.x_illu2_illumio.illumio_user</record_name>
+        <reverted_from/>
+        <source>2149653c87910110d7a34046cebb35a9</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-15 07:16:17</sys_created_on>
+        <sys_id>35e3adb0875e0110d7a34046cebb3516</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17f8c6f467b0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-15 07:16:17</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>3de3adb0745e01105caad56ec327c915</update_guid>
+        <update_guid_history>3de3adb0745e01105caad56ec327c915:665962038</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">f1a565f0875e0110d7a34046cebb35eb</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-15 07:23:55</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>55829834c6b148c8acf2a192e2a87219</sys_id>
+        <sys_metadata>dc53e5b0875e0110d7a34046cebb3529</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_illu2_illumio.illumio_user</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent display_value="IllumioUtilsAJAX">844365b0875e0110d7a34046cebb35cf</sys_parent>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_dc53e5b0875e0110d7a34046cebb3529</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_dc53e5b0875e0110d7a34046cebb3529">35e3adb0875e0110d7a34046cebb3516</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-15 07:23:55</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
