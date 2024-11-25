@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>IllumioManageJobs</name>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var IllumioManageJobs = Class.create();
 IllumioManageJobs.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
 
@@ -63,11 +65,13 @@ IllumioManageJobs.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-21 05:28:20</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>c454535edb83045015543cae7c9619aa</sys_id>
         <sys_mod_count>54</sys_mod_count>
         <sys_name>IllumioManageJobs</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_c454535edb83045015543cae7c9619aa</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

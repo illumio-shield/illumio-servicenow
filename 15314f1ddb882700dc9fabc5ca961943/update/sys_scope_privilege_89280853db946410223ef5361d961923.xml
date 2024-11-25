@@ -6,17 +6,19 @@
         <sys_class_name>sys_scope_privilege</sys_class_name>
         <sys_created_by>Illumio_mid2</sys_created_by>
         <sys_created_on>2020-11-10 16:32:17</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>89280853db946410223ef5361d961923</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>x_266937_illumio_t_illumio_test_table_2</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_scope_privilege_89280853db946410223ef5361d961923</sys_update_name>
         <sys_updated_by>Illumio_mid2</sys_updated_by>
         <sys_updated_on>2020-11-10 16:32:17</sys_updated_on>
         <target_name>x_266937_illumio_t_illumio_test_table_2</target_name>
-        <target_scope display_value="">b4f8726c2fd028904ef4837cf699b6b1</target_scope>
+        <target_scope display_value="illumio testing app">b4f8726c2fd028904ef4837cf699b6b1</target_scope>
         <target_type>sys_db_object</target_type>
     </sys_scope_privilege>
 </record_update>

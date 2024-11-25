@@ -52,6 +52,7 @@
             <sys_class_name>sys_ui_related_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2024-03-27 07:25:21</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>0b3bbf3b97418a50b7daf896f053af6e</sys_id>
@@ -59,6 +60,7 @@
             <sys_name>Illumio PCE Configuration - Default view</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_related_x_illu2_illumio_illumio_pce_conf_null</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
