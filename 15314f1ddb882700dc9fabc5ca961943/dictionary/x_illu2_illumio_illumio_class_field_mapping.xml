@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="d9b212fc97bc0210b7daf896f053aff4" label="Illumio Class Field Mapping" max_length="40" name="x_illu2_illumio_illumio_class_field_mapping" type="collection">
-        <element label="Order" max_length="100" name="order" type="integer"/>
-        <element attributes="readonly_clickthrough=true" label="Illumio Label Dimension" max_length="32" name="illumio_label_dimension" reference="x_illu2_illumio_illumio_label_dimension" reference_qual="javascript:&quot;illumio_pce_configuration=&quot; + current.illumio_config_class_mapping.illumio_pce_configuration" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" label="Source Table" max_length="80" name="source_table" read_only="true" type="table_name"/>
         <element default="answer = function (sourceGr) {&#13;&#10;&#13;&#10;    //sourceGr - GlideRecord of the Source Table being selected&#13;&#10;    //Add your code here&#13;&#10;    return &quot;&quot;; // return the values of IP Address&#13;&#10;}(sourceGr);" label="Script" max_length="4000" name="script" type="script"/>
+        <element label="Order" max_length="100" name="order" type="integer"/>
+        <element attributes="readonly_clickthrough=true" label="Illumio Config Class Mapping" max_length="32" name="illumio_config_class_mapping" read_only="true" reference="x_illu2_illumio_illumio_config_class_mapping" reference_cascade_rule="delete" type="reference"/>
+        <element attributes="readonly_clickthrough=true" label="Illumio Label Dimension" max_length="32" name="illumio_label_dimension" reference="x_illu2_illumio_illumio_label_dimension" reference_qual="javascript:&quot;illumio_pce_configuration=&quot; + current.illumio_config_class_mapping.illumio_pce_configuration" type="reference" use_reference_qualifier="advanced"/>
+        <element label="Is Multiple" max_length="40" name="is_multiple" type="boolean"/>
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
         <element label="Advanced" max_length="40" name="advanced" type="boolean"/>
-        <element attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" label="Source Table" max_length="80" name="source_table" read_only="true" type="table_name"/>
-        <element attributes="readonly_clickthrough=true" label="Illumio Config Class Mapping" max_length="32" name="illumio_config_class_mapping" read_only="true" reference="x_illu2_illumio_illumio_config_class_mapping" reference_cascade_rule="delete" type="reference"/>
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="source_table" dependent_on_field="source_table" label="Field" max_length="80" name="ci_field" type="field_name" use_dependent_field="true"/>
-        <element label="Is Multiple" max_length="40" name="is_multiple" type="boolean"/>
         <element choice="3" default="label_dimension" label="Type" max_length="40" name="type" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Public IP Address" value="public_ip_address"/>
