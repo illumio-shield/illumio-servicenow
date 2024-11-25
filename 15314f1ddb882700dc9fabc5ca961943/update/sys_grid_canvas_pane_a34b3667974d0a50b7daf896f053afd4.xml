@@ -2,17 +2,19 @@
     <sys_grid_canvas_pane action="INSERT_OR_UPDATE">
         <grid_canvas display_value="PA Illumio [Deprecated] - New Tab">3df33a2f970d0a50b7daf896f053aff3</grid_canvas>
         <height>11</height>
-        <portal_widget display_value="Created 2024-03-26 01:07:33">6b4b3667974d0a50b7daf896f053afd2</portal_widget>
+        <portal_widget display_value="Created 2024-03-26 08:07:33">6b4b3667974d0a50b7daf896f053afd2</portal_widget>
         <posx>0</posx>
         <posy>6</posy>
         <sys_class_name>sys_grid_canvas_pane</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:07:33</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>a34b3667974d0a50b7daf896f053afd4</sys_id>
         <sys_mod_count>22</sys_mod_count>
         <sys_name>3df33a2f970d0a50b7daf896f053aff3</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_grid_canvas_pane_a34b3667974d0a50b7daf896f053afd4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
