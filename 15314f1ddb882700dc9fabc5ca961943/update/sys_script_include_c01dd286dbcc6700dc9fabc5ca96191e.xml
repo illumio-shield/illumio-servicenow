@@ -6,9 +6,7 @@
         <caller_access/>
         <client_callable>true</client_callable>
         <description>To get record from custom table in client scripts by multiple comma separated sys_id</description>
-        <mobile_callable>false</mobile_callable>
         <name>IllumioGetCustomTableRecord</name>
-        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var IllumioGetCustomTableRecord = Class.create();
 IllumioGetCustomTableRecord.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
 
@@ -34,13 +32,11 @@ IllumioGetCustomTableRecord.prototype = Object.extendsObject(global.AbstractAjax
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:12:51</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>c01dd286dbcc6700dc9fabc5ca96191e</sys_id>
         <sys_mod_count>64</sys_mod_count>
         <sys_name>IllumioGetCustomTableRecord</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_c01dd286dbcc6700dc9fabc5ca96191e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

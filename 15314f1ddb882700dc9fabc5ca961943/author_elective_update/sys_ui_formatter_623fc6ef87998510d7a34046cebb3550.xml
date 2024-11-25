@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_formatter">
+    <sys_ui_formatter action="DELETE">
+        <active>true</active>
+        <angular_module/>
+        <formatter>x_illu2_illumio_clearField</formatter>
+        <name>Clear field formatter</name>
+        <sys_class_name>sys_ui_formatter</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-02 06:26:26</sys_created_on>
+        <sys_id>623fc6ef87998510d7a34046cebb3550</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Clear field formatter</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_formatter_623fc6ef87998510d7a34046cebb3550</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-02 06:26:26</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_field_mapping</table>
+        <type>formatter</type>
+    </sys_ui_formatter>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>9c678a4fdb45c9101b813feb68961967</instance_id>
+        <instance_name>dev122125</instance_name>
+        <name>sys_ui_formatter_623fc6ef87998510d7a34046cebb3550</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_formatter"><sys_ui_formatter action="INSERT_OR_UPDATE"><active>true</active><angular_module/><formatter>x_illu2_illumio_clearField</formatter><name>Clear field formatter</name><sys_class_name>sys_ui_formatter</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-02-02 06:26:26</sys_created_on><sys_id>623fc6ef87998510d7a34046cebb3550</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Clear field formatter</sys_name><sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package><sys_policy/><sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope><sys_update_name>sys_ui_formatter_623fc6ef87998510d7a34046cebb3550</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-02-02 06:26:26</sys_updated_on><table>x_illu2_illumio_illumio_pce_field_mapping</table><type>formatter</type></sys_ui_formatter></record_update>]]></payload>
+        <payload_hash>-427783913</payload_hash>
+        <record_name>Clear field formatter</record_name>
+        <reverted_from/>
+        <source>2149653c87910110d7a34046cebb35a9</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-02 06:26:26</sys_created_on>
+        <sys_id>085fcaaf87998510d7a34046cebb35c2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17eb91ce8ce0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-02 06:26:26</sys_updated_on>
+        <type>UI Formatter</type>
+        <update_guid>405fcaafa9998510861c76be9c9e68c2</update_guid>
+        <update_guid_history>405fcaafa9998510861c76be9c9e68c2:-427783913</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-04-27 10:12:02</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_formatter">sys_ui_formatter</sys_db_object>
+        <sys_id>804d5dd6fb1342c0848d59f02c391000</sys_id>
+        <sys_metadata>623fc6ef87998510d7a34046cebb3550</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Clear field formatter</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent display_value="">627519b487910110d7a34046cebb354f</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_ui_formatter_623fc6ef87998510d7a34046cebb3550</sys_update_name>
+        <sys_update_version display_value="sys_ui_formatter_623fc6ef87998510d7a34046cebb3550">085fcaaf87998510d7a34046cebb35c2</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-04-27 10:12:02</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
