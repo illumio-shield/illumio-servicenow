@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>IllumioUtils</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[gs.include("IllumioConstants");
 var IllumioUtils = Class.create();
 IllumioUtils.prototype = {
@@ -493,7 +495,7 @@ IllumioUtils.prototype = {
             var sourceTable = current.getValue("source_table");
             var workloadFieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
             workloadFieldValueGr.addQuery('illumio_pce_workload', current.getUniqueValue());
-            workloadFieldValueGr.addEncodedQuery('illumio_label_dimension.keyIN' + mappedFields[sourceTable]);
+            workloadFieldValueGr.addQuery('illumio_label_dimension.key', "IN", mappedFields[sourceTable]);
             workloadFieldValueGr.query();
 
             while (workloadFieldValueGr.next()) {
@@ -1272,14 +1274,27 @@ IllumioUtils.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>416</sys_mod_count>
+        <sys_mod_count>417</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-08-09 09:14:55</sys_updated_on>
+        <sys_updated_on>2024-11-26 11:35:19</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b630a09ddb9020d01206fd641d9619df</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 11:35:18</sys_created_on>
+        <sys_id>2b58d1621b0296501aeafe261a4bcbd5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 11:35:18</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
