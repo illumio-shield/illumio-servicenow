@@ -1,107 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="4fb245a79300021062233f018bba1065" label="Illumio PCE Workload [Deprecated]" max_length="40" name="x_illu2_illumio_illumio_servicenow_servers" type="collection">
-        <element attributes="edge_encryption_enabled=true" default="true" label="IP Address" max_length="40" name="add_ip_address" type="boolean"/>
-        <element attributes="readonly_clickthrough=true" label="ServiceNow Record Identifier" max_length="40" name="cmdb_reference_field" reference="cmdb_ci" type="reference"/>
-        <element attributes="edge_encryption_enabled=true" label="Label Conflicts" max_length="40" name="conflicts" type="boolean"/>
-        <element label="Deleted from PCE" max_length="40" name="deleted_from_pce" read_only="true" type="boolean"/>
-        <element label="Discovered Applications" max_length="1000" name="discovered_applications" type="string"/>
-        <element label="Discovered Environments" max_length="500" name="discovered_environments" type="string"/>
-        <element label="Discovered Locations" max_length="500" name="discovered_locations" type="string"/>
-        <element label="Duplicate" max_length="40" name="duplicate" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true, readonly_clickthrough=true" label="Primary Workload" max_length="32" name="duplicate_of" reference="x_illu2_illumio_illumio_servicenow_servers" type="reference"/>
-        <element label="Hide Application" max_length="100" name="hide_application" type="string"/>
-        <element label="Hide Environment" max_length="100" name="hide_environment" type="string"/>
         <element label="Hide Location" max_length="100" name="hide_location" type="string"/>
-        <element display="true" label="Hostname" max_length="100" name="hostname" type="string"/>
-        <element active="false" attributes="edge_encryption_enabled=true" label="PCE Interface IP Address" max_length="40" name="interface_ip_address" type="string"/>
-        <element active="false" label="IP Conflict" max_length="40" name="ipconflict" type="boolean"/>
+        <element label="Deleted from PCE" max_length="40" name="deleted_from_pce" read_only="true" type="boolean"/>
+        <element label="Duplicate" max_length="40" name="duplicate" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 18" max_length="80" name="pce_ip_address_18" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 22" max_length="80" name="pce_ip_address_22" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 31" max_length="80" name="pce_ip_address_31" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 17" max_length="80" name="select_ip_address_17" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 21" max_length="80" name="select_ip_address_21" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 7" max_length="80" name="select_ip_address_7" type="string"/>
         <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
             <choice>
-                <element inactive_on_update="false" label="Managed" sequence="100" value="managed"/>
                 <element inactive_on_update="false" label="Unmanaged" sequence="200" value="unmanaged"/>
                 <element inactive_on_update="false" label="Unknown" sequence="300" value="unknown"/>
+                <element inactive_on_update="false" label="Managed" sequence="100" value="managed"/>
             </choice>
         </element>
-        <element label="PCE Application" max_length="255" name="pce_application" type="string"/>
-        <element label="PCE Environment" max_length="255" name="pce_environment" type="string"/>
-        <element label="PCE Public IP Address" max_length="40" name="pce_ip_address" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 10" max_length="80" name="pce_ip_address_10" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 11" max_length="80" name="pce_ip_address_11" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 12" max_length="80" name="pce_ip_address_12" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 13" max_length="80" name="pce_ip_address_13" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 14" max_length="80" name="pce_ip_address_14" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 15" max_length="80" name="pce_ip_address_15" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 16" max_length="80" name="pce_ip_address_16" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 17" max_length="80" name="pce_ip_address_17" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 18" max_length="80" name="pce_ip_address_18" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 19" max_length="80" name="pce_ip_address_19" type="string"/>
-        <element label="PCE IP Address 2" max_length="40" name="pce_ip_address_2" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 20" max_length="80" name="pce_ip_address_20" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 21" max_length="80" name="pce_ip_address_21" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 22" max_length="80" name="pce_ip_address_22" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 23" max_length="80" name="pce_ip_address_23" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 24" max_length="80" name="pce_ip_address_24" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 25" max_length="80" name="pce_ip_address_25" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="PCE IP Address 26" max_length="80" name="pce_ip_address_26" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 27" max_length="80" name="pce_ip_address_27" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 28" max_length="80" name="pce_ip_address_28" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 29" max_length="80" name="pce_ip_address_29" type="string"/>
-        <element label="PCE IP Address 3" max_length="40" name="pce_ip_address_3" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 30" max_length="80" name="pce_ip_address_30" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 31" max_length="80" name="pce_ip_address_31" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 32" max_length="80" name="pce_ip_address_32" type="string"/>
-        <element label="PCE IP Address 4" max_length="80" name="pce_ip_address_4" type="string"/>
-        <element label="PCE IP Address 5" max_length="80" name="pce_ip_address_5" type="string"/>
         <element label="PCE IP Address 6" max_length="80" name="pce_ip_address_6" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 7" max_length="80" name="pce_ip_address_7" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 8" max_length="80" name="pce_ip_address_8" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 9" max_length="80" name="pce_ip_address_9" type="string"/>
-        <element label="PCE Location" max_length="255" name="pce_location" type="string"/>
-        <element label="PCE Role" max_length="255" name="pce_role" type="string"/>
-        <element label="PCE workload href" max_length="2048" name="pce_workload_href" type="string"/>
-        <element label="CMDB Application" max_length="255" name="select_application" type="string"/>
-        <element label="CMDB Environment" max_length="255" name="select_environment" type="string"/>
-        <element label="CMDB IP Address" max_length="40" name="select_ip_address" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 10" max_length="80" name="select_ip_address_10" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 11" max_length="80" name="select_ip_address_11" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 12" max_length="80" name="select_ip_address_12" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 13" max_length="80" name="select_ip_address_13" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 14" max_length="80" name="select_ip_address_14" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 15" max_length="80" name="select_ip_address_15" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 16" max_length="80" name="select_ip_address_16" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 17" max_length="80" name="select_ip_address_17" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 18" max_length="80" name="select_ip_address_18" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 19" max_length="80" name="select_ip_address_19" type="string"/>
-        <element label="CMDB IP Address 2" max_length="40" name="select_ip_address_2" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 20" max_length="80" name="select_ip_address_20" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 21" max_length="80" name="select_ip_address_21" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 22" max_length="80" name="select_ip_address_22" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 23" max_length="80" name="select_ip_address_23" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 24" max_length="80" name="select_ip_address_24" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 25" max_length="80" name="select_ip_address_25" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 26" max_length="80" name="select_ip_address_26" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 27" max_length="80" name="select_ip_address_27" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 28" max_length="80" name="select_ip_address_28" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 29" max_length="80" name="select_ip_address_29" type="string"/>
-        <element label="CMDB IP Address 3" max_length="40" name="select_ip_address_3" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 30" max_length="80" name="select_ip_address_30" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 31" max_length="80" name="select_ip_address_31" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 32" max_length="80" name="select_ip_address_32" type="string"/>
-        <element label="CMDB IP Address 4" max_length="80" name="select_ip_address_4" type="string"/>
-        <element label="CMDB IP Address 5" max_length="80" name="select_ip_address_5" type="string"/>
-        <element label="CMDB IP Address 6" max_length="80" name="select_ip_address_6" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 7" max_length="80" name="select_ip_address_7" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 8" max_length="80" name="select_ip_address_8" type="string"/>
-        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 9" max_length="80" name="select_ip_address_9" type="string"/>
-        <element label="CMDB Location" max_length="255" name="select_location" type="string"/>
         <element label="CMDB Role" max_length="255" name="select_role" type="string"/>
-        <element label="Servicenow Record Identifier" max_length="32" name="server" type="string"/>
-        <element label="ServiceNow CMDB Identifiers List" max_length="4000" name="servicenow_cmdb_identifiers_list" reference="cmdb_ci" type="glide_list"/>
-        <element attributes="edge_encryption_enabled=true" default="true" label="Application Label" max_length="40" name="update_application" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 10" max_length="80" name="pce_ip_address_10" type="string"/>
+        <element label="PCE Location" max_length="255" name="pce_location" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 29" max_length="80" name="select_ip_address_29" type="string"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Environment Label" max_length="40" name="update_environment" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 14" max_length="80" name="pce_ip_address_14" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 28" max_length="80" name="pce_ip_address_28" type="string"/>
+        <element label="CMDB Environment" max_length="255" name="select_environment" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 13" max_length="80" name="select_ip_address_13" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 32" max_length="80" name="select_ip_address_32" type="string"/>
+        <element attributes="edge_encryption_enabled=true, readonly_clickthrough=true" label="Primary Workload" max_length="32" name="duplicate_of" reference="x_illu2_illumio_illumio_servicenow_servers" type="reference"/>
+        <element display="true" label="Hostname" max_length="100" name="hostname" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="IP Address" max_length="40" name="add_ip_address" type="boolean"/>
+        <element label="Discovered Applications" max_length="1000" name="discovered_applications" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 15" max_length="80" name="pce_ip_address_15" type="string"/>
+        <element label="PCE IP Address 2" max_length="40" name="pce_ip_address_2" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 29" max_length="80" name="pce_ip_address_29" type="string"/>
+        <element label="CMDB IP Address" max_length="40" name="select_ip_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 14" max_length="80" name="select_ip_address_14" type="string"/>
+        <element label="CMDB IP Address 4" max_length="80" name="select_ip_address_4" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 19" max_length="80" name="pce_ip_address_19" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 23" max_length="80" name="pce_ip_address_23" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 32" max_length="80" name="pce_ip_address_32" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 18" max_length="80" name="select_ip_address_18" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 22" max_length="80" name="select_ip_address_22" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 8" max_length="80" name="select_ip_address_8" type="string"/>
+        <element label="PCE Application" max_length="255" name="pce_application" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 27" max_length="80" name="pce_ip_address_27" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 7" max_length="80" name="pce_ip_address_7" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 26" max_length="80" name="select_ip_address_26" type="string"/>
+        <element label="Servicenow Record Identifier" max_length="32" name="server" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 11" max_length="80" name="pce_ip_address_11" type="string"/>
+        <element label="PCE Role" max_length="255" name="pce_role" type="string"/>
+        <element label="CMDB IP Address 3" max_length="40" name="select_ip_address_3" type="string"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="IP Address" max_length="40" name="update_ip_address" type="boolean"/>
+        <element label="Discovered Environments" max_length="500" name="discovered_environments" type="string"/>
+        <element label="Hide Application" max_length="100" name="hide_application" type="string"/>
+        <element attributes="readonly_clickthrough=true" label="ServiceNow Record Identifier" max_length="40" name="cmdb_reference_field" reference="cmdb_ci" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 12" max_length="80" name="pce_ip_address_12" type="string"/>
+        <element label="PCE workload href" max_length="2048" name="pce_workload_href" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 11" max_length="80" name="select_ip_address_11" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 30" max_length="80" name="select_ip_address_30" type="string"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Location Label" max_length="40" name="update_location" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 16" max_length="80" name="pce_ip_address_16" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 20" max_length="80" name="pce_ip_address_20" type="string"/>
+        <element label="PCE IP Address 3" max_length="40" name="pce_ip_address_3" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 10" max_length="80" name="select_ip_address_10" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 15" max_length="80" name="select_ip_address_15" type="string"/>
+        <element label="CMDB IP Address 5" max_length="80" name="select_ip_address_5" type="string"/>
+        <element active="false" attributes="edge_encryption_enabled=true" label="PCE Interface IP Address" max_length="40" name="interface_ip_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 24" max_length="80" name="pce_ip_address_24" type="string"/>
+        <element label="PCE IP Address 4" max_length="80" name="pce_ip_address_4" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 19" max_length="80" name="select_ip_address_19" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 23" max_length="80" name="select_ip_address_23" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 9" max_length="80" name="select_ip_address_9" type="string"/>
+        <element label="PCE Environment" max_length="255" name="pce_environment" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 8" max_length="80" name="pce_ip_address_8" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 27" max_length="80" name="select_ip_address_27" type="string"/>
+        <element label="ServiceNow CMDB Identifiers List" max_length="4000" name="servicenow_cmdb_identifiers_list" reference="cmdb_ci" type="glide_list"/>
+        <element attributes="edge_encryption_enabled=true" label="Label Conflicts" max_length="40" name="conflicts" type="boolean"/>
+        <element label="Discovered Locations" max_length="500" name="discovered_locations" type="string"/>
+        <element label="Hide Environment" max_length="100" name="hide_environment" type="string"/>
+        <element label="PCE Public IP Address" max_length="40" name="pce_ip_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 9" max_length="80" name="pce_ip_address_9" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 28" max_length="80" name="select_ip_address_28" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="Application Label" max_length="40" name="update_application" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 13" max_length="80" name="pce_ip_address_13" type="string"/>
+        <element label="CMDB Application" max_length="255" name="select_application" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 12" max_length="80" name="select_ip_address_12" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 31" max_length="80" name="select_ip_address_31" type="string"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Role Label" max_length="40" name="update_role" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 17" max_length="80" name="pce_ip_address_17" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 21" max_length="80" name="pce_ip_address_21" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 30" max_length="80" name="pce_ip_address_30" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 16" max_length="80" name="select_ip_address_16" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 20" max_length="80" name="select_ip_address_20" type="string"/>
+        <element label="CMDB IP Address 6" max_length="80" name="select_ip_address_6" type="string"/>
+        <element active="false" label="IP Conflict" max_length="40" name="ipconflict" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="PCE IP Address 25" max_length="80" name="pce_ip_address_25" type="string"/>
+        <element label="PCE IP Address 5" max_length="80" name="pce_ip_address_5" type="string"/>
+        <element label="CMDB IP Address 2" max_length="40" name="select_ip_address_2" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="CMDB IP Address 24" max_length="80" name="select_ip_address_24" type="string"/>
+        <element label="CMDB Location" max_length="255" name="select_location" type="string"/>
         <index name="index">
             <element name="cmdb_reference_field"/>
         </index>
@@ -115,12 +115,9 @@
             <element name="duplicate"/>
         </index>
         <index name="index4">
-            <element name="duplicate"/>
-        </index>
-        <index name="index5">
             <element name="duplicate_of"/>
         </index>
-        <index name="index6">
+        <index name="index5">
             <element name="server"/>
         </index>
     </element>

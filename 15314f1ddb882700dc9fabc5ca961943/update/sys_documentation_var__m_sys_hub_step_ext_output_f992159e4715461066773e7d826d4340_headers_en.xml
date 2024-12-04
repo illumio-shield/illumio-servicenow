@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="headers" label="Headers" language="en" table="var__m_sys_hub_step_ext_output_f992159e4715461066773e7d826d4340">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>headers</element>
+            <help/>
+            <hint/>
+            <label>Headers</label>
+            <language>en</language>
+            <name>var__m_sys_hub_step_ext_output_f992159e4715461066773e7d826d4340</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-03 13:33:20</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Headers</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_f992159e4715461066773e7d826d4340_headers_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-03 13:33:20</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
