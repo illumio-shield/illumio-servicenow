@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_illu2_illumio_illumio_pce_conf">
+    <x_illu2_illumio_illumio_pce_conf action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <application/>
+        <auto_synchronization>false</auto_synchronization>
+        <business_calendar/>
+        <cancel_job_on_limit_exceed>false</cancel_job_on_limit_exceed>
+        <condition/>
+        <conditional>false</conditional>
+        <create_unmanaged_workloads_on_pce_from_cmdb_records>false</create_unmanaged_workloads_on_pce_from_cmdb_records>
+        <critical_label_group_application/>
+        <critical_label_group_environment/>
+        <critical_label_group_location/>
+        <critical_label_group_role/>
+        <enable_proxy_between_pce_and_mid_server>true</enable_proxy_between_pce_and_mid_server>
+        <entered_time/>
+        <environment/>
+        <host_name/>
+        <http_retry_count>5</http_retry_count>
+        <http_retry_interval_increment>30</http_retry_interval_increment>
+        <http_retry_interval_max>300</http_retry_interval_max>
+        <ip_address>ip_address</ip_address>
+        <limits_on_workloads_and_labels_changes_per_sync>false</limits_on_workloads_and_labels_changes_per_sync>
+        <location/>
+        <max_drift/>
+        <mid_server display_value="illumioMID">cb2a3b09db0212102fcecafc139619b7</mid_server>
+        <name>illumio atf</name>
+        <new_label_creation_limit/>
+        <new_workloads_to_create_at_a_time>0</new_workloads_to_create_at_a_time>
+        <number_of_workloads_to_be_created_from_servicenow/>
+        <offset/>
+        <offset_type>0</offset_type>
+        <organization_id>1</organization_id>
+        <pce_url>https://devtest111.ilabs.io:8443</pce_url>
+        <role/>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2024-12-06 06:30:20</run_start>
+        <run_time>1970-01-01 00:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[var startDiscovery = new x_illu2_illumio.IllumioStartDiscovery(); startDiscovery.process(current.getUniqueValue());]]></script>
+        <secret_key>﷞﷟﷒03e0db7edbf016102fcecafc139619a1﷬﷔1﷬﷭UfltKCoWHfB4VKEOXudLSg==2phIVHUj1zmnLU3ZkVSV6Ipq5_V3wksV7GziaPnF8Oncpzbr73sSPuDyDrn6dFlv1AWIJHs-_YjtJVk44ogH1Z9LRgY3akik51qquyDrXNo=﷮﷯</secret_key>
+        <servicenow_source_table/>
+        <set_limit_on_new_label_creation>false</set_limit_on_new_label_creation>
+        <set_limit_on_workload_deletion>false</set_limit_on_workload_deletion>
+        <set_limit_on_workload_label_modifications>false</set_limit_on_workload_label_modifications>
+        <sys_class_name>x_illu2_illumio_illumio_pce_conf</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-06 06:31:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>3d727be91b9656901aeafe261a4bcbd6</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>illumio atf</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>x_illu2_illumio_illumio_pce_conf_3d727be91b9656901aeafe261a4bcbd6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-12 06:07:58</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+        <username>﷞﷟﷒03e0db7edbf016102fcecafc139619a1﷬﷔1﷬﷭P7GBgu4HbGruc83YwbtFLQ==MHNwtCgmDnWDx0S083amXGq6SVuTGbrW8l28s9kcu0LqkgQVRw==﷮﷯</username>
+        <workload_deletion_limit/>
+        <workload_label_modifications_limit/>
+    </x_illu2_illumio_illumio_pce_conf>
+</record_update>
