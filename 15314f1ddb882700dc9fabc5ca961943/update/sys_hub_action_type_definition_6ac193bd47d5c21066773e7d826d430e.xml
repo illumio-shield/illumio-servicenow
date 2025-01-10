@@ -1849,7 +1849,7 @@ ms.include("IllumioMIDConstants");&#13;
     <sys_hub_action_plan action="INSERT_OR_UPDATE">
         <action_id display_value="Fetch Label Dimensions">6ac193bd47d5c21066773e7d826d430e</action_id>
         <plan>{"type":"PlanProxy","persistor":{"@class":".ChunkingPlanPersistor","table":"sys_hub_action_plan","id":"4a23f45a4751461066773e7d826d43ed","name":"plan","plan_signature":null}}</plan>
-        <snapshot>cb6907b41be69a101aeafe261a4bcbde</snapshot>
+        <snapshot>21f69c011b8312101aeafe261a4bcbb3</snapshot>
         <sys_class_name>sys_hub_action_plan</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 11:16:00</sys_created_on>
@@ -3712,6 +3712,6 @@ ms.include("IllumioMIDConstants");&#13;
     <sys_hub_action_type_definition action="UPDATE">
         <sys_id>6ac193bd47d5c21066773e7d826d430e</sys_id>
         <latest_snapshot>2923b45a4751461066773e7d826d43fc</latest_snapshot>
-        <compiler_build>glide-xanadu-07-02-2024__patch1-hotfix3b-11-14-2024_11-25-2024_0807.zip</compiler_build>
+        <compiler_build>glide-xanadu-07-02-2024__patch4-11-22-2024_12-02-2024_1408.zip</compiler_build>
     </sys_hub_action_type_definition>
 </record_update>

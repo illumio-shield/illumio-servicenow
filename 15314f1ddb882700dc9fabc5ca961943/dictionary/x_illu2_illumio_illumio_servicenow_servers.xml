@@ -84,8 +84,8 @@
         <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
             <choice>
                 <element inactive_on_update="false" label="Unmanaged" sequence="200" value="unmanaged"/>
-                <element inactive_on_update="false" label="Unknown" sequence="300" value="unknown"/>
                 <element inactive_on_update="false" label="Managed" sequence="100" value="managed"/>
+                <element inactive_on_update="false" label="Unknown" sequence="300" value="unknown"/>
             </choice>
         </element>
         <element attributes="edge_encryption_enabled=true" label="PCE IP Address 26" max_length="80" name="pce_ip_address_26" type="string"/>

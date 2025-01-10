@@ -16,9 +16,9 @@
         <element display="true" label="Hostname" max_length="100" name="hostname" type="string"/>
         <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
             <choice>
-                <element inactive_on_update="false" label="Unmanaged" sequence="1" value="unmanaged"/>
                 <element inactive_on_update="false" label="Unknown" sequence="2" value="unknown"/>
                 <element inactive_on_update="false" label="Managed" sequence="0" value="managed"/>
+                <element inactive_on_update="false" label="Unmanaged" sequence="1" value="unmanaged"/>
             </choice>
         </element>
         <element attributes="readonly_clickthrough=true" label="ServiceNow CMDB Identifier" max_length="32" name="servicenow_cmdb_identifier" reference="cmdb_ci" type="reference"/>
