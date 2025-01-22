@@ -27,8 +27,8 @@
         <element attributes="allow_null=true,edge_encryption_enabled=true,allow_references=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="IP Address 25" max_length="80" name="ip_address_25" type="field_name" use_dependent_field="true"/>
         <element choice="3" default="ASC" label="Order" max_length="40" name="order" type="choice">
             <choice>
-                <element inactive_on_update="false" label="Descending" value="DESC"/>
                 <element inactive_on_update="false" label="Ascending" value="ASC"/>
+                <element inactive_on_update="false" label="Descending" value="DESC"/>
             </choice>
         </element>
         <element attributes="allow_null=true,allow_references=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>

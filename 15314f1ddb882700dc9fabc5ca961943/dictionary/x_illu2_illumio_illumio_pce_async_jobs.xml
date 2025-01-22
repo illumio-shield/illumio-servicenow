@@ -10,14 +10,14 @@
         <element label="Primary Key To Map" max_length="20" name="primary_key_to_map" type="string"/>
         <element choice="1" label="Job Status" mandatory="true" max_length="40" name="job_status" type="choice">
             <choice>
+                <element inactive_on_update="false" label="Pending" value="pending"/>
+                <element inactive_on_update="false" label="New" value="new"/>
+                <element inactive_on_update="false" label="Done" value="done"/>
+                <element inactive_on_update="false" label="Running" value="running"/>
                 <element inactive_on_update="false" label="Partial Success" value="partial_success"/>
                 <element inactive_on_update="false" label="Failed" value="failed"/>
                 <element inactive_on_update="false" label="Completed" value="completed"/>
                 <element inactive_on_update="false" label="Ready to Map" value="ready_to_map"/>
-                <element inactive_on_update="false" label="New" value="new"/>
-                <element inactive_on_update="false" label="Done" value="done"/>
-                <element inactive_on_update="false" label="Running" value="running"/>
-                <element inactive_on_update="false" label="Pending" value="pending"/>
             </choice>
         </element>
         <element label="Result Table Name" mandatory="true" max_length="100" name="result_table_name" type="string"/>

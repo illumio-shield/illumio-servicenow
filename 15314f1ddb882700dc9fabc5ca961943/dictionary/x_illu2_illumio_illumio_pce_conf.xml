@@ -17,9 +17,9 @@
         <element attributes="edge_encryption_enabled=true" choice="3" default="0" label="Maximum no. of new PCE workloads to create" max_length="40" name="new_workloads_to_create_at_a_time" type="choice">
             <choice>
                 <element inactive_on_update="false" label="1000" sequence="250" value="1000"/>
-                <element inactive_on_update="false" label="All" sequence="100" value="0"/>
-                <element inactive_on_update="false" label="200" sequence="150" value="200"/>
                 <element inactive_on_update="false" label="500" sequence="200" value="500"/>
+                <element inactive_on_update="false" label="200" sequence="150" value="200"/>
+                <element inactive_on_update="false" label="All" sequence="100" value="0"/>
             </choice>
         </element>
         <element label="Workload Modifications Limit" max_length="40" name="workload_label_modifications_limit" type="string"/>

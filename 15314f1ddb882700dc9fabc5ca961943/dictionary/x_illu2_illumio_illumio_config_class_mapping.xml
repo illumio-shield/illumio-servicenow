@@ -4,8 +4,8 @@
         <element dependent="source_table" dependent_on_field="source_table" label="Order by Column Name" max_length="80" name="order_by_column_name" type="field_name" use_dependent_field="true"/>
         <element choice="3" default="ASC" label="Order" max_length="40" name="order" type="choice">
             <choice>
-                <element inactive_on_update="false" label="Descending" value="DESC"/>
                 <element inactive_on_update="false" label="Ascending" value="ASC"/>
+                <element inactive_on_update="false" label="Descending" value="DESC"/>
             </choice>
         </element>
         <element dependent="source_table" dependent_on_field="source_table" label="Conditions for Deleting Workloads" max_length="4000" name="conditions_for_deleting_workloads" type="conditions" use_dependent_field="true"/>
