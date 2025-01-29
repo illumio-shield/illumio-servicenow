@@ -63,14 +63,14 @@ IllumioLogUtil.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4f3be58adb4c6700dc9fabc5ca9619a0</sys_id>
-        <sys_mod_count>7</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>IllumioLogUtil</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy>read</sys_policy>
+        <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_4f3be58adb4c6700dc9fabc5ca9619a0</sys_update_name>
         <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 08:01:47</sys_updated_on>
+        <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
