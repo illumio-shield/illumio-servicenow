@@ -38,7 +38,7 @@ IllumioHTTPClient.prototype = {
             client.getHostConfiguration().setProxy(proxy.host, proxy.port);
             client.getParams().setAuthenticationPreemptive(true);
             if (proxy.username != null && proxy.password != null) {
-				// set the authentication only when username & password aren't null
+                // set the authentication only when username & password aren't null
                 client.getState().setProxyCredentials(new AuthScope(proxy.host, proxy.port), new UsernamePasswordCredentials(proxy.username, proxy.password));
             }
         }
@@ -128,7 +128,7 @@ IllumioHTTPClient.prototype = {
             retryCount = (typeof retryCount == 'undefined') ? this.httpRetryCount : retryCount;
             if (retryCount <= 0 || (RETRY_CODES.indexOf(responseCode) == -1 && responseCode < 500)) {
                 this.logger._error('Failed: HTTP' + method.getName() + ' Call, status: ' + responseCode);
-				this.logger._debug("Failure reason: " + method.getResponseBodyAsString());
+                this.logger._debug("Failure reason: " + method.getResponseBodyAsString());
                 return {
                     hasError: true,
                     status: responseCode
@@ -255,7 +255,7 @@ IllumioHTTPClient.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6559a58adb4c6700dc9fabc5ca961943</sys_id>
-        <sys_mod_count>193</sys_mod_count>
+        <sys_mod_count>194</sys_mod_count>
         <sys_name>IllumioHTTPClient</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -263,6 +263,6 @@ IllumioHTTPClient.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_6559a58adb4c6700dc9fabc5ca961943</sys_update_name>
         <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 09:47:48</sys_updated_on>
+        <sys_updated_on>2025-01-29 10:26:40</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

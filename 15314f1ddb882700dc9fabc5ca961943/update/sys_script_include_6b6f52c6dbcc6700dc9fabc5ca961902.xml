@@ -48,7 +48,8 @@ IllumioPollAsyncJobStatus.prototype = {
                     job_identifier: this.job_identifier,
                     time_zone: gs.getSession().getTimeZoneName(),
                     pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
-                    retry_params: JSON.stringify(pceConfig.retry_params)
+                    retry_params: JSON.stringify(pceConfig.retry_params),
+                    chunk_size: gs.getProperty("x_illu2_illumio.payload.batch.size", 1000)
                 };
 
                 var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioManageAsyncJobs', pceConfig.midServer, parameters);
@@ -69,13 +70,13 @@ IllumioPollAsyncJobStatus.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:21:10</sys_created_on>
         <sys_id>6b6f52c6dbcc6700dc9fabc5ca961902</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>20</sys_mod_count>
         <sys_name>IllumioPollAsyncJobStatus</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_6b6f52c6dbcc6700dc9fabc5ca961902</sys_update_name>
         <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
+        <sys_updated_on>2025-01-29 10:29:10</sys_updated_on>
     </sys_script_include>
 </record_update>
