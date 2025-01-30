@@ -6,9 +6,7 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description>To start discovery of PCE data</description>
-        <mobile_callable>false</mobile_callable>
         <name>IllumioStartDiscovery</name>
-        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var IllumioStartDiscovery = Class.create();
 IllumioStartDiscovery.prototype = {
     initialize: function() {
@@ -192,7 +190,7 @@ IllumioStartDiscovery.prototype = {
                         illumio_scheduled_job_id: jobSysId,
                         job_identifier: type + 's',
                         time_zone: gs.getSession().getTimeZoneName(),
-                        pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                        enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
                         retry_params: JSON.stringify(pceConfig.retry_params),
                     };
                     var illumioAddToECCQueue = new IllumioAddToECCQueue(
@@ -245,16 +243,14 @@ IllumioStartDiscovery.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:20:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>641f9e82dbcc6700dc9fabc5ca9619ce</sys_id>
-        <sys_mod_count>121</sys_mod_count>
+        <sys_mod_count>125</sys_mod_count>
         <sys_name>IllumioStartDiscovery</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_641f9e82dbcc6700dc9fabc5ca9619ce</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-09 10:06:47</sys_updated_on>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-01-29 10:42:25</sys_updated_on>
     </sys_script_include>
 </record_update>
