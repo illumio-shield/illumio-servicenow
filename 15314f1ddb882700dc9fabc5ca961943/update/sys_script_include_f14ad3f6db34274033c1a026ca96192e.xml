@@ -320,7 +320,7 @@ IllumioAutoSyncWithPCE.prototype = {
                         1000
                     ),
                     workloads_to_delete: JSON.stringify(retiredWorkloadsObject),
-                    pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                    enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
                     retry_params: JSON.stringify(pceConfig.retry_params)
                 };
                 // Add the request to ECC queue
