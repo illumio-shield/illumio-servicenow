@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_macro">
+    <sys_ui_macro action="DELETE">
+        <active>true</active>
+        <category>general</category>
+        <description/>
+        <media_type/>
+        <name>clearField</name>
+        <scoped_name>x_illu2_illumio_clearField</scoped_name>
+        <sys_class_name>sys_ui_macro</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-02 06:25:55</sys_created_on>
+        <sys_id>37ce82ef87998510d7a34046cebb35a9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>clearField</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_macro_37ce82ef87998510d7a34046cebb35a9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-02 06:25:55</sys_updated_on>
+        <xml><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<script>
+		function clearValue(field){
+			document.getElementById("x_illu2_illumio_illumio_pce_field_mapping."+field).value = '';
+			document.getElementById("sys_display.x_illu2_illumio_illumio_pce_field_mapping."+field).innerText = "Click to select...";
+		}
+	</script>
+</j:jelly>]]></xml>
+    </sys_ui_macro>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>9c678a4fdb45c9101b813feb68961967</instance_id>
+        <instance_name>dev122125</instance_name>
+        <name>sys_ui_macro_37ce82ef87998510d7a34046cebb35a9</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ui_macro"&gt;&lt;sys_ui_macro action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;category&gt;general&lt;/category&gt;&lt;description/&gt;&lt;media_type/&gt;&lt;name&gt;clearField&lt;/name&gt;&lt;scoped_name&gt;x_illu2_illumio_clearField&lt;/scoped_name&gt;&lt;sys_class_name&gt;sys_ui_macro&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-02-02 06:25:55&lt;/sys_created_on&gt;&lt;sys_id&gt;37ce82ef87998510d7a34046cebb35a9&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;clearField&lt;/sys_name&gt;&lt;sys_package display_value="Illumio" source="x_illu2_illumio"&gt;15314f1ddb882700dc9fabc5ca961943&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Illumio"&gt;15314f1ddb882700dc9fabc5ca961943&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_macro_37ce82ef87998510d7a34046cebb35a9&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-02-02 06:25:55&lt;/sys_updated_on&gt;&lt;xml&gt;&lt;![CDATA[&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null"&gt;
+	&lt;script&gt;
+		function clearValue(field){
+			document.getElementById("x_illu2_illumio_illumio_pce_field_mapping."+field).value = '';
+			document.getElementById("sys_display.x_illu2_illumio_illumio_pce_field_mapping."+field).innerText = "Click to select...";
+		}
+	&lt;/script&gt;
+&lt;/j:jelly&gt;]]&gt;&lt;/xml&gt;&lt;/sys_ui_macro&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1181833437</payload_hash>
+        <record_name>clearField</record_name>
+        <reverted_from/>
+        <source>2149653c87910110d7a34046cebb35a9</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-02 06:25:55</sys_created_on>
+        <sys_id>543fcaaf87998510d7a34046cebb355e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17eb91c6e930000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-02 06:25:55</sys_updated_on>
+        <type>Macro</type>
+        <update_guid>5c3fcaaf77998510a17e853556847b5d</update_guid>
+        <update_guid_history>5c3fcaaf77998510a17e853556847b5d:1181833437</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-04-27 10:12:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_ui_macro">sys_ui_macro</sys_db_object>
+        <sys_id>0bc3584e9b2d4d7c8ecff7a758dd5e10</sys_id>
+        <sys_metadata>37ce82ef87998510d7a34046cebb35a9</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>clearField</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_ui_macro_37ce82ef87998510d7a34046cebb35a9</sys_update_name>
+        <sys_update_version display_value="sys_ui_macro_37ce82ef87998510d7a34046cebb35a9">543fcaaf87998510d7a34046cebb355e</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-04-27 10:12:11</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

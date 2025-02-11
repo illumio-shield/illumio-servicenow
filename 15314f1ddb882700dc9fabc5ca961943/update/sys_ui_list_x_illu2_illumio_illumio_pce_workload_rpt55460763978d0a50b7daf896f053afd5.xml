@@ -3,7 +3,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>hostname</element>
-            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="8a7a19a6db5f1e102fcecafc1396190b">eb1366cd47a1825066773e7d826d434c</list_id>
+            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="84c5b143db6b1e102fcecafc1396193d">eb1366cd47a1825066773e7d826d434c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
@@ -18,7 +18,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>known_to_pce</element>
-            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="8a7a19a6db5f1e102fcecafc1396190b">eb1366cd47a1825066773e7d826d434c</list_id>
+            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="84c5b143db6b1e102fcecafc1396193d">eb1366cd47a1825066773e7d826d434c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>1</position>
@@ -33,7 +33,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>conflicts</element>
-            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="8a7a19a6db5f1e102fcecafc1396190b">eb1366cd47a1825066773e7d826d434c</list_id>
+            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="84c5b143db6b1e102fcecafc1396193d">eb1366cd47a1825066773e7d826d434c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>2</position>
@@ -48,7 +48,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>illumio_pce_configuration</element>
-            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="8a7a19a6db5f1e102fcecafc1396190b">eb1366cd47a1825066773e7d826d434c</list_id>
+            <list_id display_value="x_illu2_illumio_illumio_pce_workload" element="NULL" name="x_illu2_illumio_illumio_pce_workload" parent="NULL" relationship="NULL" sys_domain="global" view="84c5b143db6b1e102fcecafc1396193d">eb1366cd47a1825066773e7d826d434c</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>3</position>
@@ -87,7 +87,7 @@
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-04-12 08:28:27</sys_updated_on>
             <sys_user/>
-            <view display_value="Rpt55460763978d0a50b7daf896f053afd5" name="RPT55460763978d0a50b7daf896f053afd5">8a7a19a6db5f1e102fcecafc1396190b</view>
+            <view display_value="Rpt55460763978d0a50b7daf896f053afd5" name="RPT55460763978d0a50b7daf896f053afd5">84c5b143db6b1e102fcecafc1396193d</view>
             <view_name/>
         </sys_ui_list>
     </sys_ui_list>
