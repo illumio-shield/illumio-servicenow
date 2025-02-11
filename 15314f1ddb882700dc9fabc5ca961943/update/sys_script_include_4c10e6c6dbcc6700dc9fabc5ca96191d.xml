@@ -790,4 +790,15 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-14 08:01:53</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4c10e6c6dbcc6700dc9fabc5ca96191d</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 11:00:11</sys_created_on>
+        <sys_id>8550d1661bce56501aeafe261a4bcbd1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 11:00:11</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

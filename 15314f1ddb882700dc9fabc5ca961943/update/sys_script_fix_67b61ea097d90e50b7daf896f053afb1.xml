@@ -310,4 +310,15 @@ startMigration();
         <sys_updated_on>2024-04-11 05:07:27</sys_updated_on>
         <unloadable>false</unloadable>
     </sys_script_fix>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>67b61ea097d90e50b7daf896f053afb1</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 07:36:04</sys_created_on>
+        <sys_id>71215c05db4b5a102fcecafc139619bd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 07:36:04</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

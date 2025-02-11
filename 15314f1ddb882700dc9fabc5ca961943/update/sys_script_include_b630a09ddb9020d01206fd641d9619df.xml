@@ -1286,4 +1286,15 @@ IllumioUtils.prototype = {
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-08-09 09:14:55</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b630a09ddb9020d01206fd641d9619df</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 11:35:18</sys_created_on>
+        <sys_id>2b58d1621b0296501aeafe261a4bcbd5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 11:35:18</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

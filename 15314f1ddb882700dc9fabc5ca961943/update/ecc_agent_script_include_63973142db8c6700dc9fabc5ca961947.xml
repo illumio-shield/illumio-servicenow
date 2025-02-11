@@ -455,4 +455,15 @@ IllumioManageAsyncJobs.prototype = {
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-29 12:52:36</sys_updated_on>
     </ecc_agent_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>63973142db8c6700dc9fabc5ca961947</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-21 07:15:10</sys_created_on>
+        <sys_id>c4ece23cdbca5e502fcecafc139619cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-21 07:15:10</sys_updated_on>
+        <table>ecc_agent_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

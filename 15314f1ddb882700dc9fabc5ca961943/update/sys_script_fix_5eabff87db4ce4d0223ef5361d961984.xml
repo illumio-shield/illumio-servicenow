@@ -70,4 +70,15 @@ if (grPCEConfig.next()) {
         <sys_updated_on>2024-04-11 05:07:11</sys_updated_on>
         <unloadable>false</unloadable>
     </sys_script_fix>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5eabff87db4ce4d0223ef5361d961984</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 07:36:17</sys_created_on>
+        <sys_id>383190c5db4b5a102fcecafc13961946</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 07:36:17</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
