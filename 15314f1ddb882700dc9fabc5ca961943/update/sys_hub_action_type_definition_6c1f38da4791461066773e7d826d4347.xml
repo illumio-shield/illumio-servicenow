@@ -40,7 +40,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_6c1f38da4791461066773e7d826d4347</sys_update_name>
         <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-02-11 07:38:42</sys_updated_on>
+        <sys_updated_on>2025-02-11 12:45:11</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -2363,28 +2363,8 @@
         <url/>
         <url_target/>
     </sys_documentation>
-    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_6c1f38da4791461066773e7d826d4347^sys_idNOT IN2ed40d13dbab5e102fcecafc13961944,aed40d13dbab5e102fcecafc13961943"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_6c1f38da4791461066773e7d826d4347^sys_idNOT IN37fa8a5fdb639e102fcecafc1396191e,b3fa8a5fdb639e102fcecafc1396191f"/>
     <sys_choice field="type" table="var__m_sys_hub_action_input_6c1f38da4791461066773e7d826d4347">
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Label</label>
-            <language>en</language>
-            <name>var__m_sys_hub_action_input_6c1f38da4791461066773e7d826d4347</name>
-            <sequence>1</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-04-03 12:11:19</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_id>2ed40d13dbab5e102fcecafc13961944</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-04-03 12:11:19</sys_updated_on>
-            <value>label</value>
-        </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>type</element>
@@ -2399,11 +2379,31 @@
             <sys_created_on>2024-04-03 12:11:19</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>aed40d13dbab5e102fcecafc13961943</sys_id>
+            <sys_id>37fa8a5fdb639e102fcecafc1396191e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-04-03 12:11:19</sys_updated_on>
             <value>workload</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Label</label>
+            <language>en</language>
+            <name>var__m_sys_hub_action_input_6c1f38da4791461066773e7d826d4347</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-03 12:11:19</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b3fa8a5fdb639e102fcecafc1396191f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-03 12:11:19</sys_updated_on>
+            <value>label</value>
         </sys_choice>
     </sys_choice>
     <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_6c1f38da4791461066773e7d826d4347^sys_idNOT IN5755895647d1461066773e7d826d438e,5755895647d1461066773e7d826d4392,9755895647d1461066773e7d826d438a,a5df705e4791461066773e7d826d43a2,a5df705e4791461066773e7d826d43a8,d755895647d1461066773e7d826d4386"/>
@@ -4940,7 +4940,7 @@
         <url/>
         <url_target/>
     </sys_documentation>
-    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_02fddd664719861066773e7d826d4383^sys_idNOT IN6ad40d13dbab5e102fcecafc1396193c,ead40d13dbab5e102fcecafc1396193d"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_02fddd664719861066773e7d826d4383^sys_idNOT IN73fa8a5fdb639e102fcecafc13961917,f3fa8a5fdb639e102fcecafc13961918"/>
     <sys_choice field="type" table="var__m_sys_hub_action_input_02fddd664719861066773e7d826d4383">
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
@@ -4956,7 +4956,7 @@
             <sys_created_on>2024-04-04 09:01:32</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>6ad40d13dbab5e102fcecafc1396193c</sys_id>
+            <sys_id>73fa8a5fdb639e102fcecafc13961917</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-04-04 09:01:32</sys_updated_on>
@@ -4976,7 +4976,7 @@
             <sys_created_on>2024-04-04 09:01:32</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>ead40d13dbab5e102fcecafc1396193d</sys_id>
+            <sys_id>f3fa8a5fdb639e102fcecafc13961918</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-04-04 09:01:32</sys_updated_on>
