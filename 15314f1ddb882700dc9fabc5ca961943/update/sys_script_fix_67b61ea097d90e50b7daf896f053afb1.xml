@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
     <sys_script_fix action="INSERT_OR_UPDATE">
         <before>false</before>
-        <description/>
+        <description>This script is introduced in the Illumio v2.0.0. &#13;
+We introduced the support of multiple label dimensions and introduced new tables and deprecated the old tables. To prevent the loss of existing data present in the old tables, we introduced the fix scripts to migrate the data present in the tables, while upgrading to the new version.</description>
         <name>Migrate configurations</name>
         <record_for_rollback>false</record_for_rollback>
         <script><![CDATA[var labelDimensionObject = {}, configClassObject = {};
@@ -297,15 +298,28 @@ startMigration();
         <sys_class_name>sys_script_fix</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-29 08:02:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>67b61ea097d90e50b7daf896f053afb1</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>Migrate configurations</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_fix_67b61ea097d90e50b7daf896f053afb1</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-11 05:07:27</sys_updated_on>
+        <sys_updated_on>2025-01-10 07:36:05</sys_updated_on>
         <unloadable>false</unloadable>
     </sys_script_fix>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>67b61ea097d90e50b7daf896f053afb1</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 07:36:04</sys_created_on>
+        <sys_id>71215c05db4b5a102fcecafc139619bd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 07:36:04</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

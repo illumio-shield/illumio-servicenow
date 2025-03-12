@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="DELETE">
+        <operation>read</operation>
+        <source_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>Illumio_mid2</sys_created_by>
+        <sys_created_on>2020-11-03 06:13:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>fc5739b0db54ac901206fd641d96199e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>u_illumio_test_table</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_scope_privilege_fc5739b0db54ac901206fd641d96199e</sys_update_name>
+        <sys_updated_by>Illumio_mid2</sys_updated_by>
+        <sys_updated_on>2020-11-03 06:13:14</sys_updated_on>
+        <target_name>u_illumio_test_table</target_name>
+        <target_scope display_value="Global">global</target_scope>
+        <target_type>sys_db_object</target_type>
+    </sys_scope_privilege>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>a4f78e48db001704a874f897bf96198d</instance_id>
+        <instance_name>ven02375</instance_name>
+        <name>sys_scope_privilege_fc5739b0db54ac901206fd641d96199e</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="INSERT_OR_UPDATE">
+        <operation>read</operation>
+        <source_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>Illumio_mid2</sys_created_by>
+        <sys_created_on>2020-11-03 06:13:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>fc5739b0db54ac901206fd641d96199e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>u_illumio_test_table</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_scope_privilege_fc5739b0db54ac901206fd641d96199e</sys_update_name>
+        <sys_updated_by>Illumio_mid2</sys_updated_by>
+        <sys_updated_on>2020-11-03 06:13:14</sys_updated_on>
+        <target_name>u_illumio_test_table</target_name>
+        <target_scope display_value="Global">global</target_scope>
+        <target_type>sys_db_object</target_type>
+    </sys_scope_privilege>
+</record_update>]]></payload>
+        <payload_hash>-792531335</payload_hash>
+        <record_name>u_illumio_test_table</record_name>
+        <reverted_from/>
+        <source>aa0066f0dbd756102fcecafc139619ba</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-22 09:39:35</sys_created_on>
+        <sys_id>048022b4dbd756102fcecafc139619a7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1948d61aa290000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-22 09:39:35</sys_updated_on>
+        <type>Cross scope privilege</type>
+        <update_guid>cc8022b49cd7561025f462dade35f1a6</update_guid>
+        <update_guid_history>cc8022b49cd7561025f462dade35f1a6:0,bb4f1ab09ed75610567a608a0e780c8e:-1769768685,636a7e27395a16108d37b6d39264f06c:0,ee8d5a074ad2921054dff58bc669c34a:0,adffe7e99b5e5650f5f07dbea5797c3b:-316252417</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Illumio_mid2</sys_created_by>
+        <sys_created_on>2025-01-22 09:45:30</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_db_object display_value="" name="sys_scope_privilege">sys_scope_privilege</sys_db_object>
+        <sys_id>6225657e87874960b6f857ed69ed0900</sys_id>
+        <sys_metadata>fc5739b0db54ac901206fd641d96199e</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>u_illumio_test_table</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_scope_privilege_fc5739b0db54ac901206fd641d96199e</sys_update_name>
+        <sys_update_version display_value="sys_scope_privilege_fc5739b0db54ac901206fd641d96199e">048022b4dbd756102fcecafc139619a7</sys_update_version>
+        <sys_updated_by>Illumio_mid2</sys_updated_by>
+        <sys_updated_on>2025-01-22 09:45:30</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

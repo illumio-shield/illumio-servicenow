@@ -39,13 +39,13 @@
         checkedRecordsData, selectedRecordsObject = {},
         countObject = {},
         configSysIds = [],
-		validSelectedRecordsCount = 0,
+        validSelectedRecordsCount = 0,
         totalRecordsToSync = 0;
     var createScheduledJobCount = 0,
         errorInScheduledJobCreation = false;
     var instanceURL, jobSysIdObject = {};
     var selectedRecordsData = [],
-        gaCustomTableData, dialog, answer, thresoldLimitLogs = {};
+        gaCustomTableData, dialog, answer, thresoldLimitLogs = {}, limitExceeded = false;
 
     var userName = g_user.firstName + " " + g_user.lastName;
 
@@ -66,7 +66,7 @@
         answer = response.responseXML.documentElement.getAttribute("answer");
         answer = JSON.parse(answer);
         selectedRecordsObject = answer.data;
-		validSelectedRecordsCount = answer.count;
+        validSelectedRecordsCount = answer.count;
         configSysIds = Object.keys(selectedRecordsObject);
         fetchDataFromPCE();
     }
@@ -144,6 +144,7 @@
             totalRecordsToSync = answer.data.totalRecords;
             instanceURL = answer.instanceURL;
             thresoldLimitLogs = answer.data.logMessage;
+            limitExceeded = answer.data.limitExceeded;
 
             if (answer.data.cancelJobOnLimitExceed) {
                 dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
@@ -163,7 +164,10 @@
         var dialogModal;
         if (totalRecordsToSync == 0) {
             dialogModal = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-            dialogModal.setTitle("No valid workload selected or any Threshold Limit has been exceeded.");
+            if (limitExceeded)
+                dialogModal.setTitle("Thresold limit has been exceeded.");
+            else
+                dialogModal.setTitle("No valid workloads are selected. Please select the workloads which are not marked as duplicate and have conflicts.");
             dialogModal.render();
             return false;
         }
@@ -197,7 +201,7 @@
         if (thresoldLimitLogs[configSysId]) {
             createJob.addParam("sysparm_thresold_logs", thresoldLimitLogs[configSysId]);
         }
-        
+
         createJob.addParam("sysparm_job_type", "data sync");
         createJob.getXML(gaGetJobSysID);
 
@@ -238,34 +242,34 @@
 
         selectedRecordsData = checkedRecordsData[configSysId];
         for (var index = 0; index < selectedRecordsData.length; index++) {
-            
+
             var workloadObject = selectedRecordsData[index];
             workloadObject["href"] = workloadObject.pce_workload_href;
             if (workloadObject.known_to_pce == "unknown") {
                 // create operation 
-    
+
                 workloadObject["description"] =
                     "Created by " +
                     userName +
                     " [" + instanceURL + "] at " +
                     new Date().toLocaleString();
-    
+
                 combinedWorkloads["createUnknown"].push(workloadObject);
-    
+
             } else if (workloadObject.known_to_pce == "managed") {
                 // Update operation
-    
+
                 workloadObject["description"] =
                     "Updated by " +
                     userName +
                     " [" + instanceURL + "] at " +
                     new Date().toLocaleString();
-    
+
                 combinedWorkloads["updateManaged"].push(workloadObject);
-    
+
             } else if (workloadObject.known_to_pce == "unmanaged") {
                 // Update operation
-    
+
                 workloadObject["description"] =
                     "Updated by " +
                     userName +
@@ -279,7 +283,7 @@
         var skipCount = selectedRecordsObject[configSysId].length - checkedRecordsObject[configSysId].length;
         if (skipCount > 0 || thresoldLimitLogs[configSysId])
             partial_succ = "true";
-        
+
         var ga_update = new GlideAjax("IllumioUpdatePCE");
         ga_update.addParam("sysparm_name", "action");
         ga_update.addParam("sysparm_operation", "updateCreate");
@@ -300,18 +304,20 @@
         <sys_class_name>sys_ui_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 12:20:20</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>d0aca64edbcc6700dc9fabc5ca961967</sys_id>
-        <sys_mod_count>344</sys_mod_count>
+        <sys_mod_count>345</sys_mod_count>
         <sys_name>Sync selected servers with PCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_d0aca64edbcc6700dc9fabc5ca961967</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-11 13:47:26</sys_updated_on>
+        <sys_updated_on>2024-11-20 18:21:56</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>

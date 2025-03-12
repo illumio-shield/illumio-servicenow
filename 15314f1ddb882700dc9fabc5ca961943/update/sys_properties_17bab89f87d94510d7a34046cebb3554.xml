@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
     <sys_properties action="INSERT_OR_UPDATE">
         <choices/>
-        <description/>
+        <description>This property has been DEPRECATED. The Illumio app no longer uses this property.</description>
         <ignore_cache>false</ignore_cache>
         <is_private>false</is_private>
         <name>x_illu2_illumio.glide.script.block.client.globals</name>
@@ -10,17 +10,19 @@
         <sys_class_name>sys_properties</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-02-01 05:38:37</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>17bab89f87d94510d7a34046cebb3554</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>x_illu2_illumio.glide.script.block.client.globals</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy>read</sys_policy>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_properties_17bab89f87d94510d7a34046cebb3554</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-09 11:41:42</sys_updated_on>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-02-05 15:50:47</sys_updated_on>
         <type>boolean</type>
-        <value>false</value>
+        <value>true</value>
         <write_roles>admin,x_illu2_illumio.illumio_admin</write_roles>
     </sys_properties>
     <sys_translated_text action="delete_multiple" query="documentkey=17bab89f87d94510d7a34046cebb3554"/>

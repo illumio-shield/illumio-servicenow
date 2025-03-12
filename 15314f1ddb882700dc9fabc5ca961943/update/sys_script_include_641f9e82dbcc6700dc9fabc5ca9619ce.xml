@@ -6,11 +6,13 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description>To start discovery of PCE data</description>
+        <mobile_callable>false</mobile_callable>
         <name>IllumioStartDiscovery</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var IllumioStartDiscovery = Class.create();
 IllumioStartDiscovery.prototype = {
     initialize: function() {
-		this.scheduledJobsGr = new GlideRecord(
+        this.scheduledJobsGr = new GlideRecord(
             'x_illu2_illumio_illumio_scheduled_jobs'
         );
         this.utils = new x_illu2_illumio.IllumioUtils();
@@ -38,7 +40,7 @@ IllumioStartDiscovery.prototype = {
             var fieldMappingGr = new GlideRecord(
                 'x_illu2_illumio_illumio_class_field_mapping'
             );
-			fieldMappingGr.addQuery('illumio_config_class_mapping',configClassGr.getUniqueValue());
+            fieldMappingGr.addQuery('illumio_config_class_mapping', configClassGr.getUniqueValue());
             fieldMappingGr.addQuery('type', 'host_name');
             fieldMappingGr.addActiveQuery();
             fieldMappingGr.setLimit(1);
@@ -119,12 +121,12 @@ IllumioStartDiscovery.prototype = {
                             jobSysId,
                             'Discovery start error',
                             'Adding to ECC queue failed',
-							configSysId
+                            configSysId
                         );
-						return false;
+                        return false;
                     }
-                return true;
-				}
+                    return true;
+                }
             }
         }
     },
@@ -137,9 +139,9 @@ IllumioStartDiscovery.prototype = {
             'agent',
             'public_ip',
             'interfaces',
-			'ven',
-			'enforcement_mode',
-			'os_id'
+            'ven',
+            'enforcement_mode',
+            'os_id'
         ],
         primary_key_to_map: 'hostname',
     },
@@ -161,12 +163,12 @@ IllumioStartDiscovery.prototype = {
         if (pceConfig) {
             try {
                 for (var typeIndex in types) {
-					
-						
-					if(this.utils.getCancelledJobStatus(jobSysId)){
-						break;
+
+
+                    if (this.utils.getCancelledJobStatus(jobSysId)) {
+                        break;
                     }
-					
+
                     var type = types[typeIndex];
                     var params = this[type.toUpperCase() + '_PARAMS'];
                     var parametersToSend = {
@@ -190,8 +192,9 @@ IllumioStartDiscovery.prototype = {
                         illumio_scheduled_job_id: jobSysId,
                         job_identifier: type + 's',
                         time_zone: gs.getSession().getTimeZoneName(),
-                        pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                        enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
                         retry_params: JSON.stringify(pceConfig.retry_params),
+                        chunk_size: gs.getProperty("x_illu2_illumio.payload.batch.size", 1000)
                     };
                     var illumioAddToECCQueue = new IllumioAddToECCQueue(
                         'IllumioManageAsyncJobs',
@@ -212,10 +215,10 @@ IllumioStartDiscovery.prototype = {
                     }
                     gs.info('Started async job to fetch PCE ' + type + 's');
                 }
-				
-						
-				if(this.utils.getCancelledJobStatus(jobSysId)){
-						return false;				
+
+
+                if (this.utils.getCancelledJobStatus(jobSysId)) {
+                    return false;
                 }
                 return true;
             } catch (e) {
@@ -224,7 +227,7 @@ IllumioStartDiscovery.prototype = {
                     'Adding to ECC queue failed',
                     'Exception occurred while adding to ECC queue. Exception: ' +
                     e, configSysId
-					
+
                 );
                 return false;
             }
@@ -243,14 +246,16 @@ IllumioStartDiscovery.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:20:29</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>641f9e82dbcc6700dc9fabc5ca9619ce</sys_id>
-        <sys_mod_count>121</sys_mod_count>
+        <sys_mod_count>125</sys_mod_count>
         <sys_name>IllumioStartDiscovery</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy>read</sys_policy>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_641f9e82dbcc6700dc9fabc5ca9619ce</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-09 10:06:47</sys_updated_on>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-01-29 10:29:43</sys_updated_on>
     </sys_script_include>
 </record_update>

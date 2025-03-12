@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="5629c1704729025066773e7d826d434e" label="Illumio Incident Mapping" max_length="40" name="x_illu2_illumio_illumio_incident_mapping" type="collection">
-        <element label="Hostname" max_length="400" name="hostname" type="string"/>
+        <element label="Incident" max_length="32" name="incident" reference="incident" reference_cascade_rule="delete" type="reference"/>
         <element label="href" max_length="400" name="href" type="string"/>
         <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
-        <element label="Incident" max_length="32" name="incident" reference="incident" reference_cascade_rule="delete" type="reference"/>
+        <element label="Hostname" max_length="400" name="hostname" type="string"/>
         <index name="index">
             <element name="illumio_pce_configuration"/>
         </index>

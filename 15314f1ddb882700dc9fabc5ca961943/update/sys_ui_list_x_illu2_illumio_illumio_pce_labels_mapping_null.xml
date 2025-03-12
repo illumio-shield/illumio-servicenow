@@ -58,6 +58,7 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2018-08-22 10:03:44</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>12dd0a8edb8c6700dc9fabc5ca961990</sys_id>
@@ -65,6 +66,7 @@
             <sys_name>x_illu2_illumio_illumio_pce_labels_mapping</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_list_x_illu2_illumio_illumio_pce_labels_mapping_null</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
