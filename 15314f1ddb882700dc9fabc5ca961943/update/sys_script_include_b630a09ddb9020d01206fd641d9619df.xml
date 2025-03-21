@@ -6,9 +6,7 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
-        <mobile_callable>false</mobile_callable>
         <name>IllumioUtils</name>
-        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[gs.include("IllumioConstants");
 var IllumioUtils = Class.create();
 IllumioUtils.prototype = {
@@ -123,54 +121,38 @@ IllumioUtils.prototype = {
             var criticalGroupConfig = this.getCritical(pceConfig.getUniqueValue());
 
             if (!gs.nil(criticalGroupConfig)) {
-                var fetchLabelGroups = new sn_ws.RESTMessageV2(
-                    'IllumioFetchLabelGroups',
-                    'GetLabelGroups'
-                );
-                var pce_authorization = gs.base64Encode(
-                    pceConfig.username.getDecryptedValue() +
-                    ':' +
-                    pceConfig.secret_key.getDecryptedValue()
-                );
-
-                fetchLabelGroups.setRequestHeader(
-                    'Authorization',
-                    'Basic ' + pce_authorization
-                );
-
-                fetchLabelGroups.setRequestHeader('User-Agent', 'servicenow');
-
-                fetchLabelGroups.setStringParameter(
-                    'url',
-                    pceConfig.pce_url + ''
-                );
-                fetchLabelGroups.setStringParameter(
-                    'orgID',
-                    (pceConfig.organization_id || '1') + ''
-                );
-
-                fetchLabelGroups.setMIDServer(pceConfig.mid_server.name + '');
-
-                fetchLabelGroups.setEccParameter('skip_sensor', 'true');
-                if (pceConfig.mid_server.status + '' == 'down') {
+                if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
                     return false;
                 }
-                var response = fetchLabelGroups.executeAsync();
-                var response_status = response.getStatusCode();
 
-                if (response_status == 200 || response_status == 201) {
-                    response = JSON.parse(response.getBody());
+                var inputs = {};
+                inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf
+                inputs['query_parameters'] = "";
+
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_groups').inForeground().withInputs(inputs).run();
+                var outputs = result.getOutputs();
+
+                var statusCode = outputs['status'];
+                var headers = outputs['headers'];
+                var response = outputs['response'];
+
+                if (statusCode == 200 || statusCode == 201) {
+                    response = JSON.parse(response);
 
                     this.parseLabelsInResponse(
                         criticalGroupConfig,
                         response,
                         pceConfig
                     );
+                    return true;
                 }
+                return false;
             }
             return true;
         } catch (ex) {
             gs.error('Exception while fetching data from PCE. Error', ex);
+            return false;
         }
     },
 
@@ -748,16 +730,16 @@ IllumioUtils.prototype = {
 
             var inputs = {};
             inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
-                    
+
             // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
             var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_dimensions').inForeground().withInputs(inputs).run();
             var outputs = result.getOutputs();
-    
+
             // Get Outputs:
             returnDict["statusCode"] = outputs['variable']; // String
             returnDict["response"] = JSON.parse(outputs['variable1']); // JSON
             returnDict["status"] = true;
-                
+
         } catch (exc) {
             gs.error("Exception while making the API call to get the label dimensions for PCE configuration " + pceConfig.getValue("name") + ". Error - " + exc);
         }
@@ -934,7 +916,7 @@ IllumioUtils.prototype = {
                         "display_name_plural": labelDimensionData["display_name_plural"]
                     }
                 };
-                
+
                 var inputs = {};
                 inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
                 inputs['request_body'] = JSON.stringify(requestBody); // JSON 
@@ -986,7 +968,7 @@ IllumioUtils.prototype = {
                         "display_name_plural": labelDimensionData["display_name_plural"]
                     },
                 };
-                
+
                 var inputs = {};
                 inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
                 inputs['label_dimension_href'] = labelDimensionData["href"]; // String 
@@ -1274,27 +1256,14 @@ IllumioUtils.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>418</sys_mod_count>
+        <sys_mod_count>419</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
-    </sys_script_include>
-    <sys_es_latest_script action="INSERT_OR_UPDATE">
-        <id>b630a09ddb9020d01206fd641d9619df</id>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-11-26 11:35:18</sys_created_on>
-        <sys_id>2b58d1621b0296501aeafe261a4bcbd5</sys_id>
-        <sys_mod_count>0</sys_mod_count>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-26 11:35:18</sys_updated_on>
-        <table>sys_script_include</table>
-        <use_es_latest>false</use_es_latest>
-    </sys_es_latest_script>
+        <sys_updated_on>2025-03-21 05:19:27</sys_updated_on>
+    </sys_script_include>
 </record_update>
