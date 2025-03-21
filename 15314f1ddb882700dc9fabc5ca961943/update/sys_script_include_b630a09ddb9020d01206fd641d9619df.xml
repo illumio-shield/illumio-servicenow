@@ -130,7 +130,8 @@ IllumioUtils.prototype = {
                 inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf
                 inputs['query_parameters'] = "";
 
-                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_groups').inForeground().withInputs(inputs).run();
+                var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_groups').inForeground().withInputs(inputs).timeout(actionTimeout).run();
                 var outputs = result.getOutputs();
 
                 var statusCode = outputs['status'];
@@ -732,7 +733,8 @@ IllumioUtils.prototype = {
             inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
 
             // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
-            var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_dimensions').inForeground().withInputs(inputs).run();
+            var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+            var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_dimensions').inForeground().withInputs(inputs).timeout(actionTimeout).run();
             var outputs = result.getOutputs();
 
             // Get Outputs:
@@ -922,7 +924,8 @@ IllumioUtils.prototype = {
                 inputs['request_body'] = JSON.stringify(requestBody); // JSON 
 
                 // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
-                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.create_label_dimensions').inForeground().withInputs(inputs).run();
+                var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.create_label_dimensions').inForeground().withInputs(inputs).timeout(actionTimeout).run();
                 var outputs = result.getOutputs();
 
                 // Get Outputs:
@@ -975,7 +978,8 @@ IllumioUtils.prototype = {
                 inputs['request_body'] = JSON.stringify(body); // JSON 
 
                 // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
-                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.update_label_dimensions').inForeground().withInputs(inputs).run();
+                var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.update_label_dimensions').inForeground().withInputs(inputs).timeout(actionTimeout).run();
                 var outputs = result.getOutputs();
 
                 // Get Outputs:
@@ -1257,13 +1261,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>420</sys_mod_count>
+        <sys_mod_count>421</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-21 12:18:49</sys_updated_on>
+        <sys_updated_on>2025-03-21 14:03:36</sys_updated_on>
     </sys_script_include>
 </record_update>
