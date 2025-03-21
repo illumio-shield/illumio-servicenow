@@ -122,7 +122,7 @@ IllumioUtils.prototype = {
 
             if (!gs.nil(criticalGroupConfig)) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                    gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                     return false;
                 }
 
@@ -724,7 +724,7 @@ IllumioUtils.prototype = {
             };
 
             if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                 return returnDict;
             }
 
@@ -903,7 +903,7 @@ IllumioUtils.prototype = {
             var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                    gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                     returnDict["status"] = false;
                     return returnDict;
                 }
@@ -957,7 +957,7 @@ IllumioUtils.prototype = {
             var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                    gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                     return false;
                 }
 
@@ -1257,13 +1257,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>419</sys_mod_count>
+        <sys_mod_count>420</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-21 05:19:27</sys_updated_on>
+        <sys_updated_on>2025-03-21 12:18:49</sys_updated_on>
     </sys_script_include>
 </record_update>
