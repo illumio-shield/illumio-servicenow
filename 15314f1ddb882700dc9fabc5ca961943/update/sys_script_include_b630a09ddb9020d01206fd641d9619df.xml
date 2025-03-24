@@ -74,12 +74,33 @@ IllumioUtils.prototype = {
      */
     parseLabelsInResponse: function(criticalGroupConfig, response, pceConfig) {
         var labelGroupGr;
+        var counter = 0;
+        for (var index = 0; index < response.length; index++) {
+            if (
+                criticalGroupConfig[response[index].key] &&
+                criticalGroupConfig[response[index].key]["groupName"] ==
+                response[index].name
+            ) {
+                criticalGroupConfig[response[index].key]['visited'] = true;
+                counter++;
+            }
+        }
+        for (var type in criticalGroupConfig) {
+            if (!criticalGroupConfig[type]['visited']) {
+                gs.info('The Critical Label Group ({0}) for the Configuration named {1} does not match any label groups at PCE', [criticalGroupConfig[type]['groupName'], pceConfig.getDisplayValue()]);
+            }
+        }
+        //If any invalid Critical Group Configuration is found, we will terminate the process
+        if (counter != Object.keys(criticalGroupConfig).length) {
+            throw new Error("[parseLabelsInResponse]Invalid Critical Group Configuration(s) Found");
+        }
+
 
         for (var resIndex = 0; resIndex < response.length; resIndex++) {
             if (
                 criticalGroupConfig[response[resIndex].key] &&
-                criticalGroupConfig[response[resIndex].key]["groupName"].toUpperCase() ==
-                response[resIndex].name.toUpperCase()
+                criticalGroupConfig[response[resIndex].key]["groupName"] ==
+                response[resIndex].name
             ) {
                 criticalGroupConfig[response[resIndex].key]['visited'] = true;
                 for (var labelIndex = 0; labelIndex < response[resIndex].labels.length; labelIndex++) {
@@ -98,11 +119,7 @@ IllumioUtils.prototype = {
                 }
             }
         }
-        for (var type in criticalGroupConfig) {
-            if (!criticalGroupConfig[type]['visited']) {
-                gs.info('The Critical Label Group ({0}) for the Configuration named {1} does not match any label groups at PCE', [criticalGroupConfig[type]['groupName'], pceConfig.getDisplayValue()]);
-            }
-        }
+
     },
 
 
@@ -152,7 +169,7 @@ IllumioUtils.prototype = {
             }
             return true;
         } catch (ex) {
-            gs.error('Exception while fetching data from PCE. Error', ex);
+            gs.error('Exception while fetching data from PCE. ', ex);
             return false;
         }
     },
@@ -405,7 +422,7 @@ IllumioUtils.prototype = {
                 cmdbIndex++;
             }
         } catch (ex) {
-            gs.error("[getInterfacesObject] Exception occured while generating valid interfaces object. Exception", ex);
+            gs.error("[getInterfacesObject] Exception occurred while generating valid interfaces object. Exception", ex);
         } finally {
             return {
                 interfaces: interfaces,
@@ -776,7 +793,7 @@ IllumioUtils.prototype = {
             labelDimensionGr.setWorkflow(false);
             labelDimensionGr.update();
         } catch (exc) {
-            gs.warn("Error occured while creating/updating the record for Label Dimension " + details["key"] + ". ");
+            gs.warn("Error occurred while creating/updating the record for Label Dimension " + details["key"] + ". ");
         }
     },
 
@@ -1104,7 +1121,7 @@ IllumioUtils.prototype = {
                             }
                         }
                     } catch (err) {
-                        gs.info("Exception occured while preparing workload object. Error", err);
+                        gs.info("Exception occurred while preparing workload object. Error", err);
                     }
                 }
             }
@@ -1261,13 +1278,13 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>422</sys_mod_count>
+        <sys_mod_count>429</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-24 05:06:27</sys_updated_on>
+        <sys_updated_on>2025-03-24 09:26:13</sys_updated_on>
     </sys_script_include>
 </record_update>
