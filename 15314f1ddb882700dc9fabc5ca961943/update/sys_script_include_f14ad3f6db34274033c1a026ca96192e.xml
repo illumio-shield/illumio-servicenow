@@ -6,9 +6,7 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
-        <mobile_callable>false</mobile_callable>
         <name>IllumioAutoSyncWithPCE</name>
-        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[gs.include("IllumioConstants");
 var IllumioAutoSyncWithPCE = Class.create();
 IllumioAutoSyncWithPCE.prototype = {
@@ -49,7 +47,7 @@ IllumioAutoSyncWithPCE.prototype = {
             // fetch scheduled job record
             var illumioScheduledJobsGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
             if (!illumioScheduledJobsGr.get(illumioJobId)) {
-                gs.error("Error while starting Auto Sunc process: Not able to find Scheduled Job with Sys ID: {0}", illumioJobId);
+                gs.error("Error while starting Auto Sync process: Not able to find Scheduled Job with Sys ID: {0}", illumioJobId);
                 return;
             }
 
@@ -58,7 +56,7 @@ IllumioAutoSyncWithPCE.prototype = {
                 userGr = illumioScheduledJobsGr.job_owner;
             var configGr = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
             if (!configGr.get(configSysId)) {
-                gs.error("Error while starting Auto Sunc process: Not able to find PCE Configuration with Sys ID: {0}", configSysId);
+                gs.error("Error while starting Auto Sync process: Not able to find PCE Configuration with Sys ID: {0}", configSysId);
                 return;
             }
 
@@ -429,16 +427,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>337</sys_mod_count>
+        <sys_mod_count>338</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-24 06:10:34</sys_updated_on>
     </sys_script_include>
 </record_update>
