@@ -12,7 +12,9 @@ IllumioHTTPClient.prototype = {
         this.logger = new IllumioLogUtil();
         this.baseUrl = baseUrl;
         var proxyFlag = (pceMIDProxy == 'true' || pceMIDProxy == '1' || pceMIDProxy == true || pceMIDProxy == null);
-        this.client = this._setupClient(baseUrl, username, password, protocol, proxyFlag);
+        // we'll skip the logs when creating object for 'snHttpClient'
+        var skipLogs = pceMIDProxy == null;
+        this.client = this._setupClient(baseUrl, username, password, protocol, proxyFlag, skipLogs);
         this.httpRetryCount = retryParams.http_retry_count;
         this.httpRetryIntervalIncrement = retryParams.http_retry_interval_increment;
         this.httpRetryIntervalMax = retryParams.http_retry_interval_max;
@@ -27,13 +29,13 @@ IllumioHTTPClient.prototype = {
      * @param {boolean} proxyFlag Flag to indicate if the proxy should be used
      * @returns {HttpClient} HTTP client
      **/
-    _setupClient: function(baseUrl, username, password, protocol, proxyFlag) {
+    _setupClient: function(baseUrl, username, password, protocol, proxyFlag, skipLogs) {
         var client = new HttpClient();
         var authScope = new AuthScope(baseUrl, protocol);
         var credentials = new UsernamePasswordCredentials(username, password);
         client.getParams().setAuthenticationPreemptive(true);
         client.getState().setCredentials(authScope.ANY, credentials);
-        var proxy = this._getProxy(proxyFlag);
+        var proxy = this._getProxy(proxyFlag, skipLogs);
         if (proxy != null) {
             client.getHostConfiguration().setProxy(proxy.host, proxy.port);
             client.getParams().setAuthenticationPreemptive(true);
@@ -48,18 +50,25 @@ IllumioHTTPClient.prototype = {
     /**
      * Get the proxy details
      * @param {boolean} proxyFlag Flag to indicate if the proxy should be used
+     * @param {boolean} skipLogs Flag to skip duplicate logs on creation of HTTPClient
      * @returns {object} Proxy details
      **/
-    _getProxy: function(proxyFlag) {
+    _getProxy: function(proxyFlag, skipLogs) {
         var proxy = null;
         if (ms.getConfigParameter('mid.proxy.use_proxy') != 'true' && proxyFlag) {
-            this.logger._warning('Proxy is not configured on MID Server and enabled for connecting to PCE. Please either configure Proxy in MID Server or uncheck the "Enable Proxy between PCE and MID server" checkbox in configuration.');
+            if(!skipLogs) {
+                this.logger._warning('Proxy is not configured on MID Server and enabled for connecting to PCE. Please either configure Proxy in MID Server or uncheck the "Enable Proxy between PCE and MID server" checkbox in configuration.');
+            }
             return proxy; // null
         } else if (ms.getConfigParameter('mid.proxy.use_proxy') != 'true' && !proxyFlag) {
-            this.logger._debug('Proxy is not configured on MID Server and disabled for connecting to PCE. Continuing without proxy to connect with PCE and ServiceNow instance.');
+            if (!skipLogs) {
+                this.logger._debug('Proxy is not configured on MID Server and disabled for connecting to PCE. Continuing without proxy to connect with PCE and ServiceNow instance.');
+            }
             return proxy; // null
         } else if (ms.getConfigParameter('mid.proxy.use_proxy') == 'true' && proxyFlag) {
-            this.logger._debug('Proxy is configured on MID Server and enabled for connecting to PCE. Proceeding to use proxy to connect with PCE and ServiceNow instance.');
+            if (!skipLogs) {
+                this.logger._debug('Proxy is configured on MID Server and enabled for connecting to PCE. Proceeding to use proxy to connect with PCE and ServiceNow instance.');
+            }
             var proxyHost = ms.getConfigParameter('mid.proxy.host');
             var proxyPort = ms.getConfigParameter('mid.proxy.port');
             var proxyUsername = ms.getConfigParameter('mid.proxy.username');
@@ -72,10 +81,14 @@ IllumioHTTPClient.prototype = {
             };
             return proxy; // non-null
         } else if (ms.getConfigParameter('mid.proxy.use_proxy') == 'true' && !proxyFlag) {
-            this.logger._debug('Proxy is configured on MID Server and disabled for connecting to PCE. Proceeding to use proxy for ServiceNow instance but not for PCE.');
+            if (!skipLogs) {
+                this.logger._debug('Proxy is configured on MID Server and disabled for connecting to PCE. Proceeding to use proxy for ServiceNow instance but not for PCE.');
+            }
             return proxy; // null
         } else {
-            this.logger._error('Found an invalid scenario with MID Server proxy value (' + ms.getConfigParameter('mid.proxy.use_proxy') + ') and the checkbox. Please recheck the setup or reach out to Illumio Support.');
+            if (!skipLogs) {
+                this.logger._error('Found an invalid scenario with MID Server proxy value (' + ms.getConfigParameter('mid.proxy.use_proxy') + ') and the checkbox. Please recheck the setup or reach out to Illumio Support.');
+            }
             // just in case if we ever fall into gaps due to misconfiguration
             return null;
         }
