@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="93b285a79300021062233f018bba1031" label="Illumio PCE Labels Mapping" max_length="40" name="x_illu2_illumio_illumio_pce_labels_mapping" type="collection">
+        <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <element label="Href" mandatory="true" max_length="100" name="href" type="string"/>
         <element label="Key" mandatory="true" max_length="50" name="key" type="string"/>
         <element label="Value" mandatory="true" max_length="255" name="value" type="string"/>
-        <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <index name="index">
             <element name="href"/>
         </index>
