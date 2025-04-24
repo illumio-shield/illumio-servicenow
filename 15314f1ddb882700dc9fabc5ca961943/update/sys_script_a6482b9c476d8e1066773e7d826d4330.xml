@@ -33,14 +33,15 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
 
-    var grSysProp = gs.getProperty("x_illu2_illumio.incident_creation_for_scheduled_job","true");
+    var grSysProp = gs.getProperty("x_illu2_illumio.incident_creation_for_scheduled_job", "true");
     var grIncidentResponse = new GlideRecord("incident");
 
-    if (grSysProp=="true") {
-        grIncidentResponse.description = "Job Type: " + current.getDisplayValue("job_type") +"\nCurrent Operation: " + current.getValue("current_operation")+"\nJob Status: " + current.getDisplayValue("job_status");
-        grIncidentResponse.short_description = current.illumio_pce_configuration.name + ": " + current.getDisplayValue("job_type")+ "-" + current.getDisplayValue("job_status");
-        current.setValue("incident",grIncidentResponse.insert());
-		current.update();
+    if (grSysProp == "true") {
+        grIncidentResponse.description = "Job Type: " + current.getDisplayValue("job_type") + "\nCurrent Operation: " + current.getValue("current_operation") + "\nJob Status: " + current.getDisplayValue("job_status") + "\n\nLogs:\n" +
+            current.getDisplayValue("logs");
+        grIncidentResponse.short_description = current.illumio_pce_configuration.name + ": " + current.getDisplayValue("job_type") + "-" + current.getDisplayValue("job_status");
+        current.setValue("incident", grIncidentResponse.insert());
+        current.update();
     }
 
 })(current, previous);]]></script>
@@ -51,7 +52,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>a6482b9c476d8e1066773e7d826d4330</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>34</sys_mod_count>
         <sys_name>Scheduled Job Incident Creation</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -60,7 +61,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_a6482b9c476d8e1066773e7d826d4330</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-14 05:55:32</sys_updated_on>
+        <sys_updated_on>2025-04-24 08:35:17</sys_updated_on>
         <template/>
         <when>after</when>
     </sys_script>
