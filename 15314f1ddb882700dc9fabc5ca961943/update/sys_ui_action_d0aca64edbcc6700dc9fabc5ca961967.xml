@@ -31,37 +31,26 @@
         <onclick>doSyncWithPCE()</onclick>
         <order>100</order>
         <script><![CDATA[function doSyncWithPCE() {
-    // jshint maxerr:100
-    // get the selected servers
+
+    // get the selected workloads
     var checkedRecordsSysID = g_list.getChecked();
-    //var selected = [];
-    var selected, labelsToCreate, instanceURL;
-    var partial_succ = "false",
-        status, count = 0;
 
+    var checkedRecordsObject = {},
+        checkedRecordsData, selectedRecordsObject = {},
+        countObject = {},
+        configSysIds = [],
+        validSelectedRecordsCount = 0,
+        totalRecordsToSync = 0;
+    var createScheduledJobCount = 0,
+        errorInScheduledJobCreation = false;
+    var instanceURL, jobSysIdObject = {};
     var selectedRecordsData = [],
-        gaCustomTableData,
-        gaCustomTableData2,
-        gaCustomTableData3,
-        managedWorkloads = [],
-        unmanagedWorkloads = [],
-        unknownWorkloads = [],
-        jobSysId,
-        ans, skippedWorkloads = 0,
-        answer,
-        fieldMapping;
+        gaCustomTableData, dialog, answer, thresoldLimitLogs = {}, limitExceeded = false;
 
-    var managed_workloads_list = [];
-    var unmanaged_workloads_list = [];
-    var unknown_workloads_list = [];
+    var userName = g_user.firstName + " " + g_user.lastName;
 
-    var userFirstName = g_user.firstName;
-    var userLastName = g_user.lastName;
-    var userName = userFirstName + " " + userLastName;
-    var validWorkloads;
-    var combinedWorkloads = {};
+    // start sync process
     var loadingDialog = new GlideModal();
-
     loadingDialog.setTitle("Starting sync process");
     loadingDialog.setWidth(400);
     loadingDialog.renderWithContent(
@@ -74,48 +63,48 @@
     gaCustomTableData.getXML(gaParseIdResponse);
 
     function gaParseIdResponse(response) {
-        ans = response.responseXML.documentElement.getAttribute("answer");
-        ans = JSON.parse(ans);
-        checkedRecordsSysID = ans;
-        checkedRecordsSysID = selected = checkedRecordsSysID + "";
+        answer = response.responseXML.documentElement.getAttribute("answer");
+        answer = JSON.parse(answer);
+        selectedRecordsObject = answer.data;
+        validSelectedRecordsCount = answer.count;
+        configSysIds = Object.keys(selectedRecordsObject);
         fetchDataFromPCE();
     }
 
     function fetchDataFromPCE() {
         gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
         gaCustomTableData.addParam("sysparm_name", "fetchCriticalLabels");
+        gaCustomTableData.addParam("sysparm_config_sys_ids", JSON.stringify(configSysIds));
         gaCustomTableData.getXML(gaParseResponse);
 
         function gaParseResponse(response) {
-            ans = response.responseXML.documentElement.getAttribute("answer");
-            status = JSON.parse(ans);
-            if (!status) {
-                loadingDialog.destroy();
-                var dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                dialog.setTitle(
-                    "Can not start data sync process as MID server is down"
-                );
+            answer = response.responseXML.documentElement.getAttribute("answer");
+            var responseDict = JSON.parse(answer);
+            if (!responseDict.status) {
+                var message = "Cannot start data sync process for PCE Configuration(s) - " + responseDict["failedConfigurations"].join(", ") + ". Please check application logs.";
+            	loadingDialog.destroy();
+                dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                dialog.setTitle(message);
                 dialog.render();
                 return;
             }
-            getLabelGroups();
+            excludeWorkloads();
         }
     }
 
-    function getLabelGroups() {
+    function excludeWorkloads() {
         gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
-        gaCustomTableData.addParam("sysparm_name", "fetchLabelsForLabelGroups");
-        gaCustomTableData.addParam("sysparm_sys_ids", JSON.stringify(checkedRecordsSysID));
+        gaCustomTableData.addParam("sysparm_name", "excludeWorkloadsWithCriticalLabels");
+        gaCustomTableData.addParam("sysparm_selected_record_object", JSON.stringify(selectedRecordsObject));
         gaCustomTableData.getXML(gaParseLResponse);
 
-        /**
-         * Callback function for AJAX call to IllumioGetCustomTableRecord
-         */
+
+        // Callback function for AJAX call to IllumioGetCustomTableRecord
         function gaParseLResponse(response) {
             answer = response.responseXML.documentElement.getAttribute("answer");
-
             answer = JSON.parse(answer);
-            checkedRecordsSysID = answer;
+            checkedRecordsObject = answer.filteredRecords;
+            totalRecordsToSync = answer.totalRecords;
             getLabelGroupsCount();
         }
     }
@@ -123,70 +112,47 @@
     function getLabelGroupsCount() {
         gaCustomTableData = new GlideAjax('GetLabelGroupsAjax');
         gaCustomTableData.addParam('sysparm_name', 'countCriticalGroupsFetched');
+        gaCustomTableData.addParam('sysparm_config_sys_ids', JSON.stringify(configSysIds));
         gaCustomTableData.getXML(gaParseLCResponse);
 
         function gaParseLCResponse(response) {
             answer = response.responseXML.documentElement.getAttribute("answer");
-            count = answer;
+            countObject = JSON.parse(answer);
             getCustomtableRecord();
         }
     }
 
     function getCustomtableRecord() {
         loadingDialog.destroy();
-        if (checkedRecordsSysID.length < selected.split(",").length) {
-            skippedWorkloads = parseInt(selected.split(',').length) - parseInt(checkedRecordsSysID.length);
-            skippedWorkloads = skippedWorkloads + '';
-            partial_succ = "true";
-        }
-        if (checkedRecordsSysID.length == 0) {
-            var dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-            dialog.setTitle("Cannot sync a workload that has a critical label.");
-            dialog.render();
+        if (totalRecordsToSync < validSelectedRecordsCount) {
+            var dialogModal = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+            dialogModal.setTitle("Cannot sync a workload that has a critical label.");
+            dialogModal.render();
             return;
         }
 
         gaCustomTableData = new GlideAjax("IllumioGetCustomTableRecord");
         gaCustomTableData.addParam("sysparm_name", "getData");
-        gaCustomTableData.addParam("sysparm_sys_ids", checkedRecordsSysID);
+        gaCustomTableData.addParam("sysparm_checked_records_object", JSON.stringify(checkedRecordsObject));
         gaCustomTableData.getXML(gaParseTableResponse);
 
-        /**
-         * Callback function for AJAX call to IllumioGetCustomTableRecord
-         */
+        // Callback function for AJAX call to IllumioGetCustomTableRecord         
         function gaParseTableResponse(response) {
             answer = response.responseXML.documentElement.getAttribute("answer");
             answer = JSON.parse(answer);
+            checkedRecordsData = answer.data.filteredRecords;
+            totalRecordsToSync = answer.data.totalRecords;
+            instanceURL = answer.instanceURL;
+            thresoldLimitLogs = answer.data.logMessage;
+            limitExceeded = answer.data.limitExceeded;
 
-            // Filter the successful responses
-            for (var index = 0, len = answer.length; index < len; index++) {
-                if (answer[index]["status"] == "success") {
-                    selectedRecordsData.push(answer[index]);
-                }
-            }
-            getLabelCounter();
-        }
-    }
-
-    function getLabelCounter() {
-        var gaLabel = new GlideAjax("GetLabelGroupsAjax");
-        gaLabel.addParam("sysparm_name", "getCreateLabelCounter");
-        gaLabel.addParam("sysparm_selectedRecordsData", JSON.stringify(selectedRecordsData));
-        gaLabel.getXML(processLabelCounter);
-
-        function processLabelCounter(response1) {
-            var ans1 = response1.responseXML.documentElement.getAttribute("answer");
-            ans1 = JSON.parse(ans1);
-            if (!ans1.hasError) {
-                labelsToCreate = parseInt(ans1.counter);
-                instanceURL = ans1.instanceURL;
-                preparePayload();
-            } else {
-                var dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                dialog.setTitle(ans1.message);
+            if (answer.data.cancelJobOnLimitExceed) {
+                dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                dialog.setTitle("Cancelled the job for one or more configuration as thresold limit exceeded");
                 dialog.render();
             }
 
+            preparePayload();
         }
     }
 
@@ -195,109 +161,35 @@
      * Make AJAX call to forward the processed workload objects after fetching their labels' details
      */
     function preparePayload() {
-        var dialog;
-        if (selectedRecordsData.length == 0) {
-            dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-            dialog.setTitle("No valid workload selected.");
-            dialog.render();
+        var dialogModal;
+        if (totalRecordsToSync == 0) {
+            dialogModal = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+            if (limitExceeded)
+                dialogModal.setTitle("Thresold limit has been exceeded.");
+            else
+                dialogModal.setTitle("No valid workloads are selected. Please select the workloads which are not marked as duplicate and have conflicts.");
+            dialogModal.render();
             return false;
         }
+        for (var configSysId in checkedRecordsData) {
 
-        for (var index = 0, len = selectedRecordsData.length; index < len; index++) {
-
-            // If the workload is knonw to PCE
-            if (selectedRecordsData[index]["known_to_pce"] == "managed") {
-                if (selectedRecordsData[index]["conflicts"] == "true") {
-                    managedWorkloads.push({
-                        known_to_pce: selectedRecordsData[index]["known_to_pce"],
-                        sys_id: selectedRecordsData[index]["sys_id"],
-                        href: selectedRecordsData[index]["href"],
-                        hostname: selectedRecordsData[index]["hostname"],
-                        application: selectedRecordsData[index]["application"],
-                        environment: selectedRecordsData[index]["environment"],
-                        location: selectedRecordsData[index]["location"],
-                        role: selectedRecordsData[index]["role"],
-                        operation: "update",
-                    });
-                }
-            } else if (selectedRecordsData[index]["known_to_pce"] == "unmanaged") {
-                if (selectedRecordsData[index]["conflicts"] == "true") {
-                    unmanagedWorkloads.push({
-                        known_to_pce: selectedRecordsData[index]["known_to_pce"],
-                        sys_id: selectedRecordsData[index]["sys_id"],
-                        href: selectedRecordsData[index]["href"],
-                        hostname: selectedRecordsData[index]["hostname"],
-                        application: selectedRecordsData[index]["application"],
-                        environment: selectedRecordsData[index]["environment"],
-                        location: selectedRecordsData[index]["location"],
-                        role: selectedRecordsData[index]["role"],
-                        interfaces: selectedRecordsData[index]["interfaces"],
-                        operation: "update",
-                    });
-                }
-            } else {
-                unknownWorkloads.push({
-                    known_to_pce: selectedRecordsData[index]["known_to_pce"],
-                    sys_id: selectedRecordsData[index]["sys_id"],
-                    hostname: selectedRecordsData[index]["hostname"],
-                    application: selectedRecordsData[index]["application"],
-                    environment: selectedRecordsData[index]["environment"],
-                    location: selectedRecordsData[index]["location"],
-                    role: selectedRecordsData[index]["role"],
-                    select_ip_address: selectedRecordsData[index]["ip_address"],
-                    select_ip_address_2: selectedRecordsData[index]["umw1"],
-                    select_ip_address_3: selectedRecordsData[index]["umw2"],
-					select_ip_address_4: selectedRecordsData[index]["umw3"],
-                    select_ip_address_5: selectedRecordsData[index]["umw4"],
-                    select_ip_address_6: selectedRecordsData[index]["umw5"],
-                    operation: "create",
-                });
+            selectedRecordsData = checkedRecordsData[configSysId];
+            var validWorkloadsCount = selectedRecordsData.length;
+            if (validWorkloadsCount != 0) {
+                createScheduledJobCount += 1;
+                createScheduledJob(configSysId, validWorkloadsCount);
             }
         }
-
-        // If there is no workload selected
-        if (unknownWorkloads.length + managedWorkloads.length + unmanagedWorkloads.length == 0) {
-            dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-            dialog.setTitle("No valid workload selected.");
-            dialog.render();
-        } else {
-
-            var wlToModify = managedWorkloads.length + unmanagedWorkloads.length;
-            var workloadToCreate = unknownWorkloads.length;
-            var gaThreshold = new GlideAjax("GetLabelGroupsAjax");
-            gaThreshold.addParam("sysparm_name", "checkThresholdLimit");
-            gaThreshold.addParam('sysparm_labelsToCreate', labelsToCreate + '');
-            gaThreshold.addParam('sysparm_wlToModify', wlToModify + '');
-            gaThreshold.addParam('sysparm_workloadToCreate', workloadToCreate + '');
-            gaThreshold.getXML(function(response) {
-                ans = response.responseXML.documentElement.getAttribute("answer");
-                ans = JSON.parse(ans);
-                if (!ans.limitExceed) {
-                    createScheduledJob();
-                } else {
-                    dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                    dialog.setTitle(ans.description);
-                    dialog.render();
-                }
-
-            });
-
-
-        }
-
     }
 
-    function createScheduledJob() {
-        validWorkloads =
-            unknownWorkloads.length +
-            managedWorkloads.length +
-            unmanagedWorkloads.length;
+    function createScheduledJob(configSysId, validWorkloads) {
 
         //Creating new data sync job
         var createJob = new GlideAjax("IllumioManageJobs");
         createJob.addParam("sysparm_name", "createScheduledJob");
         createJob.addParam("sysparm_job_status", "running");
         createJob.addParam("sysparm_type_flag", "false");
+        createJob.addParam("sysparm_config_sys_id", configSysId);
         createJob.addParam(
             "sysparm_current_operation",
             "Sync process for " + validWorkloads + " workload(s) has started"
@@ -306,274 +198,103 @@
             "sysparm_logs",
             "Sync process for " + validWorkloads + " workload(s) has started"
         );
+        if (thresoldLimitLogs[configSysId]) {
+            createJob.addParam("sysparm_thresold_logs", thresoldLimitLogs[configSysId]);
+        }
+
         createJob.addParam("sysparm_job_type", "data sync");
         createJob.getXML(gaGetJobSysID);
-        // Process the managed workloads
-        /**
-         * Callback function for AJAX call to IllumioManageJobs
-         */
+
+        // Callback function for AJAX call to IllumioManageJobs
         function gaGetJobSysID(response) {
-            jobSysId = response.responseXML.documentElement.getAttribute("answer");
+            var jobSysId = response.responseXML.documentElement.getAttribute("answer");
+            createScheduledJobCount -= 1;
+
             // Check if sceduled job is created or not
             if (jobSysId == null) {
-                var dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                dialog.setTitle(
-                    "Can not start data sync process as there is data collection in running state."
-                );
-                dialog.render();
+                errorInScheduledJobCreation = true;
             } else {
+                jobSysIdObject[configSysId] = jobSysId;
+                processWorkloads(configSysId);
+            }
+
+            if (createScheduledJobCount == 0) {
+                var message = "Sync process started";
+                if (errorInScheduledJobCreation)
+                    message = "Can not start data sync process for some of the configurations as there is data collection in running state. Please check logs for more details.";
+
                 dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                dialog.setTitle("Sync process started");
+                dialog.setTitle(message);
                 dialog.render();
-                processWorkloads();
-
             }
         }
 
     }
 
-    function processWorkloads() {
+    function processWorkloads(configSysId) {
+        var partial_succ = "false";
 
-        var ga_fields = new GlideAjax("IllumioPrepareWorkload");
-        ga_fields.addParam("sysparm_name", "getMappedFields");
-
-        ga_fields.getXML(gaParseFieldsResponse);
-
-        function gaParseFieldsResponse(responseFields) {
-            fieldMapping = JSON.parse(responseFields.responseXML.documentElement.getAttribute("answer"));
-
-            var labelsToMap;
-            for (var mw = 0; mw < managedWorkloads.length; mw++) {
-                labelsToMap = {
-                    app: managedWorkloads[mw].application,
-                    env: managedWorkloads[mw].environment,
-                    loc: managedWorkloads[mw].location,
-                    role: managedWorkloads[mw].role,
-                };
-
-
-                gaCustomTableData = new GlideAjax("IllumioPrepareWorkload");
-                gaCustomTableData.addParam("sysparm_name", "getHrefs");
-                gaCustomTableData.addParam(
-                    "sysparm_labels_to_map",
-                    JSON.stringify(labelsToMap)
-                );
-                gaCustomTableData.addParam(
-                    "sysparm_workload",
-                    JSON.stringify(managedWorkloads[mw])
-                );
-
-                gaCustomTableData.getXML(function(response) {
-                    gaParseLabelsResponse(response, combinedWorkloads);
-                });
-            }
-
-            // Process the unmanaged workloads
-            for (var umw = 0; umw < unmanagedWorkloads.length; umw++) {
-                labelsToMap = {
-                    app: unmanagedWorkloads[umw].application,
-                    env: unmanagedWorkloads[umw].environment,
-                    loc: unmanagedWorkloads[umw].location,
-                    role: unmanagedWorkloads[umw].role,
-                };
-
-                gaCustomTableData2 = new GlideAjax("IllumioPrepareWorkload");
-                gaCustomTableData2.addParam("sysparm_name", "getHrefs");
-                gaCustomTableData2.addParam(
-                    "sysparm_labels_to_map",
-                    JSON.stringify(labelsToMap)
-                );
-                gaCustomTableData2.addParam(
-                    "sysparm_workload",
-                    JSON.stringify(unmanagedWorkloads[umw])
-                );
-
-                gaCustomTableData2.getXML(function(response) {
-                    gaParseLabelsResponse(response, combinedWorkloads);
-                });
-            }
-            // Process the unknown workloads
-            for (var uk = 0; uk < unknownWorkloads.length; uk++) {
-                labelsToMap = {
-                    app: unknownWorkloads[uk].application,
-                    env: unknownWorkloads[uk].environment,
-                    loc: unknownWorkloads[uk].location,
-                    role: unknownWorkloads[uk].role,
-                };
-                gaCustomTableData3 = new GlideAjax("IllumioPrepareWorkload");
-                gaCustomTableData3.addParam("sysparm_name", "getHrefs");
-                gaCustomTableData3.addParam(
-                    "sysparm_labels_to_map",
-                    JSON.stringify(labelsToMap)
-                );
-                gaCustomTableData3.addParam(
-                    "sysparm_workload",
-                    JSON.stringify(unknownWorkloads[uk])
-                );
-
-                gaCustomTableData3.getXML(function(response) {
-
-                    gaParseLabelsResponse(response, combinedWorkloads);
-                });
-            }
-        }
-    }
-
-    /**
-     * Get the label details for a PCE and push the workload to the global list
-     */
-    function gaParseLabelsResponse(response, combinedWorkloads) {
-        var href, answer, limit;
-        var answer_raw = JSON.parse(
-            response.responseXML.documentElement.getAttribute("answer")
-        );
-
-        href = answer_raw.workload.href;
-        answer = answer_raw.retVal;
-
-        // The object to be pushed to the global list
-        var workload_object = {
-            href: href,
-            hostname: answer_raw.workload.hostname,
-            sys_id: answer_raw.workload.sys_id,
-            labels: [],
-            createlabels: [],
+        var combinedWorkloads = {
+            createUnknown: [],
+            updateManaged: [],
+            updateUnManaged: [],
         };
 
-        // Filter the label response and push the existing labels in "labels" and non existant ones to "createlabels" list
-        for (var lr = 0; lr < answer.length; lr++) {
-            var label_response = answer[lr];
-            if (label_response.status == "success") {
-                workload_object.labels.push({
-                    href: label_response["href"],
-                });
-            } else if (
-                label_response.status == "failed" &&
-                label_response.value != ""
-            ) {
-                workload_object.createlabels.push({
-                    key: label_response.key,
-                    value: label_response.value,
-                });
+        selectedRecordsData = checkedRecordsData[configSysId];
+        for (var index = 0; index < selectedRecordsData.length; index++) {
+
+            var workloadObject = selectedRecordsData[index];
+            workloadObject["href"] = workloadObject.pce_workload_href;
+            if (workloadObject.known_to_pce == "unknown") {
+                // create operation 
+
+                workloadObject["description"] =
+                    "Created by " +
+                    userName +
+                    " [" + instanceURL + "] at " +
+                    new Date().toLocaleString();
+
+                combinedWorkloads["createUnknown"].push(workloadObject);
+
+            } else if (workloadObject.known_to_pce == "managed") {
+                // Update operation
+
+                workloadObject["description"] =
+                    "Updated by " +
+                    userName +
+                    " [" + instanceURL + "] at " +
+                    new Date().toLocaleString();
+
+                combinedWorkloads["updateManaged"].push(workloadObject);
+
+            } else if (workloadObject.known_to_pce == "unmanaged") {
+                // Update operation
+
+                workloadObject["description"] =
+                    "Updated by " +
+                    userName +
+                    " [" + instanceURL + "] at " +
+                    new Date().toLocaleString();
+
+                combinedWorkloads["updateUnManaged"].push(workloadObject);
             }
         }
 
-        var ga_update;
+        var skipCount = selectedRecordsObject[configSysId].length - checkedRecordsObject[configSysId].length;
+        if (skipCount > 0 || thresoldLimitLogs[configSysId])
+            partial_succ = "true";
 
-        if (answer_raw.workload.known_to_pce == "unknown") {
-            limit = unknownWorkloads.length;
-            workload_object["description"] =
-                "Created by " +
-                userName +
-                " [" + instanceURL + "] at " +
-                new Date().toLocaleString();
-            if (answer_raw.workload.select_ip_address != "") {
-                workload_object["ip_address"] = answer_raw.workload.select_ip_address;
-            }
-            if (answer_raw.workload.select_ip_address_2 != "") {
-                workload_object["umw1"] = answer_raw.workload.select_ip_address_2;
-            }
-            if (answer_raw.workload.select_ip_address_3 != "") {
-                workload_object["umw2"] = answer_raw.workload.select_ip_address_3;
-            }
-			if (answer_raw.workload.select_ip_address_4 != "") {
-                workload_object["umw3"] = answer_raw.workload.select_ip_address_4;
-            }
-            if (answer_raw.workload.select_ip_address_5 != "") {
-                workload_object["umw4"] = answer_raw.workload.select_ip_address_5;
-            }
-			if (answer_raw.workload.select_ip_address_6 != "") {
-                workload_object["umw5"] = answer_raw.workload.select_ip_address_6;
-            }
-
-            unknown_workloads_list.push(workload_object);
-
-            // Check if the global workload list is completely updated
-
-            combinedWorkloads["createUnknown"] = unknown_workloads_list;
-
-            if (unknown_workloads_list.length == limit) {
-                if ((managedWorkloads.length == 0 || (managedWorkloads.length && combinedWorkloads["updateManaged"])) && (unmanagedWorkloads.length == 0 || (unmanagedWorkloads.length && combinedWorkloads["updateUnManaged"]))) {
-                    ga_update = new GlideAjax("IllumioUpdatePCE");
-                    ga_update.addParam("sysparm_name", "action");
-                    ga_update.addParam("sysparm_operation", "updateCreate");
-                    ga_update.addParam("sysparm_skipped_count", skippedWorkloads + "");
-                    ga_update.addParam("sysparm_jobSysId", jobSysId);
-                    ga_update.addParam("sysparm_partial", partial_succ);
-                    ga_update.addParam("sysparm_count", count + "");
-                    ga_update.addParam("sysparm_custom_record_sys_id", checkedRecordsSysID);
-                    ga_update.addParam("sysparm_payload", JSON.stringify(combinedWorkloads));
-                    ga_update.getXML();
-                }
-            }
-        } else if (answer_raw.workload.known_to_pce == "managed") {
-            // Update operation
-            limit = managedWorkloads.length;
-            workload_object["description"] =
-                "Updated by " +
-                userName +
-                " [" + instanceURL + "] at " +
-                new Date().toLocaleString();
-
-            workload_object["updateFields"] = fieldMapping.updateFields;
-            managed_workloads_list.push(workload_object);
-            // Check if the global workload list is completely updated
-            if (managed_workloads_list.length == limit) {
-                combinedWorkloads["updateManaged"] = managed_workloads_list;
-                if (
-                    (unknownWorkloads.length == 0 ||
-                        (unknownWorkloads.length && combinedWorkloads["createUnknown"])) &&
-                    (unmanagedWorkloads.length == 0 ||
-                        (unmanagedWorkloads.length && combinedWorkloads["updateUnManaged"]))
-                ) {
-                    ga_update = new GlideAjax("IllumioUpdatePCE");
-                    ga_update.addParam("sysparm_name", "action");
-                    ga_update.addParam("sysparm_operation", "updateCreate");
-                    ga_update.addParam("sysparm_skipped_count", skippedWorkloads + "");
-                    ga_update.addParam("sysparm_jobSysId", jobSysId);
-                    ga_update.addParam("sysparm_partial", partial_succ);
-                    ga_update.addParam("sysparm_count", count + "");
-                    ga_update.addParam("sysparm_custom_record_sys_id", checkedRecordsSysID);
-                    ga_update.addParam("sysparm_payload", JSON.stringify(combinedWorkloads));
-                    ga_update.getXML();
-                }
-            }
-        } else if (answer_raw.workload.known_to_pce == "unmanaged") {
-            // Update operation
-            limit = unmanagedWorkloads.length;
-            workload_object["description"] =
-                "Updated by " +
-                userName +
-                " [" + instanceURL + "] at " +
-                new Date().toLocaleString();
-
-            workload_object["updateFields"] = fieldMapping.updateFields;
-            workload_object["known_to_pce"] = answer_raw.workload.known_to_pce;
-            workload_object["interfaces"] = answer_raw.workload.interfaces;
-            unmanaged_workloads_list.push(workload_object);
-            // Check if the global workload list is completely updated
-            if (unmanaged_workloads_list.length == limit) {
-                combinedWorkloads["updateUnManaged"] = unmanaged_workloads_list;
-                if (
-                    (managedWorkloads.length == 0 ||
-                        (managedWorkloads.length && combinedWorkloads["updateManaged"])) &&
-                    (unknownWorkloads.length == 0 ||
-                        (unknownWorkloads.length && combinedWorkloads["createUnknown"]))
-                ) {
-                    //var ga_update;
-                    ga_update = new GlideAjax("IllumioUpdatePCE");
-                    ga_update.addParam("sysparm_name", "action");
-                    ga_update.addParam("sysparm_operation", "updateCreate");
-                    ga_update.addParam("sysparm_skipped_count", skippedWorkloads + "");
-                    ga_update.addParam("sysparm_jobSysId", jobSysId);
-                    ga_update.addParam("sysparm_partial", partial_succ);
-                    ga_update.addParam("sysparm_count", count + "");
-                    ga_update.addParam("sysparm_custom_record_sys_id", checkedRecordsSysID);
-                    ga_update.addParam("sysparm_payload", JSON.stringify(combinedWorkloads));
-                    ga_update.getXML();
-                }
-            }
-        }
+        var ga_update = new GlideAjax("IllumioUpdatePCE");
+        ga_update.addParam("sysparm_name", "action");
+        ga_update.addParam("sysparm_operation", "updateCreate");
+        ga_update.addParam("sysparm_skipped_count", skipCount + "");
+        ga_update.addParam("sysparm_jobSysId", jobSysIdObject[configSysId]);
+        ga_update.addParam("sysparm_config_sys_id", configSysId);
+        ga_update.addParam("sysparm_partial", partial_succ);
+        ga_update.addParam("sysparm_count", countObject[configSysId] + "");
+        ga_update.addParam("sysparm_custom_record_sys_id", checkedRecordsObject[configSysId]);
+        ga_update.addParam("sysparm_payload", JSON.stringify(combinedWorkloads));
+        ga_update.getXML();
     }
 }]]></script>
         <show_insert>true</show_insert>
@@ -583,16 +304,21 @@
         <sys_class_name>sys_ui_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 12:20:20</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>d0aca64edbcc6700dc9fabc5ca961967</sys_id>
+        <sys_mod_count>346</sys_mod_count>
         <sys_name>Sync selected servers with PCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_d0aca64edbcc6700dc9fabc5ca961967</sys_update_name>
-        <table>x_illu2_illumio_illumio_servicenow_servers</table>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-24 09:24:21</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>
     </sys_ui_action>

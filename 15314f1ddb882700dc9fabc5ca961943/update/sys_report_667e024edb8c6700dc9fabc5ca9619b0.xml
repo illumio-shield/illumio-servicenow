@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report">
     <sys_report action="INSERT_OR_UPDATE">
+        <active>false</active>
         <additional_groupby/>
         <aggregate>COUNT</aggregate>
-        <aggregation_source/>
+        <aggregation_source>no_override</aggregation_source>
         <allow_data_label_overlap>false</allow_data_label_overlap>
         <apply_alias>false</apply_alias>
         <axis_max_color display_value="UI14 Blue Light">b0d449b3d7332100fa6c0c12ce610383</axis_max_color>
@@ -46,10 +47,10 @@
         <end_time/>
         <exp_report_attrs>true</exp_report_attrs>
         <field/>
-        <field_list/>
-        <filter table="x_illu2_illumio_illumio_servicenow_servers">duplicate=true<item endquery="false" field="duplicate" goto="false" newquery="false" operator="=" or="false" value="true"/>
+        <field_list>hostname,conflicts,illumio_pce_configuration,known_to_pce,public_ip_address,pce_workload_href</field_list>
+        <filter table="x_illu2_illumio_illumio_pce_workload">duplicate=true<item endquery="false" field="duplicate" goto="false" newquery="false" operator="=" or="false" value="true"/>
         </filter>
-        <formatting_configuration/>
+        <formatting_configuration>{"table":"x_illu2_illumio_illumio_servicenow_servers","stringFormattingProperties":{},"durationFormattingProperties":{},"dateFormattingProperties":{},"numberFormattingProperties":{"$COUNT_FIELD$,AGGREGATION":{"decimalPrecision":2,"groupingUsed":true,"roundingMode":"HALF_UP","metricPrefixSymbolUsed":false,"showOriginalNumberInTooltip":true,"addValueInTooltip":true}}}</formatting_configuration>
         <from/>
         <funnel_neck_percent>30</funnel_neck_percent>
         <gauge_autoscale>true</gauge_autoscale>
@@ -72,6 +73,7 @@
         <lower_limit/>
         <map display_value="World">93b8a3a2d7101200bd4a4ebfae61033a</map>
         <map_source/>
+        <no_bulk_migration>false</no_bulk_migration>
         <orderby_list/>
         <other_threshold>-2</other_threshold>
         <others>true</others>
@@ -87,7 +89,7 @@
         <sc_stackby_variable_id/>
         <score_color display_value="Black">65b30218a9fe3dba0120df8611520d97</score_color>
         <series_name_text/>
-        <set_color>color_palette</set_color>
+        <set_color>null</set_color>
         <show_chart_border>false</show_chart_border>
         <show_chart_data_label>false</show_chart_data_label>
         <show_chart_title>report</show_chart_title>
@@ -106,14 +108,19 @@
         <sys_class_name>sys_report</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 10:06:29</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>667e024edb8c6700dc9fabc5ca9619b0</sys_id>
-        <sys_name>Total duplicate workloads</sys_name>
+        <sys_mod_count>38</sys_mod_count>
+        <sys_name>Total Duplicate Workloads</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_667e024edb8c6700dc9fabc5ca9619b0</sys_update_name>
-        <table>x_illu2_illumio_illumio_servicenow_servers</table>
-        <title>Total duplicate workloads</title>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-12 08:34:01</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_workload</table>
+        <title>Total Duplicate Workloads</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>
@@ -121,6 +128,7 @@
         <type>single_score</type>
         <upper_limit/>
         <use_color_heatmap>false</use_color_heatmap>
+        <use_color_palette>false</use_color_palette>
         <use_null_in_trend>false</use_null_in_trend>
         <user>GLOBAL</user>
         <x_axis_allow_decimals>false</x_axis_allow_decimals>

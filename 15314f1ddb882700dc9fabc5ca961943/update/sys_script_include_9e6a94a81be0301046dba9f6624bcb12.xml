@@ -6,7 +6,9 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description/>
+        <mobile_callable>false</mobile_callable>
         <name>IllumioStartAuthentication</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var IllumioStartAuthentication = Class.create();
 IllumioStartAuthentication.prototype = {
 
@@ -16,14 +18,17 @@ IllumioStartAuthentication.prototype = {
     },
 
     AUTHENTICATION_API_ENDPOINT: '/api/v2/product_version',
+    
     /**
      * Creates a scheudle job and triggers the authentication process
      */
-    process: function () {
+    process: function (configSysId) {
 
         // Create new job
         this.scheduledJobsGr.job_started = new GlideDateTime();
+		this.scheduledJobsGr.illumio_pce_configuration = configSysId;
         this.scheduledJobsGr.job_status = 'running';
+		this.scheduledJobsGr.job_owner = gs.getUser().getID();
         this.scheduledJobsGr.current_operation = 'Connectivity check with PCE';
         this.scheduledJobsGr.logs = '[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] MID Server is running and it is up-to-date';
         this.scheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] MID Server user has required roles';
@@ -31,8 +36,8 @@ IllumioStartAuthentication.prototype = {
         this.scheduledJobsGr.job_type = 'connectivity_check';
         var jobSysId = this.scheduledJobsGr.insert();
 
-        if (!this.startAuthetication(jobSysId)) {
-            this.utis.handleFailure(jobSysId, 'Connectivity check start error', 'Adding to ECC queue failed');
+        if (!this.startAuthetication(jobSysId,configSysId)) {
+            this.utils.handleFailure(jobSysId, 'Connectivity check start error', 'Adding to ECC queue failed',configSysId);
         }
     },
 
@@ -41,16 +46,23 @@ IllumioStartAuthentication.prototype = {
      * @params {String} jobSysId system id of the process monitor
      * @return {boolean} Whether the process of creating ECC queue passed or not
      */
-    startAuthetication: function (jobSysId) {
+    startAuthetication: function (jobSysId,configSysId) {
 
         gs.info("Initiating a job to check PCE connectivity.");
-        var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
+        var pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
+        var org_id = pceConfig.pceOrganizationID;
+        var label_dimension_api_endpoint = "/api/v2/orgs/"+org_id+"/label_dimensions"; 
+		
+		
+        if (this.utils.getCancelledJobStatus(jobSysId)) 
+            return false;
 
         if (pceConfig) {
             var parameters = {
+				illumio_pce_configuration_id: configSysId,
                 pce_url: pceConfig.pceUrl,
                 pce_authorization: gs.base64Encode(pceConfig.pceUsername + ':' + pceConfig.pceSecret),
-                pce_endpoint: this.AUTHENTICATION_API_ENDPOINT,
+                pce_endpoint: label_dimension_api_endpoint,
                 illumio_scheduled_job_id: jobSysId,
                 time_zone: gs.getSession().getTimeZoneName(),
 				enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
@@ -60,12 +72,12 @@ IllumioStartAuthentication.prototype = {
             var addToECCQueue = illumioAddToECCQueue.insert();
 
             if (!addToECCQueue) {
-                this.utis.handleFailure(jobSysId, 'Adding to ECC queue', 'Adding task for async job of fetching workloads to ECC queue failed');
+                this.utils.handleFailure(jobSysId, 'Adding to ECC queue', 'Adding task for async job of fetching workloads to ECC queue failed', configSysId);
                 return false;
             }
             return true;
         } else {
-            this.utis.handleFailure(jobSysId, 'PCEConfiguration', 'Cannot find PCE configuration');
+            this.utils.handleFailure(jobSysId, 'PCEConfiguration', 'Cannot find PCE configuration', configSysId);
             return false;
         }
 
@@ -76,11 +88,16 @@ IllumioStartAuthentication.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-06-01 11:15:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>9e6a94a81be0301046dba9f6624bcb12</sys_id>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>IllumioStartAuthentication</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_9e6a94a81be0301046dba9f6624bcb12</sys_update_name>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
     </sys_script_include>
 </record_update>

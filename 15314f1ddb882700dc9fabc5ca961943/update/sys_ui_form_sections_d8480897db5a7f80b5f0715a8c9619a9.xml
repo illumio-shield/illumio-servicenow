@@ -31,44 +31,30 @@
         <sys_ui_form_section action="INSERT_OR_UPDATE">
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2020-11-03 08:09:43</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_id>c7f112b0dbd4ac901206fd641d9619e7</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_overrides/>
-            <sys_ui_form display_value="x_illu2_illumio_illumio_pce_conf" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d8480897db5a7f80b5f0715a8c9619a9</sys_ui_form>
-            <sys_ui_section caption="Critical Label Groups" display_value="Critical Label Groups" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">fef112b0dbd4ac901206fd641d96194d</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-11-03 08:09:43</sys_updated_on>
-        </sys_ui_form_section>
-        <sys_ui_form_section action="INSERT_OR_UPDATE">
-            <position>3</position>
-            <sys_created_by>admin</sys_created_by>
             <sys_created_on>2020-11-06 13:57:10</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>4a4e7af5db10e0d01206fd641d961958</sys_id>
-            <sys_mod_count>0</sys_mod_count>
+            <sys_mod_count>1</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_pce_conf" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d8480897db5a7f80b5f0715a8c9619a9</sys_ui_form>
             <sys_ui_section caption="Threshold Limit" display_value="Threshold Limit" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">864e3af5db10e0d01206fd641d9619b2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-11-06 13:57:10</sys_updated_on>
+            <sys_updated_on>2024-03-27 07:22:16</sys_updated_on>
         </sys_ui_form_section>
         <sys_ui_form_section action="INSERT_OR_UPDATE">
-            <position>4</position>
+            <position>3</position>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-08-17 13:19:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>df55097687d91d90d7a34046cebb35a2</sys_id>
-            <sys_mod_count>0</sys_mod_count>
+            <sys_mod_count>1</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_pce_conf" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d8480897db5a7f80b5f0715a8c9619a9</sys_ui_form>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-08-17 13:19:03</sys_updated_on>
+            <sys_updated_on>2024-03-27 07:22:16</sys_updated_on>
         </sys_ui_form_section>
         <sys_ui_form action="INSERT_OR_UPDATE">
             <name>x_illu2_illumio_illumio_pce_conf</name>
@@ -76,15 +62,20 @@
             <sys_class_name>sys_ui_form</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2019-07-02 14:04:53</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>d8480897db5a7f80b5f0715a8c9619a9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>x_illu2_illumio_illumio_pce_conf</sys_name>
             <sys_overrides/>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_form_sections_d8480897db5a7f80b5f0715a8c9619a9</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2019-07-02 14:04:53</sys_updated_on>
             <sys_user/>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>

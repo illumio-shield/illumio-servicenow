@@ -48,8 +48,12 @@ function updateJob(sys_id) {
         // If status is ready_to_map, dump data to mapping table from staging table
         if (current.job_status + "" == 'ready_to_map') {
             var data = [];
+            var configSysId = utils.getConfigurationId(current.illumio_job_id);
             var mappingTableGr = new GlideRecord(current.mapping_table_name + "");
+            mappingTableGr.addQuery('illumio_pce_configuration', configSysId);
+            mappingTableGr.query();
             var stagingTableGr = new GlideRecord(current.result_table_name + "");
+            stagingTableGr.addQuery('illumio_pce_configuration', configSysId);
             stagingTableGr.query();
 
             while (stagingTableGr.next()) {
@@ -68,16 +72,27 @@ function updateJob(sys_id) {
                     for (var index = 0, dataLength = data.length; index < dataLength; index++) {
                         mappingTableGr.initialize();
                         for (var key in keysToMap) {
-                            mappingTableGr[keysToMap[key]] = data[index][keysToMap[key]] + "";
+							if(keysToMap[key] == 'ven'){
+                                if(data[index][keysToMap[key]] == "null")
+                                    continue;
+                                var ven_data = JSON.parse(data[index][keysToMap[key]]);
+                                mappingTableGr['ven_href'] = ven_data.href;
+                                mappingTableGr['ven_version'] = ven_data.version;
+                                mappingTableGr['ven_status'] = ven_data.status;
+                                continue;
+                            }
+                            mappingTableGr[keysToMap[key]] = (data[index][keysToMap[key]]) == "null" ? "" : data[index][keysToMap[key]] + "";
                         }
+                        mappingTableGr.setValue('illumio_pce_configuration', configSysId);
                         mappingTableGr.insert();
                     }
 
                     stagingTableGr.initialize();
+                    stagingTableGr.addQuery('illumio_pce_configuration', configSysId);
                     stagingTableGr.deleteMultiple();
                     updateJob(current.sys_id);
                 } catch (ex) {
-                    gs.error("Exception Occured while creating workloads for mapping table: " + ex);
+                    gs.error("Exception occurred while creating workloads for mapping table: " + ex);
                 }
 
             } else {
@@ -99,7 +114,7 @@ function updateJob(sys_id) {
 
     } catch (e) {
         var jobContent = {
-            logs: "Exception occured while creating/getting the status of the async job " + e,
+            logs: "Exception occurred while creating/getting the status of the async job " + e,
             current_operation: "Fetching PCE data",
             job_status: "failed",
             job_completed: new GlideDateTime(),
@@ -113,17 +128,33 @@ function updateJob(sys_id) {
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 10:35:05</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6db41282dbcc6700dc9fabc5ca96191f</sys_id>
+        <sys_mod_count>84</sys_mod_count>
         <sys_name>Illumio Poll PCE Async Job Status</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_6db41282dbcc6700dc9fabc5ca96191f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-24 06:08:56</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>
     <sys_translated_text action="delete_multiple" query="documentkey=6db41282dbcc6700dc9fabc5ca96191f"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>6db41282dbcc6700dc9fabc5ca96191f</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-21 06:45:05</sys_created_on>
+        <sys_id>2bf5a234dbca5e502fcecafc139619df</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-21 06:45:05</sys_updated_on>
+        <table>sys_script</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

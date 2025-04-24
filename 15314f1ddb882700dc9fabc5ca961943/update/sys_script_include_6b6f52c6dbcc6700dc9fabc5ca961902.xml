@@ -6,71 +6,81 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description>To poll for Async Job status that are running on PCE</description>
+        <mobile_callable>false</mobile_callable>
         <name>IllumioPollAsyncJobStatus</name>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var IllumioPollAsyncJobStatus = Class.create();
 IllumioPollAsyncJobStatus.prototype = {
 
-	initialize: function (asyncJobLocation, retryAfter, jobSysID, primaryKey, resultTable, keysToMap, retryCount, illumio_job_id, job_identifier) {
+    initialize: function(asyncJobLocation, retryAfter, jobSysID, primaryKey, resultTable, keysToMap, retryCount, illumio_job_id, job_identifier) {
 
-		this.asyncJobLocation = asyncJobLocation;
-		this.retryAfter = retryAfter;
-		this.jobSysID = jobSysID;
-		this.resultTable = resultTable;
-		this.keysToMap = keysToMap;
-		this.primaryKey = primaryKey;
-		this.retryCount = retryCount;
-		this.illumio_job_id = illumio_job_id;
-		this.job_identifier = job_identifier;
-	},
-	/**
-	 * Calls the MID server script include to poll the async job status
-	 */
-	execute: function () {
+        this.asyncJobLocation = asyncJobLocation;
+        this.retryAfter = retryAfter;
+        this.jobSysID = jobSysID;
+        this.resultTable = resultTable;
+        this.keysToMap = keysToMap;
+        this.primaryKey = primaryKey;
+        this.retryCount = retryCount;
+        this.illumio_job_id = illumio_job_id;
+        this.job_identifier = job_identifier;
+    },
+    /**
+     * Calls the MID server script include to poll the async job status
+     */
+    execute: function() {
+        var utils = new IllumioUtils();
+        var configSysId = utils.getConfigurationId(this.illumio_job_id);
 
-		var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
+        var pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
 
-		if (pceConfig) {
-			try {
-				var parameters = {
-					pce_url: pceConfig.pceUrl,
-					pce_endpoint: '/api/v2' + this.asyncJobLocation,
-					pce_authorization: gs.base64Encode(pceConfig.pceUsername + ':' + pceConfig.pceSecret),
-					pce_async_job_sys_id: this.jobSysID + '',
-					illumio_scheduled_job_id: this.illumio_job_id + '',
-					operation: 'get_async_job_status',
-					result_table_name: this.resultTable,
-					keys_to_map: this.keysToMap,
-					primary_key: this.primaryKey,
-					retry_count: this.retryCount,
-					job_identifier: this.job_identifier,
-					time_zone: gs.getSession().getTimeZoneName(),
-					pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
-					retry_params: JSON.stringify(pceConfig.retry_params)
-				};
+        if (pceConfig) {
+            try {
+                var parameters = {
+                    illumio_pce_configuration_id: configSysId,
+                    pce_url: pceConfig.pceUrl,
+                    pce_endpoint: '/api/v2' + this.asyncJobLocation,
+                    pce_authorization: gs.base64Encode(pceConfig.pceUsername + ':' + pceConfig.pceSecret),
+                    pce_async_job_sys_id: this.jobSysID + '',
+                    illumio_scheduled_job_id: this.illumio_job_id + '',
+                    operation: 'get_async_job_status',
+                    result_table_name: this.resultTable,
+                    keys_to_map: this.keysToMap,
+                    primary_key: this.primaryKey,
+                    retry_count: this.retryCount,
+                    job_identifier: this.job_identifier,
+                    time_zone: gs.getSession().getTimeZoneName(),
+                    enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
+                    retry_params: JSON.stringify(pceConfig.retry_params),
+                    chunk_size: gs.getProperty("x_illu2_illumio.payload.batch.size", 1000)
+                };
 
-				var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioManageAsyncJobs', pceConfig.midServer, parameters);
-				illumioAddToECCQueue.insert();
+                var illumioAddToECCQueue = new IllumioAddToECCQueue('IllumioManageAsyncJobs', pceConfig.midServer, parameters);
+                illumioAddToECCQueue.insert();
 
-			} catch (exception) {
-				gs.error('Exception occurred while preparing request data to poll status. Exception: ' + exception);
-			}
+            } catch (exception) {
+                gs.error('Exception occurred while preparing request data to poll status. Exception: ' + exception);
+            }
 
-		} else {
-			gs.error('No configurations available');
-		}
-	},
+        } else {
+            gs.error('No configurations available');
+        }
+    },
 
-	type: 'IllumioPollAsyncJobStatus'
-};
-]]></script>
+    type: 'IllumioPollAsyncJobStatus'
+};]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:21:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>6b6f52c6dbcc6700dc9fabc5ca961902</sys_id>
+        <sys_mod_count>20</sys_mod_count>
         <sys_name>IllumioPollAsyncJobStatus</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy>read</sys_policy>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_6b6f52c6dbcc6700dc9fabc5ca961902</sys_update_name>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-01-29 10:29:10</sys_updated_on>
     </sys_script_include>
 </record_update>

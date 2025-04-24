@@ -6,8 +6,10 @@
         <caller_access/>
         <client_callable>false</client_callable>
         <description>Discover servers from the CI list and map it with PCE data.</description>
+        <mobile_callable>false</mobile_callable>
         <name>IllumioDiscoverAndMapCMDBServers</name>
-        <script><![CDATA[gs.include('IllumioConstants');
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[gs.include("IllumioConstants");
 var IllumioDiscoverAndMapCMDBServers = Class.create();
 IllumioDiscoverAndMapCMDBServers.prototype = {
     // Reference to hostname rules http://man7.org/linux/man-pages/man7/hostname.7.html
@@ -20,36 +22,36 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             managed: {},
             unknown: {},
         };
-        this.mappedFields = new IllumioGetPCEConfiguration().getMappedFields();
     },
 
     /**
      * Process the fields of a each mapped table
-     * @param {GlideRecord} pceConfig - PCE Configuration
+     * @param {Object} pceConfig - PCE Configuration object
      **/
     _processTable: function(pceConfig) {
-        var workloads = new Object();
-        var hostname;
-        var retiredWorkloads = new Object();
-        var processedHosts;
-        var duplicateWorkloads = [];
-        var maxRecords =
-            gs.getProperty("x_illu2_illumio.maximum_ci_records") || 25000;
+        var workloads = {},
+            retiredWorkloads = {},
+            duplicateWorkloads = [],
+            processedHosts = {};
+        var maxRecords = gs.getProperty("x_illu2_illumio.maximum_ci_records") || 25000;
+
         for (var table in pceConfig.source) {
-            processedHosts = new Object();
             retiredWorkloads[table] = 0;
-            gs.info("Started mapping CMDB servers with PCE from table " + table);
-            /* CI Relation GlideRecord Object */
+            gs.info("Started mapping CMDB Servers with PCE from table {0}", table);
+
+            // CI Relation GlideRecord Object
             var sourceTableGr = new GlideRecord(table);
             sourceTableGr.setLimit(maxRecords);
 
-            /* Process records in batches */
+            // Process records in batches
             var recordIndex = 0;
             while (recordIndex < maxRecords) {
-                /* Slice only 10000 records */
+
+                // Slice only 10000 records
                 if (maxRecords - recordIndex >= 10000)
                     sourceTableGr.chooseWindow(recordIndex, recordIndex + 10000);
                 else sourceTableGr.chooseWindow(recordIndex, maxRecords);
+
                 if (pceConfig.source[table].order_by == "ASC") {
                     sourceTableGr.orderBy(pceConfig.source[table].sort_order);
                 } else {
@@ -57,31 +59,20 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 }
                 sourceTableGr.query();
 
-                /* If there are no more records, break */
+                // If there are no more records, break
                 if (!sourceTableGr.hasNext()) {
-                    gs.info(
-                        "No more data available to process in " + table + " table."
-                    );
+                    gs.info("No more data available to process in {0} table.", table);
                     break;
                 }
 
                 while (sourceTableGr.next()) {
                     // check the condition for retired wotkloads and delete
-                    if (!gs.nil(pceConfig.source[table].condition)) {
-                        var condition = GlideFilter.checkRecord(
-                            sourceTableGr,
-                            pceConfig.source[table].condition,
-                            true
-                        );
+                    if (!gs.nil(pceConfig.source[table].exclude_condition)) {
+                        var condition = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].exclude_condition, true);
                         if (condition) {
                             // condition matched
                             retiredWorkloads[table]++;
-                            gs.info(
-                                'Excluding workload from "' +
-                                table +
-                                '" table having sys_id: ' +
-                                sourceTableGr.sys_id
-                            );
+                            gs.info('Excluding workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
                             continue; // skipping retired workload
                         }
                     }
@@ -89,84 +80,53 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     // check the condition for workloads to delete
                     var toDeleteWorkload = false;
                     if (!gs.nil(pceConfig.source[table].delete_condition)) {
-                        var conditionAvail = GlideFilter.checkRecord(
-                            sourceTableGr,
-                            pceConfig.source[table].delete_condition,
-                            true
-                        );
+                        var conditionAvail = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].delete_condition, true);
+
                         if (conditionAvail) {
                             // condition matched
                             toDeleteWorkload = true;
-                            gs.info(
-                                'Deleting workload from "' +
-                                table +
-                                '" table having sys_id: ' +
-                                sourceTableGr.sys_id
-                            );
+                            gs.info('Deleting workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
+                        }
+                    }
+
+                    // Check the condition for creating incident for workload
+                    var createIncident = false;
+                    if (!gs.nil(pceConfig.source[table].incident_condition)) {
+                        var incidentConditionAvail = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].incident_condition, true);
+                        if (incidentConditionAvail) {
+                            createIncident = true;
                         }
                     }
 
                     /* Process the record and get the label values */
-                    hostname = this.getValueFromDotWalkableField(
-                        sourceTableGr,
-                        pceConfig.source[table].labels.host_name
-                    );
+                    var hostname = this.getValueFromCMDB(sourceTableGr, pceConfig.source[table].host_name);
                     if (!gs.nil(hostname)) {
-                        if (!workloads[hostname]) {
-                            workloads[hostname] = {};
-                            workloads[hostname]["identifiers"] = [];
-                        }
 
+                        // create PCE Workload object
+                        var tempWorkload = this._evaluateClassFieldMapping(pceConfig, sourceTableGr, toDeleteWorkload, table);
+                        tempWorkload["source_table"] = table;
+                        tempWorkload["host_name"] = hostname;
+                        // check if workload is duplicate
                         if (processedHosts[hostname]) {
-                            var tempWorkload = {
-                                identifiers: [],
-                            };
-                            tempWorkload["deleted_from_pce"] = toDeleteWorkload;
-                            for (var field in pceConfig.source[table].labels) {
-                                tempWorkload[field] = this.getValueFromDotWalkableField(
-                                    sourceTableGr,
-                                    pceConfig.source[table].labels[field]
-                                );
-                            }
-                            tempWorkload["identifiers"].push(
-                                sourceTableGr.sys_id.getDisplayValue()
-                            );
+                            tempWorkload['create_incident'] = false; // duplicate workload cannot create incident (if duplicateworkloads and workloads sharing same function in future)
                             duplicateWorkloads.push(tempWorkload);
                         } else {
-                            processedHosts[hostname] = {};
-                            processedHosts[hostname]["identifiers"] = [];
-                            for (var field1 in pceConfig.source[table].labels) {
-                                workloads[hostname][field1] =
-                                    this.getValueFromDotWalkableField(
-                                        sourceTableGr,
-                                        pceConfig.source[table].labels[field1]
-                                    );
-                            }
-                            workloads[hostname]["deleted_from_pce"] = toDeleteWorkload;
-                            workloads[hostname]["identifiers"].push(
-                                sourceTableGr.sys_id.getDisplayValue()
-                            );
+                            tempWorkload['create_incident'] = createIncident;
+                            workloads[hostname] = tempWorkload;
+                            processedHosts[hostname] = true;
                         }
                     } else {
-                        gs.info(
-                            "[process] No hostname exist for " +
-                            table +
-                            " table having record with sys_id: " +
-                            sourceTableGr.sys_id
-                        );
+                        gs.info("[process] No hostname exist for {0} table having record with sys_id: {1}", [table, sourceTableGr.sys_id]);
                     }
                 }
                 /* Jump 10000 records */
                 recordIndex += 10000;
             }
 
+            // add log of retired workload count in scheduled job status
             if (retiredWorkloads[table] > 0) {
-                // add log of retired workload count in scheduled job status
                 var jobContent = {
-                    logs: 'Total excluded workloads from "' +
-                        table +
-                        '" table : ' +
-                        retiredWorkloads[table],
+                    logs: 'Total excluded workloads from "' + table + '" table : ' + retiredWorkloads[table],
                     current_operation: "Mapping CMDB servers to PCE",
                 };
                 this.utils.updateJobRecord(this.illumioJobId, jobContent);
@@ -174,8 +134,56 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         }
         return {
             workloads: workloads,
-            duplicateWorkloads: duplicateWorkloads
+            duplicateWorkloads: duplicateWorkloads,
         };
+    },
+
+    /**
+     * Prepare workload object from Class Field Mapping Configuration
+     * @param {Object} pceConfig PCE Configuration object
+     * @param {Object} sourceTableGr CMDB record
+     * @param {Boolean} toDeleteWorkload Flag to delete workload
+     * @returns {Object} Workload object
+     */
+    _evaluateClassFieldMapping: function(pceConfig, sourceTableGr, toDeleteWorkload, table) {
+
+        // initialize object
+        var tempWorkload = {
+            labelDimesion: {},
+            ipAddress: {
+                cmdb_value: []
+            },
+        };
+
+        // set label dimension values
+        tempWorkload["deleted_from_pce"] = toDeleteWorkload;
+        for (var field in pceConfig.source[table].label_dimensions) {
+            tempWorkload["labelDimesion"][field] = {
+                "cmdb_value": this.getValueFromCMDB(sourceTableGr, pceConfig.source[table].label_dimensions[field]),
+                "label_dimension_sys_id": pceConfig.source[table].label_dimensions[field]["label_dimension_sys_id"]
+            };
+        }
+
+        // set ip addresses
+        tempWorkload["ipAddress"]["public_ip_address"] = this.getValueFromCMDB(sourceTableGr, pceConfig.source[table].public_ip);
+        var ipAddressObjects = pceConfig.source[table].ip_address;
+
+        for (var ipIndex in ipAddressObjects) {
+            var value = this.getValueFromCMDB(sourceTableGr, ipAddressObjects[ipIndex]);
+            if (!gs.nil(value)) {
+
+                // check if value contains multiple ip addresses
+                if (ipAddressObjects[ipIndex].is_multiple)
+                    tempWorkload["ipAddress"]["cmdb_value"] = tempWorkload["ipAddress"]["cmdb_value"].concat(value);
+                else
+                    tempWorkload["ipAddress"]["cmdb_value"].push(value);
+            }
+        }
+
+        // set cmdb identifiers
+        tempWorkload["identifier"] = sourceTableGr.sys_id.getDisplayValue();
+
+        return tempWorkload;
     },
 
     /**
@@ -184,13 +192,14 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      */
     process: function(illumioJobId) {
         this.illumioJobId = illumioJobId;
+        this.pceConfigId = this.utils.getConfigurationId(illumioJobId);
         var jobContent;
         try {
-            this.source = {};
-
             /* Read the PCE configuration for custom table and fields */
-            var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
-            if (!pceConfig) {
+            var pceConfig = new IllumioGetPCEConfiguration().getConfiguration(this.pceConfigId);
+
+            // check if configuration is available
+            if (gs.nil(pceConfig)) {
                 gs.error("Failed to fetch PCE configuration");
                 jobContent = {
                     logs: "Failed to fetch PCE configuration ",
@@ -202,8 +211,9 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 return;
             }
 
+            // check if field mappings are configured
             if (gs.nil(pceConfig.source)) {
-                gs.error("No PCE field mapping configured");
+                gs.error("No PCE field mapping configured for PCE Configuration named {0}", pceConfig["name"]);
                 jobContent = {
                     logs: "No PCE field mapping configured ",
                     current_operation: "Mapping Discovery",
@@ -213,40 +223,53 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 this.utils.updateJobRecord(this.illumioJobId, jobContent);
                 return;
             }
-            /* Update scheduled job status */
+
+            // Update scheduled job status to Fetching CMDB Servers
             jobContent = {
                 logs: "Fetching CMDB servers",
                 current_operation: "Fetching CMDB servers",
             };
             this.utils.updateJobRecord(this.illumioJobId, jobContent);
 
-            /* Remove all entries from custom table */
-            var illumioServersGr = new GlideRecord(
-                "x_illu2_illumio_illumio_servicenow_servers"
-            );
+
+            gs.info("Deleting existing custom table data for PCE Configuration {0}", pceConfig["name"]);
+
+            // Remove all entries from field value table
+            var workloadFieldValueGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+            workloadFieldValueGr.addQuery("illumio_pce_workload.illumio_pce_configuration", this.pceConfigId);
+            workloadFieldValueGr.query();
+            workloadFieldValueGr.deleteMultiple();
+
+            // Remove all entries from custom table
+            var illumioServersGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+            illumioServersGr.addQuery("illumio_pce_configuration", this.pceConfigId);
             illumioServersGr.query();
-            gs.info("Deleting existing custom table data");
             illumioServersGr.deleteMultiple();
-            gs.info("Existing custom table data deleted");
+
+            gs.info("Existing custom table data deleted for PCE Configuration {0}", pceConfig["name"]);
 
             var startTime = Date.now();
 
-            /* Update scheduled job status */
+            // Update scheduled job status
             jobContent = {
                 logs: "Mapping CMDB servers to PCE",
                 current_operation: "Mapping CMDB servers to PCE",
             };
             this.utils.updateJobRecord(this.illumioJobId, jobContent);
 
+            // prepare workload objects
             var allWorkloads = this._processTable(pceConfig);
-            for (var workload in allWorkloads['workloads']) {
-                this.addToCustomTable(workload, allWorkloads['workloads'][workload]);
+
+            // create PCE Workloads
+            for (var workload in allWorkloads["workloads"]) {
+                this.addToCustomTable(workload, allWorkloads["workloads"][workload]);
             }
 
-            for (var item in allWorkloads['duplicateWorkloads']) {
+            // create duplicate PCE Workloads
+            for (var item in allWorkloads["duplicateWorkloads"]) {
                 this.addToCustomTable(
-                    allWorkloads['duplicateWorkloads'][item].host_name,
-                    allWorkloads['duplicateWorkloads'][item]
+                    allWorkloads["duplicateWorkloads"][item].host_name,
+                    allWorkloads["duplicateWorkloads"][item]
                 );
             }
             gs.info("Added all records to the custom table");
@@ -260,6 +283,8 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     job_type: "data sync",
                 };
                 this.utils.updateJobRecord(this.illumioJobId, jobContent);
+
+                // Start Synchronizing with PCE
                 gs.info("Synchronizing with PCE");
                 var autoSync = new IllumioAutoSyncWithPCE();
                 autoSync.process(this.illumioJobId);
@@ -276,11 +301,12 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
             var endTime = Date.now();
             var timeTaken = endTime - startTime;
-            gs.info("Time taken to finish mapping " + timeTaken + " milliseconds");
+            gs.info("Time taken to finish mapping {0} milliseconds for PCE Configuration {1}", [timeTaken, pceConfig["name"]]);
         } catch (e) {
-            gs.error("Exception occurred while mapping data " + e);
+
+            gs.error("Exception occurred while mapping data for PCE Configuration {0} Error{1}", [pceConfig["name"], e]);
             jobContent = {
-                logs: "Exception occured while mapping data " + e,
+                logs: "Exception occurred while mapping data " + e,
                 current_operation: "Mapping Discovery",
                 job_status: "failed",
                 job_completed: new GlideDateTime(),
@@ -289,32 +315,22 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         }
     },
 
-    /*
-     * Compare the record with mapping tables and make custom entry appropriately
-     * Also add the PCE labels
-     * @param {String} hostname Hostname of the workload 
+    /**
+     * Validate hostname
+     * @param {String} hostname Hostname of the workload
      */
     _isValidHostName: function(hostname) {
         try {
             if (!hostname.match(this.VALID_HOSTNAME_REGEX)) {
-                gs.error(
-                    "Skipped adding hostname " +
-                    hostname +
-                    " to the x_illu2_illumio_illumio_servicenow_servers table as it is invalid."
-                );
+                gs.error("Skipped adding hostname {0} to the x_illu2_illumio_illumio_pce_workload table as it is invalid.", hostname);
                 return;
             }
         } catch (e) {
-            gs.error(
-                "Skipped adding hostname " +
-                hostname +
-                " to the x_illu2_illumio_illumio_servicenow_servers table due to exception. " +
-                e
-            );
+            gs.error("Skipped adding hostname {0} to the x_illu2_illumio_illumio_pce_workload table due to exception. Error{1}", [hostname, e]);
             var jobContent = {
                 logs: "Skipped adding hostname " +
                     hostname +
-                    " to the x_illu2_illumio_illumio_servicenow_servers table due to exception. " +
+                    " to the x_illu2_illumio_illumio_pce_workload table due to exception. " +
                     e,
                 current_operation: "Mapping Discovery",
                 job_status: "failed",
@@ -324,94 +340,70 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             return;
         }
     },
-    /**
-     * Prepares an object that has mapped information
-     * @param {GlideRecord} sourceTableGr GlideRecord of the CMDB table
-     * @returns mapped properties of the workload
-     */
-    _fetchProperties: function(sourceTableGr) {
-        var properties = {
-            application: sourceTableGr["application"] ?
-                sourceTableGr["application"].trim() : "",
-            location: sourceTableGr["location"] ? sourceTableGr["location"].trim() : "",
-            environment: sourceTableGr["environment"] ?
-                sourceTableGr["environment"].trim() : "",
-            role: sourceTableGr["role"] ? sourceTableGr["role"].trim() : "",
-            ipAddress: {},
-        };
 
-        for (var i = 0; i < MAX_IP_ADDRESSES; i++) {
-            var ipAddressCount = i > 0 ? "ipAddress" + (i + 1) : "ipAddress";
-            var ipAddressSourceTableCount = i > 0 ? "ip_address_" + (i + 1) : "ip_address";
-            properties['ipAddress'][ipAddressCount] = sourceTableGr[
-                    ipAddressSourceTableCount
-                ] ?
-                sourceTableGr[ipAddressSourceTableCount] :
-                "";
-        }
-        return properties;
+    /**
+     * Get the Workload Mapping record for given hostname and workload type
+     * @param {String} hostNamePart hostname
+     * @param {Boolean} workloadType type of workload
+     * @returns {GlideRecord} GlideRecord of Workload Mapping
+     */
+    _fetchWorkloadMapping: function(hostNamePart, workloadType) {
+
+        var workloadsMappingGr = new GlideRecord("x_illu2_illumio_illumio_pce_workloads_mapping");
+        workloadsMappingGr.addQuery("agent", workloadType);
+        workloadsMappingGr.addQuery("illumio_pce_configuration", this.pceConfigId);
+        workloadsMappingGr.setLimit(1);
+        workloadsMappingGr.addQuery("hostname", hostNamePart).addOrCondition("hostname", "STARTSWITH", hostNamePart + ".");
+        workloadsMappingGr.query();
+
+        return workloadsMappingGr;
     },
 
     /**
-     * Queries the workload in mappings table and initialize a record in the workloads table
+     * Queries the workload in mappings table and initialize and insert a record in the workloads table
      * @param {boolean} workloadType true if workload is managed, false if workload is unmanaged, null if workload is unknown
-     * @param {JSON} properties properties of the workload
      * @param {string} hostname hostname of the workload
-     * @param {GlideRecord} illumioServersGr GlideRecord of the Object
      * @param {GlideRecord} sourceTableGr GlideRecord of the CMDB table
-     * @param {GlideRecord} labelsMappingGr GlideRecord of the mappings table
-     * @returns GlideRecord of the Workload 
      */
-    _queryWorkload: function(
-        workloadType,
-        properties,
-        hostname,
-        illumioServersGr,
-        sourceTableGr,
-        labelsMappingGr
-    ) {
-        var workload;
-        if (workloadType) {
-            workload = "managed";
-        } else {
-            workload = "unmanaged";
-            var interfacesIPs = [];
-            var IpFieldMappingForInterfaces = {};
-        }
-        var mappingIP = "";
-        var workloadLabels;
-        var hostNamePart = hostname.split(".")[0];
-        var queryString =
-            "hostname=" + hostNamePart + "^ORhostnameSTARTSWITH" + hostNamePart + ".";
+    _queryWorkload: function(workloadType, hostname, sourceTableGr) {
 
-        var workloadsMappingGr = new GlideRecord(
-            "x_illu2_illumio_illumio_pce_workloads_mapping"
-        );
-        workloadsMappingGr.addQuery("agent", workloadType);
-        workloadsMappingGr.setLimit(1);
-        workloadsMappingGr.addEncodedQuery(queryString);
-        workloadsMappingGr.query();
+        var illumioServersGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+        var workload = "managed";
+        if (!workloadType) {
+            workload = "unmanaged";
+        }
+
+        // fetch workload mapping record
+        var hostNamePart = hostname.split(".")[0];
+        var workloadsMappingGr = this._fetchWorkloadMapping(hostNamePart, workloadType);
 
         if (workloadsMappingGr.next()) {
             this.isworkloadinMapping = true;
-            illumioServersGr = this._initializeObject(workload, illumioServersGr, hostname, properties, sourceTableGr, workloadsMappingGr);
+            illumioServersGr = this._initializeObject(workload, illumioServersGr, hostname, sourceTableGr, workloadsMappingGr);
+
+            // Set interfaces in the PCE Workload table
+            var interfacesIPs = [];
+            if (!workloadType) {
+                interfacesIPs = JSON.parse(workloadsMappingGr.getValue("interfaces"));
+            }
+            this._setInterfaceObject(illumioServersGr, sourceTableGr, interfacesIPs);
+
+            // If PCE IP Address is not null then add it to PCE workloads custom table
+            var mappingIP = workloadsMappingGr.public_ip;
+            if (mappingIP != "null") {
+                illumioServersGr.public_ip_address = mappingIP;
+            }
+
+            illumioServersGr = this._insertObject(hostNamePart, illumioServersGr, sourceTableGr);
+
+            // add field values for configured Label Dimensions
             try {
-                workloadLabels = JSON.parse(workloadsMappingGr.labels + "");
-                if (!workloadType) {
-                    interfacesIPs = JSON.parse(workloadsMappingGr.interfaces + "");
-                }
+                var workloadLabels = JSON.parse(workloadsMappingGr.getValue("labels"));
+                this._updatePCELabelValues(sourceTableGr, workloadLabels);
             } catch (err) {
-                gs.error(
-                    "Error while parsing labels from workloadMapping record" +
-                    workloadsMappingGr.labels +
-                    ". " +
-                    err
-                );
+                gs.error("Error while parsing labels from workloadMapping record {0}. Error{1}", [workloadsMappingGr.labels, err]);
                 var jobContent = {
-                    logs: "Error while parsing labels from workloadMapping record" +
-                        workloadsMappingGr.labels +
-                        ". " +
-                        err,
+                    logs: "Error while parsing labels from workloadMapping record" + workloadsMappingGr.labels + ". " + err,
                     current_operation: "Mapping Discovery",
                     job_status: "failed",
                     job_completed: new GlideDateTime(),
@@ -419,60 +411,111 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 this.utils.updateJobRecord(this.illumioJobId, jobContent);
             }
 
-            if (!workloadType) {
-                for (var i = 1; i < MAX_IP_ADDRESSES; i++) {
-                    var umw = "umw" + i;
-                    var pceIPAddress = "pce_ip_address_" + (i + 1);
-                    IpFieldMappingForInterfaces[umw] = pceIPAddress;
-                }
-                var interfacesLength = interfacesIPs.length;
-                for (var IPIndex = 0; IPIndex < interfacesLength; IPIndex++) {
-                    if (interfacesIPs[IPIndex].name in IpFieldMappingForInterfaces) {
-                        illumioServersGr[
-                            IpFieldMappingForInterfaces[interfacesIPs[IPIndex].name]
-                        ] = interfacesIPs[IPIndex].address;
-                    }
-                }
-            }
-
-            // If PCE IP Address is not null then add it to PCE workloads custom table
-            mappingIP = workloadsMappingGr.public_ip;
-            if (mappingIP != "null") {
-                illumioServersGr.pce_ip_address = mappingIP;
-            }
-            illumioServersGr = this._updateLabels(workloadLabels, labelsMappingGr, illumioServersGr);
-            illumioServersGr = this._insertObject(hostNamePart, illumioServersGr);
+            this._createWorkloadFieldValue(illumioServersGr, sourceTableGr);
         }
         return illumioServersGr;
     },
 
     /**
-     * Checkes if the label is already present in PCE
-     * @param {JSON} workloadLabels Object of workloads with labels
-     * @param {GlideRecord} labelsMappingGr GlideRecord of the mappings table
-     * @param {GlideRecord} illumioServersGr GlideRecord of the Workloads
-     * @returns GlideRecord of the Workload
+     * Prepare interface object
+     * @param {GlideRecord} illumioServersGr GlideRecord of PCE Workload table
+     * @param {Object} sourceTableGr Workload object
+     * @param {Object} interfacesIPs Interface object from PCE 
      */
-    _updateLabels: function(workloadLabels, labelsMappingGr, illumioServersGr) {
-        var mappings = {
-            'app': 'pce_application',
-            'loc': 'pce_location',
-            'env': 'pce_environment',
-            'role': 'pce_role'
-        };
-        for (
-            var labelIndex = 0; labelIndex < workloadLabels.length; labelIndex++
-        ) {
-            labelsMappingGr.initialize();
-            labelsMappingGr.addQuery("href", workloadLabels[labelIndex].href);
-            labelsMappingGr.query();
+    _setInterfaceObject: function(illumioServersGr, sourceTableGr, interfacesIPs) {
+        var interfaceObject = {};
 
-            /* If PCE label exists with same href					 */
-            if (labelsMappingGr.next()) {
-                illumioServersGr[mappings[labelsMappingGr.key + '']] = labelsMappingGr.value + "";
+        // set PCE ip address
+        for (var index in interfacesIPs) {
+            interfaceObject[interfacesIPs[index]["name"]] = {
+                pce_value: interfacesIPs[index]["address"],
+                cmdb_value: ""
+            };
+        }
+
+        // set umw0 cmdb value
+        interfaceObject["umw0"] = !gs.nil(interfaceObject["umw0"]) ? interfaceObject["umw0"] : {
+            "pce_value": ''
+        };
+        interfaceObject["umw0"]["cmdb_value"] = sourceTableGr.ipAddress.public_ip_address;
+
+        // set cmdb ip address
+        var cmdbValuesLength = sourceTableGr.ipAddress.cmdb_value.length;
+        for (var keyCount = 1; keyCount <= MAX_IP_ADDRESSES && keyCount - 1 < cmdbValuesLength; keyCount++) {
+            var key = "umw" + keyCount;
+            var cmdbVal = sourceTableGr.ipAddress.cmdb_value[keyCount - 1];
+            if (!gs.nil(cmdbVal)) {
+                if (gs.nil(interfaceObject[key]))
+                    interfaceObject[key] = {
+                        pce_value: ""
+                    };
+                interfaceObject[key]["cmdb_value"] = cmdbVal;
             }
         }
-        return illumioServersGr;
+
+        illumioServersGr.setValue("interfaces", JSON.stringify(interfaceObject));
+    },
+
+    /**
+     * Create records in PCE Workload Field Value with cmdb and pce values for configured label dimensions
+     * @param {GlideRecord} illumioServersGr GlideRecord of PCE Workload table
+     * @param {Object} sourceTableGr Workload object
+     */
+    _createWorkloadFieldValue: function(illumioServersGr, sourceTableGr) {
+        // Set CMDB and PCE values for Label Dimensions
+
+        var labelDimesionData = sourceTableGr["labelDimesion"];
+        for (var field in labelDimesionData) {
+			if (gs.nil(labelDimesionData[field]["cmdb_value"]) && gs.nil(labelDimesionData[field]["pce_value"]))
+				continue;
+			
+            var workloadFieldValueGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+            workloadFieldValueGr.initialize();
+            workloadFieldValueGr.setValue("illumio_label_dimension", labelDimesionData[field]["label_dimension_sys_id"]);
+
+            if (!gs.nil(labelDimesionData[field]["cmdb_value"]))
+                workloadFieldValueGr.setValue(
+                    "cmdb_value",
+                    labelDimesionData[field]["cmdb_value"]
+                );
+            workloadFieldValueGr.setValue("illumio_pce_workload", illumioServersGr.getUniqueValue());
+
+            if (!gs.nil(labelDimesionData[field]["pce_value"]))
+                workloadFieldValueGr.setValue(
+                    "pce_value",
+                    labelDimesionData[field]["pce_value"]
+                );
+            workloadFieldValueGr.insert();
+        }
+    },
+
+    /**
+     * Checkes if the label is already present in PCE
+     * @param {Object} sourceTableGr Workload object
+     * @param {JSON} workloadLabels Object of workloads with labels
+     */
+    _updatePCELabelValues: function(sourceTableGr, pceWorkloadLabels) {
+        var labelsMappingGr = new GlideRecord("x_illu2_illumio_illumio_pce_labels_mapping");
+
+        // Set PCE values for Label Dimensions
+        for (var labelIndex = 0; labelIndex < pceWorkloadLabels.length; labelIndex++) {
+            labelsMappingGr.initialize();
+            labelsMappingGr.addQuery("illumio_pce_configuration", this.pceConfigId);
+            labelsMappingGr.addQuery("href", pceWorkloadLabels[labelIndex].href);
+            labelsMappingGr.setLimit(1);
+            labelsMappingGr.query();
+
+            /* If PCE label exists with same href	*/
+            if (labelsMappingGr.next()) {
+                var labelDimensionKey = labelsMappingGr.getValue("key");
+                if (gs.nil(sourceTableGr["labelDimesion"][labelDimensionKey])) {
+                    sourceTableGr["labelDimesion"][labelDimensionKey] = {
+                        label_dimension_sys_id: this.utils.fetchLabelDimensionSysId(labelDimensionKey, this.pceConfigId)
+                    };
+                }
+                sourceTableGr["labelDimesion"][labelDimensionKey]["pce_value"] = labelsMappingGr.getValue("value");
+            }
+        }
     },
 
     /**
@@ -480,74 +523,137 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      * @param {boolean} workload true if the workload is managed, false if unmanaged, null if unknown
      * @param {GlideRecord} illumioServersGr GlideRecord of the Workload
      * @param {string} hostname Hostname of the workload
-     * @param {JSON} properties Properties of the workload
      * @param {GlideRecord} sourceTableGr GlideRecord of the CMDB table
      * @param {GlideRecord} workloadsMappingGr GlideRecord of the workloads mapping table
      * @returns GlideRecord of the object
      */
-    _initializeObject: function(workload, illumioServersGr, hostname, properties, sourceTableGr, workloadsMappingGr) {
+    _initializeObject: function(
+        workload,
+        illumioServersGr,
+        hostname,
+        sourceTableGr,
+        workloadsMappingGr
+    ) {
         illumioServersGr.initialize();
-        illumioServersGr.servicenow_cmdb_identifiers_list =
-            sourceTableGr.identifiers + "";
-        illumioServersGr.server = hostname;
-        illumioServersGr.hostname = hostname;
+        illumioServersGr.setValue("servicenow_cmdb_identifier", sourceTableGr.identifier + "");
+        illumioServersGr.setValue("hostname", hostname);
+        illumioServersGr.setValue("illumio_pce_configuration", this.pceConfigId);
+        illumioServersGr.setValue("source_table", sourceTableGr["source_table"]);
 
-        illumioServersGr.select_application = properties["application"];
-        illumioServersGr.select_location = properties["location"];
-        illumioServersGr.select_environment = properties["environment"];
-        illumioServersGr.select_role = properties["role"];
-        illumioServersGr.select_ip_address = properties["ipAddress"]["ipAddress"];
         illumioServersGr.conflicts = false;
-        illumioServersGr.known_to_pce = "unknown";
-        if (workload) {
-            illumioServersGr.known_to_pce = workload;
-            if (workload == 'unmanaged') {
-                illumioServersGr.deleted_from_pce =
-                    sourceTableGr["deleted_from_pce"];
-                for (var i = 2; i <= MAX_IP_ADDRESSES; i++) {
-                    illumioServersGr["select_ip_address_" + i] = properties.ipAddress["ipAddress" + i];
-                }
-            } else {
-                for (i = 2; i <= MAX_IP_ADDRESSES; i++) {
-                    var ipAddressIllumioServersName = "ip_address_" + i;
-                    illumioServersGr[ipAddressIllumioServersName] = "";
-                }
+        illumioServersGr.setValue("known_to_pce", "unknown");
+
+        if (!gs.nil(workload)) {
+            illumioServersGr.setValue("known_to_pce", workload);
+            if (workload == "unmanaged") {
+                illumioServersGr.deleted_from_pce = sourceTableGr["deleted_from_pce"];
             }
-            illumioServersGr.pce_workload_href = workloadsMappingGr.href + "";
-        } else {
-            for (i = 2; i <= MAX_IP_ADDRESSES; i++) {
-                illumioServersGr["select_ip_address_" + i] = properties.ipAddress["ipAddress" + i];
-            }
+            illumioServersGr.setValue("pce_workload_href", workloadsMappingGr.getValue("href"));
+            illumioServersGr.ven_href = workloadsMappingGr.getValue("ven_href");
+            illumioServersGr.ven_status = workloadsMappingGr.getValue("ven_status");
+            illumioServersGr.enforcement_mode = workloadsMappingGr.getValue("enforcement_mode");
+            illumioServersGr.ven_version = workloadsMappingGr.getValue("ven_version");
+            illumioServersGr.os_id = workloadsMappingGr.getValue("os_id");
         }
+
         return illumioServersGr;
     },
 
     /**
-     * 
+     * Create or update incident for workload
+     * @param {GlideRecord} illumioServersGr GlideRecord of the workloads table
+     * @returns sys_id of incident record
+     */
+    createOrUpdateIncident: function(illumioServersGr, incidentSysId) {
+
+        var incidentGr = new GlideRecord('incident');
+        if (!incidentGr.get(incidentSysId)) {
+            incidentGr.initialize();
+        }
+        
+        var information = "Hostname: " + illumioServersGr.getValue("hostname");
+        if (!gs.nil(illumioServersGr.getValue("pce_workload_href"))) {
+            information += "\n" + "Href: " + illumioServersGr.getValue("pce_workload_href"); 
+        }
+
+        if (!gs.nil(illumioServersGr.getValue("public_ip_address"))) {
+            information += "\n" + "Public IP Address: " + illumioServersGr.getValue("public_ip_address"); 
+        }
+        
+        if (!gs.nil(illumioServersGr.getValue("known_to_pce"))) {
+            information += "\n" + "Known to PCE: " + illumioServersGr.getValue("known_to_pce"); 
+        }
+        
+         
+        incidentGr.setValue("short_description",illumioServersGr.getDisplayValue("illumio_pce_configuration") +": "+ illumioServersGr.getValue("hostname"));
+        incidentGr.setValue("description", information);
+        incidentGr.setValue("cmdb_ci",illumioServersGr.getValue("servicenow_cmdb_identifier"));
+        incidentGr.update();
+
+        if (gs.nil(incidentSysId)) {
+            incidentMappingGr = new GlideRecord("x_illu2_illumio_illumio_incident_mapping");
+            incidentMappingGr.initialize();
+            incidentMappingGr.setValue("href", illumioServersGr.getValue("pce_workload_href"));
+            incidentMappingGr.setValue("hostname", illumioServersGr.getValue("hostname"));
+            incidentMappingGr.setValue("incident", incidentGr.getUniqueValue());
+            incidentMappingGr.setValue("illumio_pce_configuration", illumioServersGr.getValue("illumio_pce_configuration"));
+            incidentMappingGr.insert();
+            return incidentGr.getUniqueValue();
+        }
+        return incidentGr.getUniqueValue();
+    },
+
+    /**
+     * Populate incident if it's already created
+     * @param {GlideRecord} illumioServerGr 
+     */
+    getIncident: function(illumioServerGr) {
+        var incidentMappingGr = new GlideRecord("x_illu2_illumio_illumio_incident_mapping");
+        incidentMappingGr.addQuery("illumio_pce_configuration", this.pceConfigId);
+        var href = illumioServerGr.getValue("pce_workload_href");
+        if (gs.nil(href)){
+            incidentMappingGr.addNullQuery("href");
+        }
+        else{
+            incidentMappingGr.addQuery("href", href);
+        }
+        incidentMappingGr.addQuery("hostname", illumioServerGr.getValue("hostname"));
+        incidentMappingGr.setLimit(1);
+        incidentMappingGr.query();
+        if (incidentMappingGr.next()) {
+            return incidentMappingGr.getValue("incident");
+        }
+    },
+
+
+    /**
+     * Insert PCE Workload record
      * @param {string} hostNamePart Hostname of the workload or part of the hostname
      * @param {GlideRecord} illumioServersGr GlideRecord of the workload
      * @returns GlideRecord of the Workload
      */
-    _insertObject: function(hostNamePart, illumioServersGr) {
+    _insertObject: function(hostNamePart, illumioServersGr, sourceTableGr) {
         hostNamePart = hostNamePart.toLowerCase();
 
-        if (
-            this.hostnameMap[illumioServersGr.known_to_pce + ""].hasOwnProperty(
-                hostNamePart
-            )
-        ) {
-            illumioServersGr.duplicate_of =
-                this.hostnameMap[illumioServersGr.known_to_pce + ""][
-                    hostNamePart
-                ];
+        if (!gs.nil(this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart])) {
+            illumioServersGr.setValue("duplicate_of", this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart]);
             illumioServersGr.duplicate = true;
             illumioServersGr.insert();
-        } else {
-            illumioServersGr.duplicate = false;
-            var sysId = illumioServersGr.insert();
-            this.hostnameMap[illumioServersGr.known_to_pce + ""][hostNamePart] =
-                sysId;
+            return illumioServersGr;
         }
+
+        // Check if incident already exists
+        var incidentSysId = this.getIncident(illumioServersGr);
+       
+        //creation of new incident
+        if (sourceTableGr['create_incident'] || !gs.nil(incidentSysId)) {
+            illumioServersGr.setValue("incident", this.createOrUpdateIncident(illumioServersGr, incidentSysId)); //creating new incident for given workload
+        }
+
+        illumioServersGr.duplicate = false;
+        var sysId = illumioServersGr.insert();
+        this.hostnameMap[illumioServersGr.getValue("known_to_pce")][hostNamePart] = sysId;
+
         return illumioServersGr;
     },
 
@@ -555,65 +661,29 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      * Queries the mapping table and add the workloads to PCE workloads table
      * @param {string} hostname Hostname of the workload
      * @param {GlideRecord} sourceTableGr GlideRecord of the CMDB table
-     * @returns GlideRecord of the workload
      */
     addToCustomTable: function(hostname, sourceTableGr) {
         try {
-            /* Instantiate GlideRecord objects and variables */
-            var illumioServersGr = new GlideRecord(
-                "x_illu2_illumio_illumio_servicenow_servers"
-            );
-            var labelsMappingGr = new GlideRecord(
-                "x_illu2_illumio_illumio_pce_labels_mapping"
-            );
-
-            this._isValidHostName(hostname);
-
-            /* Fetch properties from  object */
-            var properties = this._fetchProperties(sourceTableGr);
+            // initialize variables
             this.isworkloadinMapping = false;
 
+            // validate hostname
+            this._isValidHostName(hostname);
+
             //query managed workload
-            illumioServersGr = this._queryWorkload(
-                true,
-                properties,
-                hostname,
-                illumioServersGr,
-                sourceTableGr,
-                labelsMappingGr
-            );
-            illumioServersGr = this._queryWorkload(
-                false,
-                properties,
-                hostname,
-                illumioServersGr,
-                sourceTableGr,
-                labelsMappingGr
-            );
-            var hostNamePart = hostname.split(".")[0];
+            this._queryWorkload(true, hostname, sourceTableGr);
+
+            //query unmanaged workload
+            this._queryWorkload(false, hostname, sourceTableGr);
+
+            // handle record if it's not present in PCE Workload Mapping table
             if (!this.isworkloadinMapping) {
-                illumioServersGr = this._initializeObject(
-                    null,
-                    illumioServersGr,
-                    hostname,
-                    properties,
-                    sourceTableGr,
-                    null
-                );
-                this._insertObject(hostNamePart, illumioServersGr);
+                this._createUnknownWorkload(hostname, sourceTableGr);
             }
         } catch (e) {
-            gs.error(
-                "Exception while adding hostname " +
-                hostname +
-                " to workloads list. Exception: " +
-                e
-            );
+            gs.error("[addToCustomTable] Exception while adding hostname {0} to workloads list. Error{1}", [hostname, e]);
             var jobContent = {
-                logs: "Exception while adding hostname " +
-                    hostname +
-                    " to workloads list. Exception: " +
-                    e,
+                logs: "Exception while adding hostname " + hostname + " to workloads list. Exception: " + e,
                 current_operation: "Mapping Discovery",
                 job_status: "failed",
                 job_completed: new GlideDateTime(),
@@ -624,27 +694,82 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
     },
 
     /**
+     * Create record in PCE Workload if it's not already present at Illumio
+     * @param {String} hostname Hostname of the workload
+     * @param {Object} sourceTableGr Workload object
+     */
+    _createUnknownWorkload: function(hostname, sourceTableGr) {
+        var hostNamePart = hostname.split(".")[0];
+        var illumioServersGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+        illumioServersGr = this._initializeObject(
+            null,
+            illumioServersGr,
+            hostname,
+            sourceTableGr
+        );
+
+        this._setInterfaceObject(illumioServersGr, sourceTableGr, []);
+        this._insertObject(hostNamePart, illumioServersGr, sourceTableGr);
+        this._createWorkloadFieldValue(illumioServersGr, sourceTableGr);
+    },
+
+    /**
+     * Populate CMDB values
+     * @param {GlideRecord} sourceTableGr GlideRecord of the CMDB table
+     * @param {Object} fieldMapping Object of Class Field Mapping 
+     * @returns {Object} value from CMDB record
+     */
+    getValueFromCMDB: function(sourceGr, fieldMapping) {
+        if (fieldMapping.advanced) {
+            return this.getValueFromScript(sourceGr, fieldMapping);
+        }
+        return this.getValueFromDotWalkableField(sourceGr, fieldMapping.value);
+    },
+
+    /**
+     * Evaluate script
+     * @param {GlideRecord} sourceGr GlideRecord of the CMDB table
+     * @param {Object} fieldMapping Object of Class Field Mapping 
+     * @returns {object} value from script
+     */
+    getValueFromScript: function(sourceGr, fieldMapping) {
+        try {
+            var fieldMappingGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+            if (fieldMappingGr.get(fieldMapping["mappingSysId"])) {
+                var evaluator = new GlideScopedEvaluator();
+                evaluator.putVariable('sourceGr', sourceGr);
+                evaluator.putVariable('answer', null);
+                evaluator.evaluateScript(fieldMappingGr, 'script', null);
+                return evaluator.getVariable('answer');
+            }
+        } catch (e) {
+            gs.error("[getValueFromScript] Error while fetching value from cmdb record", e);
+        }
+        return "";
+    },
+
+    /**
      * Gets the value of the field that is having dot walking enable.
-     * @param {String} gr GlideRecord to get the field value from.
+     * @param {String} sourceGr GlideRecord to get the field value from.
      * @param {String} fieldName Name of the field to get the value from.
      * @returns {String} Value of the field.
      **/
-    getValueFromDotWalkableField: function(gr, fieldName) {
+    getValueFromDotWalkableField: function(sourceGr, fieldName) {
         try {
-            if (gs.nil(gr) || gs.nil(fieldName)) return "";
+            if (gs.nil(sourceGr) || gs.nil(fieldName)) return "";
             var dotWalkableFieldArray = fieldName.split(".");
-            var tempGR = gr; //to use the temporary variable to avoid changing into the existing one
-
-            for (var fIndex = 0; fIndex < dotWalkableFieldArray.length - 1; fIndex++) {
+            var tempGR = sourceGr; //to use the temporary variable to avoid changing into the existing one
+            var fIndex;
+            for (fIndex = 0; fIndex < dotWalkableFieldArray.length - 1; fIndex++) {
                 if (gs.nil(tempGR[dotWalkableFieldArray[fIndex]])) return "";
                 tempGR = tempGR[dotWalkableFieldArray[fIndex]].getRefRecord();
                 if (!tempGR.isValidRecord()) return "";
             }
             return tempGR[dotWalkableFieldArray[fIndex]] + "";
         } catch (e) {
-            return "";
+            gs.error("[getValueFromDotWalkableField] Error while fetching value from cmdb record", e);
         }
-
+        return "";
     },
 
     type: "IllumioDiscoverAndMapCMDBServers",
@@ -652,11 +777,27 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
+        <sys_mod_count>406</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy>read</sys_policy>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-24 06:13:52</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4c10e6c6dbcc6700dc9fabc5ca96191d</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 11:00:11</sys_created_on>
+        <sys_id>8550d1661bce56501aeafe261a4bcbd1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 11:00:11</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

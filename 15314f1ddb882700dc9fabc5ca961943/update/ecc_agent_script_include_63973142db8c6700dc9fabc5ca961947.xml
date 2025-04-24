@@ -12,7 +12,7 @@ IllumioManageAsyncJobs.prototype = {
 
         // set the parameters here
         this.logger = new IllumioLogUtil();
-
+        this._fallbackDefaultBatchSize = 1000;
         var url = String(ms.getConfigParameter("url"));
         if (url.charAt(url.length - 1) == '/') {
             url = url.substring(0, url.length - 1);
@@ -26,6 +26,16 @@ IllumioManageAsyncJobs.prototype = {
         this.pceAuthorization = probe.getParameter('glide.jms.pce_authorization');
         this.currentJobSysID = probe.getParameter('glide.jms.pce_async_job_sys_id') + '';
         this.pceMIDProxy = probe.getParameter('glide.jms.enable_pce_mid_proxy');
+        this.batchSize = probe.getParameter('glide.jms.chunk_size');
+        this.batchSize = parseInt(this.batchSize, 10) || this._fallbackDefaultBatchSize;
+        if (this.batchSize < 1) {
+            this.logger._warning(
+                "Invalid 'x_illu2_illumio.payload.batch.size' provided. Proceeding with " +
+                this._fallbackDefaultBatchSize +
+                " as default value. Please set a valid value to 'x_illu2_illumio.payload.batch.size' property."
+            );
+            this.batchSize = this._fallbackDefaultBatchSize;
+        }
 
         this.timeZone = probe.getParameter('glide.jms.time_zone');
         this.SimpleDF = Packages.java.text.SimpleDateFormat;
@@ -34,7 +44,7 @@ IllumioManageAsyncJobs.prototype = {
         this.snowDateFormat = this.SimpleDF("yyyy-MM-dd HH:mm:ss");
         this.illumioDateFormat = this.SimpleDF("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-        this.snowDateFormat.setTimeZone(this.TimeZone.getTimeZone(this.timeZone));
+        this.snowDateFormat.setTimeZone(this.TimeZone.getTimeZone('GMT'));
         this.illumioDateFormat.setTimeZone(this.TimeZone.getTimeZone('UTC'));
 
         this.utils = new IllumioPCEUtils(this.timeZone);
@@ -55,11 +65,19 @@ IllumioManageAsyncJobs.prototype = {
 
         this.pceHttpClient = new IllumioHTTPClient(this.pceUrl, this.pceUsername, this.pcePassword, this.protocol, this.pceMIDProxy, this.retryParams);
         this.snHttpClient = new IllumioHTTPClient(this.snowUrl, this.snowUsername, this.snowPassword, "443", null, this.retryParams);
+        this.illumio_jobId = probe.getParameter("glide.jms.illumio_scheduled_job_id");
     },
 
     run: function() {
 
+        if (
+            this.utils.checkCancelledJobStatus(this.illumio_jobId, this.snowUrl, this.snowUsername, this.snowPassword)
+        ) {
+            return;
+        }
+
         this.requiredOperation = probe.getParameter('glide.jms.operation');
+        this.configSysId = probe.getParameter('glide.jms.illumio_pce_configuration_id');
 
         // perform required async job operation
         if (this.requiredOperation == 'create_async_job') {
@@ -68,7 +86,7 @@ IllumioManageAsyncJobs.prototype = {
 
         } else if (this.requiredOperation == 'get_async_job_status') {
             this.logger._info('IllumioManageAsyncJobs - Getting async job status from PCE');
-            this.getAsyncJobStatus();
+            this.getAsyncJobStatus(this.configSysId);
 
         } else {
             this.logger._error('IllumioManageAsyncJobs - No async operation provided.');
@@ -86,6 +104,10 @@ IllumioManageAsyncJobs.prototype = {
             var headers = {
                 Prefer: 'respond-async'
             };
+
+            if (this.utils.checkCancelledJobStatus(this.illumio_jobId, this.snowUrl, this.snowUsername, this.snowPassword)) {
+                return;
+            }
 
             // getting all workloads
             var response = this.pceHttpClient.get(this.pceEndpoint, '', headers);
@@ -113,6 +135,10 @@ IllumioManageAsyncJobs.prototype = {
                 job_identifier: probe.getParameter('glide.jms.job_identifier')
             };
 
+            if (this.utils.checkCancelledJobStatus(this.illumio_jobId, this.snowUrl, this.snowUsername, this.snowPassword)) {
+                return;
+            }
+
             /*var post = */
             var endpoint = TABLE_API + ASYNC_JOB_TABLE;
             response = this.snHttpClient.post(endpoint, '', null, payload);
@@ -122,11 +148,8 @@ IllumioManageAsyncJobs.prototype = {
                 this.handleException("Failed to create async job on SNOW, Please check MID server logs for more details.");
                 return false;
             }
-
         } catch (exception) {
-
             this.logger._except('IllumioManageAsyncJobs - Exception occurred while creating async job on PCE. Exception: ' + exception);
-
             this.handleException('Exception occurred while creating async job on PCE. Exception: ' + exception);
         }
 
@@ -136,12 +159,18 @@ IllumioManageAsyncJobs.prototype = {
      * Get status of async job running on PCE
      * @return {Boolean} whether status was successful or not.
      */
-    getAsyncJobStatus: function() {
+    getAsyncJobStatus: function(configSysId) {
 
         try {
             var jobStatus = 'failed';
             var resultUrl = '';
             var isResultsAvailable = false;
+
+
+            if (this.utils.checkCancelledJobStatus(this.illumio_jobId, this.snowUrl, this.snowUsername, this.snowPassword)) {
+                return;
+            }
+
             var response = this.pceHttpClient.get(this.pceEndpoint, '');
 
             if (response.hasError) {
@@ -161,7 +190,7 @@ IllumioManageAsyncJobs.prototype = {
                     this.logger._error('IllumioManageAsyncJobs - Job completed but datafiles url is not present in response. Setting job status to failed.');
                     jobStatus = 'failed';
                 } else {
-                    isResultsAvailable = this.getAsyncJobResults(resultUrl);
+                    isResultsAvailable = this.getAsyncJobResults(resultUrl, configSysId);
                 }
             }
 
@@ -187,9 +216,7 @@ IllumioManageAsyncJobs.prototype = {
             }
 
         } catch (exception) {
-
             this.logger._except('IllumioManageAsyncJobs - Exception occurred while getting async job status from PCE. Exception: ' + exception);
-
             this.handleException('Exception occurred while getting async job status from PCE. Exception: ' + exception);
         }
     },
@@ -199,9 +226,15 @@ IllumioManageAsyncJobs.prototype = {
      * @param {String} resultsLocation location of the result.
      * @return {Boolean} whether request was successful or not.
      */
-    getAsyncJobResults: function(resultsLocation) {
+    getAsyncJobResults: function(resultsLocation, configSysId) {
 
         try {
+
+
+            if (this.utils.checkCancelledJobStatus(this.illumio_jobId, this.snowUrl, this.snowUsername, this.snowPassword)) {
+                return;
+            }
+
             this.logger._info('IllumioManageAsyncJobs - Getting async job results');
 
             var response = this.pceHttpClient.get('/api/v2' + resultsLocation, '');
@@ -264,29 +297,44 @@ IllumioManageAsyncJobs.prototype = {
                 }
             });
 
-            this.logger._debug('IllumioManageAsyncJobs - Total records : ' + resultData.length);
+            var resultLength = resultData.length;
+            this.logger._debug('IllumioManageAsyncJobs - Total records : ' + resultLength + ", will be broken down into batches of " + this.batchSize);
 
             var jobContent = {
-                logs: 'Total ' + job_identifier + ' fetched : ' + resultData.length
+                logs: 'Total ' + job_identifier + ' fetched : ' + resultLength
             };
             this._updateJobRecord(scheduled_job_id, jobContent);
 
-            var mappingGR = new GlideRecord(resultTable);
-            mappingGR.initialize();
-            mappingGR.setValue("json_data", JSON.stringify(resultData));
-            if (!mappingGR.insert()) {
-                this.logger._error("Cannot insert the data in staging table");
-                this.handleException('Exception occurred while posting results to SNOW, Please check MID server logs for more details.');
-                return false;
+            if (this.utils.checkCancelledJobStatus(this.illumio_jobId, this.snowUrl, this.snowUsername, this.snowPassword)) {
+                return;
             }
+            // add 1 more iteration count in case the 'resultLength' is exactly divisible by 'batchSize'
+            var iterations = (resultLength / this.batchSize) + 1;
 
+            // extra check on 'resultData' length as it gets shorter everytime the chunked payload is sent
+            for (var iter = 0; iter < iterations && resultData.length != 0; iter++) {
+                var payload = {
+                    illumio_pce_configuration: configSysId,
+                    json_data: JSON.stringify(resultData.splice(0, this.batchSize)),
+                    // splice would update the source array, hence we always start from 0
+                };
+                this.logger._debug("Proceeding to write the payload of " + job_identifier + " from index " + (iter * this.batchSize) + " to " + ((iter + 1) * this.batchSize));
+                var endpoint = TABLE_API + resultTable;
+                var resp = this.snHttpClient.post(endpoint, '', null, payload);
+                if (resp.hasError) {
+                    this.logger._error('Cannot insert the data in staging table');
+                    this.handleException(
+                        'Exception occurred while posting results to SNOW, Please check MID server logs for more details.'
+                    );
+                    return false;
+                }
+                this.logger._debug("Pending " + job_identifier + " to be written:" + resultData.length);
+            }
             this.logger._info('IllumioManageAsyncJobs - Posted all records to SNOW');
             return true;
 
         } catch (exception) {
-
             this.logger._except('IllumioManageAsyncJobs - Exception occurred while getting async job results. Exception: ' + exception);
-
             this.handleException('Exception occurred while getting async job results. Exception: ' + exception);
             return false;
         }
@@ -323,43 +371,93 @@ IllumioManageAsyncJobs.prototype = {
      */
     _updateJobRecord: function(jobSysId, jobContent) {
 
-        var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
-        if (jobGr.get(jobSysId)) {
-            // Update only if job is not invalidated
-            if (jobGr.job_status != 'failed') {
-                for (var key in jobContent) {
-                    if (jobContent.hasOwnProperty(key)) {
-                        if (key != "logs") {
-                            jobGr[key] = jobContent[key];
-                        } else {
-                            jobGr[key] += '\n' + "[" + this.illumioDateFormat.format(new Date()) + "] " + jobContent[key];
-                        }
+        var snowGetUrl =
+            TABLE_API +
+            SCHEDULED_JOB_TABLE +
+            '?sysparm_fields=logs&sysparm_query=sys_id=' +
+            jobSysId;
+
+        var putUrl =
+            TABLE_API + SCHEDULED_JOB_TABLE + '/' + jobSysId;
+
+        var response = this.snHttpClient.get(snowGetUrl, '');
+        if (response.data.result.length == 0) {
+            this.logger._error(
+                '[run] Error while checking status of given job on ServiceNow. Proceeding with further actions.'
+            );
+            return;
+        }
+
+        var jobRecord = response.data.result[0];
+
+        if (response.hasError) {
+            return false;
+        } else if (jobRecord.job_status == 'cancelled') {
+            return true;
+        }
+
+        if (jobRecord.job_status != 'failed') {
+
+            for (var key in jobContent) {
+                if (jobContent.hasOwnProperty(key)) {
+                    if (key != 'logs') {
+                        jobRecord[key] = jobContent[key];
+                    } else {
+                        jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n", "\n");
+                        jobRecord["logs"] += '\n' + '[' + this.illumioDateFormat.format(new Date()) + '] ' + jobContent["logs"];
+
                     }
                 }
-                jobGr.update();
+            }
+            jobRecord["illumio_pce_configuration"] = jobRecord.illumio_pce_configuration.value;
+            var putResponse = this.snHttpClient.put(
+                putUrl,
+                '',
+                null,
+                jobRecord
+            );
+            if (putResponse.hasError) {
+                return false;
             } else {
-                this.logger._info('[_updateJobRecord] Given job is invalidated. Aborting further actions.');
+                this.logger._info(
+                    'The Scheduled Job had updated the values with the logs'
+                );
             }
         } else {
-            this.logger._error('[_updateJobRecord] Data sync job record for given sys_id (' + jobSysId + ') does not exist.');
+            this.logger._info(
+                '[_updateJobRecord] Given job is invalidated. Aborting further actions.'
+            );
         }
     },
-
-
 
     type: "IllumioUpdateKnownWorkloads"
 };]]></script>
         <sys_class_name>ecc_agent_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 08:29:35</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
-        <sys_domain_path>/</sys_domain_path>
         <sys_id>63973142db8c6700dc9fabc5ca961947</sys_id>
+        <sys_mod_count>88</sys_mod_count>
         <sys_name>IllumioManageAsyncJobs</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_63973142db8c6700dc9fabc5ca961947</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-21 10:11:40</sys_updated_on>
     </ecc_agent_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>63973142db8c6700dc9fabc5ca961947</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-21 07:15:10</sys_created_on>
+        <sys_id>c4ece23cdbca5e502fcecafc139619cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-21 07:15:10</sys_updated_on>
+        <table>ecc_agent_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

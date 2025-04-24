@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_illu2_illumio_illumio_critical_label_group_configuration</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Prevent duplicate critical group config</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+	
+	current.setValue("label_group", current.getValue("label_group").trim());
+
+    var criticalConfigGr = new GlideRecord("x_illu2_illumio_illumio_critical_label_group_configuration");
+    criticalConfigGr.addQuery("illumio_pce_configuration", current.getValue("illumio_pce_configuration"));
+    criticalConfigGr.addQuery("illumio_label_dimension", current.getValue("illumio_label_dimension"));
+	criticalConfigGr.addQuery("sys_id", "!=", current.getUniqueValue());
+    criticalConfigGr.query();
+    if (criticalConfigGr.next()) {
+        gs.addErrorMessage("Critical label group for label dimension " + current.getDisplayValue("illumio_label_dimension") + " is already configured. Please select the different label dimension or update the existing.");
+        gs.info('[Illumio prevent duplicate critical label group configuration] ' + "Critical label group for label dimension " + current.getDisplayValue("illumio_label_dimension") + " is already configured. Please select the different label dimension or update the existing.");
+        current.setAbortAction(true);
+    }
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-27 08:44:12</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>350d88c897918a50b7daf896f053af28</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Prevent duplicate critical group config</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_350d88c897918a50b7daf896f053af28</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-10 16:07:51</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=350d88c897918a50b7daf896f053af28"/>
+</record_update>

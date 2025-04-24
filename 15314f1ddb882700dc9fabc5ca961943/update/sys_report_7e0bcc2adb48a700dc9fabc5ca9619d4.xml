@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report">
     <sys_report action="INSERT_OR_UPDATE">
+        <active>false</active>
         <additional_groupby/>
         <aggregate>COUNT</aggregate>
-        <aggregation_source/>
+        <aggregation_source>no_override</aggregation_source>
         <allow_data_label_overlap>false</allow_data_label_overlap>
         <apply_alias>false</apply_alias>
         <axis_max_color display_value="UI14 Blue Light">b0d449b3d7332100fa6c0c12ce610383</axis_max_color>
@@ -46,11 +47,11 @@
         <end_time/>
         <exp_report_attrs>true</exp_report_attrs>
         <field>pce_application</field>
-        <field_list/>
+        <field_list>hostname,duplicate,known_to_pce,conflicts,select_role,pce_role,select_application,pce_application,select_environment,pce_environment,select_location,pce_location,select_ip_address,pce_ip_address,pce_workload_href,sys_updated_on</field_list>
         <filter table="x_illu2_illumio_illumio_servicenow_servers">known_to_pce!=unknown^duplicate=false<item display_value="Unknown" endquery="false" field="known_to_pce" goto="false" newquery="false" operator="!=" or="false" value="unknown"/>
             <item endquery="false" field="duplicate" goto="false" newquery="false" operator="=" or="false" value="false"/>
         </filter>
-        <formatting_configuration/>
+        <formatting_configuration>{"table":"x_illu2_illumio_illumio_servicenow_servers","stringFormattingProperties":{},"durationFormattingProperties":{},"dateFormattingProperties":{},"numberFormattingProperties":{}}</formatting_configuration>
         <from/>
         <funnel_neck_percent>30</funnel_neck_percent>
         <gauge_autoscale>true</gauge_autoscale>
@@ -73,6 +74,7 @@
         <lower_limit/>
         <map display_value="World">93b8a3a2d7101200bd4a4ebfae61033a</map>
         <map_source/>
+        <no_bulk_migration>false</no_bulk_migration>
         <orderby_list/>
         <other_threshold>-2</other_threshold>
         <others>true</others>
@@ -107,14 +109,19 @@
         <sys_class_name>sys_report</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-23 13:49:13</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>7e0bcc2adb48a700dc9fabc5ca9619d4</sys_id>
-        <sys_name>Unique Workloads by Applications</sys_name>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>Unique Workloads by Applications [Deprecated]</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_7e0bcc2adb48a700dc9fabc5ca9619d4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-26 07:41:31</sys_updated_on>
         <table>x_illu2_illumio_illumio_servicenow_servers</table>
-        <title>Unique Workloads by Applications</title>
+        <title>Unique Workloads by Applications [Deprecated]</title>
         <title_horizontal_alignment>center</title_horizontal_alignment>
         <title_vertical_alignment>top</title_vertical_alignment>
         <to/>
@@ -122,6 +129,7 @@
         <type>bar</type>
         <upper_limit/>
         <use_color_heatmap>false</use_color_heatmap>
+        <use_color_palette>false</use_color_palette>
         <use_null_in_trend>false</use_null_in_trend>
         <user>GLOBAL</user>
         <x_axis_allow_decimals>false</x_axis_allow_decimals>

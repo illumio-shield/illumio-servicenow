@@ -7,7 +7,7 @@
 var IllumioPCEUtils = Class.create();
 
 IllumioPCEUtils.prototype = {
-    initialize: function (timezone) {
+    initialize: function(timezone) {
         this.logger = new IllumioLogUtil();
 
         this.timeZone = timezone;
@@ -16,9 +16,19 @@ IllumioPCEUtils.prototype = {
 
         this.snowDateFormat = this.SimpleDF("yyyy-MM-dd HH:mm:ss");
         this.illumioDateFormat = this.SimpleDF("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        
-        this.snowDateFormat.setTimeZone(this.TimeZone.getTimeZone(this.timeZone));
+
+        this.snowDateFormat.setTimeZone(this.TimeZone.getTimeZone('GMT'));
         this.illumioDateFormat.setTimeZone(this.TimeZone.getTimeZone('UTC'));
+
+        //	
+        var url = String(ms.getConfigParameter("url"));
+        if (url.charAt(url.length - 1) == '/') {
+            url = url.substring(0, url.length - 1);
+        }
+        this.snowUrl = url;
+        this.snowUsername = ms.getConfigParameter("mid.instance.username");
+        this.snowPassword = ms.getConfigParameter("mid.instance.password");
+        //
     },
 
     /**
@@ -26,7 +36,7 @@ IllumioPCEUtils.prototype = {
      * @param {String} exception - Exception message
      * @param {String} jobId - sys_id of the job
      */
-    handleException: function (exception, jobSysId) {
+    handleException: function(exception, jobSysId) {
 
         if (jobSysId) {
             var payload = {
@@ -44,30 +54,63 @@ IllumioPCEUtils.prototype = {
      * @param {String} jobId sys_id of the job record
      * @param {String} jonContent content of the job 
      */
-    _updateJobRecord: function (jobSysId, jobContent) {
+    _updateJobRecord: function(jobSysId, jobContent) {
 
-        var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
-        if (jobGr.get(jobSysId)) {
-            // Update only if job is not invalidated
-            if (jobGr.job_status != 'failed') {
-                for (var key in jobContent) {
-                    if (jobContent.hasOwnProperty(key)) {
-                        if (key != "logs") {
-                            jobGr[key] = jobContent[key];
-                        } else {
-                            for (var log_ind = 0; log_ind < jobContent[key].length; log_ind++) {
-                                jobGr[key] += '\n' + "[" + this.illumioDateFormat.format(new Date()) + "] " + jobContent[key][log_ind];
-                            }
-                        }
+        if (this.checkCancelledJobStatus(jobSysId, this.snowUrl, this.snowUsername, this.snowPassword))
+            return;
+
+        var snowGetUrl =
+            TABLE_API +
+            SCHEDULED_JOB_TABLE +
+            '?sysparm_fields=logs&sysparm_query=sys_id=' +
+            jobSysId;
+        var snowPutUrl = TABLE_API + SCHEDULED_JOB_TABLE + '/' + jobSysId;
+
+        var response = this.snHttpClient.get(snowGetUrl, '');
+        if (response.data.result.length == 0) return false;
+        var jobRecord = response.data.result[0];
+
+        if (response.hasError) {
+            return false;
+        } else if (jobRecord.job_status == 'cancelled') {
+            return true;
+        }
+
+        if (jobRecord.job_status != 'failed') {
+            for (var key in jobContent) {
+                if (jobContent.hasOwnProperty(key)) {
+
+                    if (key != 'logs') {
+                        jobRecord[key] = jobContent[key];
+                    } else {
+                        jobRecord["logs"] = jobRecord["logs"].replaceAll("\\\"", "\"");
+                        jobRecord["logs"] = jobRecord["logs"].replaceAll("\\'", "'");
+                        jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n", "\n");
+                        jobRecord["logs"] += '\n' + '[' + this.illumioDateFormat.format(new Date()) + '] ' + jobContent["logs"];
                     }
                 }
-                jobGr.update();
+            }
+            jobRecord["illumio_pce_configuration"] = jobRecord.illumio_pce_configuration.value;
+
+            var putResponse = this.snHttpClient.put(
+                snowPutUrl,
+                '',
+                null,
+                jobRecord
+            );
+            if (putResponse.hasError) {
+                return false;
             } else {
-                this.logger._info('[_updateJobRecord] Given job is invalidated. Aborting further actions.');
+                this.logger._info(
+                    'The Scheduled Job been updated with the logs'
+                );
             }
         } else {
-            this.logger._error('[_updateJobRecord] Data sync job record for given sys_id (' + jobSysId + ') does not exist.');
+            this.logger._info(
+                '[_updateJobRecord] Given job is invalidated. Aborting further actions.'
+            );
         }
+
     },
 
     /**
@@ -75,7 +118,7 @@ IllumioPCEUtils.prototype = {
      * @param {String} parm name of the config parameter
      * @returns {String} value of the parameter
      **/
-    getMidConfigParam: function (parm) {
+    getMidConfigParam: function(parm) {
         try {
             var midServer = Packages.com.service_now.mid.MIDServer.get();
             var config = midServer.getConfig();
@@ -102,9 +145,11 @@ IllumioPCEUtils.prototype = {
      * @param {String} base64String Base64 string
      * @returns {String} decoded string
      **/
-    decodeBase64: function (base64String) {
+    decodeBase64: function(base64String) {
         var decodedPceAuthorization = Base64.getDecoder().decode(base64String);
-        var decodedPceAuthorizationString = decodedPceAuthorization.map(function(c) { return String.fromCharCode(c); }).join("");
+        var decodedPceAuthorizationString = decodedPceAuthorization.map(function(c) {
+            return String.fromCharCode(c);
+        }).join("");
         return decodedPceAuthorizationString;
     },
 
@@ -113,25 +158,66 @@ IllumioPCEUtils.prototype = {
      * @param {String} url URL
      * @returns {String} port
      **/
-    getPortFromUrl: function (url) {
+    getPortFromUrl: function(url) {
         new IllumioLogUtil()._debug("getPortFromUrl: " + url);
         var port = parseInt(url.substring(url.lastIndexOf(':') + 1));
-        return isNaN(port) ? 443 : port;        
+        return isNaN(port) ? 443 : port;
     },
+
+
+    /**
+     * Returns the job status in boolean
+     * @param {sys_id} jobSysId
+     * @param {String} SNOWurl
+     * @param {String} SNOWusername
+     * @param {Password} SNOWpassword
+     * @returns {Boolean} value for cancelled job status
+     **/
+    checkCancelledJobStatus: function(jobSysId, SNOWurl, SNOWusername, SNOWpassword) {
+
+        this.snHttpClient = new IllumioHTTPClient(
+            this.snowUrl,
+            this.snowUsername,
+            this.snowPassword,
+            '443',
+            null,
+            this.retryParams
+        );
+
+        var snowGetUrl =
+            TABLE_API +
+            SCHEDULED_JOB_TABLE +
+            '?sysparm_query=sys_id=' + jobSysId;
+
+        var response = this.snHttpClient.get(snowGetUrl, '');
+        if (response.hasError) {
+            return false;
+        }
+
+        if (response.data.result && response.data.result[0].job_status == "cancelled")
+            return true;
+
+        return false;
+    },
+
 
     type: 'IllumioPCEUtils'
 };]]></script>
         <sys_class_name>ecc_agent_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-06-10 05:54:46</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
-        <sys_domain_path>/</sys_domain_path>
         <sys_id>93966d1f1b20381046dba9f6624bcb74</sys_id>
+        <sys_mod_count>45</sys_mod_count>
         <sys_name>IllumioPCEUtils</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_93966d1f1b20381046dba9f6624bcb74</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-21 10:12:06</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

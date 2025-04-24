@@ -11,8 +11,10 @@ IllumioHTTPClient.prototype = {
     initialize: function(baseUrl, username, password, protocol, pceMIDProxy, retryParams) {
         this.logger = new IllumioLogUtil();
         this.baseUrl = baseUrl;
-        var proxyFlag = (pceMIDProxy == 'true' || pceMIDProxy == null);
-        this.client = this._setupClient(baseUrl, username, password, protocol, proxyFlag);
+        var proxyFlag = (pceMIDProxy == 'true' || pceMIDProxy == '1' || pceMIDProxy == true || pceMIDProxy == null);
+        // we'll skip the logs when creating object for 'snHttpClient'
+        var skipLogs = pceMIDProxy == null;
+        this.client = this._setupClient(baseUrl, username, password, protocol, proxyFlag, skipLogs);
         this.httpRetryCount = retryParams.http_retry_count;
         this.httpRetryIntervalIncrement = retryParams.http_retry_interval_increment;
         this.httpRetryIntervalMax = retryParams.http_retry_interval_max;
@@ -27,17 +29,20 @@ IllumioHTTPClient.prototype = {
      * @param {boolean} proxyFlag Flag to indicate if the proxy should be used
      * @returns {HttpClient} HTTP client
      **/
-    _setupClient: function(baseUrl, username, password, protocol, proxyFlag) {
+    _setupClient: function(baseUrl, username, password, protocol, proxyFlag, skipLogs) {
         var client = new HttpClient();
         var authScope = new AuthScope(baseUrl, protocol);
         var credentials = new UsernamePasswordCredentials(username, password);
         client.getParams().setAuthenticationPreemptive(true);
         client.getState().setCredentials(authScope.ANY, credentials);
-        var proxy = this._getProxy(proxyFlag);
+        var proxy = this._getProxy(proxyFlag, skipLogs);
         if (proxy != null) {
             client.getHostConfiguration().setProxy(proxy.host, proxy.port);
             client.getParams().setAuthenticationPreemptive(true);
-            client.getState().setProxyCredentials(new AuthScope(proxy.host, proxy.port), new UsernamePasswordCredentials(proxy.username, proxy.password));
+            if (proxy.username != null && proxy.password != null) {
+                // set the authentication only when username & password aren't null
+                client.getState().setProxyCredentials(new AuthScope(proxy.host, proxy.port), new UsernamePasswordCredentials(proxy.username, proxy.password));
+            }
         }
         return client;
     },
@@ -45,15 +50,25 @@ IllumioHTTPClient.prototype = {
     /**
      * Get the proxy details
      * @param {boolean} proxyFlag Flag to indicate if the proxy should be used
+     * @param {boolean} skipLogs Flag to skip duplicate logs on creation of HTTPClient
      * @returns {object} Proxy details
      **/
-    _getProxy: function(proxyFlag) {
+    _getProxy: function(proxyFlag, skipLogs) {
         var proxy = null;
-        if (ms.getConfigParameter('mid.proxy.use_proxy') != 'true') {
-            this.logger._debug('Proxy is not configured, continuing with internet connection');
-            return proxy;
-        }
-        if (proxyFlag) {
+        if (ms.getConfigParameter('mid.proxy.use_proxy') != 'true' && proxyFlag) {
+            if(!skipLogs) {
+                this.logger._warning('Proxy is not configured on MID Server and enabled for connecting to PCE. Please either configure Proxy in MID Server or uncheck the "Enable Proxy between PCE and MID server" checkbox in configuration.');
+            }
+            return proxy; // null
+        } else if (ms.getConfigParameter('mid.proxy.use_proxy') != 'true' && !proxyFlag) {
+            if (!skipLogs) {
+                this.logger._debug('Proxy is not configured on MID Server and disabled for connecting to PCE. Continuing without proxy to connect with PCE and ServiceNow instance.');
+            }
+            return proxy; // null
+        } else if (ms.getConfigParameter('mid.proxy.use_proxy') == 'true' && proxyFlag) {
+            if (!skipLogs) {
+                this.logger._debug('Proxy is configured on MID Server and enabled for connecting to PCE. Proceeding to use proxy to connect with PCE and ServiceNow instance.');
+            }
             var proxyHost = ms.getConfigParameter('mid.proxy.host');
             var proxyPort = ms.getConfigParameter('mid.proxy.port');
             var proxyUsername = ms.getConfigParameter('mid.proxy.username');
@@ -64,8 +79,19 @@ IllumioHTTPClient.prototype = {
                 username: proxyUsername,
                 password: proxyPassword
             };
+            return proxy; // non-null
+        } else if (ms.getConfigParameter('mid.proxy.use_proxy') == 'true' && !proxyFlag) {
+            if (!skipLogs) {
+                this.logger._debug('Proxy is configured on MID Server and disabled for connecting to PCE. Proceeding to use proxy for ServiceNow instance but not for PCE.');
+            }
+            return proxy; // null
+        } else {
+            if (!skipLogs) {
+                this.logger._error('Found an invalid scenario with MID Server proxy value (' + ms.getConfigParameter('mid.proxy.use_proxy') + ') and the checkbox. Please recheck the setup or reach out to Illumio Support.');
+            }
+            // just in case if we ever fall into gaps due to misconfiguration
+            return null;
         }
-        return proxy;
     },
 
     /**
@@ -91,11 +117,18 @@ IllumioHTTPClient.prototype = {
         }
         if (requestData) {
             method.setRequestBody(JSON.stringify(requestData));
-            method.addRequestHeader('Content-Type', 'application/json');
+            method.addRequestHeader('Content-Type', 'application/json; charset=utf-8');
         }
+
         try {
             this.client.executeMethod(method);
-            var responseBody = method.getResponseBodyAsString();
+            var responseBody = method.getResponseBody();
+
+            if (responseBody)
+                responseBody = IOUtils.toString(responseBody, "UTF-8");
+            else
+                responseBody = method.getResponseBodyAsString();
+
             var responseCode = parseInt(method.getStatusCode());
             var getMethodResponseHeaders = method.getResponseHeaders();
             var responseHeaders = {};
@@ -116,8 +149,9 @@ IllumioHTTPClient.prototype = {
             }
 
             retryCount = (typeof retryCount == 'undefined') ? this.httpRetryCount : retryCount;
-            if (retryCount <= 0 || (RETRY_CODES.indexOf(responseCode) == -1 && !(responseCode >= 500))) {
+            if (retryCount <= 0 || (RETRY_CODES.indexOf(responseCode) == -1 && responseCode < 500)) {
                 this.logger._error('Failed: HTTP' + method.getName() + ' Call, status: ' + responseCode);
+                this.logger._debug("Failure reason: " + method.getResponseBodyAsString());
                 return {
                     hasError: true,
                     status: responseCode
@@ -127,7 +161,7 @@ IllumioHTTPClient.prototype = {
             lastSleepTime = lastSleepTime ? lastSleepTime : 0;
             lastSleepTime = Math.min(this.httpRetryIntervalMax, lastSleepTime + this.httpRetryIntervalIncrement);
             if (responseCode == 429) {
-				var retryAfterHeader = responseHeaders['retry-after'];
+                var retryAfterHeader = responseHeaders['retry-after'];
                 if (retryAfterHeader) {
                     lastSleepTime = this.parseRetryAfterHeader(retryAfterHeader) || lastSleepTime;
                 }
@@ -230,7 +264,7 @@ IllumioHTTPClient.prototype = {
         if (isNaN(retryAfterSeconds)) {
             var retryAfterDate = new Date(retryAfter);
             if (retryAfterDate) {
-                retryAfterSeconds = Math.floor((retryAfterDate.getTime() - new Date().getTime())/1000);
+                retryAfterSeconds = Math.floor((retryAfterDate.getTime() - new Date().getTime()) / 1000);
             }
         }
         return retryAfterSeconds || 0;
@@ -241,14 +275,29 @@ IllumioHTTPClient.prototype = {
         <sys_class_name>ecc_agent_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 07:31:35</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
-        <sys_domain_path>/</sys_domain_path>
         <sys_id>6559a58adb4c6700dc9fabc5ca961943</sys_id>
+        <sys_mod_count>196</sys_mod_count>
         <sys_name>IllumioHTTPClient</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_6559a58adb4c6700dc9fabc5ca961943</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-21 10:30:33</sys_updated_on>
     </ecc_agent_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>6559a58adb4c6700dc9fabc5ca961943</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-20 09:55:00</sys_created_on>
+        <sys_id>7fd78ae4db821e502fcecafc139619dd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-20 09:55:00</sys_updated_on>
+        <table>ecc_agent_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

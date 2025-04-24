@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description>This script is introduced in the Illumio v2.0.0. &#13;
+We introduced the support of multiple label dimensions and introduced new tables and deprecated the old tables. To prevent the loss of existing data present in the old tables, we introduced the fix scripts to migrate the data present in the tables, while upgrading to the new version.</description>
+        <name>Migrate configurations</name>
+        <record_for_rollback>false</record_for_rollback>
+        <script><![CDATA[var labelDimensionObject = {}, configClassObject = {};
+var script = 
+"answer = function (sourceGr) {var cmdbGr = new GlideRecord('SOURCE_TABLE');cmdbGr.addQuery('HOST_NAME_FIELD', sourceGr.getValue('CURRENT_HOST_NAME_FIELD'));cmdbGr.setLimit(1);cmdbGr.query();if (cmdbGr.next()) {return cmdbGr.getValue('CI_FIELD');}return '';}(sourceGr);";
+
+// migrate critical group configurations
+function migrateCriticalGroupConfig(configGr) {
+
+    var criticalGroupConfigFields = {
+        "critical_label_group_application": "app",
+        "critical_label_group_environment": "env",
+        "critical_label_group_location": "loc",
+        "critical_label_group_role": "role"
+    };
+
+    var labelDimensionDetails = {
+        "app": {
+            "display_name_plural": "Applications",
+            "display_name_singular": "Application",
+            "label_type_initial": "A"
+        },
+        "env": {
+            "display_name_plural": "Environments",
+            "display_name_singular": "Environment",
+            "label_type_initial": "E"
+        },
+        "loc": {
+            "display_name_plural": "Locations",
+            "display_name_singular": "Location",
+            "label_type_initial": "L"
+        },
+        "role": {
+            "display_name_plural": "Roles",
+            "display_name_singular": "Role",
+            "label_type_initial": "R"
+        }
+    };
+
+    var configSysId = configGr.getUniqueValue();
+    
+    for (var field in criticalGroupConfigFields) {
+        var dimensionSysId;
+        var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+        labelDimensionGr.addQuery("key", criticalGroupConfigFields[field]);
+        labelDimensionGr.addQuery("illumio_pce_configuration", configSysId);
+        labelDimensionGr.query();
+        if (!labelDimensionGr.next()) {
+            labelDimensionGr.initialize();
+            labelDimensionGr.setValue("key", criticalGroupConfigFields[field]);
+            for(var ldField in labelDimensionDetails[criticalGroupConfigFields[field]]) {
+                labelDimensionGr.setValue(ldField, labelDimensionDetails[criticalGroupConfigFields[field]][ldField]);
+            }
+            labelDimensionGr.setValue("illumio_pce_configuration", configSysId);
+            labelDimensionGr.setWorkflow(false);
+            dimensionSysId = labelDimensionGr.insert();
+        } else {
+            dimensionSysId = labelDimensionGr.getUniqueValue();
+        }
+
+        labelDimensionObject[criticalGroupConfigFields[field]] = dimensionSysId;
+
+        
+        var cmdbValue = configGr.getValue(field);
+        if (gs.nil(cmdbValue))
+            continue;
+
+        var criticalConfigGr = new GlideRecord("x_illu2_illumio_illumio_critical_label_group_configuration");
+        criticalConfigGr.setValue("illumio_pce_configuration", configSysId);
+        criticalConfigGr.setValue("label_group", cmdbValue);
+        criticalConfigGr.setValue("illumio_label_dimension", dimensionSysId);
+        criticalConfigGr.insert();
+    }
+}
+
+// migrate hostname mapping configuration
+function createHostNameMapping(fieldMapGr, configClassSysId) {
+
+    if (!gs.nil(fieldMapGr.getValue("host_name"))) {
+        var classFieldMapGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+        classFieldMapGr.setValue("ci_field", fieldMapGr.getValue("host_name"));
+        classFieldMapGr.setValue("type", "host_name");
+        classFieldMapGr.setValue("active", true);
+        classFieldMapGr.setValue("illumio_config_class_mapping", configClassSysId);
+        classFieldMapGr.insert();
+        configClassObject[configClassSysId]["hostName"] = fieldMapGr.getValue("host_name");
+    }
+}
+
+// migrate public ip address mapping configuration
+function createPublicIPMapping(fieldMapGr, configClassSysId) {
+    
+    var field = fieldMapGr.getValue("ip_address");
+    if (!gs.nil(field)) {
+        var classFieldMapGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+        classFieldMapGr.setValue("ci_field", field);
+        classFieldMapGr.setValue("type", "public_ip_address");
+        classFieldMapGr.setValue("active", true);
+        classFieldMapGr.setValue("illumio_config_class_mapping", configClassSysId);
+        classFieldMapGr.insert();
+
+        // prepare script to add configuration in other configured cmdb classes
+        var tempScript = script;
+        tempScript = tempScript.replace("SOURCE_TABLE", fieldMapGr.getValue("servicenow_source_table"));
+        tempScript = tempScript.replace("HOST_NAME_FIELD", fieldMapGr.getValue("host_name"));
+        tempScript = tempScript.replace("CI_FIELD", field);
+        configClassObject[configClassSysId]["publicIP"] = tempScript;
+    }
+
+}
+
+// migrate label dimension mapping configuration
+function createLabelDimensionMapping(fieldMapGr, configClassSysId) {
+    var fieldObject = {
+        "app": "application",
+        "loc": "location",
+        "role": "role",
+        "env": "environment"
+    };
+
+    for (var key in fieldObject) {
+        var field = fieldMapGr.getValue(fieldObject[key]);
+
+        if (!gs.nil(field)) {
+            var classFieldMapGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+            classFieldMapGr.setValue("ci_field", field);
+            classFieldMapGr.setValue("type", "label_dimension");
+            classFieldMapGr.setValue("active", true);
+            classFieldMapGr.setValue("illumio_config_class_mapping", configClassSysId);
+            classFieldMapGr.setValue("illumio_label_dimension", labelDimensionObject[key]);
+            classFieldMapGr.insert();
+
+            // prepare script to add configuration in other configured cmdb classes
+            var tempScript = script;
+            tempScript = tempScript.replace("SOURCE_TABLE", fieldMapGr.getValue("servicenow_source_table"));
+            tempScript = tempScript.replace("HOST_NAME_FIELD", fieldMapGr.getValue("host_name"));
+            tempScript = tempScript.replace("CI_FIELD", field);
+            configClassObject[configClassSysId]["labelDimension"][labelDimensionObject[key]] = tempScript;
+        }
+    }
+}
+
+// migrate ip address mapping configuration
+function createIPMapping(fieldMapGr, configClassSysId) {
+
+    for (var ipIndex = 1; ipIndex<=32; ipIndex++) {
+        var field = fieldMapGr.getValue("ip_address_" + ipIndex);
+        if (!gs.nil(field)) {
+            var classFieldMapGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+            classFieldMapGr.setValue("ci_field", field);
+            classFieldMapGr.setValue("type", "ip_address");
+            classFieldMapGr.setValue("active", true);
+            classFieldMapGr.setValue("illumio_config_class_mapping", configClassSysId);
+            classFieldMapGr.insert();
+
+            // prepare script to add configuration in other configured cmdb classes
+            var tempScript = script;
+            tempScript = tempScript.replace("SOURCE_TABLE", fieldMapGr.getValue("servicenow_source_table"));
+            tempScript = tempScript.replace("HOST_NAME_FIELD", fieldMapGr.getValue("host_name"));
+            tempScript = tempScript.replace("CI_FIELD", field);
+            configClassObject[configClassSysId]["ipAddress"]["ip_address_" + ipIndex] = tempScript;
+        }
+    }
+}
+
+// migrate config class mapping
+function createConfigClass(configSysId) {
+
+    var fieldMappingObject = {
+        "servicenow_source_table": "source_table",
+        "set_user_configurable_sort_order": "user_configurable_sort_order",
+        "conditions_for_retired_workloads": "conditions_for_excluding_workloads",
+        "conditions_for_deleting_workloads": "conditions_for_deleting_workloads",
+        "pce_configuration": "illumio_pce_configuration",
+        "order": "order",
+        "order_by_column_name": "order_by_column_name",
+    };
+
+    var fieldMapGr = new GlideRecord("x_illu2_illumio_illumio_pce_field_mapping");
+    fieldMapGr.addQuery("pce_configuration", configSysId);
+    fieldMapGr.query();
+    while (fieldMapGr.next()) {
+        
+        var configClassGr = new GlideRecord("x_illu2_illumio_illumio_config_class_mapping");
+        configClassGr.initialize();
+        configClassGr.setValue("active", true);
+
+        for(var field in fieldMappingObject) {
+            configClassGr.setValue(fieldMappingObject[field], fieldMapGr.getValue(field));
+        }
+
+        var configClassSysId = configClassGr.insert();
+        configClassObject[configClassSysId] = {};
+        configClassObject[configClassSysId]["labelDimension"] = {};
+        configClassObject[configClassSysId]["ipAddress"] = {};
+
+        createLabelDimensionMapping(fieldMapGr, configClassSysId);
+        createIPMapping(fieldMapGr, configClassSysId);
+        createPublicIPMapping(fieldMapGr, configClassSysId);
+        createHostNameMapping(fieldMapGr, configClassSysId);
+    }
+}
+
+// insert class field mappings for cross class configuration support 
+function insertClassFieldMap(type, configClassSysId, scriptContent, labelDimensionSysId) {
+    
+    var classFieldMapGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+    classFieldMapGr.setValue("advanced", true);
+    classFieldMapGr.setValue("type", type);
+    classFieldMapGr.setValue("active", true);
+    classFieldMapGr.setValue("illumio_config_class_mapping", configClassSysId);
+    if (type == "label_dimension")
+        classFieldMapGr.setValue("illumio_label_dimension", labelDimensionSysId);
+    classFieldMapGr.setValue("script", scriptContent);
+    classFieldMapGr.insert();
+}
+
+// prepare script for cross class label dimension configuration
+function evaluateScriptObjectForLabelDimension(parentSysId, configClassSysId) {
+
+    for (var key in configClassObject[parentSysId]["labelDimension"]) {
+        var tempScript = configClassObject[parentSysId]["labelDimension"][key];
+        tempScript = tempScript.replace("CURRENT_HOST_NAME_FIELD", configClassObject[configClassSysId]["hostName"]);
+        insertClassFieldMap("label_dimension", configClassSysId, tempScript, key);
+
+    }
+        
+}
+
+// prepare script for cross class ip address configuration
+function evaluateScriptObjectForIP(parentSysId, configClassSysId) {
+    
+    for (var key in configClassObject[parentSysId]["ipAddress"]) {
+
+        var tempScript = configClassObject[parentSysId]["ipAddress"][key];
+        tempScript = tempScript.replace("CURRENT_HOST_NAME_FIELD", configClassObject[configClassSysId]["hostName"]);
+        insertClassFieldMap("ip_address", configClassSysId, tempScript);
+    }
+
+}
+
+// prepare script for cross class public ip address configuration
+function evaluateScriptObjectForPublicIP(parentSysId, configClassSysId) {
+    
+    var tempScript = configClassObject[parentSysId]["publicIP"];
+    if (!gs.nil(tempScript)) {
+        tempScript = tempScript.replace("CURRENT_HOST_NAME_FIELD", configClassObject[configClassSysId]["hostName"]);
+        insertClassFieldMap("public_ip_address", configClassSysId, tempScript);
+    }
+}
+
+function evaluateConfigClassObject() {
+    for(var parentSysId in configClassObject) {
+        for ( var configClassSysId in configClassObject) {
+            if (parentSysId == configClassSysId)
+                continue;
+
+            evaluateScriptObjectForLabelDimension(parentSysId, configClassSysId);
+            evaluateScriptObjectForIP(parentSysId, configClassSysId);
+            evaluateScriptObjectForPublicIP(parentSysId, configClassSysId);
+        }
+    }
+}
+
+function startMigration() {
+    try {
+        var configGr = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+        configGr.setLimit(1);
+        configGr.query();
+        if (configGr.next()) {        
+            gs.info("[FIX SCRIPT] Started migration of Critical Label Group Configuration");
+            migrateCriticalGroupConfig(configGr);
+
+            gs.info("[FIX SCRIPT] Started migration of Illumio PCE Field Mappings");
+            createConfigClass(configGr.getUniqueValue());
+
+            evaluateConfigClassObject();
+			
+			configGr.setValue("cancel_job_on_limit_exceed", true);
+			configGr.update();
+
+            gs.info("[FIX SCRIPT] Completed migration of all configurations");
+        } else {
+            gs.info("[FIX SCRIPT] There is no Illumio PCE Configuration found");
+        }
+    } catch (ex) {
+        gs.error("[FIX SCRIPT] Error while executing fix script Migrate configurations", ex);
+    }
+}
+
+startMigration();
+]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-29 08:02:10</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>67b61ea097d90e50b7daf896f053afb1</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Migrate configurations</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_fix_67b61ea097d90e50b7daf896f053afb1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 07:36:05</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>67b61ea097d90e50b7daf896f053afb1</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 07:36:04</sys_created_on>
+        <sys_id>71215c05db4b5a102fcecafc139619bd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 07:36:04</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

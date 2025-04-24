@@ -3,14 +3,18 @@
         <sys_class_name>sys_security_acl_role</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-19 10:10:21</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>420709cadb686050223ef5361d96192d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>.x_illu2_illumio.mid_server_user</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_security_acl display_value="x_illu2_illumio_illumio_servicenow_servers.pce_ip_address_2">ca0709cadb686050223ef5361d96192c</sys_security_acl>
         <sys_update_name>sys_security_acl_role_420709cadb686050223ef5361d96192d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-11-19 10:10:21</sys_updated_on>
         <sys_user_role display_value="x_illu2_illumio.mid_server_user" name="x_illu2_illumio.mid_server_user">be30962bdbf8674033c1a026ca9619c5</sys_user_role>
-        <transaction_id/>
     </sys_security_acl_role>
 </record_update>

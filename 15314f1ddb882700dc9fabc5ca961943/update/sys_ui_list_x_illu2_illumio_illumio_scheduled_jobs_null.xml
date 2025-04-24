@@ -3,62 +3,92 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>job_type</element>
-            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">45ad304cdbd3401015543cae7c961930</list_id>
+            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">775f4fc847a94e1066773e7d826d4332</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
             <sum>false</sum>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2020-02-26 04:51:50</sys_created_on>
-            <sys_id>49ad304cdbd3401015543cae7c961931</sys_id>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_id>335f4fc847a94e1066773e7d826d4333</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-02-26 04:51:50</sys_updated_on>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
-            <element>current_operation</element>
-            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">45ad304cdbd3401015543cae7c961930</list_id>
+            <element>illumio_pce_configuration</element>
+            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">775f4fc847a94e1066773e7d826d4332</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>1</position>
             <sum>false</sum>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2020-02-26 04:51:50</sys_created_on>
-            <sys_id>05ad304cdbd3401015543cae7c961932</sys_id>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_id>b35f4fc847a94e1066773e7d826d4333</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-02-26 04:51:50</sys_updated_on>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
-            <element>job_status</element>
-            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">45ad304cdbd3401015543cae7c961930</list_id>
+            <element>current_operation</element>
+            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">775f4fc847a94e1066773e7d826d4332</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>2</position>
             <sum>false</sum>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2020-02-26 04:51:50</sys_created_on>
-            <sys_id>85ad304cdbd3401015543cae7c961932</sys_id>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_id>375f4fc847a94e1066773e7d826d4333</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-02-26 04:51:50</sys_updated_on>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
-            <element>job_started</element>
-            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">45ad304cdbd3401015543cae7c961930</list_id>
+            <element>job_status</element>
+            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">775f4fc847a94e1066773e7d826d4332</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>3</position>
             <sum>false</sum>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2020-02-26 04:51:50</sys_created_on>
-            <sys_id>09ad304cdbd3401015543cae7c961932</sys_id>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_id>b75f4fc847a94e1066773e7d826d4333</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2020-02-26 04:51:50</sys_updated_on>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>job_started</element>
+            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">775f4fc847a94e1066773e7d826d4332</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_id>3b5f4fc847a94e1066773e7d826d4333</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>job_completed</element>
+            <list_id display_value="x_illu2_illumio_illumio_scheduled_jobs" element="NULL" name="x_illu2_illumio_illumio_scheduled_jobs" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">775f4fc847a94e1066773e7d826d4332</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_id>bb5f4fc847a94e1066773e7d826d4333</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
         </sys_ui_list_element>
         <sys_ui_list action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
@@ -72,15 +102,20 @@
             <sum>false</sum>
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2020-02-26 04:51:50</sys_created_on>
+            <sys_created_on>2024-04-09 09:07:53</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>45ad304cdbd3401015543cae7c961930</sys_id>
+            <sys_id>775f4fc847a94e1066773e7d826d4332</sys_id>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>x_illu2_illumio_illumio_scheduled_jobs</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_list_x_illu2_illumio_illumio_scheduled_jobs_null</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-04-09 09:07:53</sys_updated_on>
             <sys_user/>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>

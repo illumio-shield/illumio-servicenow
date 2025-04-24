@@ -3,11 +3,11 @@
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>500336f8c37219103b70241ce0013158</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>2833c72647f1065066773e7d826d43f0</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <text>&lt;html&gt;&#13;
 &lt;head&gt;&#13;
 &lt;style&gt;&#13;
@@ -28,9 +28,9 @@
 &lt;p&gt;&lt;/p&gt;&#13;
 &lt;p&gt;&lt;b&gt;Retry Mechanism:&lt;/b&gt; &lt;/p&gt;&#13;
 &lt;ol&gt;&lt;li&gt;Retry Mechanism is being used with a backoff time whenever server error or error with code 429 occurs.&lt;/li&gt;&#13;
-&lt;li&gt;HTTP Retry Count: This is the maximum number of times the app will attempt to synch if the initial attempt fails. Valid values are in the range from 0 to 100&lt;/li&gt;&#13;
-&lt;li&gt;HTTP Retry interval increment (seconds): This is the starting value of the time (in seconds) between retry attempts, as well as the incremental increase in the interval between retries.  Valid values  are in the range from 0 to 600&lt;/li&gt;&#13;
-&lt;li&gt;HTTP Retry interval max (seconds): This is the maximum time (in seconds) between retry attempts. Valid values are in the range from 0 to 600&lt;/li&gt;&#13;
+&lt;li&gt;HTTP Retry Count: This is the maximum number of times the app will attempt to sync if the initial attempt fails. Valid values are in the range from 0 to 100.&lt;/li&gt;&#13;
+&lt;li&gt;HTTP Retry interval increment (seconds): This is the starting value of the time (in seconds) between retry attempts, as well as the incremental increase in the interval between retries.  Valid values  are in the range from 0 to 600.&lt;/li&gt;&#13;
+&lt;li&gt;HTTP Retry interval max (seconds): This is the maximum time (in seconds) between retry attempts. Valid values are in the range from 0 to 600.&lt;/li&gt;&#13;
 &lt;/ol&gt;&#13;
 &#13;
 &#13;
@@ -42,13 +42,13 @@
             <element>http_retry_count</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>580336f8c37219103b70241ce001315e</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>a033cf2647f1065066773e7d826d43fa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -56,13 +56,13 @@
             <element>.split</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>100336f8c37219103b70241ce001315f</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>2833cf2647f1065066773e7d826d43fa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
@@ -70,13 +70,13 @@
             <element>http_retry_interval_max</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>900336f8c37219103b70241ce001315f</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>a833cf2647f1065066773e7d826d43fa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -84,13 +84,13 @@
             <element>http_retry_interval_increment</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>140336f8c37219103b70241ce001315f</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>2c33cf2647f1065066773e7d826d43fa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -98,27 +98,27 @@
             <element>.end_split</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>940336f8c37219103b70241ce001315f</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>ac33cf2647f1065066773e7d826d43fa</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <sys_user/>
             <type>.end_split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>500336f8c37219103b70241ce0013158</element>
+            <element>2833c72647f1065066773e7d826d43f0</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-10-25 05:44:25</sys_created_on>
-            <sys_id>180336f8c37219103b70241ce001315f</sys_id>
+            <sys_created_on>2024-04-29 12:55:12</sys_created_on>
+            <sys_id>2033cf2647f1065066773e7d826d43fb</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Retry Mechanism" display_value="Retry Mechanism" name="x_illu2_illumio_illumio_pce_conf" sys_domain="global" view="Default view">d755097687d91d90d7a34046cebb3547</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-10-25 05:44:25</sys_updated_on>
+            <sys_updated_on>2024-04-29 12:55:12</sys_updated_on>
             <sys_user/>
             <type>annotation</type>
         </sys_ui_element>
@@ -130,15 +130,20 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-08-17 13:19:03</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>d755097687d91d90d7a34046cebb3547</sys_id>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>x_illu2_illumio_illumio_pce_conf</sys_name>
             <sys_overrides/>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_section_d755097687d91d90d7a34046cebb3547</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-08-17 13:19:03</sys_updated_on>
             <sys_user/>
             <title>false</title>
             <view display_value="Default view" name="NULL">Default view</view>

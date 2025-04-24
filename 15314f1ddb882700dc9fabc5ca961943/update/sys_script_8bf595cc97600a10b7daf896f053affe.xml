@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_illu2_illumio_illumio_label_dimension</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Validate Label Dimension</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+    var valid = true;
+    var labelDimensionGr;
+    if (current.operation() == "insert") {
+        // Check if a label dimension record with the same key already exists on the table
+        labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+        labelDimensionGr.addQuery("key", current.getValue("key"));
+        labelDimensionGr.addQuery("illumio_pce_configuration", current.illumio_pce_configuration);
+        labelDimensionGr.setLimit(1);
+        labelDimensionGr.query();
+        if (labelDimensionGr.next()) {
+            valid = false;
+            gs.addErrorMessage("A label dimension with the key \"" + current.key + "\" already exists.");
+            current.setAbortAction(true);
+        }
+    }
+
+    // Check if the length of the label type initial of label dimension is not greater than 2
+    if (current.getValue("label_type_initial").length > 2) {
+        valid = false;
+        gs.addErrorMessage("The label type initial should be upto 2 characters only.");
+        current.setAbortAction(true);
+    }
+
+    // Check if a label dimension with the same label type initial already exists on the table
+    labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+	labelDimensionGr.addQuery("sys_id",'!=',current.getUniqueValue("sys_id"));
+    labelDimensionGr.addQuery("label_type_initial", current.getValue("label_type_initial"));
+    labelDimensionGr.addQuery("illumio_pce_configuration", current.illumio_pce_configuration);
+    labelDimensionGr.setLimit(1);
+    labelDimensionGr.query();
+    if (labelDimensionGr.next()) {
+        valid = false;
+        gs.addErrorMessage("A label dimension with the label type initial \"" + current.getValue("label_type_initial") + "\" already exists.");
+        current.setAbortAction(true);
+    }
+
+    if (valid) {
+        if (current.operation() == "insert") {
+            gs.addInfoMessage("Syncing newly created label dimension on Illumio PCE. The href would be populated once the sync completes.");
+        } else if (current.operation() == "update") {
+            gs.addInfoMessage("Syncing label dimension changes on Illumio PCE.");
+        }
+    }
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-19 07:15:13</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8bf595cc97600a10b7daf896f053affe</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Validate Label Dimension</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_8bf595cc97600a10b7daf896f053affe</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-09 11:26:17</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=8bf595cc97600a10b7daf896f053affe"/>
+</record_update>
