@@ -31,7 +31,12 @@
         <onclick>doSyncWithPCE()</onclick>
         <order>100</order>
         <script><![CDATA[function doSyncWithPCE() {
-    var gaCustomTableData, dialog,checkedRecordsObject = {}, checkedRecordsData={}, answer, sys_id, totalRecordsToSync, count = 0,configSysId=[],selectedRecordObject = {}, instanceURL;
+    var gaCustomTableData, dialog, checkedRecordsObject = {},
+        checkedRecordsData = {},
+        answer, sys_id, totalRecordsToSync, count = 0,
+        configSysId = [],
+        selectedRecordObject = {},
+        instanceURL;
     var userName = g_user.firstName + " " + g_user.lastName;
     sys_id = g_form.getUniqueValue();
     configSysId = g_form.getValue('illumio_pce_configuration');
@@ -43,22 +48,22 @@
     loadingDialog.renderWithContent(
         '<html><body><div class="row loading-container" id="loadingDialog"><label style="font-size: medium;">Validating Sync process...</label><br /><div class="loading-indicator icon-loading icon-lg"></div></div></html>'
     );
-        gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
-        gaCustomTableData.addParam("sysparm_name", "fetchCriticalLabels");
-        gaCustomTableData.addParam("sysparm_config_sys_ids",JSON.stringify([configSysId]) ); 
-        gaCustomTableData.getXML(gaParseResponse);
+    gaCustomTableData = new GlideAjax("GetLabelGroupsAjax");
+    gaCustomTableData.addParam("sysparm_name", "fetchCriticalLabels");
+    gaCustomTableData.addParam("sysparm_config_sys_ids", JSON.stringify([configSysId]));
+    gaCustomTableData.getXML(gaParseResponse);
+
     function gaParseResponse(response) {
         answer = response.responseXML.documentElement.getAttribute("answer");
-            var responseDict = JSON.parse(answer); 
-            if (!responseDict.status) { 
-                var message = "Cannot start data sync process as MID Server is either down or not responding for PCE Configuration(s) - " + responseDict["failedConfigurations"].join(", ");
-                loadingDialog.destroy();
-                dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                dialog.setTitle(message);
-                dialog.render();
-                return;
-            }
-            excludeWorkloads();
+        var responseDict = JSON.parse(answer);
+        if (!responseDict.status) {
+            var message = "Cannot start data sync process for PCE Configuration(s) - " + responseDict["failedConfigurations"].join(", ") + ". Please check application logs.";loadingDialog.destroy();
+            dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+            dialog.setTitle(message);
+            dialog.render();
+            return;
+        }
+        excludeWorkloads();
     }
 
     function excludeWorkloads() {
@@ -77,7 +82,7 @@
 
             answer = JSON.parse(answer);
             totalRecordsToSync = answer.totalRecords;
-            checkedRecordsObject =  answer.filteredRecords;
+            checkedRecordsObject = answer.filteredRecords;
             getLabelGroupsCount();
         }
     }
@@ -85,7 +90,7 @@
     function getLabelGroupsCount() {
         gaCustomTableData = new GlideAjax('GetLabelGroupsAjax');
         gaCustomTableData.addParam('sysparm_name', 'countCriticalGroupsFetched');
-        gaCustomTableData.addParam("sysparm_config_sys_ids",JSON.stringify([configSysId]) );
+        gaCustomTableData.addParam("sysparm_config_sys_ids", JSON.stringify([configSysId]));
         gaCustomTableData.getXML(gaParseLCResponse);
 
         function gaParseLCResponse(response) {
@@ -127,13 +132,13 @@
             preparePayloadForWorkload();
         }
 
-            function preparePayloadForWorkload() {
-                if (totalRecordsToSync == 0) {
-                    dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-                    dialog.setTitle("No valid workload is selected. Please select the workload which is not marked as duplicate and have conflicts.");
-                    dialog.render();
-                    return false;
-                }
+        function preparePayloadForWorkload() {
+            if (totalRecordsToSync == 0) {
+                dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+                dialog.setTitle("No valid workload is selected. Please select the workload which is not marked as duplicate and have conflicts.");
+                dialog.render();
+                return false;
+            }
 
             gaParseLabelsResponse(checkedRecordsData[configSysId][0]);
             /**
@@ -214,7 +219,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>27cb224edbcc6700dc9fabc5ca961949</sys_id>
-        <sys_mod_count>254</sys_mod_count>
+        <sys_mod_count>255</sys_mod_count>
         <sys_name>Sync Server to PCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -223,7 +228,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_27cb224edbcc6700dc9fabc5ca961949</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-20 18:32:10</sys_updated_on>
+        <sys_updated_on>2025-03-24 09:23:45</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>

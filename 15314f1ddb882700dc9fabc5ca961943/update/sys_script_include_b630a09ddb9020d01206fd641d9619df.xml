@@ -76,12 +76,33 @@ IllumioUtils.prototype = {
      */
     parseLabelsInResponse: function(criticalGroupConfig, response, pceConfig) {
         var labelGroupGr;
+        var counter = 0;
+        for (var index = 0; index < response.length; index++) {
+            if (
+                criticalGroupConfig[response[index].key] &&
+                criticalGroupConfig[response[index].key]["groupName"] ==
+                response[index].name
+            ) {
+                criticalGroupConfig[response[index].key]['visited'] = true;
+                counter++;
+            }
+        }
+        for (var type in criticalGroupConfig) {
+            if (!criticalGroupConfig[type]['visited']) {
+                gs.info('The Critical Label Group ({0}) for the Configuration named {1} does not match any label groups at PCE', [criticalGroupConfig[type]['groupName'], pceConfig.getDisplayValue()]);
+            }
+        }
+        //If any invalid Critical Group Configuration is found, we will terminate the process
+        if (counter != Object.keys(criticalGroupConfig).length) {
+            throw new Error("[parseLabelsInResponse]Invalid Critical Group Configuration(s) Found");
+        }
+
 
         for (var resIndex = 0; resIndex < response.length; resIndex++) {
             if (
                 criticalGroupConfig[response[resIndex].key] &&
-                criticalGroupConfig[response[resIndex].key]["groupName"].toUpperCase() ==
-                response[resIndex].name.toUpperCase()
+                criticalGroupConfig[response[resIndex].key]["groupName"] ==
+                response[resIndex].name
             ) {
                 criticalGroupConfig[response[resIndex].key]['visited'] = true;
                 for (var labelIndex = 0; labelIndex < response[resIndex].labels.length; labelIndex++) {
@@ -100,11 +121,7 @@ IllumioUtils.prototype = {
                 }
             }
         }
-        for (var type in criticalGroupConfig) {
-            if (!criticalGroupConfig[type]['visited']) {
-                gs.info('The Critical Label Group ({0}) for the Configuration named {1} does not match any label groups at PCE', [criticalGroupConfig[type]['groupName'], pceConfig.getDisplayValue()]);
-            }
-        }
+
     },
 
 
@@ -123,54 +140,39 @@ IllumioUtils.prototype = {
             var criticalGroupConfig = this.getCritical(pceConfig.getUniqueValue());
 
             if (!gs.nil(criticalGroupConfig)) {
-                var fetchLabelGroups = new sn_ws.RESTMessageV2(
-                    'IllumioFetchLabelGroups',
-                    'GetLabelGroups'
-                );
-                var pce_authorization = gs.base64Encode(
-                    pceConfig.username.getDecryptedValue() +
-                    ':' +
-                    pceConfig.secret_key.getDecryptedValue()
-                );
-
-                fetchLabelGroups.setRequestHeader(
-                    'Authorization',
-                    'Basic ' + pce_authorization
-                );
-
-                fetchLabelGroups.setRequestHeader('User-Agent', 'servicenow');
-
-                fetchLabelGroups.setStringParameter(
-                    'url',
-                    pceConfig.pce_url + ''
-                );
-                fetchLabelGroups.setStringParameter(
-                    'orgID',
-                    (pceConfig.organization_id || '1') + ''
-                );
-
-                fetchLabelGroups.setMIDServer(pceConfig.mid_server.name + '');
-
-                fetchLabelGroups.setEccParameter('skip_sensor', 'true');
-                if (pceConfig.mid_server.status + '' == 'down') {
+                if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                     return false;
                 }
-                var response = fetchLabelGroups.executeAsync();
-                var response_status = response.getStatusCode();
 
-                if (response_status == 200 || response_status == 201) {
-                    response = JSON.parse(response.getBody());
+                var inputs = {};
+                inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf
+                inputs['query_parameters'] = "";
+
+                var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_groups').inForeground().withInputs(inputs).timeout(actionTimeout).run();
+                var outputs = result.getOutputs();
+
+                var statusCode = outputs['status'];
+                var headers = outputs['headers'];
+                var response = outputs['response'];
+
+                if (statusCode == 200 || statusCode == 201) {
+                    response = JSON.parse(response);
 
                     this.parseLabelsInResponse(
                         criticalGroupConfig,
                         response,
                         pceConfig
                     );
+                    return true;
                 }
+                return false;
             }
             return true;
         } catch (ex) {
-            gs.error('Exception while fetching data from PCE. Error', ex);
+            gs.error('Exception while fetching data from PCE. ', ex);
+            return false;
         }
     },
 
@@ -422,7 +424,7 @@ IllumioUtils.prototype = {
                 cmdbIndex++;
             }
         } catch (ex) {
-            gs.error("[getInterfacesObject] Exception occured while generating valid interfaces object. Exception", ex);
+            gs.error("[getInterfacesObject] Exception occurred while generating valid interfaces object. Exception", ex);
         } finally {
             return {
                 interfaces: interfaces,
@@ -663,7 +665,7 @@ IllumioUtils.prototype = {
     queryCaseSensitiveGr: function(tableGr, key, value, targetField) {
 
         while (tableGr.next()) {
-            gs.info("Key in the IllumioUtils QueryCaseSesnsitive" + key);
+            gs.info("Key in the IllumioUtils QueryCaseSensitive" + key);
             if (tableGr.getValue(key) == value) {
                 return {
                     found: true,
@@ -742,22 +744,23 @@ IllumioUtils.prototype = {
             };
 
             if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                 return returnDict;
             }
 
             var inputs = {};
             inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
-                    
+
             // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
-            var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_dimensions').inForeground().withInputs(inputs).run();
+            var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+            var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.fetch_label_dimensions').inForeground().withInputs(inputs).timeout(actionTimeout).run();
             var outputs = result.getOutputs();
-    
+
             // Get Outputs:
             returnDict["statusCode"] = outputs['variable']; // String
             returnDict["response"] = JSON.parse(outputs['variable1']); // JSON
             returnDict["status"] = true;
-                
+
         } catch (exc) {
             gs.error("Exception while making the API call to get the label dimensions for PCE configuration " + pceConfig.getValue("name") + ". Error - " + exc);
         }
@@ -792,7 +795,7 @@ IllumioUtils.prototype = {
             labelDimensionGr.setWorkflow(false);
             labelDimensionGr.update();
         } catch (exc) {
-            gs.warn("Error occured while creating/updating the record for Label Dimension " + details["key"] + ". ");
+            gs.warn("Error occurred while creating/updating the record for Label Dimension " + details["key"] + ". ");
         }
     },
 
@@ -921,7 +924,7 @@ IllumioUtils.prototype = {
             var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                    gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                     returnDict["status"] = false;
                     return returnDict;
                 }
@@ -934,13 +937,14 @@ IllumioUtils.prototype = {
                         "display_name_plural": labelDimensionData["display_name_plural"]
                     }
                 };
-                
+
                 var inputs = {};
                 inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
                 inputs['request_body'] = JSON.stringify(requestBody); // JSON 
 
                 // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
-                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.create_label_dimensions').inForeground().withInputs(inputs).run();
+                var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.create_label_dimensions').inForeground().withInputs(inputs).timeout(actionTimeout).run();
                 var outputs = result.getOutputs();
 
                 // Get Outputs:
@@ -975,7 +979,7 @@ IllumioUtils.prototype = {
             var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
-                    gs.error("The configured MID Server with configuration record " + pceConfig.getUniqueValue() + " is down.");
+                    gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
                     return false;
                 }
 
@@ -986,14 +990,15 @@ IllumioUtils.prototype = {
                         "display_name_plural": labelDimensionData["display_name_plural"]
                     },
                 };
-                
+
                 var inputs = {};
                 inputs['pce_configuration'] = pceConfig; // GlideRecord of table: x_illu2_illumio_illumio_pce_conf 
                 inputs['label_dimension_href'] = labelDimensionData["href"]; // String 
                 inputs['request_body'] = JSON.stringify(body); // JSON 
 
                 // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
-                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.update_label_dimensions').inForeground().withInputs(inputs).run();
+                var actionTimeout = gs.getProperty('x_illu2_illumio.flow_action_timeout') || 30000;
+                var result = sn_fd.FlowAPI.getRunner().action('x_illu2_illumio.update_label_dimensions').inForeground().withInputs(inputs).timeout(actionTimeout).run();
                 var outputs = result.getOutputs();
 
                 // Get Outputs:
@@ -1118,7 +1123,7 @@ IllumioUtils.prototype = {
                             }
                         }
                     } catch (err) {
-                        gs.info("Exception occured while preparing workload object. Error", err);
+                        gs.info("Exception occurred while preparing workload object. Error", err);
                     }
                 }
             }
@@ -1276,15 +1281,15 @@ IllumioUtils.prototype = {
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>418</sys_mod_count>
+        <sys_mod_count>429</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-24 09:26:13</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

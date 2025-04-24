@@ -30,10 +30,10 @@ IllumioManageAsyncJobs.prototype = {
         this.batchSize = parseInt(this.batchSize, 10) || this._fallbackDefaultBatchSize;
         if (this.batchSize < 1) {
             this.logger._warning(
-				"Invalid 'x_illu2_illumio.payload.batch.size' provided. Proceeding with " 
-				+ this._fallbackDefaultBatchSize 
-				+ " as default value. Please set a valid value to 'x_illu2_illumio.payload.batch.size' property."
-			);
+                "Invalid 'x_illu2_illumio.payload.batch.size' provided. Proceeding with " +
+                this._fallbackDefaultBatchSize +
+                " as default value. Please set a valid value to 'x_illu2_illumio.payload.batch.size' property."
+            );
             this.batchSize = this._fallbackDefaultBatchSize;
         }
 
@@ -328,7 +328,7 @@ IllumioManageAsyncJobs.prototype = {
                     );
                     return false;
                 }
-				this.logger._debug("Pending " + job_identifier + " to be written:" + resultData.length);
+                this.logger._debug("Pending " + job_identifier + " to be written:" + resultData.length);
             }
             this.logger._info('IllumioManageAsyncJobs - Posted all records to SNOW');
             return true;
@@ -404,7 +404,7 @@ IllumioManageAsyncJobs.prototype = {
                         jobRecord[key] = jobContent[key];
                     } else {
                         jobRecord["logs"] = jobRecord["logs"].replaceAll("\\n", "\n");
-                        jobRecord["logs"] += '\n' + '[' + this.illumioDateFormat.format(new Date()) + ']' + jobContent["logs"];
+                        jobRecord["logs"] += '\n' + '[' + this.illumioDateFormat.format(new Date()) + '] ' + jobContent["logs"];
 
                     }
                 }
@@ -438,7 +438,7 @@ IllumioManageAsyncJobs.prototype = {
         <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_id>63973142db8c6700dc9fabc5ca961947</sys_id>
-        <sys_mod_count>87</sys_mod_count>
+        <sys_mod_count>88</sys_mod_count>
         <sys_name>IllumioManageAsyncJobs</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -446,8 +446,8 @@ IllumioManageAsyncJobs.prototype = {
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_63973142db8c6700dc9fabc5ca961947</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-01-29 09:45:08</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-21 10:11:40</sys_updated_on>
     </ecc_agent_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>63973142db8c6700dc9fabc5ca961947</id>

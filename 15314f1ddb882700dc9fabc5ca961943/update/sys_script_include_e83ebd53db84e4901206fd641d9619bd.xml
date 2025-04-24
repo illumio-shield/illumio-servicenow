@@ -151,7 +151,7 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
 
                 });
             } catch (ex) {
-                gs.error("[getCreateLabelCounter] exception occured while counting labels to create. Exception", ex);
+                gs.error("[getCreateLabelCounter] exception occurred while counting labels to create. Exception", ex);
                 return JSON.stringify({
                     hasError: true,
                     message: "Error while counting labels."
@@ -173,7 +173,7 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                 return JSON.stringify(thresholdLimit.checkThresholdLimit(configSysId, labelsToCreate, wlToModify, workloadToCreate));
 
             } catch (ex) {
-                gs.error("[checkThresholdLimit] Exception occured while checking threshold limit. Exception: " + ex);
+                gs.error("[checkThresholdLimit] Exception occurred while checking threshold limit. Exception: " + ex);
             }
         },
 
@@ -190,7 +190,7 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                 var response = utils.getInterfacesObject(workloadSysId, mappedFields.fields);
                 return JSON.stringify(response);
             } catch (ex) {
-                gs.error("[getValidatedInterfaces] Exception occured while generating valid interfaces object. Exception: " + ex);
+                gs.error("[getValidatedInterfaces] Exception occurred while generating valid interfaces object. Exception: " + ex);
             }
         },
 
@@ -203,7 +203,7 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                 var pceConfig = new IllumioGetPCEConfiguration().getConfiguration();
                 return JSON.stringify(pceConfig);
             } catch (ex) {
-                gs.error("[getConfigurationDetails] Exception occured while getting configuration details. Exception: " + ex);
+                gs.error("[getConfigurationDetails] Exception occurred while getting configuration details. Exception: " + ex);
             }
         },
 
@@ -261,7 +261,7 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
         <sys_created_on>2020-10-29 15:02:03</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>e83ebd53db84e4901206fd641d9619bd</sys_id>
-        <sys_mod_count>195</sys_mod_count>
+        <sys_mod_count>199</sys_mod_count>
         <sys_name>GetLabelGroupsAjax</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
@@ -269,6 +269,6 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_e83ebd53db84e4901206fd641d9619bd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-10 08:44:39</sys_updated_on>
+        <sys_updated_on>2025-03-24 06:10:13</sys_updated_on>
     </sys_script_include>
 </record_update>

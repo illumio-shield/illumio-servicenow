@@ -92,7 +92,7 @@ function updateJob(sys_id) {
                     stagingTableGr.deleteMultiple();
                     updateJob(current.sys_id);
                 } catch (ex) {
-                    gs.error("Exception Occured while creating workloads for mapping table: " + ex);
+                    gs.error("Exception occurred while creating workloads for mapping table: " + ex);
                 }
 
             } else {
@@ -114,7 +114,7 @@ function updateJob(sys_id) {
 
     } catch (e) {
         var jobContent = {
-            logs: "Exception occured while creating/getting the status of the async job " + e,
+            logs: "Exception occurred while creating/getting the status of the async job " + e,
             current_operation: "Fetching PCE data",
             job_status: "failed",
             job_completed: new GlideDateTime(),
@@ -132,7 +132,7 @@ function updateJob(sys_id) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>6db41282dbcc6700dc9fabc5ca96191f</sys_id>
-        <sys_mod_count>82</sys_mod_count>
+        <sys_mod_count>84</sys_mod_count>
         <sys_name>Illumio Poll PCE Async Job Status</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -141,7 +141,7 @@ function updateJob(sys_id) {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_6db41282dbcc6700dc9fabc5ca96191f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-21 09:58:21</sys_updated_on>
+        <sys_updated_on>2025-03-24 06:08:56</sys_updated_on>
         <template/>
         <when>async</when>
     </sys_script>
