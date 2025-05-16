@@ -19,7 +19,7 @@
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_properties_9a2711f5db18a0d01206fd641d961919</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-02-05 15:50:51</sys_updated_on>
         <type>integer</type>
         <value>10000</value>
