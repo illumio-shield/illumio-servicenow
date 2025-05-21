@@ -27,7 +27,6 @@ IllumioAutoSyncWithPCE.prototype = {
      * @params {string} illumioJobId Job Id of the scheduled job
      **/
     process: function(illumioJobId) {
-
         var utils = new IllumioUtils(),
             skippedWorkloads = 0,
             partial_success = "false",
@@ -36,7 +35,6 @@ IllumioAutoSyncWithPCE.prototype = {
             selectedRecordsObject = {};
 
         try {
-
             if (utils.getCancelledJobStatus(illumioJobId)) {
                 return;
             }
@@ -99,7 +97,6 @@ IllumioAutoSyncWithPCE.prototype = {
             var checkedRecordsObject = response.filteredRecords;
             var totalRecords = response.totalRecords;
             if (totalRecords < sysIds.length) {
-                partial_success = "true";
                 skippedWorkloads = sysIds.length - totalRecords;
             }
 
@@ -111,8 +108,7 @@ IllumioAutoSyncWithPCE.prototype = {
             var thresholdLimitLog = response.logMessage[configSysId];
 
             if (!cancelJobOnLimitExceed) {
-
-                //delete retired worklaods 
+                // Delete retired workloads
                 var retiredWorkloads = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
                 retiredWorkloads.addQuery('deleted_from_pce', true);
                 retiredWorkloads.addQuery("illumio_pce_configuration", configSysId);
@@ -120,7 +116,6 @@ IllumioAutoSyncWithPCE.prototype = {
 
                 // Generate the managed and unmanaged workloads' list
                 for (var index = 0, len = checkedRecordsData.length; index < len; index++) {
-
                     var workloadObject = checkedRecordsData[index];
 
                     if (checkedRecordsData[index]["known_to_pce"] == "managed") {
@@ -149,7 +144,6 @@ IllumioAutoSyncWithPCE.prototype = {
 
                         this.unManagedWorkloadsList.push(workloadObject);
                         counter = this.addObjectToPayload(false, counter);
-
                     } else {
                         workloadObject["description"] =
                             "Created by " +
@@ -213,11 +207,11 @@ IllumioAutoSyncWithPCE.prototype = {
                         thresholdLimitLog = "Cancelled the job as workload deletion limit has exceeded";
                         gs.info(thresholdLimitLog + " for Illumio PCE Configuration with sys_id " + configSysId);
                     }
-
                 }
             }
 
-            // check thresold limit
+
+            // Check threshold limit
             if (cancelJobOnLimitExceed) {
                 var notDeletedworkload = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
                 notDeletedworkload.addQuery('deleted_from_pce', true);
@@ -232,8 +226,7 @@ IllumioAutoSyncWithPCE.prototype = {
                     new Date(new GlideDateTime().getNumericValue()).toISOString() +
                     "] " + thresholdLimitLog;
 
-                illumioScheduledJobsGr.job_status = "cancelled";
-
+                illumioScheduledJobsGr.job_status = "cancelled_threshold_limit_exceeded";
                 illumioScheduledJobsGr.job_completed = new GlideDateTime();
                 if (!illumioScheduledJobsGr.update()) {
                     gs.error("Error while updating process monitor.");
@@ -344,7 +337,6 @@ IllumioAutoSyncWithPCE.prototype = {
             } catch (ex) {
                 gs.error("Exception occurred while preparing request data. Exception", ex);
             }
-
         } catch (e) {
             gs.error("Exception occurred while syncing", e);
         }
@@ -358,7 +350,6 @@ IllumioAutoSyncWithPCE.prototype = {
      * @returns updated object of the workload
      */
     getUseCreateLabelsList: function(configSysId, workloadObject, labelData) {
-
         workloadObject.labels = [];
         workloadObject.createlabels = [];
 
@@ -431,21 +422,31 @@ IllumioAutoSyncWithPCE.prototype = {
         }
         return objCounter;
     },
+
     type: "IllumioAutoSyncWithPCE",
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>340</sys_mod_count>
+        <sys_mod_count>345</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-24 10:40:32</sys_updated_on>
+        <sys_updated_on>2025-05-15 10:21:25</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f14ad3f6db34274033c1a026ca96192e</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-15 06:33:50</sys_created_on>
+        <sys_id>45a1b34983a9221058f2f496feaad30a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-15 06:33:50</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
