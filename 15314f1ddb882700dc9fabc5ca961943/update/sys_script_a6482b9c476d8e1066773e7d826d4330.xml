@@ -34,14 +34,15 @@
         <role_conditions/>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
 
-    var grSysProp = gs.getProperty("x_illu2_illumio.incident_creation_for_scheduled_job","true");
+    var grSysProp = gs.getProperty("x_illu2_illumio.incident_creation_for_scheduled_job", "true");
     var grIncidentResponse = new GlideRecord("incident");
 
-    if (grSysProp=="true") {
-        grIncidentResponse.description = "Job Type: " + current.getDisplayValue("job_type") +"\nCurrent Operation: " + current.getValue("current_operation")+"\nJob Status: " + current.getDisplayValue("job_status");
-        grIncidentResponse.short_description = current.illumio_pce_configuration.name + ": " + current.getDisplayValue("job_type")+ "-" + current.getDisplayValue("job_status");
-        current.setValue("incident",grIncidentResponse.insert());
-		current.update();
+    if (grSysProp == "true") {
+        grIncidentResponse.description = "Job Type: " + current.getDisplayValue("job_type") + "\nCurrent Operation: " + current.getValue("current_operation") + "\nJob Status: " + current.getDisplayValue("job_status") + "\n\nLogs:\n" +
+            current.getDisplayValue("logs");
+        grIncidentResponse.short_description = current.illumio_pce_configuration.name + ": " + current.getDisplayValue("job_type") + "-" + current.getDisplayValue("job_status");
+        current.setValue("incident", grIncidentResponse.insert());
+        current.update();
     }
 
 })(current, previous);]]></script>
