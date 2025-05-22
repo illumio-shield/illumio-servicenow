@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_style">
+    <sys_ui_style action="INSERT_OR_UPDATE">
+        <alt/>
+        <element>job_status</element>
+        <name>x_illu2_illumio_illumio_scheduled_jobs</name>
+        <style>background-color:#e85a2d;</style>
+        <sys_class_name>sys_ui_style</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-15 06:39:41</sys_created_on>
+        <sys_id>54c2bf8983a9221058f2f496feaad394</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_scheduled_jobs</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_style_54c2bf8983a9221058f2f496feaad394</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-15 06:39:41</sys_updated_on>
+        <themed_style/>
+        <value>cancelled_threshold_limit_exceeded</value>
+    </sys_ui_style>
+    <sys_translated_text action="delete_multiple" query="documentkey=54c2bf8983a9221058f2f496feaad394"/>
+</record_update>
