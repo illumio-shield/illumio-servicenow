@@ -38,7 +38,6 @@
         checkedRecordsData, selectedRecordsObject = {},
         countObject = {},
         configSysIds = [],
-        validSelectedRecordsCount = 0,
         totalRecordsToSync = 0;
     var createScheduledJobCount = 0,
         errorInScheduledJobCreation = false;
@@ -66,7 +65,6 @@
         answer = response.responseXML.documentElement.getAttribute("answer");
         answer = JSON.parse(answer);
         selectedRecordsObject = answer.data;
-        validSelectedRecordsCount = answer.count;
         configSysIds = Object.keys(selectedRecordsObject);
         fetchDataFromPCE();
     }
@@ -123,9 +121,9 @@
 
     function getCustomtableRecord() {
         loadingDialog.destroy();
-        if (totalRecordsToSync < validSelectedRecordsCount) {
+        if (totalRecordsToSync == 0) {
             var dialogModal = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
-            dialogModal.setTitle("Cannot sync a workload that has a critical label.");
+            dialogModal.setTitle("Cannot start data sync process as all selected workloads have a critical label associated with them.");
             dialogModal.render();
             return;
         }
