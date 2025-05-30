@@ -66,6 +66,13 @@
         answer = response.responseXML.documentElement.getAttribute("answer");
         answer = JSON.parse(answer);
         selectedRecordsObject = answer.data;
+		if (answer.count == 0) {
+			loadingDialog.destroy();
+			dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+			dialog.setTitle("Cannot start data sync process as the selected workloads do not have a conflict.");
+			dialog.render();
+			return;
+		}
         configSysIds = Object.keys(selectedRecordsObject);
         fetchDataFromPCE();
     }
@@ -306,27 +313,27 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>d0aca64edbcc6700dc9fabc5ca961967</sys_id>
-        <sys_mod_count>347</sys_mod_count>
+        <sys_mod_count>349</sys_mod_count>
         <sys_name>Sync selected servers with PCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_d0aca64edbcc6700dc9fabc5ca961967</sys_update_name>
-        <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-05-12 14:41:01</sys_updated_on>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-05-28 13:09:27</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>
     </sys_ui_action>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>d0aca64edbcc6700dc9fabc5ca961967</id>
-        <sys_created_by>crest.data</sys_created_by>
-        <sys_created_on>2025-05-08 11:57:48</sys_created_on>
-        <sys_id>66a8bc8b8319a610dec3f4c6feaad38b</sys_id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-15 06:36:16</sys_created_on>
+        <sys_id>2832338983a9221058f2f496feaad3f2</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-05-08 11:57:48</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-15 06:36:16</sys_updated_on>
         <table>sys_ui_action</table>
         <use_es_latest>false</use_es_latest>
     </sys_es_latest_script>
