@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="2bb285a79300021062233f018bba106a" extends="sysauto_script" label="Illumio PCE Configuration" max_length="40" name="x_illu2_illumio_illumio_pce_conf" type="collection">
-        <element attributes="edge_encryption_enabled=true" label="Enable Limits" max_length="40" name="limits_on_workloads_and_labels_changes_per_sync" type="boolean"/>
-        <element default="5" label="HTTP Retry Count" max_length="40" name="http_retry_count" type="integer"/>
-        <element label="Organization ID" max_length="40" name="organization_id" type="string"/>
-        <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>
-        <element label="Enable Limit on Workload Modifications" max_length="40" name="set_limit_on_workload_label_modifications" type="boolean"/>
-        <element label="Enable Proxy between PCE and MID server" max_length="40" name="enable_proxy_between_pce_and_mid_server" type="boolean"/>
-        <element default="300" label="HTTP Retry interval max (seconds)" max_length="40" name="http_retry_interval_max" type="integer"/>
-        <element label="New Label Creation Limit" max_length="40" name="new_label_creation_limit" type="string"/>
-        <element label="Enable Limit on Workload Deletion" max_length="40" name="set_limit_on_workload_deletion" type="boolean"/>
-        <element attributes="no_data_replicate=true,edge_encryption_enabled=true" label="Secret Key" mandatory="true" max_length="255" name="secret_key" type="password2"/>
-        <element active="false" attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" choice_field="business_unit" label="Source Table" mandatory="true" max_length="80" name="servicenow_source_table" type="table_name"/>
-        <element active="false" attributes="edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Host Name" mandatory="true" max_length="80" name="host_name" type="field_name" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true" label="Create Unmanaged Workloads on PCE from CMDB records" max_length="40" name="create_unmanaged_workloads_on_pce_from_cmdb_records" type="boolean"/>
-        <element default="30" label="HTTP Retry interval increment (seconds)" max_length="40" name="http_retry_interval_increment" type="integer"/>
         <element attributes="edge_encryption_enabled=true" choice="3" default="0" label="Maximum no. of new PCE workloads to create" max_length="40" name="new_workloads_to_create_at_a_time" type="choice">
             <choice>
-                <element inactive_on_update="false" label="All" sequence="100" value="0"/>
-                <element inactive_on_update="false" label="200" sequence="150" value="200"/>
                 <element inactive_on_update="false" label="500" sequence="200" value="500"/>
                 <element inactive_on_update="false" label="1000" sequence="250" value="1000"/>
+                <element inactive_on_update="false" label="All" sequence="100" value="0"/>
+                <element inactive_on_update="false" label="200" sequence="150" value="200"/>
             </choice>
         </element>
-        <element label="Unmanaged Workloads Creation Limit" max_length="40" name="number_of_workloads_to_be_created_from_servicenow" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Create Unmanaged Workloads on PCE from CMDB records" max_length="40" name="create_unmanaged_workloads_on_pce_from_cmdb_records" type="boolean"/>
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Location" max_length="80" name="location" type="field_name" use_dependent_field="true"/>
-        <element attributes="edge_encryption_enabled=true" label="Auto Sync to PCE" max_length="40" name="auto_synchronization" type="boolean"/>
-        <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Role" max_length="80" name="role" type="field_name" use_dependent_field="true"/>
-        <element label="Enable Limit on New Label Creation" max_length="40" name="set_limit_on_new_label_creation" type="boolean"/>
-        <element label="Workload Deletion Limit" max_length="40" name="workload_deletion_limit" type="string"/>
-        <element label="Cancel Job on Limit Exceed" max_length="40" name="cancel_job_on_limit_exceed" type="boolean"/>
-        <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" calculation="(function calculatedFieldValue(current) {&#10;&#10;&#9;// Add your code here&#10;&#9;var list = ['a','b','c'];&#10;&#9;return list;  // return the calculated value&#10;&#10;})(current);" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Environment" max_length="80" name="environment" type="field_name" use_dependent_field="true"/>
-        <element label="Environment" max_length="255" name="critical_label_group_environment" type="string"/>
-        <element label="API Key" mandatory="true" max_length="255" name="username" type="password2"/>
-        <element attributes="edge_encryption_enabled=true" label="MID Server" mandatory="true" max_length="32" name="mid_server" reference="ecc_agent" type="reference"/>
         <element label="Application" max_length="255" name="critical_label_group_application" type="string"/>
-        <element label="Workload Modifications Limit" max_length="40" name="workload_label_modifications_limit" type="string"/>
-        <element label="Location" max_length="255" name="critical_label_group_location" type="string"/>
-        <element label="PCE URL" mandatory="true" max_length="100" name="pce_url" type="string"/>
+        <element label="API Key" mandatory="true" max_length="255" name="username" type="password2"/>
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" default="ip_address" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="IP Address" max_length="80" name="ip_address" type="field_name" use_dependent_field="true"/>
+        <element label="Location" max_length="255" name="critical_label_group_location" type="string"/>
+        <element default="5" label="HTTP Retry Count" max_length="40" name="http_retry_count" type="integer"/>
+        <element attributes="no_data_replicate=true,edge_encryption_enabled=true" label="Secret Key" mandatory="true" max_length="255" name="secret_key" type="password2"/>
+        <element label="New Label Creation Limit" max_length="40" name="new_label_creation_limit" type="string"/>
+        <element label="Enable Proxy between PCE and MID server" max_length="40" name="enable_proxy_between_pce_and_mid_server" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Auto Sync to PCE" max_length="40" name="auto_synchronization" type="boolean"/>
+        <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Application" max_length="80" name="application" type="field_name" use_dependent_field="true"/>
+        <element label="Cancel Job on Limit Exceed" max_length="40" name="cancel_job_on_limit_exceed" type="boolean"/>
+        <element label="Enable Limit on New Label Creation" max_length="40" name="set_limit_on_new_label_creation" type="boolean"/>
+        <element label="Unmanaged Workloads Creation Limit" max_length="40" name="number_of_workloads_to_be_created_from_servicenow" type="string"/>
+        <element default="30" label="HTTP Retry interval increment (seconds)" max_length="40" name="http_retry_interval_increment" type="integer"/>
+        <element active="false" attributes="edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Host Name" mandatory="true" max_length="80" name="host_name" type="field_name" use_dependent_field="true"/>
+        <element label="PCE URL" mandatory="true" max_length="100" name="pce_url" type="string"/>
+        <element label="Workload Modifications Limit" max_length="40" name="workload_label_modifications_limit" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="MID Server" mandatory="true" max_length="32" name="mid_server" reference="ecc_agent" type="reference"/>
+        <element label="Environment" max_length="255" name="critical_label_group_environment" type="string"/>
         <element label="Role" max_length="255" name="critical_label_group_role" type="string"/>
+        <element label="Enable Limit on Workload Modifications" max_length="40" name="set_limit_on_workload_label_modifications" type="boolean"/>
+        <element label="Organization ID" max_length="40" name="organization_id" type="string"/>
+        <element active="false" attributes="allow_public=true,base_table=cmdb_ci,base_start=true,edge_encryption_enabled=true" choice_field="business_unit" label="Source Table" mandatory="true" max_length="80" name="servicenow_source_table" type="table_name"/>
+        <element attributes="edge_encryption_enabled=true" label="Enable Limits" max_length="40" name="limits_on_workloads_and_labels_changes_per_sync" type="boolean"/>
+        <element label="Enable Limit on Workload Deletion" max_length="40" name="set_limit_on_workload_deletion" type="boolean"/>
+        <element default="300" label="HTTP Retry interval max (seconds)" max_length="40" name="http_retry_interval_max" type="integer"/>
+        <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" calculation="(function calculatedFieldValue(current) {&#10;&#10;&#9;// Add your code here&#10;&#9;var list = ['a','b','c'];&#10;&#9;return list;  // return the calculated value&#10;&#10;})(current);" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Environment" max_length="80" name="environment" type="field_name" use_dependent_field="true"/>
+        <element label="Workload Deletion Limit" max_length="40" name="workload_deletion_limit" type="string"/>
+        <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Role" max_length="80" name="role" type="field_name" use_dependent_field="true"/>
         <index name="index">
             <element name="mid_server"/>
         </index>

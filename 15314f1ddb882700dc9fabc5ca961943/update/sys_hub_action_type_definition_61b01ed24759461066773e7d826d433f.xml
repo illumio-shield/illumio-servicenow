@@ -40,7 +40,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_61b01ed24759461066773e7d826d433f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-12-12 07:33:00</sys_updated_on>
+        <sys_updated_on>2025-06-11 10:09:07</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -926,7 +926,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=19e887a24791c61066773e7d826d439e"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_19e887a24791c61066773e7d826d439e^sys_idNOT IN11e887a24791c61066773e7d826d43be,51e887a24791c61066773e7d826d43ae,59e887a24791c61066773e7d826d43aa"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>response</element>
         <help/>
@@ -1279,7 +1278,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=23e15a564759461066773e7d826d4347"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_23e15a564759461066773e7d826d4347^sys_idNOT IN91e887a24791c61066773e7d826d4378"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -1936,7 +1934,6 @@
         <sys_updated_on>2024-04-03 18:10:05</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=63e15a564759461066773e7d826d438c"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_61b01ed24759461066773e7d826d433f^sys_idNOT IN23e15a564759461066773e7d826d4345,c7dc3962471d861066773e7d826d43a2"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>pce_configuration</element>
         <help/>
@@ -1988,7 +1985,6 @@
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_61b01ed24759461066773e7d826d433f"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f^sys_idNOT IN13dc3962471d861066773e7d826d43d8,144212964759461066773e7d826d433d,504212964759461066773e7d826d4343,53dc3962471d861066773e7d826d43d4,9fdc3962471d861066773e7d826d43c8"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>response</element>
         <help/>
@@ -2558,7 +2554,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=c34608264711861066773e7d826d4349"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_c34608264711861066773e7d826d4349^sys_idNOT IN561ecb6a4791c61066773e7d826d43fa"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -3339,7 +3334,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=d21e0f6a4791c61066773e7d826d430e"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_d21e0f6a4791c61066773e7d826d430e^sys_idNOT IN921e0f6a4791c61066773e7d826d4329,921e0f6a4791c61066773e7d826d4330,9a1e0f6a4791c61066773e7d826d432c"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>status</element>
         <help/>
@@ -4046,7 +4040,6 @@
         <sys_updated_on>2024-04-04 02:38:30</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=874608264711861066773e7d826d4372"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_834608264711861066773e7d826d4340^sys_idNOT IN061ecb6a4791c61066773e7d826d43e5,474608264711861066773e7d826d4347"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>query_parameters</element>
         <help/>
@@ -4098,7 +4091,6 @@
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_834608264711861066773e7d826d4340"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_834608264711861066773e7d826d4340^sys_idNOT IN0b4608264711861066773e7d826d4367,2a1e0f6a4791c61066773e7d826d4348,874608264711861066773e7d826d436c,a61e0f6a4791c61066773e7d826d433d,a61e0f6a4791c61066773e7d826d434c"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>__action_status__</element>
         <help/>
