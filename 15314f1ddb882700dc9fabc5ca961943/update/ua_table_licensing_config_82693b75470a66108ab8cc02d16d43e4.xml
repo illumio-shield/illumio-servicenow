@@ -4,24 +4,24 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_illu2_illumio_illumio_servicenow_servers</name>
+        <name>x_illu2_illumio_illumio_label_group_mapping</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2018-08-22 12:03:08</sys_created_on>
+        <sys_created_on>2020-10-28 10:48:07</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
-        <sys_id>a0c7c4762ba82290d920f0b8b891bf10</sys_id>
+        <sys_id>82693b75470a66108ab8cc02d16d43e4</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>x_illu2_illumio_illumio_servicenow_servers</sys_name>
+        <sys_name>x_illu2_illumio_illumio_label_group_mapping</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>ua_table_licensing_config_a0c7c4762ba82290d920f0b8b891bf10</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_82693b75470a66108ab8cc02d16d43e4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-08-22 12:03:08</sys_updated_on>
+        <sys_updated_on>2020-10-28 10:48:07</sys_updated_on>
     </ua_table_licensing_config>
 </record_update>

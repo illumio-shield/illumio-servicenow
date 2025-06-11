@@ -5,6 +5,7 @@
         <advanced>true</advanced>
         <applies_to/>
         <condition/>
+        <controlled_by_refs/>
         <decision_type>allow</decision_type>
         <description>Allow write for ip_address_4 in x_illu2_illumio_illumio_pce_field_mapping, for users with roles (x_illu2_illumio.illumio_admin, x_illu2_illumio.mid_server_user), and if the ACL script returns true.</description>
         <local_or_existing/>

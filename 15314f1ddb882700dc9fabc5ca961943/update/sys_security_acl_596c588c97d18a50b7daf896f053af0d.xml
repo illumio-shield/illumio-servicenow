@@ -5,6 +5,7 @@
         <advanced>false</advanced>
         <applies_to/>
         <condition/>
+        <controlled_by_refs/>
         <decision_type>allow</decision_type>
         <description>ACL for handling the IllumioUpdateWorkloadFieldValue REST endpoint.</description>
         <local_or_existing/>

@@ -40,7 +40,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_6ac193bd47d5c21066773e7d826d430e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-12-12 07:33:05</sys_updated_on>
+        <sys_updated_on>2025-06-11 11:36:04</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -400,7 +400,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=47c3d3bd4719c21066773e7d826d439b"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_47c3d3bd4719c21066773e7d826d439b^sys_idNOT IN1bb91f6a47d1c61066773e7d826d434c"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -1070,7 +1069,6 @@ ms.include("IllumioMIDConstants");&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=a7b91f6a47d1c61066773e7d826d4360"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_a7b91f6a47d1c61066773e7d826d4360^sys_idNOT IN63b91f6a47d1c61066773e7d826d436a,6bb91f6a47d1c61066773e7d826d436d,a7b91f6a47d1c61066773e7d826d4396"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>status</element>
         <help/>
@@ -1691,7 +1689,6 @@ ms.include("IllumioMIDConstants");&#13;
         <sys_updated_on>2024-04-02 09:40:54</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=9fc3d3bd4719c21066773e7d826d43e6"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_6ac193bd47d5c21066773e7d826d430e^sys_idNOT IN07c3d3bd4719c21066773e7d826d4399"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>pce_configuration</element>
         <help/>
@@ -1718,7 +1715,6 @@ ms.include("IllumioMIDConstants");&#13;
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_6ac193bd47d5c21066773e7d826d430e"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_6ac193bd47d5c21066773e7d826d430e^sys_idNOT IN2545448a475dc21066773e7d826d432f,5bc3d3bd4719c21066773e7d826d43e2,6545448a475dc21066773e7d826d4335,a3b91f6a47d1c61066773e7d826d43b8,d3c3d3bd4719c21066773e7d826d43d2"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>__action_status__</element>
         <help/>
@@ -2264,7 +2260,6 @@ ms.include("IllumioMIDConstants");&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=6923f45a4751461066773e7d826d4306"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_6923f45a4751461066773e7d826d4306^sys_idNOT INe9c99f6a47d1c61066773e7d826d4355"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -2934,7 +2929,6 @@ ms.include("IllumioMIDConstants");&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=e5c99f6a47d1c61066773e7d826d4375"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_e5c99f6a47d1c61066773e7d826d4375^sys_idNOT IN35c99f6a47d1c61066773e7d826d4380,35c99f6a47d1c61066773e7d826d4387,3dc99f6a47d1c61066773e7d826d4383"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>status</element>
         <help/>
@@ -3555,7 +3549,6 @@ ms.include("IllumioMIDConstants");&#13;
         <sys_updated_on>2024-04-03 11:15:59</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=fd23f45a4751461066773e7d826d4396"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_2923b45a4751461066773e7d826d43fc^sys_idNOT INe523f45a4751461066773e7d826d4304"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>pce_configuration</element>
         <help/>
@@ -3582,7 +3575,6 @@ ms.include("IllumioMIDConstants");&#13;
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_2923b45a4751461066773e7d826d43fc"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_2923b45a4751461066773e7d826d43fc^sys_idNOT IN3523f45a4751461066773e7d826d4384,39c99f6a47d1c61066773e7d826d439c,3d23f45a4751461066773e7d826d4376,b923f45a4751461066773e7d826d437a,b923f45a4751461066773e7d826d437e"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>__dont_treat_as_error__</element>
         <help/>

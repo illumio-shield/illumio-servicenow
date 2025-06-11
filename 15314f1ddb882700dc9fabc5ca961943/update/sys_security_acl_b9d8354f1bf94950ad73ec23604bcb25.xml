@@ -5,6 +5,7 @@
         <advanced>true</advanced>
         <applies_to/>
         <condition/>
+        <controlled_by_refs/>
         <decision_type>allow</decision_type>
         <description>Allow create for ip_address_12 in x_illu2_illumio_illumio_pce_field_mapping, if the ACL script returns true.</description>
         <local_or_existing/>

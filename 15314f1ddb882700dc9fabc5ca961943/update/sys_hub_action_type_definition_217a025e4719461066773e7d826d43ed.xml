@@ -40,7 +40,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_217a025e4719461066773e7d826d43ed</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-12-12 07:32:53</sys_updated_on>
+        <sys_updated_on>2025-06-11 11:35:47</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -999,7 +999,6 @@ outputs.headers = response["headers"];&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=14435d2247d5861066773e7d826d4359"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_14435d2247d5861066773e7d826d4359^sys_idNOT INd4435d2247d5861066773e7d826d4390,dc435d2247d5861066773e7d826d438c,dc435d2247d5861066773e7d826d4393"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>headers</element>
         <help/>
@@ -1327,7 +1326,6 @@ outputs.parameters = JSON.stringify(parameters);&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=474d86124759461066773e7d826d43c9"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_474d86124759461066773e7d826d43c9^sys_idNOT IN8b4d86124759461066773e7d826d43d6"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -2070,7 +2068,6 @@ outputs.parameters = JSON.stringify(parameters);&#13;
         <sys_updated_on>2024-04-03 17:49:51</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=d34dc6124759461066773e7d826d4332"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_217a025e4719461066773e7d826d43ed^sys_idNOT IN034d86124759461066773e7d826d43c7,4f4d861e4719461066773e7d826d43db,e19d89664795861066773e7d826d438e"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>label_href</element>
         <help/>
@@ -2147,7 +2144,6 @@ outputs.parameters = JSON.stringify(parameters);&#13;
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_217a025e4719461066773e7d826d43ed"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_217a025e4719461066773e7d826d43ed^sys_idNOT IN174dc6124759461066773e7d826d432d,1eddc2524759461066773e7d826d439d,574dc6124759461066773e7d826d4329,974dc6124759461066773e7d826d4325,deddc2524759461066773e7d826d4397"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>variable12</element>
         <help/>
@@ -2680,7 +2676,6 @@ outputs.parameters = JSON.stringify(parameters);&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=637c15e24719861066773e7d826d43d3"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_637c15e24719861066773e7d826d43d3^sys_idNOT IN677c15e24719861066773e7d826d43ea"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -3570,7 +3565,6 @@ outputs.headers = response["headers"];&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=a37c55e24719861066773e7d826d430a"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_a37c55e24719861066773e7d826d430a^sys_idNOT INf37c55e24719861066773e7d826d4338,fb7c55e24719861066773e7d826d4334,fb7c55e24719861066773e7d826d433b"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>headers</element>
         <help/>
@@ -4363,7 +4357,6 @@ outputs.headers = response["headers"];&#13;
         <sys_updated_on>2024-04-04 08:55:06</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=fb7c55e24719861066773e7d826d43c4"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_6f7c15e24719861066773e7d826d43c0^sys_idNOT IN2f7c15e24719861066773e7d826d43cc,ab7c15e24719861066773e7d826d43d0,af7c15e24719861066773e7d826d43c8"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>label_href</element>
         <help/>
@@ -4440,7 +4433,6 @@ outputs.headers = response["headers"];&#13;
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_6f7c15e24719861066773e7d826d43c0"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_6f7c15e24719861066773e7d826d43c0^sys_idNOT IN337c55e24719861066773e7d826d4372,7f7c55e24719861066773e7d826d43a4,b37c55e24719861066773e7d826d436e,bf7c55e24719861066773e7d826d4375,f37c55e24719861066773e7d826d439f"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>variable1</element>
         <help/>
