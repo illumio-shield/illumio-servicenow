@@ -65,6 +65,13 @@
         answer = response.responseXML.documentElement.getAttribute("answer");
         answer = JSON.parse(answer);
         selectedRecordsObject = answer.data;
+		if (answer.count == 0) {
+			loadingDialog.destroy();
+			dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
+			dialog.setTitle("Cannot start data sync process as the selected workloads do not have a conflict.");
+			dialog.render();
+			return;
+		}
         configSysIds = Object.keys(selectedRecordsObject);
         fetchDataFromPCE();
     }

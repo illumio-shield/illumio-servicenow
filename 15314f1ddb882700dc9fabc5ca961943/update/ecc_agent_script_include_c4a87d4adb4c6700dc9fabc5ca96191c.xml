@@ -88,7 +88,14 @@ IllumioUpdateWorkloads.prototype = {
 
     run: function() {
         var jobContent;
-        this.payload = decodeURI(this.payload);
+        try {
+            this.payload = decodeURI(this.payload);
+        } catch (e) {
+            // if we get malformed URI sequence, we skip it, else, we throw any other error
+            if (e.message.search(/Malformed URI sequence/i) < 0) {
+                throw new Error("Unhandled error - " + e.message);
+            }
+        }
 
         // Call respective method according to the operation requested
         if (this.operation == "update") {
@@ -370,7 +377,7 @@ IllumioUpdateWorkloads.prototype = {
                     } else {
                         jobContent = {
                             job_status: skippedWorkloads != 0 ? 'completed_with_error' : 'completed',
-                            logs: 'Synchronization with PCE completed' + ' \n -------------------------------------\n Total workloads: ' + (totalWorkloads + skippedWl) + '\n Created unknown workloads: ' + createdUnknownWorkloads + '\n Updated managed workloads: ' + updatedManagedWorkloads + '\n Updated unmanaged workloads: ' + updatedUnManagedWorkloads + '\n Skipped workloads: ' + (skippedWorkloads + skippedWl) + '\n Deleted workloads: ' + deletedWorkloads,
+                            logs: 'Synchronization with PCE completed' + ' \n -------------------------------------\nTotal workloads: ' + (totalWorkloads + skippedWl) + '\n Created unknown workloads: ' + createdUnknownWorkloads + '\n Updated managed workloads: ' + updatedManagedWorkloads + '\n Updated unmanaged workloads: ' + updatedUnManagedWorkloads + '\n Skipped workloads: ' + (skippedWorkloads + skippedWl) + '\n Deleted workloads: ' + deletedWorkloads,
                             job_completed: this.snowDateFormat.format(new Date()) + "",
                             current_operation: 'Synchronization with PCE completed'
                         };
@@ -1168,15 +1175,15 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>94</sys_mod_count>
+        <sys_mod_count>96</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-15 11:35:36</sys_updated_on>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-05-30 13:09:32</sys_updated_on>
     </ecc_agent_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>c4a87d4adb4c6700dc9fabc5ca96191c</id>
