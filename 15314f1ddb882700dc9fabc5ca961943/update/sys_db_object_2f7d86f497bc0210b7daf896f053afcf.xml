@@ -9,6 +9,7 @@
         <create_access>false</create_access>
         <create_access_controls>true</create_access_controls>
         <delete_access>false</delete_access>
+        <filter_extension/>
         <is_extendable>false</is_extendable>
         <label>Illumio Config Class Mapping</label>
         <live_feed_enabled>false</live_feed_enabled>
@@ -21,13 +22,11 @@
         <sys_class_name>sys_db_object</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-05 05:29:21</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2f7d86f497bc0210b7daf896f053afcf</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Illumio Config Class Mapping</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_db_object_2f7d86f497bc0210b7daf896f053afcf</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

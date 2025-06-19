@@ -109,13 +109,11 @@
         <sys_class_name>sys_report</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-26 08:10:49</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2b0cfe67974d0a50b7daf896f053af70</sys_id>
         <sys_mod_count>5</sys_mod_count>
         <sys_name>Unique Workloads</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_report_2b0cfe67974d0a50b7daf896f053af70</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -129,7 +127,6 @@
         <type>donut</type>
         <upper_limit/>
         <use_color_heatmap>false</use_color_heatmap>
-        <use_color_palette>false</use_color_palette>
         <use_null_in_trend>false</use_null_in_trend>
         <user>GLOBAL</user>
         <x_axis_allow_decimals>true</x_axis_allow_decimals>

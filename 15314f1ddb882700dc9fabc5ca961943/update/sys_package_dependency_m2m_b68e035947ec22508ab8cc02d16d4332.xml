@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
     <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
-        <dependency display_value="Text Index" source="com.glide.text_index">53219204db001300dc9fabc5ca9619b1</dependency>
+        <dependency display_value="Text Index" source="com.glide.text_index">7d70d25a470222108ab8cc02d16d430d</dependency>
         <min_version>1.0.0</min_version>
         <sys_created_by>hetang.modi</sys_created_by>
         <sys_created_on>2025-03-27 05:36:11</sys_created_on>

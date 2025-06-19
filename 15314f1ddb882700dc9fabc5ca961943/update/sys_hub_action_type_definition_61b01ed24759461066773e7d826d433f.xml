@@ -28,22 +28,22 @@
         <sys_class_name>sys_hub_action_type_definition</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:04:44</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
         <sys_id>61b01ed24759461066773e7d826d433f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Fetch Label Groups</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_61b01ed24759461066773e7d826d433f</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-12-12 07:33:00</sys_updated_on>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-06-19 09:52:22</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
+    <sys_translated_text action="delete_multiple" query="documentkey=61b01ed24759461066773e7d826d433f"/>
     <sys_variable_value action="delete_multiple" query="document_key=61b01ed24759461066773e7d826d433f"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
         <document>sys_hub_action_type_definition</document>
@@ -186,18 +186,11 @@
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>19e887a24791c61066773e7d826d439e</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-05 05:33:30</sys_updated_on>
     </sys_hub_step_instance>
@@ -498,6 +491,7 @@
         <table>var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7</table>
         <value/>
     </sys_element_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=19e887a24791c61066773e7d826d439e"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=19e887a24791c61066773e7d826d439e^sys_idNOT IN5de887a24791c61066773e7d826d43a1,99e887a24791c61066773e7d826d43a4"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -561,13 +555,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>5de887a24791c61066773e7d826d43a1</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -646,13 +638,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>99e887a24791c61066773e7d826d43a4</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -732,13 +722,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>19e887a24791c61066773e7d826d43a7</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -817,13 +805,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>19e887a24791c61066773e7d826d43ab</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -902,13 +888,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>d5e887a24791c61066773e7d826d43bb</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -926,7 +910,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=19e887a24791c61066773e7d826d439e"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_19e887a24791c61066773e7d826d439e^sys_idNOT IN11e887a24791c61066773e7d826d43be,51e887a24791c61066773e7d826d43ae,59e887a24791c61066773e7d826d43aa"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>response</element>
         <help/>
@@ -938,13 +921,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>11e887a24791c61066773e7d826d43be</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_19e887a24791c61066773e7d826d439e_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -963,13 +944,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>51e887a24791c61066773e7d826d43ae</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_19e887a24791c61066773e7d826d439e_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -988,13 +967,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>59e887a24791c61066773e7d826d43aa</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_19e887a24791c61066773e7d826d439e_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1016,18 +993,11 @@
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:10:04</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>23e15a564759461066773e7d826d4347</sys_id>
         <sys_mod_count>5</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 16:48:42</sys_updated_on>
     </sys_hub_step_instance>
@@ -1106,6 +1076,7 @@
     </sys_element_mapping>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_step_ext_output_23e15a564759461066773e7d826d4347^id=23e15a564759461066773e7d826d4347"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7^id=23e15a564759461066773e7d826d4347"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=23e15a564759461066773e7d826d4347"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=23e15a564759461066773e7d826d4347^sys_idNOT IN45e887a24791c61066773e7d826d4367"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -1169,13 +1140,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:41</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>45e887a24791c61066773e7d826d4367</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1255,13 +1224,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:41</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>9de887a24791c61066773e7d826d4374</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1279,7 +1246,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=23e15a564759461066773e7d826d4347"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_23e15a564759461066773e7d826d4347^sys_idNOT IN91e887a24791c61066773e7d826d4378"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -1291,13 +1257,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 16:48:41</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>91e887a24791c61066773e7d826d4378</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parameters</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_23e15a564759461066773e7d826d4347_parameters_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1368,13 +1332,11 @@
         <sys_class_name>sys_hub_action_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:10:04</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2be15a564759461066773e7d826d4340</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1454,13 +1416,11 @@
         <sys_class_name>sys_hub_action_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>87dc3962471d861066773e7d826d439f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1543,13 +1503,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:31</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>13dc3962471d861066773e7d826d43d5</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1632,13 +1590,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:31</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>53dc3962471d861066773e7d826d43d1</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1721,13 +1677,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>93dc3962471d861066773e7d826d43c5</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1810,13 +1764,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:11:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>d04212964759461066773e7d826d433e</sys_id>
         <sys_mod_count>17</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1899,13 +1851,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:11:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>d84212964759461066773e7d826d432d</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1936,7 +1886,6 @@
         <sys_updated_on>2024-04-03 18:10:05</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=63e15a564759461066773e7d826d438c"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_61b01ed24759461066773e7d826d433f^sys_idNOT IN23e15a564759461066773e7d826d4345,c7dc3962471d861066773e7d826d43a2"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>pce_configuration</element>
         <help/>
@@ -1948,13 +1897,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:10:04</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>23e15a564759461066773e7d826d4345</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>PCE Configuration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_input_61b01ed24759461066773e7d826d433f_pce_configuration_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1973,13 +1920,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>c7dc3962471d861066773e7d826d43a2</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Query Parameters</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_input_61b01ed24759461066773e7d826d433f_query_parameters_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1988,7 +1933,6 @@
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_61b01ed24759461066773e7d826d433f"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f^sys_idNOT IN13dc3962471d861066773e7d826d43d8,144212964759461066773e7d826d433d,504212964759461066773e7d826d4343,53dc3962471d861066773e7d826d43d4,9fdc3962471d861066773e7d826d43c8"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>response</element>
         <help/>
@@ -2000,13 +1944,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:31</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>13dc3962471d861066773e7d826d43d8</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2025,13 +1967,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:11:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>144212964759461066773e7d826d433d</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Action Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2050,13 +1990,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:11:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>504212964759461066773e7d826d4343</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f___dont_treat_as_error___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2075,13 +2013,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:31</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>53dc3962471d861066773e7d826d43d4</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2100,13 +2036,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 11:16:31</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>9fdc3962471d861066773e7d826d43c8</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_61b01ed24759461066773e7d826d433f_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2120,20 +2054,14 @@
         <action_id display_value="Fetch Label Groups">61b01ed24759461066773e7d826d433f</action_id>
         <plan>{"persistor":{"@class":".ChunkingPlanPersistor","table":"sys_hub_action_plan","id":"a74648264711861066773e7d826d4306","name":"plan","plan_signature":null}}</plan>
         <snapshot>6bf7b13e475dc61066773e7d826d431a</snapshot>
-        <sys_class_name>sys_hub_action_plan</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:31</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
         <sys_id>a74648264711861066773e7d826d4306</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
         <sys_overrides/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope/>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-05 05:33:44</sys_updated_on>
     </sys_hub_action_plan>
@@ -2162,15 +2090,14 @@
         <sys_class_name>sys_hub_action_type_snapshot</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
         <sys_id>834608264711861066773e7d826d4340</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2178,6 +2105,7 @@
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_snapshot>
+    <sys_translated_text action="delete_multiple" query="documentkey=834608264711861066773e7d826d4340"/>
     <sys_variable_value action="delete_multiple" query="document_key=834608264711861066773e7d826d4340"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
         <document>sys_hub_action_type_snapshot</document>
@@ -2307,18 +2235,11 @@
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>c34608264711861066773e7d826d4349</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 17:11:26</sys_updated_on>
     </sys_hub_step_instance>
@@ -2385,6 +2306,7 @@
     </sys_element_mapping>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_step_ext_output_c34608264711861066773e7d826d4349^id=c34608264711861066773e7d826d4349"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7^id=c34608264711861066773e7d826d4349"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=c34608264711861066773e7d826d4349"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=c34608264711861066773e7d826d4349^sys_idNOT IN5e1ecb6a4791c61066773e7d826d43ea"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -2448,13 +2370,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:25</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>5e1ecb6a4791c61066773e7d826d43ea</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2534,13 +2454,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>de1ecb6a4791c61066773e7d826d43f6</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2558,7 +2476,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=c34608264711861066773e7d826d4349"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_c34608264711861066773e7d826d4349^sys_idNOT IN561ecb6a4791c61066773e7d826d43fa"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -2570,13 +2487,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>561ecb6a4791c61066773e7d826d43fa</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parameters</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_c34608264711861066773e7d826d4349_parameters_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2599,18 +2514,11 @@
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>d21e0f6a4791c61066773e7d826d430e</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-05 05:33:42</sys_updated_on>
     </sys_hub_step_instance>
@@ -2911,6 +2819,7 @@
         <table>var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7</table>
         <value/>
     </sys_element_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=d21e0f6a4791c61066773e7d826d430e"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=d21e0f6a4791c61066773e7d826d430e^sys_idNOT INda1e0f6a4791c61066773e7d826d4311,da1e0f6a4791c61066773e7d826d4315"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -2974,13 +2883,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>da1e0f6a4791c61066773e7d826d4311</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3059,13 +2966,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>da1e0f6a4791c61066773e7d826d4315</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3145,13 +3050,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>521e0f6a4791c61066773e7d826d432a</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3230,13 +3133,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>5a1e0f6a4791c61066773e7d826d432d</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3315,13 +3216,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>9a1e0f6a4791c61066773e7d826d4319</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3339,7 +3238,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=d21e0f6a4791c61066773e7d826d430e"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_d21e0f6a4791c61066773e7d826d430e^sys_idNOT IN921e0f6a4791c61066773e7d826d4329,921e0f6a4791c61066773e7d826d4330,9a1e0f6a4791c61066773e7d826d432c"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>status</element>
         <help/>
@@ -3351,13 +3249,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>921e0f6a4791c61066773e7d826d4329</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_d21e0f6a4791c61066773e7d826d430e_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3376,13 +3272,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>921e0f6a4791c61066773e7d826d4330</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_d21e0f6a4791c61066773e7d826d430e_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3401,13 +3295,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>9a1e0f6a4791c61066773e7d826d432c</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_d21e0f6a4791c61066773e7d826d430e_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3478,13 +3370,11 @@
         <sys_class_name>sys_hub_action_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:25</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>421ecb6a4791c61066773e7d826d43e2</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3564,13 +3454,11 @@
         <sys_class_name>sys_hub_action_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>474608264711861066773e7d826d4343</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3653,13 +3541,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>6a1e0f6a4791c61066773e7d826d4345</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3742,13 +3628,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>c34608264711861066773e7d826d4368</sys_id>
         <sys_mod_count>5</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3831,13 +3715,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>cb4608264711861066773e7d826d4364</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3920,13 +3802,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e61e0f6a4791c61066773e7d826d4339</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -4009,13 +3889,11 @@
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e61e0f6a4791c61066773e7d826d4349</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -4046,7 +3924,6 @@
         <sys_updated_on>2024-04-04 02:38:30</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=874608264711861066773e7d826d4372"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_834608264711861066773e7d826d4340^sys_idNOT IN061ecb6a4791c61066773e7d826d43e5,474608264711861066773e7d826d4347"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>query_parameters</element>
         <help/>
@@ -4058,13 +3935,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:25</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>061ecb6a4791c61066773e7d826d43e5</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Query Parameters</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_input_834608264711861066773e7d826d4340_query_parameters_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -4083,13 +3958,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:29</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>474608264711861066773e7d826d4347</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>PCE Configuration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_input_834608264711861066773e7d826d4340_pce_configuration_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -4098,7 +3971,6 @@
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_834608264711861066773e7d826d4340"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_834608264711861066773e7d826d4340^sys_idNOT IN0b4608264711861066773e7d826d4367,2a1e0f6a4791c61066773e7d826d4348,874608264711861066773e7d826d436c,a61e0f6a4791c61066773e7d826d433d,a61e0f6a4791c61066773e7d826d434c"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>__action_status__</element>
         <help/>
@@ -4110,13 +3982,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>0b4608264711861066773e7d826d4367</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Action Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_834608264711861066773e7d826d4340___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -4135,13 +4005,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2a1e0f6a4791c61066773e7d826d4348</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_834608264711861066773e7d826d4340_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -4160,13 +4028,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:38:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>874608264711861066773e7d826d436c</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_834608264711861066773e7d826d4340___dont_treat_as_error___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -4185,13 +4051,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:26</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>a61e0f6a4791c61066773e7d826d433d</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_834608264711861066773e7d826d4340_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -4210,13 +4074,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 17:11:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>a61e0f6a4791c61066773e7d826d434c</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_834608264711861066773e7d826d4340_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

@@ -9,13 +9,11 @@
         <sys_class_name>sys_ui_policy_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-05 10:50:12</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>6860c7ba47d10a1066773e7d826d43a8</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>cancel_job_on_limit_exceed</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_policy_action_6860c7ba47d10a1066773e7d826d43a8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -26,4 +24,5 @@
         <value_action/>
         <visible>ignore</visible>
     </sys_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=6860c7ba47d10a1066773e7d826d43a8"/>
 </record_update>

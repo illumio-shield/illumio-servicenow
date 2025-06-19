@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="dfb285a79300021062233f018bba1018" label="Illumio Label Group Mapping" max_length="40" name="x_illu2_illumio_illumio_label_group_mapping" type="collection">
-        <element label="Description" max_length="1000" name="description" type="string"/>
-        <element label="Href" max_length="100" name="href" type="string"/>
         <element label="Key" max_length="50" name="key" type="string"/>
+        <element label="Description" max_length="1000" name="description" type="string"/>
         <element label="Name" max_length="50" name="name" type="string"/>
+        <element label="Href" max_length="100" name="href" type="string"/>
     </element>
 </database>
