@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
     <sys_properties action="INSERT_OR_UPDATE">
         <choices/>
-        <description>System property to enable Incident creation for the Schedule Job with status: Failed, Completed with Errors and Partial Success</description>
+        <description>System property to enable Incident creation for the Schedule Job with status: Failed, Completed with Errors, Partial Success and Cancelled: Threshold Limit Exceeded.</description>
         <ignore_cache>true</ignore_cache>
         <is_private>false</is_private>
         <name>x_illu2_illumio.incident_creation_for_scheduled_job</name>
