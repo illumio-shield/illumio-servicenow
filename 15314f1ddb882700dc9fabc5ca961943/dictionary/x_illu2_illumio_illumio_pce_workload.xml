@@ -3,9 +3,9 @@
         <element label="Duplicate" max_length="40" name="duplicate" type="boolean"/>
         <element choice="3" default="unknown" label="Known to PCE" max_length="10" name="known_to_pce" type="string">
             <choice>
+                <element inactive_on_update="false" label="Unmanaged" sequence="1" value="unmanaged"/>
                 <element inactive_on_update="false" label="Unknown" sequence="2" value="unknown"/>
                 <element inactive_on_update="false" label="Managed" sequence="0" value="managed"/>
-                <element inactive_on_update="false" label="Unmanaged" sequence="1" value="unmanaged"/>
             </choice>
         </element>
         <element label="OS ID" max_length="40" name="os_id" type="string"/>

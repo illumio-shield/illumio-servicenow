@@ -6,14 +6,14 @@
         <element label="Job Location" mandatory="true" max_length="100" name="job_location" type="string"/>
         <element choice="1" label="Job Status" mandatory="true" max_length="40" name="job_status" type="choice">
             <choice>
-                <element inactive_on_update="false" label="Ready to Map" value="ready_to_map"/>
-                <element inactive_on_update="false" label="Partial Success" value="partial_success"/>
-                <element inactive_on_update="false" label="Failed" value="failed"/>
-                <element inactive_on_update="false" label="Completed" value="completed"/>
-                <element inactive_on_update="false" label="Pending" value="pending"/>
                 <element inactive_on_update="false" label="New" value="new"/>
                 <element inactive_on_update="false" label="Done" value="done"/>
                 <element inactive_on_update="false" label="Running" value="running"/>
+                <element inactive_on_update="false" label="Pending" value="pending"/>
+                <element inactive_on_update="false" label="Failed" value="failed"/>
+                <element inactive_on_update="false" label="Completed" value="completed"/>
+                <element inactive_on_update="false" label="Ready to Map" value="ready_to_map"/>
+                <element inactive_on_update="false" label="Partial Success" value="partial_success"/>
             </choice>
         </element>
         <element label="Keys to Map" mandatory="true" max_length="200" name="keys_to_map" type="string"/>

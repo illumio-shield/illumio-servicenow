@@ -12,10 +12,10 @@
         <element active="false" attributes="allow_null=true,edge_encryption_enabled=true" calculation="(function calculatedFieldValue(current) {&#10;&#10;&#9;// Add your code here&#10;&#9;var list = ['a','b','c'];&#10;&#9;return list;  // return the calculated value&#10;&#10;})(current);" dependent="servicenow_source_table" dependent_on_field="servicenow_source_table" label="Environment" max_length="80" name="environment" type="field_name" use_dependent_field="true"/>
         <element attributes="edge_encryption_enabled=true" choice="3" default="0" label="Maximum no. of new PCE workloads to create" max_length="40" name="new_workloads_to_create_at_a_time" type="choice">
             <choice>
-                <element inactive_on_update="false" label="1000" sequence="250" value="1000"/>
                 <element inactive_on_update="false" label="All" sequence="100" value="0"/>
-                <element inactive_on_update="false" label="200" sequence="150" value="200"/>
                 <element inactive_on_update="false" label="500" sequence="200" value="500"/>
+                <element inactive_on_update="false" label="200" sequence="150" value="200"/>
+                <element inactive_on_update="false" label="1000" sequence="250" value="1000"/>
             </choice>
         </element>
         <element label="Cancel Job on Limit Exceed" max_length="40" name="cancel_job_on_limit_exceed" type="boolean"/>
