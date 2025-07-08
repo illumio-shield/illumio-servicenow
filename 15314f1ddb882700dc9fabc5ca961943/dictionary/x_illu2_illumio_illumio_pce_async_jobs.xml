@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="62b205a79300021062233f018bba107a" label="Illumio PCE Async Jobs" max_length="40" name="x_illu2_illumio_illumio_pce_async_jobs" type="collection">
-        <element label="Primary Key To Map" max_length="20" name="primary_key_to_map" type="string"/>
-        <element label="Illumio Job ID" mandatory="true" max_length="40" name="illumio_job_id" type="string"/>
         <element label="Retry Interval (in secs)" mandatory="true" max_length="40" name="retry_interval" type="integer"/>
-        <element label="Job Result Location" max_length="100" name="job_result_location" type="string"/>
-        <element label="Job Identifier" mandatory="true" max_length="10" name="job_identifier" type="string"/>
-        <element label="Result Table Name" mandatory="true" max_length="100" name="result_table_name" type="string"/>
-        <element label="Keys to Map" mandatory="true" max_length="200" name="keys_to_map" type="string"/>
-        <element label="Job Location" mandatory="true" max_length="100" name="job_location" type="string"/>
         <element default="0" label="Retry Count" max_length="40" name="retry_count" type="integer"/>
+        <element label="Illumio Job ID" mandatory="true" max_length="40" name="illumio_job_id" type="string"/>
+        <element label="Job Location" mandatory="true" max_length="100" name="job_location" type="string"/>
         <element choice="1" label="Job Status" mandatory="true" max_length="40" name="job_status" type="choice">
             <choice>
+                <element inactive_on_update="false" label="New" value="new"/>
+                <element inactive_on_update="false" label="Done" value="done"/>
+                <element inactive_on_update="false" label="Running" value="running"/>
+                <element inactive_on_update="false" label="Pending" value="pending"/>
                 <element inactive_on_update="false" label="Failed" value="failed"/>
                 <element inactive_on_update="false" label="Completed" value="completed"/>
                 <element inactive_on_update="false" label="Ready to Map" value="ready_to_map"/>
                 <element inactive_on_update="false" label="Partial Success" value="partial_success"/>
-                <element inactive_on_update="false" label="Done" value="done"/>
-                <element inactive_on_update="false" label="Running" value="running"/>
-                <element inactive_on_update="false" label="Pending" value="pending"/>
-                <element inactive_on_update="false" label="New" value="new"/>
             </choice>
         </element>
+        <element label="Keys to Map" mandatory="true" max_length="200" name="keys_to_map" type="string"/>
         <element label="Mapping Table Name" mandatory="true" max_length="100" name="mapping_table_name" type="string"/>
+        <element label="Job Identifier" mandatory="true" max_length="10" name="job_identifier" type="string"/>
+        <element label="Primary Key To Map" max_length="20" name="primary_key_to_map" type="string"/>
+        <element label="Result Table Name" mandatory="true" max_length="100" name="result_table_name" type="string"/>
+        <element label="Job Result Location" max_length="100" name="job_result_location" type="string"/>
     </element>
 </database>
