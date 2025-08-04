@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Determines whether the conditions provided in the config class mapping should be case-sensitive or case-insensitive. Set this to true to make condition matching case-sensitive, or false to ignore case.</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>x_illu2_illumio.is_case_sensitive</name>
+        <read_roles>x_illu2_illumio.illumio_admin,admin</read_roles>
+        <suffix>is_case_sensitive</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-29 09:51:45</sys_created_on>
+        <sys_id>484aaa11c30f62106c891275e40131a2</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>x_illu2_illumio.is_case_sensitive</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_properties_484aaa11c30f62106c891275e40131a2</sys_update_name>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-29 12:07:31</sys_updated_on>
+        <type>boolean</type>
+        <value>true</value>
+        <write_roles>admin,x_illu2_illumio.illumio_admin</write_roles>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=484aaa11c30f62106c891275e40131a2"/>
+</record_update>

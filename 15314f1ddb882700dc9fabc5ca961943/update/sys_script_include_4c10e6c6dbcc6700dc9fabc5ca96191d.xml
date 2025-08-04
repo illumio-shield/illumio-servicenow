@@ -65,10 +65,21 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     break;
                 }
 
+				// Initialize filters
+				var excludeConditionFilter = new GlideFilter(pceConfig.source[table].exclude_condition, "excludeConditionFilter");
+				var deleteConditionFilter = new GlideFilter(pceConfig.source[table].delete_condition, "deleteConditionFilter");
+				var incidentConditionFilter = new GlideFilter(pceConfig.source[table].incident_condition, "incidentConditionFilter");
+
+				if (IS_CASE_SENSITIVE == "false") {
+					excludeConditionFilter.setCaseSensitive(false);
+					deleteConditionFilter.setCaseSensitive(false);
+					incidentConditionFilter.setCaseSensitive(false);
+				}
+
                 while (sourceTableGr.next()) {
                     // check the condition for retired wotkloads and delete
                     if (!gs.nil(pceConfig.source[table].exclude_condition)) {
-                        var condition = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].exclude_condition, true);
+						var condition = excludeConditionFilter.match(sourceTableGr, true);
                         if (condition) {
                             // condition matched
                             retiredWorkloads[table]++;
@@ -80,8 +91,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     // check the condition for workloads to delete
                     var toDeleteWorkload = false;
                     if (!gs.nil(pceConfig.source[table].delete_condition)) {
-                        var conditionAvail = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].delete_condition, true);
-
+                        var conditionAvail = deleteConditionFilter.match(sourceTableGr, true);
                         if (conditionAvail) {
                             // condition matched
                             toDeleteWorkload = true;
@@ -92,7 +102,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     // Check the condition for creating incident for workload
                     var createIncident = false;
                     if (!gs.nil(pceConfig.source[table].incident_condition)) {
-                        var incidentConditionAvail = GlideFilter.checkRecord(sourceTableGr, pceConfig.source[table].incident_condition, true);
+                        var incidentConditionAvail = incidentConditionFilter.match(sourceTableGr, true);
                         if (incidentConditionAvail) {
                             createIncident = true;
                         }
