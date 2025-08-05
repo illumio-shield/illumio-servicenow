@@ -30,13 +30,13 @@
         <name>Illumio Data Collection</name>
         <onclick/>
         <order>200</order>
-        <script><![CDATA[var configClassGr = new GlideRecord('x_illu2_illumio_illumio_config_class_mapping');
+        <script><![CDATA[var configClassGr = new GlideRecordSecure('x_illu2_illumio_illumio_config_class_mapping');
 configClassGr.addActiveQuery();
 configClassGr.addQuery('illumio_pce_configuration', current.getUniqueValue());
 configClassGr.query();
 if (configClassGr.hasNext()) {
     while (configClassGr.next()) {
-        var fieldMappingGr = new GlideRecord('x_illu2_illumio_illumio_class_field_mapping');
+        var fieldMappingGr = new GlideRecordSecure('x_illu2_illumio_illumio_class_field_mapping');
         fieldMappingGr.addQuery('type', 'host_name');
 		fieldMappingGr.addQuery('illumio_config_class_mapping',configClassGr.getUniqueValue());
         fieldMappingGr.addActiveQuery();
@@ -88,17 +88,28 @@ if (configClassGr.hasNext()) {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>9771a60adbcc6700dc9fabc5ca961962</sys_id>
-        <sys_mod_count>34</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name>Illumio Data Collection</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_9771a60adbcc6700dc9fabc5ca961962</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-09 11:03:06</sys_updated_on>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 13:20:05</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_conf</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
     </sys_ui_action>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9771a60adbcc6700dc9fabc5ca961962</id>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-16 13:20:04</sys_created_on>
+        <sys_id>cc31e491c37e22106c891275e40131de</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 13:20:04</sys_updated_on>
+        <table>sys_ui_action</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

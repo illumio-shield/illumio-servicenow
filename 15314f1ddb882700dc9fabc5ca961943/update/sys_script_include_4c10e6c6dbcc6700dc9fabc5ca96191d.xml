@@ -245,13 +245,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             gs.info("Deleting existing custom table data for PCE Configuration {0}", pceConfig["name"]);
 
             // Remove all entries from field value table
-            var workloadFieldValueGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+            var workloadFieldValueGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload_field_value");
             workloadFieldValueGr.addQuery("illumio_pce_workload.illumio_pce_configuration", this.pceConfigId);
             workloadFieldValueGr.query();
             workloadFieldValueGr.deleteMultiple();
 
             // Remove all entries from custom table
-            var illumioServersGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+            var illumioServersGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
             illumioServersGr.addQuery("illumio_pce_configuration", this.pceConfigId);
             illumioServersGr.query();
             illumioServersGr.deleteMultiple();
@@ -359,7 +359,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      */
     _fetchWorkloadMapping: function(hostNamePart, workloadType) {
 
-        var workloadsMappingGr = new GlideRecord("x_illu2_illumio_illumio_pce_workloads_mapping");
+        var workloadsMappingGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workloads_mapping");
         workloadsMappingGr.addQuery("agent", workloadType);
         workloadsMappingGr.addQuery("illumio_pce_configuration", this.pceConfigId);
         workloadsMappingGr.setLimit(1);
@@ -377,7 +377,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      */
     _queryWorkload: function(workloadType, hostname, sourceTableGr) {
 
-        var illumioServersGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+        var illumioServersGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
         var workload = "managed";
         if (!workloadType) {
             workload = "unmanaged";
@@ -479,7 +479,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 			if (gs.nil(labelDimesionData[field]["cmdb_value"]) && gs.nil(labelDimesionData[field]["pce_value"]))
 				continue;
 			
-            var workloadFieldValueGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+            var workloadFieldValueGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload_field_value");
             workloadFieldValueGr.initialize();
             workloadFieldValueGr.setValue("illumio_label_dimension", labelDimesionData[field]["label_dimension_sys_id"]);
 
@@ -505,7 +505,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      * @param {JSON} workloadLabels Object of workloads with labels
      */
     _updatePCELabelValues: function(sourceTableGr, pceWorkloadLabels) {
-        var labelsMappingGr = new GlideRecord("x_illu2_illumio_illumio_pce_labels_mapping");
+        var labelsMappingGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_labels_mapping");
 
         // Set PCE values for Label Dimensions
         for (var labelIndex = 0; labelIndex < pceWorkloadLabels.length; labelIndex++) {
@@ -601,7 +601,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         incidentGr.update();
 
         if (gs.nil(incidentSysId)) {
-            incidentMappingGr = new GlideRecord("x_illu2_illumio_illumio_incident_mapping");
+            incidentMappingGr = new GlideRecordSecure("x_illu2_illumio_illumio_incident_mapping");
             incidentMappingGr.initialize();
             incidentMappingGr.setValue("href", illumioServersGr.getValue("pce_workload_href"));
             incidentMappingGr.setValue("hostname", illumioServersGr.getValue("hostname"));
@@ -618,7 +618,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      * @param {GlideRecord} illumioServerGr 
      */
     getIncident: function(illumioServerGr) {
-        var incidentMappingGr = new GlideRecord("x_illu2_illumio_illumio_incident_mapping");
+        var incidentMappingGr = new GlideRecordSecure("x_illu2_illumio_illumio_incident_mapping");
         incidentMappingGr.addQuery("illumio_pce_configuration", this.pceConfigId);
         var href = illumioServerGr.getValue("pce_workload_href");
         if (gs.nil(href)){
@@ -710,7 +710,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      */
     _createUnknownWorkload: function(hostname, sourceTableGr) {
         var hostNamePart = hostname.split(".")[0];
-        var illumioServersGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+        var illumioServersGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
         illumioServersGr = this._initializeObject(
             null,
             illumioServersGr,
@@ -744,7 +744,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      */
     getValueFromScript: function(sourceGr, fieldMapping) {
         try {
-            var fieldMappingGr = new GlideRecord("x_illu2_illumio_illumio_class_field_mapping");
+            var fieldMappingGr = new GlideRecordSecure("x_illu2_illumio_illumio_class_field_mapping");
             if (fieldMappingGr.get(fieldMapping["mappingSysId"])) {
                 var evaluator = new GlideScopedEvaluator();
                 evaluator.putVariable('sourceGr', sourceGr);
