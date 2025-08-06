@@ -165,4 +165,15 @@ IllumioGetPCEConfiguration.prototype = {
         <sys_updated_by>hetang.modi</sys_updated_by>
         <sys_updated_on>2025-01-29 08:09:28</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>61eeda82dbcc6700dc9fabc5ca9619ab</id>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-16 07:06:29</sys_created_on>
+        <sys_id>3babcbc1c37222106c891275e40131dd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 07:06:29</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

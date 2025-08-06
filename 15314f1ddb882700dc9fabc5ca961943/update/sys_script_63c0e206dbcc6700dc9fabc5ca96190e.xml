@@ -129,4 +129,15 @@
         <when>before</when>
     </sys_script>
     <sys_translated_text action="delete_multiple" query="documentkey=63c0e206dbcc6700dc9fabc5ca96190e"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>63c0e206dbcc6700dc9fabc5ca96190e</id>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-16 06:49:19</sys_created_on>
+        <sys_id>44c78741c37222106c891275e40131c8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 06:49:19</sys_updated_on>
+        <table>sys_script</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>

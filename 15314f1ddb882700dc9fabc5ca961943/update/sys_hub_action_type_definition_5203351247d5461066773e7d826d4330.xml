@@ -39,7 +39,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_5203351247d5461066773e7d826d4330</sys_update_name>
         <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-06-19 15:20:14</sys_updated_on>
+        <sys_updated_on>2025-08-06 05:43:03</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -914,29 +914,6 @@
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=246df51e47d5461066773e7d826d43f0"/>
     <sys_documentation action="INSERT_OR_UPDATE">
-        <element>headers</element>
-        <help/>
-        <hint/>
-        <label>Headers</label>
-        <language>en</language>
-        <name>var__m_sys_hub_step_ext_output_246df51e47d5461066773e7d826d43f0</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-03 16:40:18</sys_created_on>
-        <sys_id>39797d282b16aa10d920f0b8b891bfd3</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Headers</sys_name>
-        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_246df51e47d5461066773e7d826d43f0_headers_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-03 16:40:18</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
         <element>status</element>
         <help/>
         <hint/>
@@ -947,7 +924,7 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 16:40:18</sys_created_on>
-        <sys_id>3d797d282b16aa10d920f0b8b891bfda</sys_id>
+        <sys_id>30c18f3f474b2e108ab8cc02d16d434d</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -970,7 +947,7 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:06:30</sys_created_on>
-        <sys_id>75797d282b16aa10d920f0b8b891bfd7</sys_id>
+        <sys_id>3cc18f3f474b2e108ab8cc02d16d4349</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -979,6 +956,29 @@
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_246df51e47d5461066773e7d826d43f0_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 09:06:30</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>headers</element>
+        <help/>
+        <hint/>
+        <label>Headers</label>
+        <language>en</language>
+        <name>var__m_sys_hub_step_ext_output_246df51e47d5461066773e7d826d43f0</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-03 16:40:18</sys_created_on>
+        <sys_id>fcc18f3f474b2e108ab8cc02d16d4345</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Headers</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_246df51e47d5461066773e7d826d43f0_headers_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-03 16:40:18</sys_updated_on>
         <url/>
         <url_target/>
     </sys_documentation>
@@ -1249,7 +1249,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 16:40:17</sys_created_on>
-        <sys_id>6e79fd282b16aa10d920f0b8b891bf8e</sys_id>
+        <sys_id>95c1037f474b2e108ab8cc02d16d437f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parameter</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1889,7 +1889,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 16:40:17</sys_created_on>
-        <sys_id>0c79b9282b16aa10d920f0b8b891bf33</sys_id>
+        <sys_id>57b10b3f474b2e108ab8cc02d16d43df</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>PCE Configuration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1912,7 +1912,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 16:40:17</sys_created_on>
-        <sys_id>8479b9282b16aa10d920f0b8b891bf37</sys_id>
+        <sys_id>97b10b3f474b2e108ab8cc02d16d43ef</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Request Body</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1926,6 +1926,29 @@ outputs.parameter = JSON.stringify(parameters);&#13;
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_5203351247d5461066773e7d826d4330"/>
     <sys_documentation action="INSERT_OR_UPDATE">
+        <element>headers</element>
+        <help/>
+        <hint/>
+        <label>Headers</label>
+        <language>en</language>
+        <name>var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-04 09:06:30</sys_created_on>
+        <sys_id>04c1cb3f474b2e108ab8cc02d16d4398</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Headers</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330_headers_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 09:06:30</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
         <element>__action_status__</element>
         <help/>
         <hint/>
@@ -1936,7 +1959,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:35:31</sys_created_on>
-        <sys_id>3879f9282b16aa10d920f0b8b891bff6</sys_id>
+        <sys_id>48c1cb3f474b2e108ab8cc02d16d4384</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Action Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1945,29 +1968,6 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 09:35:31</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
-        <element>response</element>
-        <help/>
-        <hint/>
-        <label>Response</label>
-        <language>en</language>
-        <name>var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-04 09:06:30</sys_created_on>
-        <sys_id>41793d282b16aa10d920f0b8b891bf0d</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Response</sys_name>
-        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330_response_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 09:06:30</sys_updated_on>
         <url/>
         <url_target/>
     </sys_documentation>
@@ -1982,7 +1982,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:06:30</sys_created_on>
-        <sys_id>45793d282b16aa10d920f0b8b891bf10</sys_id>
+        <sys_id>80c1cb3f474b2e108ab8cc02d16d439f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -2005,7 +2005,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:35:31</sys_created_on>
-        <sys_id>49793d282b16aa10d920f0b8b891bf06</sys_id>
+        <sys_id>84c1cb3f474b2e108ab8cc02d16d4388</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -2018,23 +2018,23 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <url_target/>
     </sys_documentation>
     <sys_documentation action="INSERT_OR_UPDATE">
-        <element>headers</element>
+        <element>response</element>
         <help/>
         <hint/>
-        <label>Headers</label>
+        <label>Response</label>
         <language>en</language>
         <name>var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330</name>
         <plural/>
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 09:06:30</sys_created_on>
-        <sys_id>4d793d282b16aa10d920f0b8b891bf09</sys_id>
+        <sys_id>c8c1cb3f474b2e108ab8cc02d16d439b</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>Headers</sys_name>
+        <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330_headers_en</sys_update_name>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_5203351247d5461066773e7d826d4330_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 09:06:30</sys_updated_on>
         <url/>
@@ -2444,7 +2444,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:28</sys_created_on>
-        <sys_id>f1797d282b16aa10d920f0b8b891bf8b</sys_id>
+        <sys_id>a0c14f3f474b2e108ab8cc02d16d43ce</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parameter</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -3199,29 +3199,6 @@ outputs.parameter = JSON.stringify(parameters);&#13;
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=8a8531e247d9861066773e7d826d4354"/>
     <sys_documentation action="INSERT_OR_UPDATE">
-        <element>response</element>
-        <help/>
-        <hint/>
-        <label>Response</label>
-        <language>en</language>
-        <name>var__m_sys_hub_step_ext_output_8a8531e247d9861066773e7d826d4354</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>1279bd282b16aa10d920f0b8b891bf96</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Response</sys_name>
-        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_8a8531e247d9861066773e7d826d4354_response_en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
         <element>headers</element>
         <help/>
         <hint/>
@@ -3232,13 +3209,36 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>d279bd282b16aa10d920f0b8b891bf92</sys_id>
+        <sys_id>01c1cf3f474b2e108ab8cc02d16d4395</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_8a8531e247d9861066773e7d826d4354_headers_en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>response</element>
+        <help/>
+        <hint/>
+        <label>Response</label>
+        <language>en</language>
+        <name>var__m_sys_hub_step_ext_output_8a8531e247d9861066773e7d826d4354</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-04 10:44:29</sys_created_on>
+        <sys_id>89c1cf3f474b2e108ab8cc02d16d4398</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Response</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_8a8531e247d9861066773e7d826d4354_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
         <url/>
@@ -3255,7 +3255,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>d679bd282b16aa10d920f0b8b891bf99</sys_id>
+        <sys_id>8dc1cf3f474b2e108ab8cc02d16d439b</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -3895,7 +3895,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:28</sys_created_on>
-        <sys_id>1879b9282b16aa10d920f0b8b891bfc9</sys_id>
+        <sys_id>63b14b3f474b2e108ab8cc02d16d43cd</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>PCE Configuration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -3918,7 +3918,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:28</sys_created_on>
-        <sys_id>5879b9282b16aa10d920f0b8b891bfd9</sys_id>
+        <sys_id>ebb14b3f474b2e108ab8cc02d16d43d0</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Request Body</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -3942,36 +3942,13 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>29797d282b16aa10d920f0b8b891bf73</sys_id>
+        <sys_id>20c14f3f474b2e108ab8cc02d16d43aa</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_fd8531e247d9861066773e7d826d431b___dont_treat_as_error___en</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
-        <element>headers</element>
-        <help/>
-        <hint/>
-        <label>Headers</label>
-        <language>en</language>
-        <name>var__m_sys_hub_action_output_fd8531e247d9861066773e7d826d431b</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>2d797d282b16aa10d920f0b8b891bf76</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name>Headers</sys_name>
-        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_fd8531e247d9861066773e7d826d431b_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
         <url/>
@@ -3988,7 +3965,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>31797d282b16aa10d920f0b8b891bf7a</sys_id>
+        <sys_id>64c14f3f474b2e108ab8cc02d16d43bd</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -4011,7 +3988,7 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>35797d282b16aa10d920f0b8b891bf7d</sys_id>
+        <sys_id>68c14f3f474b2e108ab8cc02d16d43c0</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -4034,13 +4011,36 @@ outputs.parameter = JSON.stringify(parameters);&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 10:44:29</sys_created_on>
-        <sys_id>ad797d282b16aa10d920f0b8b891bf6f</sys_id>
+        <sys_id>e0c14f3f474b2e108ab8cc02d16d43a6</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Action Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_fd8531e247d9861066773e7d826d431b___action_status___en</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>headers</element>
+        <help/>
+        <hint/>
+        <label>Headers</label>
+        <language>en</language>
+        <name>var__m_sys_hub_action_output_fd8531e247d9861066773e7d826d431b</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-04 10:44:29</sys_created_on>
+        <sys_id>e4c14f3f474b2e108ab8cc02d16d43ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Headers</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_documentation_var__m_sys_hub_action_output_fd8531e247d9861066773e7d826d431b_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 10:44:29</sys_updated_on>
         <url/>

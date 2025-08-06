@@ -256,4 +256,15 @@ IllumioStartDiscovery.prototype = {
         <sys_updated_by>hetang.modi</sys_updated_by>
         <sys_updated_on>2025-01-29 10:29:43</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>641f9e82dbcc6700dc9fabc5ca9619ce</id>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-16 07:08:25</sys_created_on>
+        <sys_id>0c2c8709c37222106c891275e4013147</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 07:08:25</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
