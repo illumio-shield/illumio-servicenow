@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="DELETE">
+        <active>false</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>application</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Illumio clear button for field mapping</name>
+        <order/>
+        <script><![CDATA[function onLoad() {
+    var utilsGA = new GlideAjax("IllumioUtilsAJAX");
+    utilsGA.addParam("sysparm_name", "getFieldNameTypeFields");
+    utilsGA.getXML(createClearButtons);
+
+    function createClearButtons(response) {
+        var inPutIdPref = "element.x_illu2_illumio_illumio_pce_field_mapping.";
+        var fields = JSON.parse(response.responseXML.documentElement.getAttribute("answer"));
+		
+        for (var fInd = 0; fInd < fields.length; fInd++) {
+			var fieldName = fields[fInd];
+            var field = document.getElementById(inPutIdPref + fieldName);
+			field = field.getElementsBySelector(".form-field-addons")[0];
+            field.innerHTML += "<div><button style='margin-left:13px' onclick=\"g_form.clearValue('" + fieldName + "')\" type=\"button\" class=\"btn btn-default deleteButton\">Clear</button></div> ";
+        }
+
+    }
+
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-31 14:17:09</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>706765cb87914510d7a34046cebb35d3</sys_id>
+        <sys_mod_count>74</sys_mod_count>
+        <sys_name>Illumio clear button for field mapping</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_script_client_706765cb87914510d7a34046cebb35d3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-09 11:29:37</sys_updated_on>
+        <table>x_illu2_illumio_illumio_pce_field_mapping</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>5b32fdb31b4a8a14c82acb7b234bcbf3</instance_id>
+        <instance_name>dev270828</instance_name>
+        <name>sys_script_client_706765cb87914510d7a34046cebb35d3</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_script_client"&gt;
+    &lt;sys_script_client action="INSERT_OR_UPDATE"&gt;
+        &lt;active&gt;false&lt;/active&gt;
+        &lt;applies_extended&gt;false&lt;/applies_extended&gt;
+        &lt;condition/&gt;
+        &lt;description/&gt;
+        &lt;field&gt;application&lt;/field&gt;
+        &lt;global&gt;true&lt;/global&gt;
+        &lt;isolate_script&gt;true&lt;/isolate_script&gt;
+        &lt;messages/&gt;
+        &lt;name&gt;Illumio clear button for field mapping&lt;/name&gt;
+        &lt;order/&gt;
+        &lt;script&gt;&lt;![CDATA[function onLoad() {
+    var utilsGA = new GlideAjax("IllumioUtilsAJAX");
+    utilsGA.addParam("sysparm_name", "getFieldNameTypeFields");
+    utilsGA.getXML(createClearButtons);
+
+    function createClearButtons(response) {
+        var inPutIdPref = "element.x_illu2_illumio_illumio_pce_field_mapping.";
+        var fields = JSON.parse(response.responseXML.documentElement.getAttribute("answer"));
+		
+        for (var fInd = 0; fInd &lt; fields.length; fInd++) {
+			var fieldName = fields[fInd];
+            var field = document.getElementById(inPutIdPref + fieldName);
+			field = field.getElementsBySelector(".form-field-addons")[0];
+            field.innerHTML += "&lt;div&gt;&lt;button style='margin-left:13px' onclick=\"g_form.clearValue('" + fieldName + "')\" type=\"button\" class=\"btn btn-default deleteButton\"&gt;Clear&lt;/button&gt;&lt;/div&gt; ";
+        }
+
+    }
+
+}]]&gt;&lt;/script&gt;
+        &lt;sys_class_name&gt;sys_script_client&lt;/sys_class_name&gt;
+        &lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2022-01-31 14:17:09&lt;/sys_created_on&gt;
+        &lt;sys_domain&gt;global&lt;/sys_domain&gt;
+        &lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;
+        &lt;sys_id&gt;706765cb87914510d7a34046cebb35d3&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;74&lt;/sys_mod_count&gt;
+        &lt;sys_name&gt;Illumio clear button for field mapping&lt;/sys_name&gt;
+        &lt;sys_overrides/&gt;
+        &lt;sys_package display_value="Illumio" source="x_illu2_illumio"&gt;15314f1ddb882700dc9fabc5ca961943&lt;/sys_package&gt;
+        &lt;sys_policy&gt;read&lt;/sys_policy&gt;
+        &lt;sys_scope display_value="Illumio"&gt;15314f1ddb882700dc9fabc5ca961943&lt;/sys_scope&gt;
+        &lt;sys_update_name&gt;sys_script_client_706765cb87914510d7a34046cebb35d3&lt;/sys_update_name&gt;
+        &lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2024-04-09 11:29:37&lt;/sys_updated_on&gt;
+        &lt;table&gt;x_illu2_illumio_illumio_pce_field_mapping&lt;/table&gt;
+        &lt;type&gt;onLoad&lt;/type&gt;
+        &lt;ui_type&gt;0&lt;/ui_type&gt;
+        &lt;view/&gt;
+    &lt;/sys_script_client&gt;
+&lt;/record_update&gt;</payload>
+        <payload_hash>-191140337</payload_hash>
+        <record_name>Illumio clear button for field mapping</record_name>
+        <reverted_from/>
+        <source>b513dbe883eee2107f3bfdc6feaad356</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>hetang.modi</sys_created_by>
+        <sys_created_on>2025-07-02 08:07:58</sys_created_on>
+        <sys_id>488353ec83eee2107f3bfdc6feaad3bd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>197ca2da60f0000001</sys_recorded_at>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-07-02 08:07:58</sys_updated_on>
+        <type>Client Script</type>
+        <update_guid>048353eca7eee210e2d6b06592e597bd</update_guid>
+        <update_guid_history>048353eca7eee210e2d6b06592e597bd:0,6a814c5905e122102be685a4cda0adab:1688526829</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-20 10:12:09</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_client">sys_script_client</sys_db_object>
+        <sys_id>31b263f60fff42099ea62dd44075a721</sys_id>
+        <sys_metadata>706765cb87914510d7a34046cebb35d3</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Illumio clear button for field mapping</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent display_value="">f2b205a79300021062233f018bba10d1</sys_parent>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_script_client_706765cb87914510d7a34046cebb35d3</sys_update_name>
+        <sys_update_version display_value="sys_script_client_706765cb87914510d7a34046cebb35d3">488353ec83eee2107f3bfdc6feaad3bd</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-20 10:12:09</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

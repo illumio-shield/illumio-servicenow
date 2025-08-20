@@ -15,43 +15,5 @@
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2022-02-14 08:28:53</sys_updated_on>
         </sys_choice_set>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>order</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Ascending</label>
-            <language>en</language>
-            <name>x_illu2_illumio_illumio_pce_field_mapping</name>
-            <sequence/>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-02-14 08:28:53</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-02-14 08:28:53</sys_updated_on>
-            <value>ASC</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>order</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Descending</label>
-            <language>en</language>
-            <name>x_illu2_illumio_illumio_pce_field_mapping</name>
-            <sequence/>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2022-02-14 08:29:29</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2022-02-14 08:29:29</sys_updated_on>
-            <value>DESC</value>
-        </sys_choice>
     </sys_choice>
 </record_update>
