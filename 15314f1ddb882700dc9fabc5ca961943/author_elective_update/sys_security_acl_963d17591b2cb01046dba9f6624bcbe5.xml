@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>false</advanced>
+        <applies_to/>
+        <condition/>
+        <controlled_by_refs/>
+        <decision_type>allow</decision_type>
+        <description>Allow write for select_ip_address_6 in x_illu2_illumio_illumio_servicenow_servers, for users with role x_illu2_illumio.mid_server_user.</description>
+        <local_or_existing/>
+        <name>x_illu2_illumio_illumio_servicenow_servers.select_ip_address_6</name>
+        <operation display_value="write">write</operation>
+        <script/>
+        <security_attribute/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-06-04 09:22:47</sys_created_on>
+        <sys_id>963d17591b2cb01046dba9f6624bcbe5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_servicenow_servers.select_ip_address_6</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_security_acl_963d17591b2cb01046dba9f6624bcbe5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-06-04 09:22:47</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>5b32fdb31b4a8a14c82acb7b234bcbf3</instance_id>
+        <instance_name>dev270828</instance_name>
+        <name>sys_security_acl_963d17591b2cb01046dba9f6624bcbe5</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>false</advanced>
+        <applies_to/>
+        <condition/>
+        <controlled_by_refs/>
+        <decision_type>allow</decision_type>
+        <description>Allow write for select_ip_address_6 in x_illu2_illumio_illumio_servicenow_servers, for users with role x_illu2_illumio.mid_server_user.</description>
+        <local_or_existing/>
+        <name>x_illu2_illumio_illumio_servicenow_servers.select_ip_address_6</name>
+        <operation display_value="write">write</operation>
+        <script/>
+        <security_attribute/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-06-04 09:22:47</sys_created_on>
+        <sys_id>963d17591b2cb01046dba9f6624bcbe5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_servicenow_servers.select_ip_address_6</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_security_acl_963d17591b2cb01046dba9f6624bcbe5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-06-04 09:22:47</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+</record_update>]]></payload>
+        <payload_hash>865546464</payload_hash>
+        <record_name>x_illu2_illumio_illumio_servicenow_servers.select_ip_address_6</record_name>
+        <reverted_from/>
+        <source>b513dbe883eee2107f3bfdc6feaad356</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>hetang.modi</sys_created_by>
+        <sys_created_on>2025-07-02 08:08:06</sys_created_on>
+        <sys_id>b18397ec83eee2107f3bfdc6feaad3b7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>197ca2dc2d40000001</sys_recorded_at>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-07-02 08:08:06</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>7d8397ec06eee210752601ddcaa43ab6</update_guid>
+        <update_guid_history>7d8397ec06eee210752601ddcaa43ab6:0,9c9100998ae122104b6cf01e364a922d:1351473648</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-20 10:14:35</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>6b2bb7fb22f442bdb00e8c245808ecc9</sys_id>
+        <sys_metadata>963d17591b2cb01046dba9f6624bcbe5</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_servicenow_servers.select_ip_address_6</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent display_value="">89e0c41583e122107f3bfdc6feaad326</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_security_acl_963d17591b2cb01046dba9f6624bcbe5</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_963d17591b2cb01046dba9f6624bcbe5">b18397ec83eee2107f3bfdc6feaad3b7</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-20 10:14:35</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

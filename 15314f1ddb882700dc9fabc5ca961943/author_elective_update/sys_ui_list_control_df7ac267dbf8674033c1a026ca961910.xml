@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_list_control">
+    <sys_ui_list_control action="DELETE">
+        <columns_condition/>
+        <disable_nlq>false</disable_nlq>
+        <edit_condition/>
+        <edit_default_filter/>
+        <edit_roles/>
+        <empty_condition/>
+        <filter_condition/>
+        <filter_roles/>
+        <hierarchical_lists>false</hierarchical_lists>
+        <label/>
+        <link_condition/>
+        <link_roles/>
+        <list_edit_insert_row>false</list_edit_insert_row>
+        <list_edit_ref_qual_tag/>
+        <list_edit_type/>
+        <name>x_illu2_illumio_illumio_servicenow_servers</name>
+        <new_condition/>
+        <new_roles/>
+        <omit_columns_if_empty>false</omit_columns_if_empty>
+        <omit_count>false</omit_count>
+        <omit_count_views>false</omit_count_views>
+        <omit_count_views_list/>
+        <omit_drilldown_link>false</omit_drilldown_link>
+        <omit_edit_button>false</omit_edit_button>
+        <omit_filters>false</omit_filters>
+        <omit_if_empty>false</omit_if_empty>
+        <omit_links>false</omit_links>
+        <omit_new_button>true</omit_new_button>
+        <omit_related_list_count>false</omit_related_list_count>
+        <related_list/>
+        <sys_class_name>sys_ui_list_control</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-10-03 08:27:34</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>df7ac267dbf8674033c1a026ca961910</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_servicenow_servers</sys_name>
+        <sys_overrides display_value="">global</sys_overrides>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_list_control_df7ac267dbf8674033c1a026ca961910</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-10-03 08:27:34</sys_updated_on>
+    </sys_ui_list_control>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>5b32fdb31b4a8a14c82acb7b234bcbf3</instance_id>
+        <instance_name>dev270828</instance_name>
+        <name>sys_ui_list_control_df7ac267dbf8674033c1a026ca961910</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_list_control">
+    <sys_ui_list_control action="INSERT_OR_UPDATE">
+        <columns_condition/>
+        <disable_nlq>false</disable_nlq>
+        <edit_condition/>
+        <edit_default_filter/>
+        <edit_roles/>
+        <empty_condition/>
+        <filter_condition/>
+        <filter_roles/>
+        <hierarchical_lists>false</hierarchical_lists>
+        <label/>
+        <link_condition/>
+        <link_roles/>
+        <list_edit_insert_row>false</list_edit_insert_row>
+        <list_edit_ref_qual_tag/>
+        <list_edit_type/>
+        <name>x_illu2_illumio_illumio_servicenow_servers</name>
+        <new_condition/>
+        <new_roles/>
+        <omit_columns_if_empty>false</omit_columns_if_empty>
+        <omit_count>false</omit_count>
+        <omit_count_views>false</omit_count_views>
+        <omit_count_views_list/>
+        <omit_drilldown_link>false</omit_drilldown_link>
+        <omit_edit_button>false</omit_edit_button>
+        <omit_filters>false</omit_filters>
+        <omit_if_empty>false</omit_if_empty>
+        <omit_links>false</omit_links>
+        <omit_new_button>true</omit_new_button>
+        <omit_related_list_count>false</omit_related_list_count>
+        <related_list/>
+        <sys_class_name>sys_ui_list_control</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-10-03 08:27:34</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>df7ac267dbf8674033c1a026ca961910</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_servicenow_servers</sys_name>
+        <sys_overrides display_value="">global</sys_overrides>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_list_control_df7ac267dbf8674033c1a026ca961910</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-10-03 08:27:34</sys_updated_on>
+    </sys_ui_list_control>
+</record_update>]]></payload>
+        <payload_hash>1617974008</payload_hash>
+        <record_name>x_illu2_illumio_illumio_servicenow_servers</record_name>
+        <reverted_from/>
+        <source>b513dbe883eee2107f3bfdc6feaad356</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>hetang.modi</sys_created_by>
+        <sys_created_on>2025-07-02 08:08:20</sys_created_on>
+        <sys_id>1d931320832226107f3bfdc6feaad343</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>197ca2dfb6b0000001</sys_recorded_at>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-07-02 08:08:20</sys_updated_on>
+        <type>List Control</type>
+        <update_guid>d5931320dd222610b123bdaf3d7f8b43</update_guid>
+        <update_guid_history>d5931320dd222610b123bdaf3d7f8b43:0,3ca10c99c2e12210a9ef6b3d73285680:-2069903186</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-20 10:14:51</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_list_control">sys_ui_list_control</sys_db_object>
+        <sys_id>0bb34e4999954e94a5655edfec3d17a4</sys_id>
+        <sys_metadata>df7ac267dbf8674033c1a026ca961910</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_illu2_illumio_illumio_servicenow_servers</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent display_value="">4fb245a79300021062233f018bba1065</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_ui_list_control_df7ac267dbf8674033c1a026ca961910</sys_update_name>
+        <sys_update_version display_value="sys_ui_list_control_df7ac267dbf8674033c1a026ca961910">1d931320832226107f3bfdc6feaad343</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-20 10:14:51</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

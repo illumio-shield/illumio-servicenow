@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_db_object">
+    <sys_db_object action="DELETE">
+        <access>public</access>
+        <actions_access>false</actions_access>
+        <alter_access>false</alter_access>
+        <caller_access/>
+        <client_scripts_access>false</client_scripts_access>
+        <configuration_access>false</configuration_access>
+        <create_access>true</create_access>
+        <create_access_controls>true</create_access_controls>
+        <delete_access>true</delete_access>
+        <filter_extension/>
+        <is_extendable>false</is_extendable>
+        <label>Illumio PCE Configuration [Deprecated]</label>
+        <live_feed_enabled>false</live_feed_enabled>
+        <name>x_illu2_illumio_illumio_pce_configuration</name>
+        <number_ref/>
+        <provider_class/>
+        <read_access>true</read_access>
+        <scriptable_table>false</scriptable_table>
+        <super_class display_value="Scheduled Script Execution" name="sysauto_script">19bf0e52470222108ab8cc02d16d43d1</super_class>
+        <sys_class_name>sys_db_object</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 09:17:29</sys_created_on>
+        <sys_id>b7b2c5a79300021062233f018bba103f</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Illumio PCE Configuration [Deprecated]</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_db_object_b7b2c5a79300021062233f018bba103f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-05 07:08:33</sys_updated_on>
+        <update_access>true</update_access>
+        <user_role display_value="x_illu2_illumio.illumio_admin" name="x_illu2_illumio.illumio_admin">6ad8218adb4c6700dc9fabc5ca9619b2</user_role>
+        <ws_access>true</ws_access>
+    </sys_db_object>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</application>
+        <file_path/>
+        <instance_id>5b32fdb31b4a8a14c82acb7b234bcbf3</instance_id>
+        <instance_name>dev270828</instance_name>
+        <name>sys_db_object_b7b2c5a79300021062233f018bba103f</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_db_object">
+    <sys_db_object action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <actions_access>false</actions_access>
+        <alter_access>false</alter_access>
+        <caller_access/>
+        <client_scripts_access>false</client_scripts_access>
+        <configuration_access>false</configuration_access>
+        <create_access>true</create_access>
+        <create_access_controls>true</create_access_controls>
+        <delete_access>true</delete_access>
+        <filter_extension/>
+        <is_extendable>false</is_extendable>
+        <label>Illumio PCE Configuration [Deprecated]</label>
+        <live_feed_enabled>false</live_feed_enabled>
+        <name>x_illu2_illumio_illumio_pce_configuration</name>
+        <number_ref/>
+        <provider_class/>
+        <read_access>true</read_access>
+        <scriptable_table>false</scriptable_table>
+        <super_class display_value="Scheduled Script Execution" name="sysauto_script">19bf0e52470222108ab8cc02d16d43d1</super_class>
+        <sys_class_name>sys_db_object</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-08-22 09:17:29</sys_created_on>
+        <sys_id>b7b2c5a79300021062233f018bba103f</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Illumio PCE Configuration [Deprecated]</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_db_object_b7b2c5a79300021062233f018bba103f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-05 07:08:33</sys_updated_on>
+        <update_access>true</update_access>
+        <user_role display_value="x_illu2_illumio.illumio_admin" name="x_illu2_illumio.illumio_admin">6ad8218adb4c6700dc9fabc5ca9619b2</user_role>
+        <ws_access>true</ws_access>
+    </sys_db_object>
+</record_update>]]></payload>
+        <payload_hash>948846088</payload_hash>
+        <record_name>Illumio PCE Configuration [Deprecated]</record_name>
+        <reverted_from/>
+        <source>b513dbe883eee2107f3bfdc6feaad356</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>hetang.modi</sys_created_by>
+        <sys_created_on>2025-07-02 08:06:18</sys_created_on>
+        <sys_id>a3131fe883eee2107f3bfdc6feaad392</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>197ca2c203b0000001</sys_recorded_at>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-07-02 08:06:18</sys_updated_on>
+        <type>Table</type>
+        <update_guid>6f131fe823eee210f4ead1f5fa496291</update_guid>
+        <update_guid_history>6f131fe823eee210f4ead1f5fa496291:0,3be04c15c8e1221042502a3b0bb14ff3:0,3fe04c15aee122103f45e34ac41ad3be:601346599</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-08-20 10:12:53</sys_created_on>
+        <sys_db_object display_value="" name="sys_db_object">sys_db_object</sys_db_object>
+        <sys_id>2e7ab080821e490c8a1ca8a9f60b8504</sys_id>
+        <sys_metadata>b7b2c5a79300021062233f018bba103f</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Illumio PCE Configuration [Deprecated]</sys_name>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
+        <sys_update_name>sys_db_object_b7b2c5a79300021062233f018bba103f</sys_update_name>
+        <sys_update_version display_value="sys_db_object_b7b2c5a79300021062233f018bba103f">a3131fe883eee2107f3bfdc6feaad392</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-08-20 10:12:53</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
