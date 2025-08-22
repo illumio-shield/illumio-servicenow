@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="pce_wl_field_value_table" table="x_illu2_illumio_advanced_workload_sync" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>pce_wl_field_value_table</element>
+            <name>x_illu2_illumio_advanced_workload_sync</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 07:54:56</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>pce_wl_field_value_table</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_choice_x_illu2_illumio_advanced_workload_sync_pce_wl_field_value_table</sys_update_name>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 07:54:56</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>pce_wl_field_value_table</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>x_illu2_illumio_illumio_pce_workload_field_value</label>
+            <language>en</language>
+            <name>x_illu2_illumio_advanced_workload_sync</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 07:54:56</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 07:55:02</sys_updated_on>
+            <value>x_illu2_illumio_illumio_pce_workload_field_value</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

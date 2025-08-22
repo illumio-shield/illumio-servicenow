@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="f2b2874ec31f62906c891275e401315b" sys_domain="global" table="x_illu2_illumio_advanced_workload_sync" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>8ba6afc6c353a2906c891275e4013120</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <text>&lt;p&gt;The workloads matching both the conditions provided in &lt;strong&gt;"PCE Workloads Condition"&lt;/strong&gt; and &lt;strong&gt;"PCE Workload Field Values Condition"&lt;/strong&gt; would be synced with Illumio PCE. If either of the condition is empty, then the other non-empty condition would be applied to find the matching workloads to sync. &lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; By default, the workloads with conflicts would be considered to sync when both the conditions are empty. The sync operation would be triggered when the record is saved with "Active" set to true.&lt;/p&gt;</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>8ba6afc6c353a2906c891275e4013120</element>
+            <position>0</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>0ba6afc6c353a2906c891275e4013136</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>1</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>47a6afc6c353a2906c891275e4013137</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>2</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>4fa6afc6c353a2906c891275e4013137</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>3</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>47a6afc6c353a2906c891275e4013138</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>4</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>4fa6afc6c353a2906c891275e4013138</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>5</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>47a6afc6c353a2906c891275e4013139</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>pce_workload_table</element>
+            <position>6</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>4fa6afc6c353a2906c891275e4013139</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>pce_workload_condition</element>
+            <position>7</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>47a6afc6c353a2906c891275e401313a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>pce_wl_field_value_table</element>
+            <position>8</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>4fa6afc6c353a2906c891275e401313a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>pce_wl_field_value_condition</element>
+            <position>9</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 08:09:43</sys_created_on>
+            <sys_id>47a6afc6c353a2906c891275e401313b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 08:09:43</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>record_preview</element>
+            <position>10</position>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-14 13:55:34</sys_created_on>
+            <sys_id>0b6f3926c3db26906c891275e4013157</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_advanced_workload_sync" sys_domain="global" view="Default view">f2b2874ec31f62906c891275e401315b</sys_ui_section>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-14 13:55:34</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_illu2_illumio_advanced_workload_sync</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>hetang.modi</sys_created_by>
+            <sys_created_on>2025-08-13 05:32:41</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f2b2874ec31f62906c891275e401315b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_illu2_illumio_advanced_workload_sync</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_ui_section_f2b2874ec31f62906c891275e401315b</sys_update_name>
+            <sys_updated_by>hetang.modi</sys_updated_by>
+            <sys_updated_on>2025-08-13 05:32:41</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

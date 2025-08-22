@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>Finds the records based on the conditions provided in "pce_workload_condition" and "pce_wl_field_value_condition" columns, and renders them as HTML.</comments>
+        <condition>gs.hasRole("x_illu2_illumio.illumio_user")</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Preview Records</name>
+        <onclick/>
+        <order>500</order>
+        <script><![CDATA[var workloadSysIds = [];
+var workloadGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+workloadGr.addEncodedQuery(current.pce_workload_condition);
+workloadGr.orderByDesc("sys_updated_on");
+workloadGr.query();
+while (workloadGr.next()) {
+	workloadSysIds.push(workloadGr.getUniqueValue());
+}
+var htmlContent = [];
+var htmlHeader = "<!DOCTYPE html> " +
+        "<head>" +
+        "<style>" +
+        "body {" +
+        "margin: 10;" +
+        "width: 100%;" +
+        "}" +
+        "table.ILLUMIO {" +
+        "font-size: 15px;" +
+        "font-family: verdana;" +
+        "font-weight: normal;" +
+        "border: 1px solid black;" +
+        "}" +
+        "td.ILLUMIO {" +
+        "padding: 8px 50px 8px 8px;" +
+        "border: 1px solid black;" +
+        "}" +
+        "th.ILLUMIO {" +
+        "border: 1px solid black;" +
+        "padding: 8px 50px 8px 8px;" +
+        "}" +
+        "</style>" +
+        "</head>" +
+        "<body>";
+var tableHeading = "<table class=\"ILLUMIO\"><tr class=\"ILLUMIO\"><th class=\"ILLUMIO\">Illumio PCE Workload</th><th class=\"ILLUMIO\">Illumio Label Dimension</th><th class=\"ILLUMIO\">CMDB Value</th><th class=\"ILLUMIO\">PCE Value</th></tr>";
+var trStart = "<tr class=\"ILLUMIO\">";
+var trEnd = "</tr>";
+var tdStart = "<td class=\"ILLUMIO\">";
+var tdEnd = "</td>";
+htmlContent.push(htmlHeader);
+htmlContent.push(tableHeading);
+var rowCounter = 0;
+var wlFieldValueGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+wlFieldValueGr.addEncodedQuery(current.pce_wl_field_value_condition);
+wlFieldValueGr.addQuery("illumio_pce_workload", "IN", workloadSysIds);
+workloadGr.orderByDesc("sys_updated_on");
+workloadGr.orderBy("illumio_pce_workload");
+wlFieldValueGr.setLimit(101);
+wlFieldValueGr.query();
+if (!wlFieldValueGr.hasNext()) {
+	gs.addInfoMessage("No matching records found;");
+	action.setRedirectURL(current);
+}
+while (wlFieldValueGr.next()) {
+	rowCounter -= -1;
+	htmlContent.push(trStart);
+	htmlContent.push(tdStart);
+	htmlContent.push(wlFieldValueGr.getDisplayValue("illumio_pce_workload"));
+	htmlContent.push(tdEnd);
+	htmlContent.push(tdStart);
+	htmlContent.push(wlFieldValueGr.getDisplayValue("illumio_label_dimension"));
+	htmlContent.push(tdEnd);
+	htmlContent.push(tdStart);
+	htmlContent.push(wlFieldValueGr.getValue("cmdb_value"));
+	htmlContent.push(tdEnd);
+	htmlContent.push(tdStart);
+	htmlContent.push(wlFieldValueGr.getValue("pce_value"));
+	htmlContent.push(tdEnd);
+	htmlContent.push(trEnd);
+	
+	if (rowCounter > 100) {
+		// show last row to open the view in ServiceNow native table view
+		htmlContent.push("<tr><td colspan=\"4\">The Preview Record is limited to only recently updated 100 records. For the complete list, please navigate to ServiceNow's native list view.</td></tr>");
+		break;
+	}
+}
+htmlContent.push("</table></body>");
+
+current.setValue("record_preview", htmlContent.join(" "));
+current.update();
+action.setRedirectURL(current);
+]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>hetang.modi</sys_created_by>
+        <sys_created_on>2025-08-14 13:58:09</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0f7fb926c3db26906c891275e40131e0</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>Preview Records</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_action_0f7fb926c3db26906c891275e40131e0</sys_update_name>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-08-14 15:10:48</sys_updated_on>
+        <table>x_illu2_illumio_advanced_workload_sync</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>0f7fb926c3db26906c891275e40131e0</id>
+        <sys_created_by>hetang.modi</sys_created_by>
+        <sys_created_on>2025-08-14 13:58:08</sys_created_on>
+        <sys_id>2c008266c3db26906c891275e401316b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>hetang.modi</sys_updated_by>
+        <sys_updated_on>2025-08-14 13:58:08</sys_updated_on>
+        <table>sys_ui_action</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

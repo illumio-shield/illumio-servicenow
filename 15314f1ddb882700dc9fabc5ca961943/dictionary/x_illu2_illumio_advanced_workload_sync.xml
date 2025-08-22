@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2eaef2c6c31f62906c891275e401310d" label="Advanced Workload Sync" max_length="40" name="x_illu2_illumio_advanced_workload_sync" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" mandatory="true" max_length="40" name="number" read_only="true" type="string"/>
+        <element attributes="show_condition_count=true" default="illumio_pce_workload.conflicts=true^EQ" dependent="pce_wl_field_value_table" dependent_on_field="pce_wl_field_value_table" label="PCE Workload Field Values Condition" max_length="2000" name="pce_wl_field_value_condition" type="conditions" use_dependent_field="true"/>
+        <element label="Record Preview" max_length="4000" name="record_preview" read_only="true" type="html"/>
+        <element attributes="show_condition_count=true" default="conflicts=true^EQ" dependent="pce_workload_table" dependent_on_field="pce_workload_table" label="PCE Workloads Condition" max_length="2000" name="pce_workload_condition" type="conditions" use_dependent_field="true"/>
+        <element label="Active" max_length="40" name="active" type="boolean"/>
+        <element choice="3" default="x_illu2_illumio_illumio_pce_workload" label="PCE Workload Table" max_length="80" name="pce_workload_table" read_only="true" type="table_name">
+            <choice>
+                <element inactive_on_update="false" label="x_illu2_illumio_illumio_pce_workload" value="x_illu2_illumio_illumio_pce_workload"/>
+            </choice>
+        </element>
+        <element choice="3" default="x_illu2_illumio_illumio_pce_workload_field_value" label="PCE Workload Field Values Table" max_length="80" name="pce_wl_field_value_table" read_only="true" type="table_name">
+            <choice>
+                <element inactive_on_update="false" label="x_illu2_illumio_illumio_pce_workload_field_value" value="x_illu2_illumio_illumio_pce_workload_field_value"/>
+            </choice>
+        </element>
+    </element>
+</database>
