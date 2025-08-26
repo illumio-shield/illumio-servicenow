@@ -101,4 +101,15 @@ if (configClassGr.hasNext()) {
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
     </sys_ui_action>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9771a60adbcc6700dc9fabc5ca961962</id>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-16 13:20:04</sys_created_on>
+        <sys_id>cc31e491c37e22106c891275e40131de</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 13:20:04</sys_updated_on>
+        <table>sys_ui_action</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
