@@ -58,7 +58,7 @@
         <update_guid_history>33831fec08eee2109c44a5b547e7ebe1:0,7a9144997ae122100e5c2879d89d5c96:-812654214</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_illu2_illumio_illumio_pce_field_mapping.x_illu2_illumio.mid_server_user">a7b5c0e483a3a2d07f3bfdc6feaad373</sys_audit_delete>
+        <sys_audit_delete display_value="">a7b5c0e483a3a2d07f3bfdc6feaad373</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-08-20 10:11:48</sys_created_on>

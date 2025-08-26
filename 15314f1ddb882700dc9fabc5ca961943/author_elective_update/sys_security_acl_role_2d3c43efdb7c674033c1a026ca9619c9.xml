@@ -58,7 +58,7 @@
         <update_guid_history>4f839becbbeee21006576c53c8c026ee:0,31918099b7e122109c94d7b83f17f894:-320539232</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_illu2_illumio_illumio_servicenow_servers.pce_application.x_illu2_illumio.mid_s">a75680a883a3a2d07f3bfdc6feaad3ed</sys_audit_delete>
+        <sys_audit_delete display_value="">a75680a883a3a2d07f3bfdc6feaad3ed</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-08-20 10:14:31</sys_created_on>
