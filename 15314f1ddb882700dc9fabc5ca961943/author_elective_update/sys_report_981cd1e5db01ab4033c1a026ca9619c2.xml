@@ -350,7 +350,7 @@
         <update_guid_history>c773dfac01eee210760d64331eb03985:0,9581c85920e12210e39442f9f5129176:-1214838592</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Unique Workloads by Roles [Deprecated]">207604e883a3a2d07f3bfdc6feaad387</sys_audit_delete>
+        <sys_audit_delete display_value="">207604e883a3a2d07f3bfdc6feaad387</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-08-20 10:14:51</sys_created_on>

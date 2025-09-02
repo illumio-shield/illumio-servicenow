@@ -24,7 +24,7 @@
         <scoped_administration>false</scoped_administration>
         <short_description/>
         <source>x_illu2_illumio</source>
-        <store_correlation_id>REPOAPP0002185091</store_correlation_id>
+        <store_correlation_id>REPOAPP0002247285</store_correlation_id>
         <store_url>https://tpp.servicenow.com/sn_appstore_s</store_url>
         <subscription_entitlement/>
         <sys_class_name>sys_app</sys_class_name>
@@ -32,9 +32,9 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-20 05:52:41</sys_created_on>
         <sys_id>15314f1ddb882700dc9fabc5ca961943</sys_id>
-        <sys_mod_count>45</sys_mod_count>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-08-20 10:08:30</sys_updated_on>
+        <sys_mod_count>46</sys_mod_count>
+        <sys_updated_by>tina.lam</sys_updated_by>
+        <sys_updated_on>2025-09-02 15:46:11</sys_updated_on>
         <template/>
         <trackable>true</trackable>
         <uninstall_blocked>false</uninstall_blocked>
@@ -49,7 +49,6 @@
         <chunk_size_bytes>734003</chunk_size_bytes>
         <compressed>true</compressed>
         <content_type>image/png</content_type>
-        <encryption_context/>
         <file_name>logo</file_name>
         <hash/>
         <image_height>100</image_height>

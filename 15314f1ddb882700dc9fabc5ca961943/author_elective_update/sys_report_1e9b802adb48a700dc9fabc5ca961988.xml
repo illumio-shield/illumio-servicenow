@@ -348,7 +348,7 @@
         <update_guid_history>fe73dfac5deee21068e373a7818b734e:0,dd81c859bbe1221063a28dd4f8d5115d:-1999577586</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Unique Workloads by Locations [Deprecated]">d07604e883a3a2d07f3bfdc6feaad334</sys_audit_delete>
+        <sys_audit_delete display_value="">d07604e883a3a2d07f3bfdc6feaad334</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-08-20 10:14:51</sys_created_on>
