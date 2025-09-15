@@ -10,7 +10,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_pce_configuration" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">e3571f3fdbfc6380dc9fabc5ca96199c</sys_ui_form>
-            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">d66b820edb8c6700dc9fabc5ca961946</sys_ui_section>
+            <sys_ui_section display_value="">d66b820edb8c6700dc9fabc5ca961946</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2018-10-04 08:41:25</sys_updated_on>
         </sys_ui_form_section>
@@ -24,7 +24,7 @@
             <sys_mod_count>2</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_pce_configuration" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">e3571f3fdbfc6380dc9fabc5ca96199c</sys_ui_form>
-            <sys_ui_section caption="Field Mapping" display_value="Field Mapping" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
+            <sys_ui_section display_value="">ab571f3fdbfc6380dc9fabc5ca96199a</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2018-10-05 14:01:35</sys_updated_on>
         </sys_ui_form_section>
@@ -38,7 +38,7 @@
             <sys_mod_count>2</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_pce_configuration" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">e3571f3fdbfc6380dc9fabc5ca96199c</sys_ui_form>
-            <sys_ui_section caption="Scheduler Configuration" display_value="Scheduler Configuration" name="x_illu2_illumio_illumio_pce_configuration" sys_domain="global" view="Default view">a7571f3fdbfc6380dc9fabc5ca96199b</sys_ui_section>
+            <sys_ui_section display_value="">a7571f3fdbfc6380dc9fabc5ca96199b</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2018-10-05 14:01:35</sys_updated_on>
         </sys_ui_form_section>

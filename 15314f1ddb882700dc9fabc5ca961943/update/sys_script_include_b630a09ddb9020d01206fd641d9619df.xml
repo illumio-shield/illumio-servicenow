@@ -21,7 +21,7 @@ IllumioUtils.prototype = {
      * @param {JSON} jobContent Object to add in the job record
      */
     updateJobRecord: function(jobId, jobContent) {
-        var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
+        var jobGr = new GlideRecordSecure('x_illu2_illumio_illumio_scheduled_jobs');
 
         if (jobGr.get(jobId)) {
 
@@ -54,7 +54,7 @@ IllumioUtils.prototype = {
      **/
     getCritical: function(configSysId) {
         var criticalGroupConfig = {};
-        var criticalConfigGr = new GlideRecord('x_illu2_illumio_illumio_critical_label_group_configuration');
+        var criticalConfigGr = new GlideRecordSecure('x_illu2_illumio_illumio_critical_label_group_configuration');
         criticalConfigGr.addQuery('illumio_pce_configuration', configSysId);
         criticalConfigGr.query();
         while (criticalConfigGr.next()) {
@@ -106,7 +106,7 @@ IllumioUtils.prototype = {
             ) {
                 criticalGroupConfig[response[resIndex].key]['visited'] = true;
                 for (var labelIndex = 0; labelIndex < response[resIndex].labels.length; labelIndex++) {
-                    labelGroupGr = new GlideRecord('x_illu2_illumio_illumio_pce_label_group_details');
+                    labelGroupGr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_label_group_details');
                     labelGroupGr.label_group_name = response[resIndex].name;
                     labelGroupGr.label_group_path = response[resIndex].href;
                     labelGroupGr.label_group_type = response[resIndex].key;
@@ -132,7 +132,7 @@ IllumioUtils.prototype = {
      */
     fetchLabelGroupsAndLabelsFromPCE: function(pceConfig) {
         try {
-            var lgDetailsGr = new GlideRecord('x_illu2_illumio_illumio_pce_label_group_details');
+            var lgDetailsGr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_label_group_details');
             lgDetailsGr.addQuery('illumio_pce_configuration', pceConfig.getUniqueValue());
             lgDetailsGr.query();
             lgDetailsGr.deleteMultiple();
@@ -187,7 +187,7 @@ IllumioUtils.prototype = {
         if (!gs.nil(criticalGroupConfig)) {
             for (var type in criticalGroupConfig) {
                 dataObj[type] = [];
-                var labelGroupGr = new GlideRecord('x_illu2_illumio_illumio_pce_label_group_details');
+                var labelGroupGr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_label_group_details');
                 labelGroupGr.addQuery('illumio_pce_configuration', pceConfigSysId);
                 labelGroupGr.addQuery('label_group_name', criticalGroupConfig[type]['groupName']);
                 labelGroupGr.addQuery('label_group_type', type);
@@ -266,7 +266,7 @@ IllumioUtils.prototype = {
                         if (gs.nil(labelData[type]) || labelData[type].length == 0)
                             continue;
 
-                        var fieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
+                        var fieldValueGr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload_field_value');
                         fieldValueGr.addQuery('illumio_pce_workload', arrRecords[arrIndex]);
                         fieldValueGr.addQuery('illumio_label_dimension.key', type);
                         fieldValueGr.addQuery(
@@ -495,7 +495,7 @@ IllumioUtils.prototype = {
                 return true;
             }
             var sourceTable = current.getValue("source_table");
-            var workloadFieldValueGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
+            var workloadFieldValueGr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload_field_value');
             workloadFieldValueGr.addQuery('illumio_pce_workload', current.getUniqueValue());
             workloadFieldValueGr.addQuery('illumio_label_dimension.key', "IN", mappedFields[sourceTable]);
             workloadFieldValueGr.query();
@@ -683,7 +683,7 @@ IllumioUtils.prototype = {
      * @param {object} GlideRecord object of PCE configuration
      */
     persistLabelDimensions: function(pceConfig) {
-        var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+        var labelDimensionGr = new GlideRecordSecure("x_illu2_illumio_illumio_label_dimension");
         labelDimensionGr.addQuery("illumio_pce_configuration", pceConfig.getUniqueValue());
         labelDimensionGr.addNotNullQuery("href");
         labelDimensionGr.query();
@@ -774,7 +774,7 @@ IllumioUtils.prototype = {
      */
     createOrUpdateLabelDimensionRecord: function(details, pceConfig) {
         try {
-            var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+            var labelDimensionGr = new GlideRecordSecure("x_illu2_illumio_illumio_label_dimension");
             labelDimensionGr.addQuery("key", details["key"]);
             labelDimensionGr.addQuery("illumio_pce_configuration", pceConfig.getUniqueValue());
             labelDimensionGr.query();
@@ -804,7 +804,7 @@ IllumioUtils.prototype = {
      */
     fetchLabelDimensionsFromPCE: function() {
         try {
-            var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+            var pceConfig = new GlideRecordSecure("x_illu2_illumio_illumio_pce_conf");
             pceConfig.query();
 
             while (pceConfig.next()) {
@@ -844,7 +844,7 @@ IllumioUtils.prototype = {
         try {
             var matchFound = false;
 
-            var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+            var pceConfig = new GlideRecordSecure("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(pceConfigSysId)) {
                 var responseDict = this.getLabelDimensions(pceConfig);
                 if (!responseDict["status"]) {
@@ -881,7 +881,7 @@ IllumioUtils.prototype = {
      * This method would retry creating the label dimensions aaded on ServiceNow onto the coorelating Illumio PCE tenant.
      */
     retryFailedLabelDimensionCreation: function() {
-        var labelDimensionGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+        var labelDimensionGr = new GlideRecordSecure("x_illu2_illumio_illumio_label_dimension");
         labelDimensionGr.addNullQuery("href");
         labelDimensionGr.query();
         while (labelDimensionGr.next()) {
@@ -921,7 +921,7 @@ IllumioUtils.prototype = {
             "href": "",
         };
         try {
-            var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+            var pceConfig = new GlideRecordSecure("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
                     gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
@@ -976,7 +976,7 @@ IllumioUtils.prototype = {
      */
     updateLabelDimension: function(labelDimensionData) {
         try {
-            var pceConfig = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+            var pceConfig = new GlideRecordSecure("x_illu2_illumio_illumio_pce_conf");
             if (pceConfig.get(labelDimensionData["illumio_pce_configuration"])) {
                 if (!(pceConfig.mid_server.status == MID_SERVER_UP_STATUS && pceConfig.mid_server.validated == 'true')) {
                     gs.error("The configured MID Server with configuration record " + pceConfig.getValue("name") + " is down.");
@@ -1025,7 +1025,7 @@ IllumioUtils.prototype = {
      * @returns SysId of the PCE Configuration record
      */
     getConfigurationId: function(jobSysId) {
-        var jobGr = new GlideRecord('x_illu2_illumio_illumio_scheduled_jobs');
+        var jobGr = new GlideRecordSecure('x_illu2_illumio_illumio_scheduled_jobs');
         if (jobGr.get(jobSysId)) {
             return jobGr.getValue('illumio_pce_configuration');
         }
@@ -1038,7 +1038,7 @@ IllumioUtils.prototype = {
      * @returns {String} sys_id of the label dimension
      */
     fetchLabelDimensionSysId: function(labelDimensionKey, pceConfigId) {
-        var ldGr = new GlideRecord("x_illu2_illumio_illumio_label_dimension");
+        var ldGr = new GlideRecordSecure("x_illu2_illumio_illumio_label_dimension");
         ldGr.addQuery("illumio_pce_configuration", pceConfigId);
         ldGr.addQuery("key", labelDimensionKey);
         ldGr.setLimit(1);
@@ -1069,7 +1069,7 @@ IllumioUtils.prototype = {
             logMessage = {};
         // for each configuration fetch field mapping
         for (var configSysId in checkedRecords) {
-            var workloadGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+            var workloadGr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload');
             var arrRecords = checkedRecords[configSysId],
                 retVal = [];
             var mappedFields = configUtil.getMappedFields(configSysId);
@@ -1203,7 +1203,7 @@ IllumioUtils.prototype = {
         workloadObject["updateFields"] = mappedFields[workloadObject["source_table"]];
 
         // add label dimension details
-        var labelGr = new GlideRecord("x_illu2_illumio_illumio_pce_workload_field_value");
+        var labelGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload_field_value");
         labelGr.addQuery("illumio_pce_workload", workloadObject["sys_id"]);
         labelGr.query();
         while (labelGr.next()) {
@@ -1236,7 +1236,7 @@ IllumioUtils.prototype = {
 
     getCancelledJobStatus: function(jobSysId) {
 
-        var scheduledJobGr = new GlideRecord(
+        var scheduledJobGr = new GlideRecordSecure(
             'x_illu2_illumio_illumio_scheduled_jobs'
         );
 
@@ -1259,7 +1259,7 @@ IllumioUtils.prototype = {
      **/
 
     getHttpConfiguration: function(configSysId) {
-        var pceConfig = new GlideRecord('x_illu2_illumio_illumio_pce_conf');
+        var pceConfig = new GlideRecordSecure('x_illu2_illumio_illumio_pce_conf');
         if (pceConfig.get(configSysId)) {
 
             return {
@@ -1279,14 +1279,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>433</sys_mod_count>
+        <sys_mod_count>434</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-05-30 13:14:40</sys_updated_on>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-21 07:28:05</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

@@ -10,7 +10,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_pce_field_mapping" name="x_illu2_illumio_illumio_pce_field_mapping" sys_domain="global" view="Default view">344139a8db906c901206fd641d9619fd</sys_ui_form>
-            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_pce_field_mapping" sys_domain="global" view="Default view">1dda51dadb0ca0901206fd641d9619d2</sys_ui_section>
+            <sys_ui_section display_value="">1dda51dadb0ca0901206fd641d9619d2</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2020-11-02 11:08:16</sys_updated_on>
         </sys_ui_form_section>

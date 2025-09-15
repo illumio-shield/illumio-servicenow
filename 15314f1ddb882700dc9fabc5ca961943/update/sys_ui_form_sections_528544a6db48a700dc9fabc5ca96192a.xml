@@ -10,7 +10,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_servicenow_servers" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">528544a6db48a700dc9fabc5ca96192a</sys_ui_form>
-            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">6c534826db48a700dc9fabc5ca961993</sys_ui_section>
+            <sys_ui_section display_value="">6c534826db48a700dc9fabc5ca961993</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2018-08-23 13:25:08</sys_updated_on>
         </sys_ui_form_section>
@@ -24,7 +24,7 @@
             <sys_mod_count>2</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_servicenow_servers" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">528544a6db48a700dc9fabc5ca96192a</sys_ui_form>
-            <sys_ui_section caption="Sync Server to PCE" display_value="Sync Server to PCE" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">9177ae7bdb7c6380dc9fabc5ca961941</sys_ui_section>
+            <sys_ui_section display_value="">9177ae7bdb7c6380dc9fabc5ca961941</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2020-03-12 12:15:00</sys_updated_on>
         </sys_ui_form_section>
@@ -38,7 +38,7 @@
             <sys_mod_count>2</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="x_illu2_illumio_illumio_servicenow_servers" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">528544a6db48a700dc9fabc5ca96192a</sys_ui_form>
-            <sys_ui_section caption="Sync to PCE" display_value="Sync to PCE" name="x_illu2_illumio_illumio_servicenow_servers" sys_domain="global" view="Default view">71fc6f39db800850b5f0715a8c961908</sys_ui_section>
+            <sys_ui_section display_value="">71fc6f39db800850b5f0715a8c961908</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2020-03-12 12:15:00</sys_updated_on>
         </sys_ui_form_section>
