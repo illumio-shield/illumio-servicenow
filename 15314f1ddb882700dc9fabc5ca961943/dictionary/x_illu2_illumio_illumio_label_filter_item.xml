@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="f379a749c3600b5050bffa0ed4013112" label="Illumio Label Filter Item" max_length="40" name="x_illu2_illumio_illumio_label_filter_item" type="collection">
+        <element label="Label Value" max_length="40" name="label_value" type="string"/>
+        <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Illumio Sync Filter" max_length="32" name="illumio_sync_filter" reference="x_illu2_illumio_illumio_sync_filter" type="reference"/>
+        <element choice="3" label="Match With" max_length="40" name="match_with" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="CMDB" sequence="0" value="cmdb"/>
+                <element inactive_on_update="false" label="PCE" sequence="1" value="pce"/>
+            </choice>
+        </element>
+        <element label="Label Dimension" max_length="32" name="label_dimension" reference="x_illu2_illumio_illumio_label_dimension" reference_qual="javascript:(function() {&#13;&#10;      // Get the Sync Filter reference from current record                                                                                                                                                &#13;&#10;      var syncFilterId = current.illumio_sync_filter;&#13;&#10;&#13;&#10;      // If no Sync Filter selected, show nothing                                                                                                                                                         &#13;&#10;      if (gs.nil(syncFilterId)) {&#13;&#10;          return 'sys_idISEMPTY';                                                                                                                                                                         &#13;&#10;      }           &#13;&#10;&#13;&#10;      // Look up the Sync Filter to get its PCE Configuration&#13;&#10;      var syncFilterGr = new GlideRecord('x_illu2_illumio_illumio_sync_filter');&#13;&#10;      if (syncFilterGr.get(syncFilterId)) {                                                                                                                                                               &#13;&#10;          var pceConfigId = syncFilterGr.getValue('pce_configuration');&#13;&#10;                                                                                                                                                                                                          &#13;&#10;          // Filter Label Dimensions by PCE Configuration&#13;&#10;          return 'illumio_pce_configuration=' + pceConfigId;                                                                                                                                              &#13;&#10;      }           &#13;&#10;&#13;&#10;      // Fallback: show nothing                                                                                                                                                                           &#13;&#10;      return 'sys_idISEMPTY';&#13;&#10;  })()" type="reference" use_reference_qualifier="advanced"/>
+        <element choice="3" label="Comparator" max_length="40" name="comparator" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Starts With" sequence="1" value="starts_with"/>
+                <element inactive_on_update="false" label="Equals" sequence="3" value="equals"/>
+                <element inactive_on_update="false" label="Contains" sequence="0" value="contains"/>
+                <element inactive_on_update="false" label="Not Equals" sequence="4" value="not_equals"/>
+                <element inactive_on_update="false" label="Ends With" sequence="2" value="ends_with"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="illumio_sync_filter"/>
+        </index>
+        <index name="index2">
+            <element name="label_dimension"/>
+        </index>
+    </element>
+</database>
