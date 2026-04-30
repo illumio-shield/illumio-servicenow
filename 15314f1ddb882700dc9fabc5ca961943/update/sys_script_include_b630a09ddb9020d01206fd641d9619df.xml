@@ -1273,20 +1273,392 @@ IllumioUtils.prototype = {
         }
     },
 
+    /**
+     * Get workloads matching a Sync Filter's rules (Label + Workload Field filters)
+     * Uses OR logic across all filter items - workload matches if ANY filter item matches
+     * @param {String} syncFilterSysId sys_id of the Sync Filter record
+     * @returns {Object} { success: Boolean, workloads: Array, message: String }
+     */
+    getWorkloadsBySyncFilter: function(syncFilterSysId) {
+        var result = {
+            success: false,
+            workloads: [],
+            message: ''
+        };
+
+        try {
+            // Validate and fetch the Sync Filter
+            var syncFilterGr = new GlideRecord('x_illu2_illumio_illumio_sync_filter');
+            if (!syncFilterGr.get(syncFilterSysId)) {
+                result.message = 'Sync Filter not found';
+                return result;
+            }
+
+            // Check if Sync Filter is active
+            if (syncFilterGr.getValue('active') != '1') {
+                result.message = 'Sync Filter is not active';
+                return result;
+            }
+
+            var pceConfigId = syncFilterGr.getValue('pce_configuration');
+            if (gs.nil(pceConfigId)) {
+                result.message = 'No PCE Configuration associated with Sync Filter';
+                return result;
+            }
+
+            // Get active Label Filter Items
+            var labelFilterItems = this._getLabelFilterItems(syncFilterSysId);
+
+            // Get active Workload Field Filter Items (grouped by source table)
+            var workloadFieldFilterItems = this._getWorkloadFieldFilterItems(syncFilterSysId);
+
+            // If no filter items exist, return all workloads (backwards compatible)
+            if (labelFilterItems.length === 0 && Object.keys(workloadFieldFilterItems).length === 0) {
+                gs.info('[getWorkloadsBySyncFilter] No filter items found, returning all workloads');
+                result.workloads = this._getAllWorkloads(pceConfigId);
+                result.success = true;
+                result.message = 'No filters defined - returning all workloads';
+                return result;
+            }
+
+            var matchedWorkloadSysIds = {};
+
+            // Process Label Filter Items
+            if (labelFilterItems.length > 0) {
+                var labelMatches = this._evaluateLabelFilters(pceConfigId, labelFilterItems);
+                for (var i = 0; i < labelMatches.length; i++) {
+                    matchedWorkloadSysIds[labelMatches[i]] = true;
+                }
+                gs.info('[getWorkloadsBySyncFilter] Label filters matched: ' + labelMatches.length + ' workloads');
+            }
+
+            // Process Workload Field Filter Items (batch CI query per source table)
+            if (Object.keys(workloadFieldFilterItems).length > 0) {
+                var fieldMatches = this._evaluateWorkloadFieldFilters(pceConfigId, workloadFieldFilterItems);
+                for (var j = 0; j < fieldMatches.length; j++) {
+                    matchedWorkloadSysIds[fieldMatches[j]] = true;
+                }
+                gs.info('[getWorkloadsBySyncFilter] Workload Field filters matched: ' + fieldMatches.length + ' workloads');
+            }
+
+            // Convert to array and fetch full workload records
+            var finalSysIds = Object.keys(matchedWorkloadSysIds);
+            gs.info('[getWorkloadsBySyncFilter] Total unique workloads matched: ' + finalSysIds.length);
+
+            if (finalSysIds.length > 0) {
+                result.workloads = this._fetchWorkloadRecords(finalSysIds);
+            }
+
+            result.success = true;
+            result.message = 'Found ' + result.workloads.length + ' matching workloads';
+
+        } catch (ex) {
+            gs.error('[getWorkloadsBySyncFilter] Exception: ' + ex);
+            result.message = 'Exception occurred: ' + ex;
+        }
+
+        return result;
+    },
+
+    /**
+     * Get active Label Filter Items for a Sync Filter
+     * @param {String} syncFilterSysId sys_id of the Sync Filter
+     * @returns {Array} Array of label filter item objects
+     */
+    _getLabelFilterItems: function(syncFilterSysId) {
+        var items = [];
+        var gr = new GlideRecord('x_illu2_illumio_illumio_label_filter_item');
+        gr.addQuery('illumio_sync_filter', syncFilterSysId);
+        gr.addQuery('active', true);
+        gr.query();
+
+        while (gr.next()) {
+            items.push({
+                label_dimension: gr.getValue('label_dimension'),
+                label_dimension_key: gr.label_dimension.key + '',
+                comparator: gr.getValue('comparator'),
+                label_value: gr.getValue('label_value'),
+                match_with: gr.getValue('match_with')
+            });
+        }
+        return items;
+    },
+
+    /**
+     * Get active Workload Field Filter Items grouped by source table
+     * @param {String} syncFilterSysId sys_id of the Sync Filter
+     * @returns {Object} Object keyed by source table name, values are arrays of filter items
+     */
+    _getWorkloadFieldFilterItems: function(syncFilterSysId) {
+        var itemsByTable = {};
+        var gr = new GlideRecord('x_illu2_illumio_illumio_workload_field_filter_item');
+        gr.addQuery('illumio_sync_filter', syncFilterSysId);
+        gr.addQuery('active', true);
+        gr.query();
+
+        while (gr.next()) {
+            // Get the actual table name from the Config Class Mapping
+            var classMappingId = gr.getValue('source_table');
+            var classMappingGr = new GlideRecord('x_illu2_illumio_illumio_config_class_mapping');
+            if (classMappingGr.get(classMappingId)) {
+                var tableName = classMappingGr.getValue('source_table');
+
+                if (!itemsByTable[tableName]) {
+                    itemsByTable[tableName] = [];
+                }
+
+                // Get the field name from sys_dictionary reference
+                var fieldName = '';
+                var sourceFieldRef = gr.getValue('source_field');
+                if (!gs.nil(sourceFieldRef)) {
+                    var dictGr = new GlideRecord('sys_dictionary');
+                    if (dictGr.get(sourceFieldRef)) {
+                        fieldName = dictGr.getValue('element');
+                    }
+                }
+
+                itemsByTable[tableName].push({
+                    field: fieldName,
+                    comparator: gr.getValue('comparator'),
+                    value: gr.getValue('source_value')
+                });
+            }
+        }
+        return itemsByTable;
+    },
+
+    /**
+     * Get all workloads for a PCE Configuration (when no filters defined)
+     * @param {String} pceConfigId sys_id of PCE Configuration
+     * @returns {Array} Array of workload objects
+     */
+    _getAllWorkloads: function(pceConfigId) {
+        var workloads = [];
+        var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+        gr.addQuery('illumio_pce_configuration', pceConfigId);
+        gr.addQuery('duplicate', false);
+        gr.query();
+
+        while (gr.next()) {
+            workloads.push(this._workloadToObject(gr));
+        }
+        return workloads;
+    },
+
+    /**
+     * Evaluate Label Filter Items and return matching workload sys_ids
+     * @param {String} pceConfigId sys_id of PCE Configuration
+     * @param {Array} labelFilterItems Array of label filter item objects
+     * @returns {Array} Array of matching workload sys_ids
+     */
+    _evaluateLabelFilters: function(pceConfigId, labelFilterItems) {
+        var matchedSysIds = [];
+
+        // Process each label filter item (OR logic - any match qualifies)
+        for (var i = 0; i < labelFilterItems.length; i++) {
+            var item = labelFilterItems[i];
+
+            var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
+            gr.addQuery('illumio_pce_workload.illumio_pce_configuration', pceConfigId);
+            gr.addQuery('illumio_pce_workload.duplicate', false);
+            gr.addQuery('illumio_label_dimension', item.label_dimension);
+
+            // Determine which field to match against (cmdb_value or pce_value)
+            // Choice values are 'cmdb' and 'pce', map to actual field names
+            var matchField = (item.match_with === 'pce') ? 'pce_value' : 'cmdb_value';
+
+            // Apply comparator
+            this._applyComparator(gr, matchField, item.comparator, item.label_value);
+
+            gr.query();
+            while (gr.next()) {
+                var wlSysId = gr.getValue('illumio_pce_workload');
+                if (matchedSysIds.indexOf(wlSysId) === -1) {
+                    matchedSysIds.push(wlSysId);
+                }
+            }
+        }
+
+        return matchedSysIds;
+    },
+
+    /**
+     * Evaluate Workload Field Filter Items using batch CI query approach
+     * @param {String} pceConfigId sys_id of PCE Configuration
+     * @param {Object} itemsByTable Filter items grouped by source table
+     * @returns {Array} Array of matching workload sys_ids
+     */
+    _evaluateWorkloadFieldFilters: function(pceConfigId, itemsByTable) {
+        var matchedSysIds = [];
+
+        // Process each source table
+        for (var tableName in itemsByTable) {
+            var items = itemsByTable[tableName];
+
+            // Build encoded query with OR logic across items for this table
+            var queryParts = [];
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                var queryPart = this._buildEncodedQueryPart(item.field, item.comparator, item.value);
+                if (queryPart) {
+                    queryParts.push(queryPart);
+                }
+            }
+
+            if (queryParts.length === 0) {
+                continue;
+            }
+
+            var encodedQuery = queryParts.join('^OR');
+            gs.info('[_evaluateWorkloadFieldFilters] Table: ' + tableName + ', Query: ' + encodedQuery);
+
+            // Batch query: find all CIs matching the filter
+            var matchingCISysIds = [];
+            var ciGr = new GlideRecord(tableName);
+            ciGr.addEncodedQuery(encodedQuery);
+            ciGr.query();
+
+            while (ciGr.next()) {
+                matchingCISysIds.push(ciGr.getUniqueValue());
+            }
+
+            gs.info('[_evaluateWorkloadFieldFilters] Matching CIs: ' + matchingCISysIds.length);
+
+            if (matchingCISysIds.length === 0) {
+                continue;
+            }
+
+            // Find workloads linked to matching CIs
+            var wlGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+            wlGr.addQuery('illumio_pce_configuration', pceConfigId);
+            wlGr.addQuery('servicenow_cmdb_identifier', 'IN', matchingCISysIds.join(','));
+            wlGr.addQuery('source_table', tableName);
+            wlGr.addQuery('duplicate', false);
+            wlGr.query();
+
+            while (wlGr.next()) {
+                var sysId = wlGr.getUniqueValue();
+                if (matchedSysIds.indexOf(sysId) === -1) {
+                    matchedSysIds.push(sysId);
+                }
+            }
+        }
+
+        return matchedSysIds;
+    },
+
+    /**
+     * Apply comparator to a GlideRecord query
+     * @param {GlideRecord} gr GlideRecord to add query to
+     * @param {String} field Field name to query
+     * @param {String} comparator Comparator type (=, !=, CONTAINS, STARTSWITH, ENDSWITH)
+     * @param {String} value Value to compare against
+     */
+    _applyComparator: function(gr, field, comparator, value) {
+        switch (comparator) {
+            case '=':
+                gr.addQuery(field, value);
+                break;
+            case '!=':
+                gr.addQuery(field, '!=', value);
+                break;
+            case 'CONTAINS':
+                gr.addQuery(field, 'CONTAINS', value);
+                break;
+            case 'STARTSWITH':
+                gr.addQuery(field, 'STARTSWITH', value);
+                break;
+            case 'ENDSWITH':
+                gr.addQuery(field, 'ENDSWITH', value);
+                break;
+            default:
+                gr.addQuery(field, value);
+        }
+    },
+
+    /**
+     * Build encoded query part for a single filter item
+     * @param {String} field Field name
+     * @param {String} comparator Comparator type
+     * @param {String} value Value to compare
+     * @returns {String} Encoded query part
+     */
+    _buildEncodedQueryPart: function(field, comparator, value) {
+        if (gs.nil(field)) {
+            return '';
+        }
+
+        switch (comparator) {
+            case '=':
+                return field + '=' + value;
+            case '!=':
+                return field + '!=' + value;
+            case 'CONTAINS':
+                return field + 'LIKE' + value;
+            case 'STARTSWITH':
+                return field + 'STARTSWITH' + value;
+            case 'ENDSWITH':
+                return field + 'ENDSWITH' + value;
+            default:
+                return field + '=' + value;
+        }
+    },
+
+    /**
+     * Fetch full workload records by sys_ids
+     * @param {Array} sysIds Array of workload sys_ids
+     * @returns {Array} Array of workload objects with all properties
+     */
+    _fetchWorkloadRecords: function(sysIds) {
+        var workloads = [];
+        var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+        gr.addQuery('sys_id', 'IN', sysIds.join(','));
+        gr.query();
+
+        while (gr.next()) {
+            workloads.push(this._workloadToObject(gr));
+        }
+        return workloads;
+    },
+
+    /**
+     * Convert a workload GlideRecord to a plain object with all fields
+     * @param {GlideRecord} gr Workload GlideRecord
+     * @returns {Object} Workload object
+     */
+    _workloadToObject: function(gr) {
+        return {
+            sys_id: gr.getUniqueValue(),
+            hostname: gr.getValue('hostname'),
+            source_table: gr.getValue('source_table'),
+            known_to_pce: gr.getValue('known_to_pce'),
+            conflicts: gr.getValue('conflicts'),
+            duplicate: gr.getValue('duplicate'),
+            pce_workload_href: gr.getValue('pce_workload_href'),
+            servicenow_cmdb_identifier: gr.getValue('servicenow_cmdb_identifier'),
+            public_ip_address: gr.getValue('public_ip_address'),
+            ven_href: gr.getValue('ven_href'),
+            ven_status: gr.getValue('ven_status'),
+            enforcement_mode: gr.getValue('enforcement_mode'),
+            deleted_from_pce: gr.getValue('deleted_from_pce'),
+            illumio_pce_configuration: gr.getValue('illumio_pce_configuration')
+        };
+    },
+
     type: "IllumioUtils",
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>434</sys_mod_count>
+        <sys_mod_count>436</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
-        <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-07-21 07:28:05</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-04-30 14:39:01</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>
