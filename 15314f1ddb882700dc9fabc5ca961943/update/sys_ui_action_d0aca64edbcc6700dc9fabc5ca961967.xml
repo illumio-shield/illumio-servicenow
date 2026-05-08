@@ -44,6 +44,7 @@
     var instanceURL, jobSysIdObject = {};
     var selectedRecordsData = [],
         gaCustomTableData, dialog, answer, thresoldLimitLogs = {}, // FIXME: Typo in the thresoldLimitLogs variable name
+        syncFilterLogs = {},
         limitExceeded = false;
 
     var userName = g_user.firstName + " " + g_user.lastName;
@@ -65,6 +66,7 @@
         answer = response.responseXML.documentElement.getAttribute("answer");
         answer = JSON.parse(answer);
         selectedRecordsObject = answer.data;
+        syncFilterLogs = answer.syncFilterLogs || {};
 		if (answer.count == 0) {
 			loadingDialog.destroy();
 			dialog = new GlideDialogWindow("x_illu2_illumio_IllumioInfoPopup");
@@ -209,6 +211,9 @@
         if (thresoldLimitLogs[configSysId]) {
             createJob.addParam("sysparm_thresold_logs", thresoldLimitLogs[configSysId]);
         }
+        if (syncFilterLogs[configSysId]) {
+            createJob.addParam("sysparm_sync_filter_logs", syncFilterLogs[configSysId]);
+        }
 
         createJob.addParam("sysparm_job_type", "data sync");
         createJob.getXML(gaGetJobSysID);
@@ -309,7 +314,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>d0aca64edbcc6700dc9fabc5ca961967</sys_id>
-        <sys_mod_count>352</sys_mod_count>
+        <sys_mod_count>353</sys_mod_count>
         <sys_name>Sync selected servers with PCE</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -317,7 +322,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_d0aca64edbcc6700dc9fabc5ca961967</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-15 11:19:04</sys_updated_on>
+        <sys_updated_on>2026-05-08 14:35:29</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>

@@ -73,7 +73,8 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
             try {
                 var retObject = {
                     data: {},
-                    count: 0
+                    count: 0,
+                    syncFilterLogs: {}
                 };
                 var sysIds = this.getParameter("sysparm_sys_ids");
                 var pceGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
@@ -89,6 +90,26 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
                     }
                     retObject["count"] += 1;
                 }
+
+                // Apply Sync Filter for each PCE Configuration
+                var utils = new x_illu2_illumio.IllumioUtils();
+                for (var configId in retObject["data"]) {
+                    var syncFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configId);
+                    if (syncFilterResult.hasFilter) {
+                        var eligibleSysIds = syncFilterResult.sysIds;
+                        var originalIds = retObject["data"][configId];
+                        var filteredIds = [];
+                        for (var i = 0; i < originalIds.length; i++) {
+                            if (eligibleSysIds.indexOf(originalIds[i]) !== -1) {
+                                filteredIds.push(originalIds[i]);
+                            }
+                        }
+                        retObject["syncFilterLogs"][configId] = 'Workloads with conflicts: ' + originalIds.length + '. Eligible workloads after sync filter: ' + filteredIds.length;
+                        retObject["count"] -= (originalIds.length - filteredIds.length);
+                        retObject["data"][configId] = filteredIds;
+                    }
+                }
+
                 return JSON.stringify(retObject);
             } catch (e) {
                 gs.error("[filterRecords]Exception in filtering records: ", e);
@@ -264,14 +285,14 @@ GetLabelGroupsAjax.prototype = Object.extendsObject(
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-10-29 15:02:03</sys_created_on>
         <sys_id>e83ebd53db84e4901206fd641d9619bd</sys_id>
-        <sys_mod_count>201</sys_mod_count>
+        <sys_mod_count>203</sys_mod_count>
         <sys_name>GetLabelGroupsAjax</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_e83ebd53db84e4901206fd641d9619bd</sys_update_name>
-        <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-07-21 07:27:10</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-05-08 14:34:54</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>e83ebd53db84e4901206fd641d9619bd</id>

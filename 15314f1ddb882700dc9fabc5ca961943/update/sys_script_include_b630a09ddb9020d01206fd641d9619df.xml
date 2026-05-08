@@ -1274,6 +1274,50 @@ IllumioUtils.prototype = {
     },
 
     /**
+     * Get eligible workload sys_ids for a PCE Configuration based on its Sync Filter
+     * @param {String} configSysId sys_id of the PCE Configuration
+     * @returns {Object} { hasFilter: Boolean, sysIds: Array or null }
+     *   - If no active Sync Filter exists: { hasFilter: false, sysIds: null }
+     *   - If Sync Filter exists: { hasFilter: true, sysIds: [...] }
+     */
+    getEligibleWorkloadSysIdsByConfig: function(configSysId) {
+        var result = {
+            hasFilter: false,
+            sysIds: null
+        };
+
+        gs.info('[getEligibleWorkloadSysIdsByConfig] Looking for Sync Filter for config: ' + configSysId);
+
+        // Find active Sync Filter for this PCE Configuration
+        var syncFilterGr = new GlideRecord('x_illu2_illumio_illumio_sync_filter');
+        syncFilterGr.addQuery('pce_configuration', configSysId);
+        syncFilterGr.addQuery('active', true);
+        syncFilterGr.setLimit(1);
+        syncFilterGr.query();
+
+        if (!syncFilterGr.next()) {
+            gs.info('[getEligibleWorkloadSysIdsByConfig] No active Sync Filter found');
+            return result;
+        }
+
+        gs.info('[getEligibleWorkloadSysIdsByConfig] Found Sync Filter: ' + syncFilterGr.getUniqueValue());
+
+        result.hasFilter = true;
+        var filterResult = this.getWorkloadsBySyncFilter(syncFilterGr.getUniqueValue());
+
+        if (filterResult.success) {
+            result.sysIds = [];
+            for (var i = 0; i < filterResult.workloads.length; i++) {
+                result.sysIds.push(filterResult.workloads[i].sys_id);
+            }
+        } else {
+            result.sysIds = [];
+        }
+
+        return result;
+    },
+
+    /**
      * Get workloads matching a Sync Filter's rules (Label + Workload Field filters)
      * Uses OR logic across all filter items - workload matches if ANY filter item matches
      * @param {String} syncFilterSysId sys_id of the Sync Filter record
@@ -1651,14 +1695,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>436</sys_mod_count>
+        <sys_mod_count>439</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-04-30 14:39:01</sys_updated_on>
+        <sys_updated_on>2026-05-08 14:52:25</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

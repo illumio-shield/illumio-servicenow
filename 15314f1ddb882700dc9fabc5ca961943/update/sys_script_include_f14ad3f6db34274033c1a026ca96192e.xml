@@ -74,6 +74,20 @@ IllumioAutoSyncWithPCE.prototype = {
                 sysIds.push(allWorkloads.getUniqueValue());
             }
 
+            // Apply Sync Filter if one exists for this PCE Configuration
+            var syncFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configSysId);
+            if (syncFilterResult.hasFilter) {
+                var workloadsBeforeFilter = sysIds.length;
+                var eligibleSysIds = syncFilterResult.sysIds;
+                sysIds = sysIds.filter(function(id) {
+                    return eligibleSysIds.indexOf(id) !== -1;
+                });
+                var syncFilterLog = 'Workloads with conflicts: ' + workloadsBeforeFilter + '. Eligible workloads after sync filter: ' + sysIds.length;
+                gs.info('[IllumioAutoSyncWithPCE] ' + syncFilterLog);
+                illumioScheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + syncFilterLog;
+                illumioScheduledJobsGr.update();
+            }
+
             selectedRecordsObject[configSysId] = sysIds;
 
             var status = utils.fetchLabelGroupsAndLabelsFromPCE(configGr);
@@ -429,14 +443,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>346</sys_mod_count>
+        <sys_mod_count>348</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
-        <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-07-21 07:27:24</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-05-08 14:27:44</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>f14ad3f6db34274033c1a026ca96192e</id>
