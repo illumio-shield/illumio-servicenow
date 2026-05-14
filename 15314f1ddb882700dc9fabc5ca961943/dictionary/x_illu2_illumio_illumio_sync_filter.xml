@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="e1e8abc5c3600b5050bffa0ed40131f8" label="Illumio Sync Filter" max_length="40" name="x_illu2_illumio_illumio_sync_filter" type="collection">
-        <element label="PCE Configuration" max_length="32" name="pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
-        <element display="true" label="Name" max_length="40" name="name" type="string"/>
+        <element label="PCE Configuration" mandatory="true" max_length="32" name="pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
+        <element display="true" label="Name" mandatory="true" max_length="40" name="name" type="string"/>
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
         <index name="index">
             <element name="pce_configuration"/>

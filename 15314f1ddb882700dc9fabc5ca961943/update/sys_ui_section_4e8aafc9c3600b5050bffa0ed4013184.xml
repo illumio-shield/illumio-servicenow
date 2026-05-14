@@ -1,58 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="" section_id="4e8aafc9c3600b5050bffa0ed4013184" sys_domain="global" table="x_illu2_illumio_illumio_workload_field_filter_item" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>true</is_plain_text>
+            <name/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>762ac7d6c378c71050bffa0ed401315e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
+            <text>If Source Field is a Reference in Source Table, Source Value must be the sys_id</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>illumio_sync_filter</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 10:16:31</sys_created_on>
-            <sys_id>7bdd2c55c3a80b5050bffa0ed40131a7</sys_id>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>722ac7d6c378c71050bffa0ed401316a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 10:16:31</sys_updated_on>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sync_filter_group</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>fe2ac7d6c378c71050bffa0ed401316a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>source_table</element>
-            <position>1</position>
+            <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 10:16:31</sys_created_on>
-            <sys_id>f7dd2c55c3a80b5050bffa0ed40131a8</sys_id>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>7e2ac7d6c378c71050bffa0ed401316b</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 10:16:31</sys_updated_on>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>source_field</element>
-            <position>2</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 10:16:31</sys_created_on>
-            <sys_id>77dd2c55c3a80b5050bffa0ed40131a9</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 10:16:31</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>comparator</element>
             <position>3</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 10:16:31</sys_created_on>
-            <sys_id>f3dd2c55c3a80b5050bffa0ed40131aa</sys_id>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>fa2ac7d6c378c71050bffa0ed401316c</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 10:16:31</sys_updated_on>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -60,27 +72,41 @@
             <element>source_value</element>
             <position>4</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 10:16:31</sys_created_on>
-            <sys_id>73dd2c55c3a80b5050bffa0ed40131ab</sys_id>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>7a2ac7d6c378c71050bffa0ed401316d</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 10:16:31</sys_updated_on>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>active</element>
+            <element>762ac7d6c378c71050bffa0ed401315e</element>
             <position>5</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 10:16:31</sys_created_on>
-            <sys_id>ffdd2c55c3a80b5050bffa0ed40131ab</sys_id>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>f62ac7d6c378c71050bffa0ed401316e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 10:16:31</sys_updated_on>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-05-14 10:28:59</sys_created_on>
+            <sys_id>762ac7d6c378c71050bffa0ed401316f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_workload_field_filter_item" sys_domain="global" view="Default view">4e8aafc9c3600b5050bffa0ed4013184</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-05-14 10:28:59</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

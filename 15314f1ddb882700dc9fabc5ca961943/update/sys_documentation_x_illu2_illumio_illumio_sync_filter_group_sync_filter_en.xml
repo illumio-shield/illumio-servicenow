@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="comparator" label="Comparator" language="en" table="x_illu2_illumio_illumio_label_filter_item">
+    <sys_documentation element="sync_filter" label="Sync Filter" language="en" table="x_illu2_illumio_illumio_sync_filter_group">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>comparator</element>
+            <element>sync_filter</element>
             <help/>
             <hint/>
-            <label>Comparator</label>
+            <label>Sync Filter</label>
             <language>en</language>
-            <name>x_illu2_illumio_illumio_label_filter_item</name>
+            <name>x_illu2_illumio_illumio_sync_filter_group</name>
             <plural/>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-04-28 05:21:50</sys_created_on>
+            <sys_created_on>2026-05-13 04:21:36</sys_created_on>
             <sys_mod_count>3</sys_mod_count>
-            <sys_name>Comparator</sys_name>
+            <sys_name>Sync Filter</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-            <sys_update_name>sys_documentation_x_illu2_illumio_illumio_label_filter_item_comparator_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_illu2_illumio_illumio_sync_filter_group_sync_filter_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-04-28 05:21:52</sys_updated_on>
+            <sys_updated_on>2026-05-13 04:21:38</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>
