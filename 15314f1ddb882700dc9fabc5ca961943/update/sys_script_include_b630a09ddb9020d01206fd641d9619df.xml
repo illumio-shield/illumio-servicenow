@@ -1281,7 +1281,7 @@ IllumioUtils.prototype = {
      *   - If no active Sync Filter exists: { hasFilter: false, sysIds: null }
      *   - If Sync Filter(s) exist: { hasFilter: true, sysIds: [...] }
      */
-    getEligibleWorkloadSysIdsByConfig: function(configSysId) {
+    getEligibleWorkloadSysIdsByConfig: function(configSysId, type) {
         var result = {
             hasFilter: false,
             sysIds: null
@@ -1293,6 +1293,7 @@ IllumioUtils.prototype = {
         var syncFilterGr = new GlideRecord('x_illu2_illumio_illumio_sync_filter');
         syncFilterGr.addQuery('pce_configuration', configSysId);
         syncFilterGr.addQuery('active', true);
+        syncFilterGr.addQuery('type', (type + '').toLowerCase());
         syncFilterGr.query();
 
         if (!syncFilterGr.hasNext()) {
@@ -1968,14 +1969,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>442</sys_mod_count>
+        <sys_mod_count>444</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-05-14 10:49:03</sys_updated_on>
+        <sys_updated_on>2026-06-01 14:29:26</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

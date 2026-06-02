@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="" section_id="850c2c8ec374071050bffa0ed40131b1" sys_domain="global" table="x_illu2_illumio_illumio_sync_filter_group" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>name</element>
+            <element>sync_filter</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-05-13 04:32:01</sys_created_on>
-            <sys_id>bfdee046c3b4071050bffa0ed40131d4</sys_id>
+            <sys_created_on>2026-06-01 14:47:11</sys_created_on>
+            <sys_id>50e13418c3d547d050bffa0ed401319e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_sync_filter_group" sys_domain="global" view="Default view">850c2c8ec374071050bffa0ed40131b1</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-05-13 04:32:01</sys_updated_on>
+            <sys_updated_on>2026-06-01 14:47:11</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>name</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-06-01 14:47:11</sys_created_on>
+            <sys_id>5ce13418c3d547d050bffa0ed40131b7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_sync_filter_group" sys_domain="global" view="Default view">850c2c8ec374071050bffa0ed40131b1</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-06-01 14:47:11</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>active</element>
-            <position>1</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-05-13 04:32:01</sys_created_on>
-            <sys_id>7fdee046c3b4071050bffa0ed40131d6</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_sync_filter_group" sys_domain="global" view="Default view">850c2c8ec374071050bffa0ed40131b1</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-05-13 04:32:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>sync_filter</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2026-05-13 04:32:01</sys_created_on>
-            <sys_id>3bdee046c3b4071050bffa0ed40131d7</sys_id>
+            <sys_created_on>2026-06-01 14:47:11</sys_created_on>
+            <sys_id>d8e13418c3d547d050bffa0ed40131b8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_illu2_illumio_illumio_sync_filter_group" sys_domain="global" view="Default view">850c2c8ec374071050bffa0ed40131b1</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2026-05-13 04:32:01</sys_updated_on>
+            <sys_updated_on>2026-06-01 14:47:11</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

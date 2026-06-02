@@ -3,6 +3,12 @@
         <element label="PCE Configuration" mandatory="true" max_length="32" name="pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <element display="true" label="Name" mandatory="true" max_length="40" name="name" type="string"/>
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element choice="3" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="DELETION" sequence="1" value="deletion"/>
+                <element inactive_on_update="false" label="INCLUSION" sequence="0" value="inclusion"/>
+            </choice>
+        </element>
         <index name="index">
             <element name="pce_configuration"/>
         </index>
