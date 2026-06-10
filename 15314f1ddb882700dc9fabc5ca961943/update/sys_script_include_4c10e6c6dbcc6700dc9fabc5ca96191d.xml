@@ -67,12 +67,10 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
 				// Initialize filters
 				var excludeConditionFilter = new GlideFilter(pceConfig.source[table].exclude_condition, "excludeConditionFilter");
-				var deleteConditionFilter = new GlideFilter(pceConfig.source[table].delete_condition, "deleteConditionFilter");
 				var incidentConditionFilter = new GlideFilter(pceConfig.source[table].incident_condition, "incidentConditionFilter");
 
 				if (IS_CASE_SENSITIVE == "false") {
 					excludeConditionFilter.setCaseSensitive(false);
-					deleteConditionFilter.setCaseSensitive(false);
 					incidentConditionFilter.setCaseSensitive(false);
 				}
 
@@ -85,17 +83,6 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                             retiredWorkloads[table]++;
                             gs.info('Excluding workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
                             continue; // skipping retired workload
-                        }
-                    }
-
-                    // check the condition for workloads to delete
-                    var toDeleteWorkload = false;
-                    if (!gs.nil(pceConfig.source[table].delete_condition)) {
-                        var conditionAvail = deleteConditionFilter.match(sourceTableGr, true);
-                        if (conditionAvail) {
-                            // condition matched
-                            toDeleteWorkload = true;
-                            gs.info('Deleting workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
                         }
                     }
 
@@ -113,7 +100,7 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     if (!gs.nil(hostname)) {
 
                         // create PCE Workload object
-                        var tempWorkload = this._evaluateClassFieldMapping(pceConfig, sourceTableGr, toDeleteWorkload, table);
+                        var tempWorkload = this._evaluateClassFieldMapping(pceConfig, sourceTableGr, table);
                         tempWorkload["source_table"] = table;
                         tempWorkload["host_name"] = hostname;
                         // check if workload is duplicate
@@ -152,10 +139,9 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
      * Prepare workload object from Class Field Mapping Configuration
      * @param {Object} pceConfig PCE Configuration object
      * @param {Object} sourceTableGr CMDB record
-     * @param {Boolean} toDeleteWorkload Flag to delete workload
      * @returns {Object} Workload object
      */
-    _evaluateClassFieldMapping: function(pceConfig, sourceTableGr, toDeleteWorkload, table) {
+    _evaluateClassFieldMapping: function(pceConfig, sourceTableGr, table) {
 
         // initialize object
         var tempWorkload = {
@@ -164,9 +150,6 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 cmdb_value: []
             },
         };
-
-        // set label dimension values
-        tempWorkload["deleted_from_pce"] = toDeleteWorkload;
         for (var field in pceConfig.source[table].label_dimensions) {
             tempWorkload["labelDimesion"][field] = {
                 "cmdb_value": this.getValueFromCMDB(sourceTableGr, pceConfig.source[table].label_dimensions[field]),
@@ -555,9 +538,6 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
         if (!gs.nil(workload)) {
             illumioServersGr.setValue("known_to_pce", workload);
-            if (workload == "unmanaged") {
-                illumioServersGr.deleted_from_pce = sourceTableGr["deleted_from_pce"];
-            }
             illumioServersGr.setValue("pce_workload_href", workloadsMappingGr.getValue("href"));
             illumioServersGr.ven_href = workloadsMappingGr.getValue("ven_href");
             illumioServersGr.ven_status = workloadsMappingGr.getValue("ven_status");
@@ -788,14 +768,14 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>412</sys_mod_count>
+        <sys_mod_count>413</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
-        <sys_updated_by>crest.data</sys_updated_by>
-        <sys_updated_on>2025-07-31 05:21:14</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-06-04 17:35:36</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>4c10e6c6dbcc6700dc9fabc5ca96191d</id>

@@ -36,6 +36,7 @@ IllumioUpdateWorkloads.prototype = {
         this.batchSize = parseInt(probe.getParameter('glide.jms.batch_size'));
 
         this.retiredWorkloads = probe.getParameter('glide.jms.workloads_to_delete');
+        this.vensToUnpair = probe.getParameter('glide.jms.vens_to_unpair');
 
         this.fieldMappings = probe.getParameter('glide.jms.fieldMappings');
 
@@ -303,6 +304,34 @@ IllumioUpdateWorkloads.prototype = {
                 //DELETE THE RETIRED WORKLOADS
                 if (this.autoSync == 'true') {
                     this.logger._debug("Process of deleting retired workloads started");
+
+                    // Unpair VENs before deleting their workloads
+                    var vensToUnpair = JSON.parse(this.vensToUnpair || '[]');
+                    if (vensToUnpair.length > 0) {
+                        this.logger._debug("Unpairing " + vensToUnpair.length + " VEN(s) before deletion");
+
+                        if (this.utils.checkCancelledJobStatus(this.jobSysId, this.SNOWurl, this.SNOWusername, this.SNOWpassword)) {
+                            this.logger._debug("[unpair]: Job is cancelled");
+                            return;
+                        }
+
+                        var unpairUrl = "/api/v2/orgs/" + this.pceOrgId + "/vens/unpair";
+                        var unpairBody = {
+                            "vens": vensToUnpair.map(function(venHref) {
+                                return {"href": venHref};
+                            }),
+                            "firewall_restore": "default"
+                        };
+                        var unpairResponse = this.pceHttpClient.put(unpairUrl, '', null, unpairBody);
+                        if (unpairResponse.hasError) {
+                            this.logger._error("IllumioUpdateWorkloads: Failed to unpair VENs. Response status code: " + unpairResponse.status);
+                            return {
+                                "exception": 'PCE VEN unpair failed. Response status code: ' + unpairResponse.status
+                            };
+                        }
+                        this.logger._debug("Successfully unpaired " + vensToUnpair.length + " VEN(s)");
+                    }
+
                     this.retiredWorkloads = JSON.parse(this.retiredWorkloads);
                     var allHref = [];
                     for (var del_href_ind in this.retiredWorkloads) {
@@ -330,19 +359,8 @@ IllumioUpdateWorkloads.prototype = {
                             };
                         }
                         for (var href_ind = 0; href_ind < putResponse.data.length; href_ind++) {
-                            var respObj = putResponse.data[href_ind];
                             notDeletedWorkloads++;
-                            var delPayload = {
-                                deleted_from_pce: false
-                            };
-                            var updatePayloadEndpoint = TABLE_API + PCE_WORKLOADS_TABLE + "/" + this.retiredWorkloads[respObj["href"] + ''];
-                            var snowHttpPutResponse = this.snHttpClient.put(updatePayloadEndpoint, '', null, delPayload);
-                            if (snowHttpPutResponse.hasError) {
-                                this.logger._error("IllumioUpdateWorkloads: Could not update the workload mapping table for workload");
-                                return {
-                                    "exception": 'ServiceNow. Response status code: ' + snowHttpPutResponse.status
-                                };
-                            }
+                            this.logger._error("IllumioUpdateWorkloads: Failed to delete workload: " + putResponse.data[href_ind]["href"]);
                         }
                     }
 
@@ -1175,25 +1193,14 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>96</sys_mod_count>
+        <sys_mod_count>97</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-05-30 13:09:32</sys_updated_on>
-    </ecc_agent_script_include>
-    <sys_es_latest_script action="INSERT_OR_UPDATE">
-        <id>c4a87d4adb4c6700dc9fabc5ca96191c</id>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2025-05-15 06:34:33</sys_created_on>
-        <sys_id>2bc1b34983a9221058f2f496feaad35e</sys_id>
-        <sys_mod_count>0</sys_mod_count>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-15 06:34:33</sys_updated_on>
-        <table>ecc_agent_script_include</table>
-        <use_es_latest>false</use_es_latest>
-    </sys_es_latest_script>
+        <sys_updated_on>2026-06-04 17:35:37</sys_updated_on>
+    </ecc_agent_script_include>
 </record_update>

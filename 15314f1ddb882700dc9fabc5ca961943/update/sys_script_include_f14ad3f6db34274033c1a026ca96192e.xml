@@ -66,7 +66,6 @@ IllumioAutoSyncWithPCE.prototype = {
             // get all the workload sysIds
             var allWorkloads = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
             allWorkloads.addEncodedQuery('duplicate=false^conflicts=true');
-            allWorkloads.addQuery('deleted_from_pce', false);
             allWorkloads.addQuery("illumio_pce_configuration", configSysId);
             allWorkloads.orderBy("known_to_pce");
             allWorkloads.query();
@@ -122,12 +121,6 @@ IllumioAutoSyncWithPCE.prototype = {
             var thresholdLimitLog = response.logMessage[configSysId];
 
             if (!cancelJobOnLimitExceed) {
-                // Delete retired workloads
-                var retiredWorkloads = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
-                retiredWorkloads.addQuery('deleted_from_pce', true);
-                retiredWorkloads.addQuery("illumio_pce_configuration", configSysId);
-                retiredWorkloads.query();
-
                 // Generate the managed and unmanaged workloads' list
                 for (var index = 0, len = checkedRecordsData.length; index < len; index++) {
                     var workloadObject = checkedRecordsData[index];
@@ -175,39 +168,8 @@ IllumioAutoSyncWithPCE.prototype = {
                 var wlLimitObject = thresholdLimit.getThresholdLimit(configSysId);
                 var deleteLimitExceeded = false;
 
-                //process retired workloads
                 var retiredWorkloadsObject = {};
-                while (retiredWorkloads.next()) {
-                    var markDeleteAsFalse = true;
-
-                    var retiredSysId = retiredWorkloads.getUniqueValue();
-                    var retiredHostName = retiredWorkloads.getValue("hostname").trim();
-                    var mappingTableGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workloads_mapping");
-                    mappingTableGr.addQuery('hostname', retiredHostName);
-                    mappingTableGr.addQuery("illumio_pce_configuration", configSysId);
-                    mappingTableGr.addQuery('agent', false);
-                    mappingTableGr.setLimit(1);
-                    mappingTableGr.query();
-                    if (mappingTableGr.next()) {
-                        if (!wlLimitObject["limitEnabled"] || !wlLimitObject["isLimitEnabled"]["delete"] || wlLimitObject["wlLimit"]["delete"] > 0) {
-                            markDeleteAsFalse = false;
-                            this.workloadsToDelete++;
-                            wlLimitObject["wlLimit"]["delete"] -= 1;
-                            retiredWorkloadsObject[mappingTableGr.getValue("href")] = retiredSysId;
-                        } else {
-                            deleteLimitExceeded = true;
-                            if (wlLimitObject.cancelJobOnLimitExceed) {
-                                cancelJobOnLimitExceed = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (markDeleteAsFalse) {
-                        // mark deleted from pce as false
-                        retiredWorkloads.setValue("deleted_from_pce", false);
-                        retiredWorkloads.update();
-                    }
-                }
+                var vensToUnpair = [];
 
                 // Apply Deletion Sync Filter if one exists for this PCE Configuration
                 if (!cancelJobOnLimitExceed) {
@@ -245,6 +207,12 @@ IllumioAutoSyncWithPCE.prototype = {
                                 wlLimitObject["wlLimit"]["delete"] -= 1;
                                 retiredWorkloadsObject[pceHref] = candidateSysId;
                                 syncFilterDeleteCount++;
+                                if (knownToPce === "managed") {
+                                    var candidateVenHref = deletionCandidateGr.getValue("ven_href");
+                                    if (!gs.nil(candidateVenHref)) {
+                                        vensToUnpair.push(candidateVenHref);
+                                    }
+                                }
                             } else {
                                 deleteLimitExceeded = true;
                                 if (wlLimitObject.cancelJobOnLimitExceed) {
@@ -280,14 +248,6 @@ IllumioAutoSyncWithPCE.prototype = {
 
             // Check threshold limit
             if (cancelJobOnLimitExceed) {
-                var notDeletedworkload = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload');
-                notDeletedworkload.addQuery('deleted_from_pce', true);
-                notDeletedworkload.query();
-                while (notDeletedworkload.next()) {
-                    notDeletedworkload['deleted_from_pce'] = false;
-                    notDeletedworkload.update();
-                }
-
                 illumioScheduledJobsGr.logs +=
                     "\n[" +
                     new Date(new GlideDateTime().getNumericValue()).toISOString() +
@@ -389,6 +349,7 @@ IllumioAutoSyncWithPCE.prototype = {
                         1000
                     ),
                     workloads_to_delete: JSON.stringify(retiredWorkloadsObject),
+                    vens_to_unpair: JSON.stringify(vensToUnpair),
                     enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
                     retry_params: JSON.stringify(pceConfig.retry_params)
                 };
@@ -496,14 +457,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>349</sys_mod_count>
+        <sys_mod_count>350</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-01 14:23:24</sys_updated_on>
+        <sys_updated_on>2026-06-04 17:35:36</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>f14ad3f6db34274033c1a026ca96192e</id>
