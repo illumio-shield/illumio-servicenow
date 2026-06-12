@@ -181,6 +181,7 @@ IllumioAutoSyncWithPCE.prototype = {
                         deletionCandidateGr.query();
 
                         var syncFilterDeleteCount = 0;
+                        var syncFilterUnpairCount = 0;
                         var syncFilterSkippedCount = 0;
 
                         while (deletionCandidateGr.next()) {
@@ -198,19 +199,22 @@ IllumioAutoSyncWithPCE.prototype = {
                                 continue;
                             }
 
-                            if (retiredWorkloadsObject.hasOwnProperty(pceHref)) {
-                                continue;
-                            }
-
                             if (!wlLimitObject["limitEnabled"] || !wlLimitObject["isLimitEnabled"]["delete"] || wlLimitObject["wlLimit"]["delete"] > 0) {
                                 this.workloadsToDelete++;
                                 wlLimitObject["wlLimit"]["delete"] -= 1;
-                                retiredWorkloadsObject[pceHref] = candidateSysId;
-                                syncFilterDeleteCount++;
+
                                 if (knownToPce === "managed") {
                                     var candidateVenHref = deletionCandidateGr.getValue("ven_href");
                                     if (!gs.nil(candidateVenHref)) {
                                         vensToUnpair.push(candidateVenHref);
+                                        syncFilterUnpairCount++;
+                                    } else {
+                                        syncFilterSkippedCount++;
+                                    }
+                                } else {
+                                    if (!retiredWorkloadsObject.hasOwnProperty(pceHref)) {
+                                        retiredWorkloadsObject[pceHref] = candidateSysId;
+                                        syncFilterDeleteCount++;
                                     }
                                 }
                             } else {
@@ -223,7 +227,8 @@ IllumioAutoSyncWithPCE.prototype = {
                         }
 
                         var syncFilterDeleteLog = 'Deletion sync filter: ' + syncFilterDeleteCount + ' workload(s) marked for deletion' +
-                            (syncFilterSkippedCount > 0 ? ', ' + syncFilterSkippedCount + ' skipped (not known to PCE or missing href)' : '');
+                            ', ' + syncFilterUnpairCount + ' workload(s) marked for unpair' +
+                            (syncFilterSkippedCount > 0 ? ', ' + syncFilterSkippedCount + ' skipped (not known to PCE or missing href/ven)' : '');
                         gs.info('[IllumioAutoSyncWithPCE] ' + syncFilterDeleteLog);
                         illumioScheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + syncFilterDeleteLog;
                         illumioScheduledJobsGr.update();
@@ -457,14 +462,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>350</sys_mod_count>
+        <sys_mod_count>351</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-04 17:35:36</sys_updated_on>
+        <sys_updated_on>2026-06-10 17:15:18</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>f14ad3f6db34274033c1a026ca96192e</id>

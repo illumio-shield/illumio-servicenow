@@ -187,6 +187,7 @@ IllumioUpdateWorkloads.prototype = {
                     updatedUnManagedWorkloads = 0,
                     skippedWorkloads = 0;
                 var deletedWorkloads = 0;
+                var unpairedVens = 0;
                 var payload;
 
                 var totalSysIds = (this.payloadSysIds + '').split(',');
@@ -330,6 +331,8 @@ IllumioUpdateWorkloads.prototype = {
                             };
                         }
                         this.logger._debug("Successfully unpaired " + vensToUnpair.length + " VEN(s)");
+                        unpairedVens = vensToUnpair.length;
+                        totalWorkloads = totalWorkloads + unpairedVens;
                     }
 
                     this.retiredWorkloads = JSON.parse(this.retiredWorkloads);
@@ -372,7 +375,7 @@ IllumioUpdateWorkloads.prototype = {
                 this.logger._debug("IllumioUpdateWorkloads: Total workloads to sync: " + totalWorkloads);
                 this.logger._debug("IllumioUpdateWorkloads: createdUnknownWorkloads: " + createdUnknownWorkloads + " updatedManagedWorkloads: " + updatedManagedWorkloads + " updatedUnManagedWorkloads: " + updatedUnManagedWorkloads + " deletedWorkloads: " + deletedWorkloads);
 
-                skippedWorkloads = totalWorkloads - createdUnknownWorkloads - updatedManagedWorkloads - updatedUnManagedWorkloads - deletedWorkloads;
+                skippedWorkloads = totalWorkloads - createdUnknownWorkloads - updatedManagedWorkloads - updatedUnManagedWorkloads - deletedWorkloads - unpairedVens;
                 this.logger._debug("IllumioUpdateWorkloads: Number of skipped workloads due to errors in the flow: " + skippedWorkloads);
 
                 if (skippedWorkloads == totalWorkloads) {
@@ -388,14 +391,14 @@ IllumioUpdateWorkloads.prototype = {
                     if (status == 'true') {
                         jobContent = {
                             job_status: skippedWorkloads != 0 ? 'completed_with_error' : 'partial_success',
-                            logs: 'Synchronization with PCE completed' + ' \n -------------------------------------\nTotal workloads: ' + (totalWorkloads + skippedWl) + '\n Created unknown workloads: ' + createdUnknownWorkloads + '\n Updated managed workloads: ' + updatedManagedWorkloads + '\n Updated unmanaged workloads: ' + updatedUnManagedWorkloads + '\n Skipped workloads: ' + (skippedWorkloads + skippedWl) + '\n Deleted workloads: ' + deletedWorkloads,
+                            logs: 'Synchronization with PCE completed' + ' \n -------------------------------------\nTotal workloads: ' + (totalWorkloads + skippedWl) + '\n Created unknown workloads: ' + createdUnknownWorkloads + '\n Updated managed workloads: ' + updatedManagedWorkloads + '\n Updated unmanaged workloads: ' + updatedUnManagedWorkloads + '\n Skipped workloads: ' + (skippedWorkloads + skippedWl) + '\n Deleted workloads: ' + deletedWorkloads + '\n Unpaired VENs: ' + unpairedVens,
                             job_completed: this.snowDateFormat.format(new Date()) + "",
                             current_operation: 'Synchronization with PCE completed'
                         };
                     } else {
                         jobContent = {
                             job_status: skippedWorkloads != 0 ? 'completed_with_error' : 'completed',
-                            logs: 'Synchronization with PCE completed' + ' \n -------------------------------------\nTotal workloads: ' + (totalWorkloads + skippedWl) + '\n Created unknown workloads: ' + createdUnknownWorkloads + '\n Updated managed workloads: ' + updatedManagedWorkloads + '\n Updated unmanaged workloads: ' + updatedUnManagedWorkloads + '\n Skipped workloads: ' + (skippedWorkloads + skippedWl) + '\n Deleted workloads: ' + deletedWorkloads,
+                            logs: 'Synchronization with PCE completed' + ' \n -------------------------------------\nTotal workloads: ' + (totalWorkloads + skippedWl) + '\n Created unknown workloads: ' + createdUnknownWorkloads + '\n Updated managed workloads: ' + updatedManagedWorkloads + '\n Updated unmanaged workloads: ' + updatedUnManagedWorkloads + '\n Skipped workloads: ' + (skippedWorkloads + skippedWl) + '\n Deleted workloads: ' + deletedWorkloads + '\n Unpaired VENs: ' + unpairedVens,
                             job_completed: this.snowDateFormat.format(new Date()) + "",
                             current_operation: 'Synchronization with PCE completed'
                         };
@@ -1193,7 +1196,7 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>97</sys_mod_count>
+        <sys_mod_count>98</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1201,6 +1204,6 @@ IllumioUpdateWorkloads.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-04 17:35:37</sys_updated_on>
+        <sys_updated_on>2026-06-10 18:00:53</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>
