@@ -584,77 +584,10 @@ IllumioUpdateWorkloads.prototype = {
 
 
 
-            // Update custom table with newly assigned labels
-            var payloadPut = {};
-
-            this.logger._info("IllumioUpdateWorkloads: Updating the custom table records and mapping table records in SNOW.");
+            // SNOW tables will be refreshed by post-sync discovery — only count PCE successes
             for (var p = 0; p < snowUpdateQueueFinal.length; p++) {
-
-
-                // Update Workload Field Value table using Scripted REST Resource
-
-                this.logger._debug("IllumioUpdateWorkloads: Creating entry in the workload field value table");
-                var payloadFieldValue = {
-                    "sys_id": snowUpdateQueueFinal[p].sys_id,
-                    "labels": snowUpdateQueueFinal[p].payloadPut
-                };
-
-                var fieldValueEndpoint = WORKLOAD_FIELD_VALUE_ENDPOINT;
-
-                var snowHttpFieldValueResponse = this.snHttpClient.post(fieldValueEndpoint, '', null, payloadFieldValue);
-
-                if (snowHttpFieldValueResponse.hasError) {
-                    this.logger._error("IllumioUpdateWorkloads: Could not update the workload field value table for workload" + snowUpdateQueueFinal[p].hostname);
-                    return {
-                        "status": false,
-                        "count": created_workloads,
-                        "exception": 'ServiceNow. Response status code: ' + snowHttpFieldValueResponse.status
-                    };
-                }
-
-                this.logger._debug("IllumioUpdateWorkloads: Creating entry in the Workload table");
-
-
-                payloadPut = snowUpdateQueueFinal[p].payloadPut;
-                payloadPut["public_ip_address"] = snowUpdateQueueFinal[p].public_ip;
-                payloadPut["known_to_pce"] = "unmanaged";
-                payloadPut["conflicts"] = false;
-                payloadPut["pce_workload_href"] = putResponseObject[p]['href'];
-                snowUpdateQueueFinal[p].interfaces = this.interfaces;
-
-                var putEndpoint = TABLE_API + PCE_WORKLOADS_TABLE + "/" + snowUpdateQueueFinal[p].sys_id;
-                var snowHttpPutResponse = this.snHttpClient.put(putEndpoint, '', null, payloadPut);
-
-                if (snowHttpPutResponse.hasError) {
-                    this.logger._error("IllumioUpdateWorkloads: Could not update the workload table for workload" + snowUpdateQueueFinal[p].hostname);
-                    return {
-                        "status": false,
-                        "count": created_workloads,
-                        "exception": 'ServiceNow. Response status code: ' + snowHttpPutResponse.status
-                    };
-                }
-
-
-                this.logger._debug("IllumioUpdateWorkloads: Creating entry in the workload mapping table");
-                var payloadPost = {
-                    "illumio_pce_configuration": this.configSysId,
-                    "hostname": snowUpdateQueueFinal[p].hostname,
-                    "public_ip": snowUpdateQueueFinal[p].public_ip,
-                    "href": putResponseObject[p]['href'],
-                    "labels": JSON.stringify(snowUpdateQueueFinal[p].labels),
-                    "interfaces": snowUpdateQueueFinal[p].interfaces ? JSON.stringify(snowUpdateQueueFinal[p].interfaces) : "[]"
-                };
-
-                var postEndpoint = TABLE_API + PCE_WORKLOADS_MAPPING_TABLE;
-                // Update the workload mapping table with newly assigned labels.
-                var snowHttpPostResponse = this.snHttpClient.post(postEndpoint, '', null, payloadPost);
-
-                if (snowHttpPostResponse.hasError) {
-                    this.logger._error("IllumioUpdateWorkloads: Failed to update the mapping table record for host - " + snowUpdateQueueFinal[p].hostname);
-                } else {
-                    created_workloads++;
-                    this.logger._debug("IllumioUpdateWorkloads: Successfully updated the SNOW custom table and mapping table");
-                }
+                created_workloads++;
+                this.logger._debug("IllumioUpdateWorkloads: Successfully created workload on PCE: " + snowUpdateQueueFinal[p].hostname);
             }
         }
 
@@ -850,86 +783,10 @@ IllumioUpdateWorkloads.prototype = {
                 }
             }
 
-            this.logger._debug("IllumioUpdateWorkloads: Updating the records in the custom table and workload mapping table on SNOW");
-            var payloadPut = {};
+            // SNOW tables will be refreshed by post-sync discovery — only count PCE successes
             for (var p = 0; p < snowUpdateQueueFinal.length; p++) {
-
-
-                this.logger._debug("IllumioUpdateWorkloads: Updating the  entry in the workload field value table");
-                var payloadFieldValue = {
-                    "sys_id": snowUpdateQueueFinal[p].sys_id,
-                    "labels": snowUpdateQueueFinal[p].payloadPut
-                };
-
-                var fieldValueEndpoint = WORKLOAD_FIELD_VALUE_ENDPOINT;
-
-                var snowHttpFieldValueResponse = this.snHttpClient.post(fieldValueEndpoint, '', null, payloadFieldValue);
-
-                if (snowHttpFieldValueResponse.hasError) {
-                    this.logger._error("IllumioUpdateWorkloads: Could not update the workload field value table for workload" + snowUpdateQueueFinal[p].hostname);
-                    return {
-                        "status": false,
-                        "count": updated_workloads,
-                        "exception": 'ServiceNow. Response status code: ' + snowHttpFieldValueResponse.status
-                    };
-                }
-
-
-                var snowUpdatePayload = {};
-                this.logger._debug("IllumioUpdateWorkloads: Updating SNOW table records for workload : " + snowUpdateQueueFinal[p].hostname);
-                payloadPut = snowUpdateQueueFinal[p].payloadPut;
-                payloadPut["conflicts"] = false;
-                payloadPut["pce_workload_href"] = snowUpdateQueueFinal[p].href;
-                payloadPut["hostname"] = snowUpdateQueueFinal[p].hostname;
-                payloadPut["known_to_pce"] = snowUpdateQueueFinal[p].known_to_pce;
-                payloadPut["illumio_pce_configuration"] = this.configSysId;
-
-
-
-                putEndpoint = TABLE_API + PCE_WORKLOADS_TABLE + "/" + snowUpdateQueueFinal[p].sys_id;
-                var snowHttpPutResponse = this.snHttpClient.put(putEndpoint, '', '', payloadPut);
-
-                if (snowHttpPutResponse.hasError) {
-                    this.logger._error("IllumioUpdateWorkloads: Could not update custom table record for workload - " + snowUpdateQueueFinal[p].hostname);
-                    return {
-                        "status": false,
-                        "count": updated_workloads,
-                        "exception": 'ServiceNow. Response status code: ' + snowHttpPutResponse.status
-                    };
-                } else {
-                    this.logger._debug("IllumioUpdateWorkloads: SNOW custom table updated successfully");
-                }
-
-                // Update the workload mapping table on SNOW
-                this.logger._debug("IllumioUpdateWorkloads: Updating the workload mapping table");
-                var snowGetUrl = TABLE_API + PCE_WORKLOADS_MAPPING_TABLE + "?sysparm_query=href=" + snowUpdateQueueFinal[p].href;
-                snowGetUrl = encodeURI(snowGetUrl);
-                var snowGetResponse = this.snHttpClient.get(snowGetUrl, '');
-                if (snowGetResponse.hasError) {
-                    // If SNOW table could not be updated
-                    this.logger._error("IllumioUpdateWorkloads: Unable to fetch unique identifier from SNOW workload mapping table. Updating the record SKIPPED");
-                    continue;
-                }
-
-                if (snowGetResponse) {
-                    var workloadMappingSysId = snowGetResponse.data.result[0].sys_id;
-                }
-                snowUpdatePayload["labels"] = JSON.stringify(snowUpdateQueueFinal[p].labels);
-                if (snowUpdateQueueFinal[p].payloadPut.public_ip_address != "" && snowUpdateQueueFinal[p].payloadPut.public_ip_address != undefined) {
-                    snowUpdatePayload["public_ip"] = snowUpdateQueueFinal[p].payloadPut.public_ip_address;
-                }
-                if ("interfaces" in snowUpdateQueueFinal[p] && snowUpdateQueueFinal[p].interfaces && snowUpdateQueueFinal[p].interfaces.length > 0) {
-                    snowUpdatePayload["interfaces"] = JSON.stringify(snowUpdateQueueFinal[p].interfaces);
-                }
-                var putEndpoint = TABLE_API + PCE_WORKLOADS_MAPPING_TABLE + "/" + workloadMappingSysId;
-                var workloadPutSnowResponse = this.snHttpClient.put(putEndpoint, '', '', snowUpdatePayload);
-
-                if (workloadPutSnowResponse.hasError) {
-                    this.logger._error("IllumioUpdateWorkloads: Error while updating mapping table for workload - " + snowUpdateQueueFinal[p].hostname);
-                } else {
-                    this.logger._info("IllumioUpdateWorkloads: SNOW workload mapping table updated.");
-                    updated_workloads++;
-                }
+                updated_workloads++;
+                this.logger._debug("IllumioUpdateWorkloads: Successfully updated workload on PCE: " + snowUpdateQueueFinal[p].hostname);
             }
         }
 
@@ -1004,22 +861,7 @@ IllumioUpdateWorkloads.prototype = {
                 labelsToUse.push({
                     "href": respBody.href
                 });
-
-                // Payload for the request to update labels mapping on SNOW
-                var payloadPost = {
-                    key: label.key,
-                    value: storedLabelValue,
-                    href: respBody.href,
-                    illumio_pce_configuration: this.configSysId
-                };
-
-                var postEndpoint = TABLE_API + PCE_LABELS_MAPPING_TABLE;
-                // Make the HTTP call to update the labels mapping table on SNOW.
-                var postSnowResponse = this.snHttpClient.post(postEndpoint, '', '', payloadPost);
-                // If label creation failed
-                if (!postSnowResponse) {
-                    this.logger._error("IllumioUpdateWorkloads: Error while updating labels mapping table on SNOW.");
-                }
+                // SNOW labels mapping will be refreshed by post-sync discovery
             } else {
                 this.logger._error("IllumioUpdateWorkloads: Error while creating label. Status : " + status);
                 return false;
@@ -1196,7 +1038,7 @@ IllumioUpdateWorkloads.prototype = {
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>c4a87d4adb4c6700dc9fabc5ca96191c</sys_id>
-        <sys_mod_count>98</sys_mod_count>
+        <sys_mod_count>99</sys_mod_count>
         <sys_name>IllumioUpdateWorkloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -1204,6 +1046,6 @@ IllumioUpdateWorkloads.prototype = {
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>ecc_agent_script_include_c4a87d4adb4c6700dc9fabc5ca96191c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-10 18:00:53</sys_updated_on>
+        <sys_updated_on>2026-06-23 13:04:41</sys_updated_on>
     </ecc_agent_script_include>
 </record_update>

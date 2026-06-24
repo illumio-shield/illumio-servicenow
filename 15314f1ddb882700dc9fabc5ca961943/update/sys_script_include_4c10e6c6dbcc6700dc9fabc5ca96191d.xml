@@ -186,6 +186,15 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
     process: function(illumioJobId) {
         this.illumioJobId = illumioJobId;
         this.pceConfigId = this.utils.getConfigurationId(illumioJobId);
+
+        // Detect post-sync discovery from the job's initial log marker
+        var jobGr = new GlideRecordSecure('x_illu2_illumio_illumio_scheduled_jobs');
+        jobGr.get(illumioJobId);
+        this._skipAutoSync = (jobGr.getValue('logs') || '').indexOf('[POST_SYNC]') !== -1;
+        if (this._skipAutoSync) {
+            gs.info('[IllumioDiscoverAndMapCMDBServers] Post-sync discovery detected. Auto sync will be skipped.');
+        }
+
         var jobContent;
         try {
             /* Read the PCE configuration for custom table and fields */
@@ -267,8 +276,13 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             }
             gs.info("Added all records to the custom table");
 
-            /* Sync with PCE */
-            if (pceConfig.autoSync) {
+            /* Sync with PCE - only if autoSync is enabled AND not a post-sync discovery */
+            var autoSyncEnabled = !!pceConfig.autoSync;
+            this.utils.updateJobRecord(this.illumioJobId, {
+                logs: "Auto sync enabled: " + autoSyncEnabled + ", Post-sync discovery: " + this._skipAutoSync,
+            });
+
+            if (autoSyncEnabled && !this._skipAutoSync) {
                 /* Update scheduled job status */
                 jobContent = {
                     logs: "Synchronizing workloads to PCE ",
@@ -282,10 +296,18 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                 var autoSync = new IllumioAutoSyncWithPCE();
                 autoSync.process(this.illumioJobId);
             } else {
-                /* Update scheduled job status */
+                var completionMsg;
+                if (this._skipAutoSync) {
+                    completionMsg = "Completed post-sync discovery (auto sync skipped)";
+                } else if (!autoSyncEnabled) {
+                    completionMsg = "Completed discovery (auto sync not enabled)";
+                } else {
+                    completionMsg = "Completed discovery";
+                }
+
                 jobContent = {
-                    logs: "Completed discovery",
-                    current_operation: "Completed discovery",
+                    logs: completionMsg,
+                    current_operation: completionMsg,
                     job_status: "completed",
                     job_completed: new GlideDateTime(),
                 };
@@ -768,14 +790,14 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>413</sys_mod_count>
+        <sys_mod_count>416</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-04 17:35:36</sys_updated_on>
+        <sys_updated_on>2026-06-24 08:15:39</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>4c10e6c6dbcc6700dc9fabc5ca96191d</id>
