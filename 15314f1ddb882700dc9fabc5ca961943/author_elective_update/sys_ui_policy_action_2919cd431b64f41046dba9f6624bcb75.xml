@@ -72,7 +72,6 @@
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-01-28 05:06:02</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_db_object display_value="" name="sys_ui_policy_action">sys_ui_policy_action</sys_db_object>
         <sys_id>016d285bb60b4a56a66d996313410819</sys_id>
         <sys_metadata>2919cd431b64f41046dba9f6624bcb75</sys_metadata>
@@ -81,7 +80,6 @@
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_parent display_value="">f77805031b64f41046dba9f6624bcb3d</sys_parent>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_scope_delete display_value="">2dc0243a4eea402496fda72c84e16309</sys_scope_delete>
         <sys_update_name>sys_ui_policy_action_2919cd431b64f41046dba9f6624bcb75</sys_update_name>

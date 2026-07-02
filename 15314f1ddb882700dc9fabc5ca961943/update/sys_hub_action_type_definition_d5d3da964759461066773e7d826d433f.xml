@@ -28,22 +28,22 @@
         <sys_class_name>sys_hub_action_type_definition</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:18:23</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
         <sys_id>d5d3da964759461066773e7d826d433f</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Check PCE Configuration</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_d5d3da964759461066773e7d826d433f</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-25 05:46:04</sys_updated_on>
+        <sys_updated_by>koushik.choudhury</sys_updated_by>
+        <sys_updated_on>2026-07-02 08:03:45</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
+    <sys_translated_text action="delete_multiple" query="documentkey=d5d3da964759461066773e7d826d433f"/>
     <sys_variable_value action="delete_multiple" query="document_key=d5d3da964759461066773e7d826d433f"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
         <document>sys_hub_action_type_definition</document>
@@ -173,18 +173,11 @@
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>7cc4da1a4759461066773e7d826d437a</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-05 05:25:02</sys_updated_on>
     </sys_hub_step_instance>
@@ -239,6 +232,7 @@
     </sys_element_mapping>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_step_ext_output_7cc4da1a4759461066773e7d826d437a^id=7cc4da1a4759461066773e7d826d437a"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7^id=7cc4da1a4759461066773e7d826d437a"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=7cc4da1a4759461066773e7d826d437a"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=7cc4da1a4759461066773e7d826d437a^sys_idNOT IN30c4da1a4759461066773e7d826d4382"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -288,6 +282,7 @@
         <order>0</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -302,13 +297,11 @@
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>30c4da1a4759461066773e7d826d4382</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -374,6 +367,7 @@
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -388,13 +382,11 @@
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>b8c4da1a4759461066773e7d826d4385</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -412,7 +404,6 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=7cc4da1a4759461066773e7d826d437a"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_7cc4da1a4759461066773e7d826d437a^sys_idNOT INcdc4da1a4759461066773e7d826d4388"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -424,13 +415,11 @@
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>cdc4da1a4759461066773e7d826d4388</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parameters</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_7cc4da1a4759461066773e7d826d437a_parameters_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -453,18 +442,11 @@
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>81c4da1a4759461066773e7d826d4391</sys_id>
         <sys_mod_count>3</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 07:46:52</sys_updated_on>
     </sys_hub_step_instance>
@@ -737,6 +719,7 @@ outputs.status = response.status;&#13;
         <table>var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7</table>
         <value/>
     </sys_element_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=81c4da1a4759461066773e7d826d4391"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=81c4da1a4759461066773e7d826d4391^sys_idNOT INc5c4da1a4759461066773e7d826d4394"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -786,6 +769,7 @@ outputs.status = response.status;&#13;
         <order>0</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -800,13 +784,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>c5c4da1a4759461066773e7d826d4394</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -872,6 +854,7 @@ outputs.status = response.status;&#13;
         <order>2</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -886,13 +869,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>0dc4da1a4759461066773e7d826d4397</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -957,6 +938,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -971,13 +953,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:28</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>0dc4da1a4759461066773e7d826d439b</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1042,6 +1022,7 @@ outputs.status = response.status;&#13;
         <order>3</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -1056,13 +1037,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:52</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>94ec41264795861066773e7d826d43a5</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1080,7 +1059,6 @@ outputs.status = response.status;&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=81c4da1a4759461066773e7d826d4391"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_81c4da1a4759461066773e7d826d4391^sys_idNOT IN10ec41264795861066773e7d826d43a8,45c4da1a4759461066773e7d826d439e,4dc4da1a4759461066773e7d826d439a"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>headers</element>
         <help/>
@@ -1092,13 +1070,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:52</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>10ec41264795861066773e7d826d43a8</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_81c4da1a4759461066773e7d826d4391_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1117,13 +1093,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:28</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>45c4da1a4759461066773e7d826d439e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_81c4da1a4759461066773e7d826d4391_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1142,13 +1116,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>4dc4da1a4759461066773e7d826d439a</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_81c4da1a4759461066773e7d826d4391_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1205,6 +1177,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference display_value="" name="x_illu2_illumio_illumio_pce_conf">x_illu2_illumio_illumio_pce_conf</reference>
         <reference_cascade_rule/>
@@ -1219,13 +1192,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>74c49e964759461066773e7d826d434d</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1294,6 +1265,7 @@ outputs.status = response.status;&#13;
         <order>4</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -1308,13 +1280,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:53</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>28ec41264795861066773e7d826d43e0</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1383,6 +1353,7 @@ outputs.status = response.status;&#13;
         <order>2</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -1397,13 +1368,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:23:07</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2ae4de1a4759461066773e7d826d43da</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1472,6 +1441,7 @@ outputs.status = response.status;&#13;
         <order>3</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -1486,13 +1456,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:23:07</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>6ae4de1a4759461066773e7d826d43de</sys_id>
         <sys_mod_count>17</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1561,6 +1529,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -1575,13 +1544,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:52</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>90ec41264795861066773e7d826d43c8</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1650,6 +1617,7 @@ outputs.status = response.status;&#13;
         <order>5</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -1664,13 +1632,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:53</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e4ec41264795861066773e7d826d43e4</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1701,7 +1667,6 @@ outputs.status = response.status;&#13;
         <sys_updated_on>2024-04-03 18:22:28</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=8dc4da1a4759461066773e7d826d43b1"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_d5d3da964759461066773e7d826d433f^sys_idNOT IN34c49e964759461066773e7d826d4352"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>pce_confiuration</element>
         <help/>
@@ -1713,13 +1678,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:22:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>34c49e964759461066773e7d826d4352</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>PCE Confiuration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_input_d5d3da964759461066773e7d826d433f_pce_confiuration_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1728,7 +1691,6 @@ outputs.status = response.status;&#13;
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_d5d3da964759461066773e7d826d433f"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_d5d3da964759461066773e7d826d433f^sys_idNOT IN28ec41264795861066773e7d826d43e3,9cec41264795861066773e7d826d43cb,a6e4de1a4759461066773e7d826d43e3,aae4de1a4759461066773e7d826d43dd,e4ec41264795861066773e7d826d43e7"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>headers</element>
         <help/>
@@ -1740,13 +1702,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:53</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>28ec41264795861066773e7d826d43e3</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_d5d3da964759461066773e7d826d433f_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1765,13 +1725,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:52</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>9cec41264795861066773e7d826d43cb</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_d5d3da964759461066773e7d826d433f_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1790,13 +1748,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:23:07</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>a6e4de1a4759461066773e7d826d43e3</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_d5d3da964759461066773e7d826d433f___dont_treat_as_error___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1815,13 +1771,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-03 18:23:07</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>aae4de1a4759461066773e7d826d43dd</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Action Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_d5d3da964759461066773e7d826d433f___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1840,13 +1794,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 07:46:53</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e4ec41264795861066773e7d826d43e7</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_d5d3da964759461066773e7d826d433f_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -1860,20 +1812,14 @@ outputs.status = response.status;&#13;
         <action_id display_value="Check PCE Configuration">d5d3da964759461066773e7d826d433f</action_id>
         <plan>{"persistor":{"@class":".ChunkingPlanPersistor","table":"sys_hub_action_plan","id":"471604264711861066773e7d826d433e","name":"plan","plan_signature":null}}</plan>
         <snapshot>7e06f53a475dc61066773e7d826d4334</snapshot>
-        <sys_class_name>sys_hub_action_plan</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:40</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
         <sys_id>471604264711861066773e7d826d433e</sys_id>
         <sys_mod_count>3</sys_mod_count>
-        <sys_name/>
         <sys_overrides/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope/>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-05 05:25:14</sys_updated_on>
     </sys_hub_action_plan>
@@ -1902,15 +1848,14 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_type_snapshot</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:37</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
         <sys_id>9616c0264711861066773e7d826d436e</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -1918,6 +1863,7 @@ outputs.status = response.status;&#13;
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_snapshot>
+    <sys_translated_text action="delete_multiple" query="documentkey=9616c0264711861066773e7d826d436e"/>
     <sys_variable_value action="delete_multiple" query="document_key=9616c0264711861066773e7d826d436e"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
         <document>sys_hub_action_type_snapshot</document>
@@ -2047,18 +1993,11 @@ outputs.status = response.status;&#13;
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:37</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>d616c0264711861066773e7d826d4377</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-05 05:25:11</sys_updated_on>
     </sys_hub_step_instance>
@@ -2113,6 +2052,7 @@ outputs.status = response.status;&#13;
     </sys_element_mapping>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_step_ext_output_d616c0264711861066773e7d826d4377^id=d616c0264711861066773e7d826d4377"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7^id=d616c0264711861066773e7d826d4377"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=d616c0264711861066773e7d826d4377"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=d616c0264711861066773e7d826d4377^sys_idNOT INda16c0264711861066773e7d826d437a"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -2162,6 +2102,7 @@ outputs.status = response.status;&#13;
         <order>0</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -2176,13 +2117,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:37</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>da16c0264711861066773e7d826d437a</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2248,6 +2187,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -2262,13 +2202,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>da16c0264711861066773e7d826d437e</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2286,7 +2224,6 @@ outputs.status = response.status;&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=d616c0264711861066773e7d826d4377"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_d616c0264711861066773e7d826d4377^sys_idNOT IN2a16c0264711861066773e7d826d4381"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>parameters</element>
         <help/>
@@ -2298,13 +2235,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2a16c0264711861066773e7d826d4381</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parameters</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_d616c0264711861066773e7d826d4377_parameters_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2327,18 +2262,11 @@ outputs.status = response.status;&#13;
         <outputs/>
         <section/>
         <step_type display_value="Script">106afb6647032200b4fad7527c9a71e7</step_type>
-        <sys_class_name>sys_hub_step_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e216c0264711861066773e7d826d4388</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-04 08:59:18</sys_updated_on>
     </sys_hub_step_instance>
@@ -2611,6 +2539,7 @@ outputs.status = response.status;&#13;
         <table>var__m_sys_flow_step_definition_input_106afb6647032200b4fad7527c9a71e7</table>
         <value/>
     </sys_element_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=e216c0264711861066773e7d826d4388"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=e216c0264711861066773e7d826d4388^sys_idNOT INe616c0264711861066773e7d826d438b"/>
     <sys_hub_step_ext_input action="INSERT_OR_UPDATE">
         <active>true</active>
@@ -2660,6 +2589,7 @@ outputs.status = response.status;&#13;
         <order>0</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -2674,13 +2604,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e616c0264711861066773e7d826d438b</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2746,6 +2674,7 @@ outputs.status = response.status;&#13;
         <order>3</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -2760,13 +2689,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>517dd9264719861066773e7d826d4329</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2831,6 +2758,7 @@ outputs.status = response.status;&#13;
         <order>2</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -2845,13 +2773,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e616c0264711861066773e7d826d438f</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2916,6 +2842,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -2930,13 +2857,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>ee16c0264711861066773e7d826d4392</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -2954,7 +2879,6 @@ outputs.status = response.status;&#13;
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=e216c0264711861066773e7d826d4388"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_e216c0264711861066773e7d826d4388^sys_idNOT IN2616c0264711861066773e7d826d4392,2616c0264711861066773e7d826d4395,d97dd9264719861066773e7d826d432b"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>response</element>
         <help/>
@@ -2966,13 +2890,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2616c0264711861066773e7d826d4392</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_e216c0264711861066773e7d826d4388_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -2991,13 +2913,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2616c0264711861066773e7d826d4395</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_e216c0264711861066773e7d826d4388_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3016,13 +2936,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>d97dd9264719861066773e7d826d432b</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_e216c0264711861066773e7d826d4388_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3079,6 +2997,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference display_value="" name="x_illu2_illumio_illumio_pce_conf">x_illu2_illumio_illumio_pce_conf</reference>
         <reference_cascade_rule/>
@@ -3093,13 +3012,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_input</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:37</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>5a16c0264711861066773e7d826d4371</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3168,6 +3085,7 @@ outputs.status = response.status;&#13;
         <order>5</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -3182,13 +3100,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>257dd9264719861066773e7d826d438d</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3257,6 +3173,7 @@ outputs.status = response.status;&#13;
         <order>1</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -3271,13 +3188,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>557dd9264719861066773e7d826d433f</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3346,6 +3261,7 @@ outputs.status = response.status;&#13;
         <order>4</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -3360,13 +3276,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>a57dd9264719861066773e7d826d4389</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3435,6 +3349,7 @@ outputs.status = response.status;&#13;
         <order>3</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -3449,13 +3364,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e616c0264711861066773e7d826d43a8</sys_id>
         <sys_mod_count>7</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3524,6 +3437,7 @@ outputs.status = response.status;&#13;
         <order>2</order>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -3538,13 +3452,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_hub_action_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>ee16c0264711861066773e7d826d43a4</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
@@ -3575,7 +3487,6 @@ outputs.status = response.status;&#13;
         <sys_updated_on>2024-04-04 02:37:38</sys_updated_on>
     </sys_hub_action_status_metadata>
     <sys_hub_status_condition action="delete_multiple" query="action_status_metadata_id=ee16c0264711861066773e7d826d43d7"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_9616c0264711861066773e7d826d436e^sys_idNOT IN5a16c0264711861066773e7d826d4375"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>pce_confiuration</element>
         <help/>
@@ -3587,13 +3498,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:37</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>5a16c0264711861066773e7d826d4375</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>PCE Confiuration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_input_9616c0264711861066773e7d826d436e_pce_confiuration_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3602,7 +3511,6 @@ outputs.status = response.status;&#13;
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_9616c0264711861066773e7d826d436e"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_9616c0264711861066773e7d826d436e^sys_idNOT IN217dd9264719861066773e7d826d4343,2e16c0264711861066773e7d826d43a7,657dd9264719861066773e7d826d438c,aa16c0264711861066773e7d826d43ac,e17dd9264719861066773e7d826d4390"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>status</element>
         <help/>
@@ -3614,13 +3522,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>217dd9264719861066773e7d826d4343</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_9616c0264711861066773e7d826d436e_status_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3639,13 +3545,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>2e16c0264711861066773e7d826d43a7</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Action Status</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_9616c0264711861066773e7d826d436e___action_status___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3664,13 +3568,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:18</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>657dd9264719861066773e7d826d438c</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Headers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_9616c0264711861066773e7d826d436e_headers_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3689,13 +3591,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 02:37:38</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>aa16c0264711861066773e7d826d43ac</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Don't Treat as Error</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_9616c0264711861066773e7d826d436e___dont_treat_as_error___en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
@@ -3714,13 +3614,11 @@ outputs.status = response.status;&#13;
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-04 08:59:19</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>e17dd9264719861066773e7d826d4390</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Response</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_documentation_var__m_sys_hub_action_output_9616c0264711861066773e7d826d436e_response_en</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>

@@ -2,6 +2,7 @@
     <sys_ui_section caption="" section_id="1dda51dadb0ca0901206fd641d9619d2" sys_domain="global" table="x_illu2_illumio_illumio_pce_field_mapping" version="3" view="">
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-02-17 14:27:59</sys_created_on>
             <sys_id>0c6dc1a897310510cbaaf8b3f153af72</sys_id>
@@ -13,6 +14,7 @@
         </sys_ui_annotation>
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-02-17 14:27:59</sys_created_on>
             <sys_id>406dc1a897310510cbaaf8b3f153af72</sys_id>
@@ -54,6 +56,7 @@
         </sys_ui_annotation>
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-02-17 14:27:59</sys_created_on>
             <sys_id>446dc1a897310510cbaaf8b3f153af73</sys_id>
@@ -65,6 +68,7 @@
         </sys_ui_annotation>
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-02-17 14:27:59</sys_created_on>
             <sys_id>806dc1a897310510cbaaf8b3f153af73</sys_id>
@@ -76,6 +80,7 @@
         </sys_ui_annotation>
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2022-02-17 14:27:59</sys_created_on>
             <sys_id>cc6dc1a897310510cbaaf8b3f153af72</sys_id>
@@ -765,7 +770,6 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2020-10-26 09:43:57</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>1dda51dadb0ca0901206fd641d9619d2</sys_id>
@@ -774,7 +778,6 @@
             <sys_overrides/>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
             <sys_update_name>sys_ui_section_1dda51dadb0ca0901206fd641d9619d2</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>

@@ -155,16 +155,25 @@ IllumioGetPCEConfiguration.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:18:42</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>61eeda82dbcc6700dc9fabc5ca9619ab</sys_id>
         <sys_mod_count>68</sys_mod_count>
         <sys_name>IllumioGetPCEConfiguration</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_61eeda82dbcc6700dc9fabc5ca9619ab</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-10 08:17:11</sys_updated_on>
     </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>61eeda82dbcc6700dc9fabc5ca9619ab</id>
+        <sys_created_by>crest.data</sys_created_by>
+        <sys_created_on>2025-07-16 07:06:29</sys_created_on>
+        <sys_id>3babcbc1c37222106c891275e40131dd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>crest.data</sys_updated_by>
+        <sys_updated_on>2025-07-16 07:06:29</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
 </record_update>
