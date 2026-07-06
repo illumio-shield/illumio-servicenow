@@ -12,12 +12,12 @@
         <element attributes="readonly_clickthrough=true" label="Job Owner" max_length="32" name="job_owner" reference="sys_user" type="reference"/>
         <element choice="1" label="Job Status" max_length="20" name="job_status" type="string">
             <choice>
+                <element inactive_on_update="false" label="Completed" sequence="0" value="completed"/>
                 <element inactive_on_update="false" label="Completed with errors" sequence="1" value="completed_with_error"/>
+                <element inactive_on_update="false" label="Failed" sequence="2" value="failed"/>
                 <element inactive_on_update="false" label="Partial Success" sequence="3" value="partial_success"/>
                 <element inactive_on_update="false" label="Running" sequence="4" value="running"/>
                 <element inactive_on_update="false" label="Cancelled" sequence="5" value="cancelled"/>
-                <element inactive_on_update="false" label="Completed" sequence="0" value="completed"/>
-                <element inactive_on_update="false" label="Failed" sequence="2" value="failed"/>
             </choice>
         </element>
         <element label="Job Started" max_length="40" name="job_started" type="glide_date_time"/>

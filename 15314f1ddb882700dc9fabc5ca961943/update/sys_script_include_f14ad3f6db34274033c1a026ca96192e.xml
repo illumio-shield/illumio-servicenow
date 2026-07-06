@@ -47,7 +47,7 @@ IllumioAutoSyncWithPCE.prototype = {
             instanceURL = instanceURL.replace('/', '');
 
             // fetch scheduled job record
-            var illumioScheduledJobsGr = new GlideRecord("x_illu2_illumio_illumio_scheduled_jobs");
+            var illumioScheduledJobsGr = new GlideRecordSecure("x_illu2_illumio_illumio_scheduled_jobs");
             if (!illumioScheduledJobsGr.get(illumioJobId)) {
                 gs.error("Error while starting Auto Sunc process: Not able to find Scheduled Job with Sys ID: {0}", illumioJobId);
                 return;
@@ -56,7 +56,7 @@ IllumioAutoSyncWithPCE.prototype = {
             // fetch the PCE Configuration record
             var configSysId = illumioScheduledJobsGr.getValue("illumio_pce_configuration"),
                 userGr = illumioScheduledJobsGr.job_owner;
-            var configGr = new GlideRecord("x_illu2_illumio_illumio_pce_conf");
+            var configGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_conf");
             if (!configGr.get(configSysId)) {
                 gs.error("Error while starting Auto Sunc process: Not able to find PCE Configuration with Sys ID: {0}", configSysId);
                 return;
@@ -66,7 +66,7 @@ IllumioAutoSyncWithPCE.prototype = {
                 pceConfig = new IllumioGetPCEConfiguration().getConfiguration(configSysId);
 
             // get all the workload sysIds
-            var allWorkloads = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+            var allWorkloads = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
             allWorkloads.addEncodedQuery('duplicate=false^conflicts=true');
             allWorkloads.addQuery('deleted_from_pce', false);
             allWorkloads.addQuery("illumio_pce_configuration", configSysId);
@@ -106,7 +106,7 @@ IllumioAutoSyncWithPCE.prototype = {
             if (!cancelJobOnLimitExceed) {
 
                 //delete retired worklaods 
-                var retiredWorkloads = new GlideRecord("x_illu2_illumio_illumio_pce_workload");
+                var retiredWorkloads = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
                 retiredWorkloads.addQuery('deleted_from_pce', true);
                 retiredWorkloads.addQuery("illumio_pce_configuration", configSysId);
                 retiredWorkloads.query();
@@ -167,7 +167,7 @@ IllumioAutoSyncWithPCE.prototype = {
 
                     var retiredSysId = retiredWorkloads.getUniqueValue();
                     var retiredHostName = retiredWorkloads.getValue("hostname").trim();
-                    var mappingTableGr = new GlideRecord("x_illu2_illumio_illumio_pce_workloads_mapping");
+                    var mappingTableGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workloads_mapping");
                     mappingTableGr.addQuery('hostname', retiredHostName);
                     mappingTableGr.addQuery("illumio_pce_configuration", configSysId);
                     mappingTableGr.addQuery('agent', false);
@@ -212,7 +212,7 @@ IllumioAutoSyncWithPCE.prototype = {
 
             // check thresold limit
             if (cancelJobOnLimitExceed) {
-                var notDeletedworkload = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+                var notDeletedworkload = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload');
                 notDeletedworkload.addQuery('deleted_from_pce', true);
                 notDeletedworkload.query();
                 while (notDeletedworkload.next()) {
@@ -359,7 +359,7 @@ IllumioAutoSyncWithPCE.prototype = {
         for (var labelType in labelData) {
             var labelCMDBValue = labelData[labelType];
 
-            var labelsGr = new GlideRecord("x_illu2_illumio_illumio_pce_labels_mapping");
+            var labelsGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_labels_mapping");
             labelsGr.addQuery("key", labelType);
             labelsGr.addQuery("value", labelCMDBValue);
             labelsGr.addQuery("illumio_pce_configuration", configSysId);
@@ -396,7 +396,7 @@ IllumioAutoSyncWithPCE.prototype = {
                     this.unknownWorkloadsList.length + this.workloadsToDelete) !=
                 0
             ) {
-                var grPayload = new GlideRecord(
+                var grPayload = new GlideRecordSecure(
                     "x_illu2_illumio_illumio_autosync_payload"
                 );
                 grPayload.initialize();
@@ -430,14 +430,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>336</sys_mod_count>
+        <sys_mod_count>337</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-09 10:03:21</sys_updated_on>
+        <sys_updated_by>koushik.choudhury</sys_updated_by>
+        <sys_updated_on>2026-07-06 18:49:49</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>f14ad3f6db34274033c1a026ca96192e</id>
