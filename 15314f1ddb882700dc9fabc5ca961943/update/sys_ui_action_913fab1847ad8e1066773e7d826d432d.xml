@@ -36,7 +36,10 @@
 var incidentSysid =  discoverAndMapUtil.createOrUpdateIncident(current);
 current.setValue("incident", incidentSysid);
 current.update();
-action.setRedirectURL("incident.do?sys_id="+incidentSysid);
+var incGr = new GlideRecord("incident");
+if (incGr.get(incidentSysid)) {
+    action.openGlideRecord(incGr);
+}
 ]]></script>
         <show_form_icon_only>false</show_form_icon_only>
         <show_insert>false</show_insert>
@@ -50,15 +53,15 @@ action.setRedirectURL("incident.do?sys_id="+incidentSysid);
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>913fab1847ad8e1066773e7d826d432d</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>13</sys_mod_count>
         <sys_name>Create Incident</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_913fab1847ad8e1066773e7d826d432d</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-13 07:37:22</sys_updated_on>
+        <sys_updated_by>koushik.choudhury</sys_updated_by>
+        <sys_updated_on>2026-07-06 19:26:39</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_workload</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
