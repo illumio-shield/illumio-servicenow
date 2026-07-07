@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
     <sys_script_fix action="INSERT_OR_UPDATE">
         <before>false</before>
-        <description/>
+        <description>  Introduced in: v2.5.0&#13;
+    &#13;
+Purpose: Migrates existing field mapping configuration from the Illumio PCE Configuration table&#13;
+  (x_illu2_illumio_illumio_pce_conf) to the Illumio PCE Field Mapping table (x_illu2_illumio_illumio_pce_field_mapping). This fix&#13;
+  script runs on upgrade to ensure existing source table, hostname, label dimension (application, location, role, environment), and&#13;
+  IP address field mappings are preserved in the new dedicated field mapping table.</description>
         <name>Add exisiting mapping to other table</name>
         <record_for_rollback>false</record_for_rollback>
         <script><![CDATA[/**
@@ -53,19 +58,21 @@ if (grPCEConfig.next()) {
     }
 } else {
     gs.info('No PCE configuration found for Illumio application. Hence skipping the record creation for field mapping');
-}]]></script>
+}
+
+gs.info('[Fix Script] Completed execution of "Add existing mapping to other table" fix script');]]></script>
         <sys_class_name>sys_script_fix</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-10-29 05:24:47</sys_created_on>
         <sys_id>5eabff87db4ce4d0223ef5361d961984</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>7</sys_mod_count>
         <sys_name>Add exisiting mapping to other table</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_fix_5eabff87db4ce4d0223ef5361d961984</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-11 05:07:11</sys_updated_on>
+        <sys_updated_by>koushik.choudhury</sys_updated_by>
+        <sys_updated_on>2026-07-07 05:32:50</sys_updated_on>
         <unloadable>false</unloadable>
     </sys_script_fix>
     <sys_es_latest_script action="INSERT_OR_UPDATE">

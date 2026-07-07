@@ -12,7 +12,7 @@
         <script><![CDATA[var IllumioStartDiscovery = Class.create();
 IllumioStartDiscovery.prototype = {
     initialize: function() {
-		this.scheduledJobsGr = new GlideRecordSecure(
+		this.scheduledJobsGr = new GlideRecord(
             'x_illu2_illumio_illumio_scheduled_jobs'
         );
         this.utils = new x_illu2_illumio.IllumioUtils();
@@ -27,7 +27,7 @@ IllumioStartDiscovery.prototype = {
         // Check if any job is already in running state
         gs.info('Initiating Discovery');
 
-        var configClassGr = new GlideRecordSecure(
+        var configClassGr = new GlideRecord(
             'x_illu2_illumio_illumio_config_class_mapping'
         );
         configClassGr.addActiveQuery();
@@ -37,7 +37,7 @@ IllumioStartDiscovery.prototype = {
         );
         configClassGr.query();
         while (configClassGr.next()) {
-            var fieldMappingGr = new GlideRecordSecure(
+            var fieldMappingGr = new GlideRecord(
                 'x_illu2_illumio_illumio_class_field_mapping'
             );
 			fieldMappingGr.addQuery('illumio_config_class_mapping',configClassGr.getUniqueValue());
@@ -246,14 +246,14 @@ IllumioStartDiscovery.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:20:29</sys_created_on>
         <sys_id>641f9e82dbcc6700dc9fabc5ca9619ce</sys_id>
-        <sys_mod_count>122</sys_mod_count>
+        <sys_mod_count>123</sys_mod_count>
         <sys_name>IllumioStartDiscovery</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_641f9e82dbcc6700dc9fabc5ca9619ce</sys_update_name>
-        <sys_updated_by>koushik.choudhury</sys_updated_by>
-        <sys_updated_on>2026-07-06 18:50:31</sys_updated_on>
+        <sys_updated_by>vscode.extension</sys_updated_by>
+        <sys_updated_on>2026-07-07 07:03:09</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>641f9e82dbcc6700dc9fabc5ca9619ce</id>
