@@ -39,6 +39,7 @@
         <next_element/>
         <primary>false</primary>
         <read_only>true</read_only>
+        <read_only_option>client_script_modifiable</read_only_option>
         <read_roles/>
         <reference display_value="Incident" name="incident">incident</reference>
         <reference_cascade_rule/>

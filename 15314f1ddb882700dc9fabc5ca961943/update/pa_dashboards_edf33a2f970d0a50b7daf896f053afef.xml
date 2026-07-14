@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_dashboards">
     <pa_dashboards action="INSERT_OR_UPDATE">
         <active>true</active>
+        <base_dashboard/>
         <breakdown_source/>
+        <certified>false</certified>
         <color>#ffffff</color>
+        <description/>
         <disable_multiple_element>false</disable_multiple_element>
         <experience_dashboard/>
         <group/>
@@ -18,6 +21,7 @@
         <notification_text/>
         <order/>
         <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <ready_to_migrate>Yes</ready_to_migrate>
         <restrict_to_roles>x_illu2_illumio.illumio_user</restrict_to_roles>
         <role_override>true</role_override>
         <roles/>

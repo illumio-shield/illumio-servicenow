@@ -10,6 +10,7 @@
         <condition>gs.hasRole('x_illu2_illumio.illumio_user') &amp;&amp; current.known_to_pce == "unknown" &amp;&amp; current.duplicate==false</condition>
         <form_action>true</form_action>
         <form_button>true</form_button>
+        <form_button_icon/>
         <form_button_v2>false</form_button_v2>
         <form_context_menu>false</form_context_menu>
         <form_link>false</form_link>
@@ -21,6 +22,7 @@
         <list_action>false</list_action>
         <list_banner_button>false</list_banner_button>
         <list_button>false</list_button>
+        <list_button_icon/>
         <list_choice>false</list_choice>
         <list_context_menu>false</list_context_menu>
         <list_link>false</list_link>
@@ -158,7 +160,9 @@
         gs.error("[Sync to PCE]Exception in Sync to PCE:" + ex);
     }
 }]]></script>
+        <show_form_icon_only>false</show_form_icon_only>
         <show_insert>true</show_insert>
+        <show_list_icon_only>false</show_list_icon_only>
         <show_multiple_update>false</show_multiple_update>
         <show_query>false</show_query>
         <show_update>true</show_update>

@@ -2,6 +2,7 @@
     <sys_ui_section caption="" section_id="ce4bbb3b97418a50b7daf896f053af27" sys_domain="global" table="x_illu2_illumio_illumio_critical_label_group_configuration" version="3" view="">
         <sys_ui_annotation action="INSERT_OR_UPDATE">
             <is_plain_text>false</is_plain_text>
+            <name/>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2024-04-09 10:58:15</sys_created_on>
             <sys_id>a0a8e70c472d4e1066773e7d826d4364</sys_id>

@@ -5,14 +5,14 @@
         <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <element label="Href" mandatory="true" max_length="100" name="href" type="string"/>
         <index name="index">
-            <element name="href"/>
+            <element name="key"/>
+            <element name="value"/>
         </index>
         <index name="index2">
             <element name="illumio_pce_configuration"/>
         </index>
         <index name="index3">
-            <element name="key"/>
-            <element name="value"/>
+            <element name="href"/>
         </index>
     </element>
 </database>

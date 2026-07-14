@@ -4,6 +4,7 @@
         <can_delegate>true</can_delegate>
         <description/>
         <elevated_privilege>false</elevated_privilege>
+        <federated_id>QiewSIi8CInU4RTvgur5GeIkH/aRNM8wGuMKg/tjlFc=</federated_id>
         <grantable>true</grantable>
         <includes_roles/>
         <name>x_illu2_illumio.mid_server_user</name>
