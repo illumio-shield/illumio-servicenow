@@ -39,6 +39,7 @@
         <next_element/>
         <primary>false</primary>
         <read_only>true</read_only>
+        <read_only_option>client_script_modifiable</read_only_option>
         <read_roles/>
         <reference/>
         <reference_cascade_rule/>
@@ -57,8 +58,8 @@
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_dictionary_x_illu2_illumio_illumio_pce_label_group_details_label_path</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-06-01 09:22:08</sys_updated_on>
+        <sys_updated_by>koushik.choudhury</sys_updated_by>
+        <sys_updated_on>2026-07-14 13:14:38</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

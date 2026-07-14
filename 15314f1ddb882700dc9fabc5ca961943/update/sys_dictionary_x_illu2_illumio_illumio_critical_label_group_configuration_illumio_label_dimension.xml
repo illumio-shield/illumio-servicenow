@@ -39,6 +39,7 @@
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
+        <read_only_option/>
         <read_roles/>
         <reference display_value="" name="x_illu2_illumio_illumio_label_dimension">x_illu2_illumio_illumio_label_dimension</reference>
         <reference_cascade_rule/>

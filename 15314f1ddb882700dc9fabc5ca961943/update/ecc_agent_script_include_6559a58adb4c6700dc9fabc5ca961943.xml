@@ -286,15 +286,4 @@ IllumioHTTPClient.prototype = {
         <sys_updated_by>crest.data</sys_updated_by>
         <sys_updated_on>2025-05-08 10:39:20</sys_updated_on>
     </ecc_agent_script_include>
-    <sys_es_latest_script action="INSERT_OR_UPDATE">
-        <id>6559a58adb4c6700dc9fabc5ca961943</id>
-        <sys_created_by>hetang.modi</sys_created_by>
-        <sys_created_on>2025-04-09 10:15:18</sys_created_on>
-        <sys_id>0e1bc72d83f0ae10dec3f4c6feaad3f3</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>hetang.modi</sys_updated_by>
-        <sys_updated_on>2025-04-09 10:15:18</sys_updated_on>
-        <table>ecc_agent_script_include</table>
-        <use_es_latest>false</use_es_latest>
-    </sys_es_latest_script>
 </record_update>

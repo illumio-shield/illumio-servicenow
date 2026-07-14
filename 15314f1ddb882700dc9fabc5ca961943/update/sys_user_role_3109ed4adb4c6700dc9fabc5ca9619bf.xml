@@ -4,6 +4,7 @@
         <can_delegate>true</can_delegate>
         <description>The normal user of Illumio app</description>
         <elevated_privilege>false</elevated_privilege>
+        <federated_id/>
         <grantable>true</grantable>
         <includes_roles/>
         <name>x_illu2_illumio.illumio_user</name>
