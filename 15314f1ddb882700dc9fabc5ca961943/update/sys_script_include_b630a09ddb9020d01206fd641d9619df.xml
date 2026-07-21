@@ -228,8 +228,13 @@ IllumioUtils.prototype = {
                 var countGa = new GlideAggregate('x_illu2_illumio_illumio_pce_label_group_details');
                 countGa.addQuery("illumio_pce_configuration", configSysIds[configIndex]);
                 countGa.groupBy("label_group_name");
+				countGa.addAggregate('COUNT');
                 countGa.query();
-                countObject[configSysIds[configIndex]] = countGa.getRowCount();
+                var count = 0;
+				while (countGa.next()) {
+					count++;
+				}
+				countObject[configSysIds[configIndex]] = count;
             }
         } catch (err) {
             gs.error("Error while fetching the count of labels", err);
@@ -664,8 +669,6 @@ IllumioUtils.prototype = {
      */
     queryCaseSensitiveGr: function(tableGr, key, value, targetField) {
         while (tableGr.next()) {
-            // NOTE: The log can likely be removed. Mostly probably was used for debugging.
-            gs.info("Key in the IllumioUtils QueryCaseSensitive" + key);
             if (tableGr.getValue(key) == value) {
                 return {
                     found: true,
@@ -1968,14 +1971,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>445</sys_mod_count>
+        <sys_mod_count>448</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-04 17:35:37</sys_updated_on>
+        <sys_updated_on>2026-07-20 15:45:34</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>
