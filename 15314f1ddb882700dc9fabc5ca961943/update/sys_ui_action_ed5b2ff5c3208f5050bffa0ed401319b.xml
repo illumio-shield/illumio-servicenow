@@ -42,23 +42,25 @@
         <condition/>
         <form_action>true</form_action>
         <form_button>true</form_button>
+        <form_button_icon/>
         <form_button_v2>false</form_button_v2>
         <form_context_menu>false</form_context_menu>
         <form_link>false</form_link>
         <form_menu_button_v2>false</form_menu_button_v2>
         <form_style/>
         <format_for_configurable_workspace>false</format_for_configurable_workspace>
-        <hint>abc hint</hint>
+        <hint>Shows all matching workloads</hint>
         <isolate_script>true</isolate_script>
         <list_action>true</list_action>
         <list_banner_button>false</list_banner_button>
         <list_button>false</list_button>
+        <list_button_icon/>
         <list_choice>false</list_choice>
         <list_context_menu>true</list_context_menu>
         <list_link>false</list_link>
         <list_save_with_form_button>false</list_save_with_form_button>
         <list_style/>
-        <messages>abc message</messages>
+        <messages>Shows all matching workloads</messages>
         <name>Show Matching Workloads</name>
         <onclick>onClick()</onclick>
         <order>100</order>
@@ -94,7 +96,9 @@
       // Redirect to filtered workloads list
       action.setRedirectURL("x_illu2_illumio_illumio_pce_workload_list.do?sysparm_query=sys_idIN" + workloadIds.join(","));
   })(current, action, gs); ]]></script>
+        <show_form_icon_only>false</show_form_icon_only>
         <show_insert>false</show_insert>
+        <show_list_icon_only>false</show_list_icon_only>
         <show_multiple_update>false</show_multiple_update>
         <show_query>false</show_query>
         <show_update>true</show_update>
@@ -104,7 +108,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>ed5b2ff5c3208f5050bffa0ed401319b</sys_id>
-        <sys_mod_count>17</sys_mod_count>
+        <sys_mod_count>18</sys_mod_count>
         <sys_name>Show Matching Workloads</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -112,7 +116,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_ui_action_ed5b2ff5c3208f5050bffa0ed401319b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-05-14 10:49:42</sys_updated_on>
+        <sys_updated_on>2026-07-22 13:39:04</sys_updated_on>
         <table>x_illu2_illumio_illumio_sync_filter</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
