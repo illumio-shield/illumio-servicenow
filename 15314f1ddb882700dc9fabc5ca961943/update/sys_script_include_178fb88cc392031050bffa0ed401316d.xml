@@ -15,10 +15,10 @@ IllumioTestUtils.prototype = {
 
     constants: function() {
         return {
-            pceConfigSysId: 'b66cb0fcc3c68b1050bffa0ed401318d',
+            pceConfigSysId: 'f926c944c316031050bffa0ed40131aa',
             table: 'cmdb_ci_server',
-            prefix: '202607141547',
-            seedCount: 20,
+            prefix: '202607271048',
+            seedCount: 20000,
             values: [
                 { field: 'os',          data: ['Solaris', 'Windows', 'Linux', 'AIX'] },
                 { field: 'environment', data: ['QA', 'Production', 'DR', 'Staging'] },
@@ -719,13 +719,13 @@ IllumioTestUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-07-20 14:11:14</sys_created_on>
         <sys_id>178fb88cc392031050bffa0ed401316d</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>IllumioTestUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_178fb88cc392031050bffa0ed401316d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-20 15:45:33</sys_updated_on>
+        <sys_updated_on>2026-07-27 05:18:48</sys_updated_on>
     </sys_script_include>
 </record_update>

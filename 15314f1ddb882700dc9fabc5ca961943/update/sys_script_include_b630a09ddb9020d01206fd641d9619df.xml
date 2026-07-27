@@ -1314,11 +1314,11 @@ IllumioUtils.prototype = {
             var filterSysId = syncFilterGr.getUniqueValue();
             gs.info('[getEligibleWorkloadSysIdsByConfig] Processing Sync Filter: ' + filterSysId);
 
-            var filterResult = this.getWorkloadsBySyncFilter(filterSysId);
+            var filterResult = this.getWorkloadsBySyncFilter(filterSysId, false, true);
 
-            if (filterResult.success) {
-                for (var i = 0; i < filterResult.workloads.length; i++) {
-                    allSysIds[filterResult.workloads[i].sys_id] = true;
+            if (filterResult.success && filterResult.sysIds) {
+                for (var i = 0; i < filterResult.sysIds.length; i++) {
+                    allSysIds[filterResult.sysIds[i]] = true;
                 }
             }
         }
@@ -1330,13 +1330,48 @@ IllumioUtils.prototype = {
     },
 
     /**
+     * Generate CSV content for workloads matching active inclusion sync filters
+     * for a PCE Configuration. Queries workloads in batches to avoid IN clause limits.
+     * @param {String} configSysId sys_id of the PCE Configuration
+     * @param {Array} sysIds Array of workload sys_ids to include
+     * @returns {String} CSV string with headers and workload data
+     */
+    generateWorkloadCsv: function(sysIds) {
+        var CSV_BATCH_SIZE = 500;
+        var headers = ['sys_id', 'hostname', 'source_table', 'known_to_pce', 'conflicts', 'pce_workload_href', 'servicenow_cmdb_identifier'];
+        var lines = [headers.join(',')];
+
+        var chunks = this._chunkArray(sysIds, CSV_BATCH_SIZE);
+        for (var c = 0; c < chunks.length; c++) {
+            var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+            gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+            gr.query();
+
+            while (gr.next()) {
+                var row = [];
+                for (var h = 0; h < headers.length; h++) {
+                    var val = gr.getValue(headers[h]) || '';
+                    if (val.indexOf(',') !== -1 || val.indexOf('"') !== -1) {
+                        val = '"' + val.replace(/"/g, '""') + '"';
+                    }
+                    row.push(val);
+                }
+                lines.push(row.join(','));
+            }
+        }
+
+        return lines.join('\n');
+    },
+
+    /**
      * Get workloads matching a Sync Filter's rules (Label + Workload Field filters)
      * Logic: AND within each group, OR across groups
      * @param {String} syncFilterSysId sys_id of the Sync Filter record
      * @param {Boolean} skipActiveCheck Optional - if true, skips the active check (for preview)
-     * @returns {Object} { success: Boolean, workloads: Array, message: String }
+     * @param {Boolean} sysIdsOnly Optional - if true, returns sysIds array instead of full workload objects
+     * @returns {Object} { success, workloads, message } or { success, sysIds, message } when sysIdsOnly=true
      */
-    getWorkloadsBySyncFilter: function(syncFilterSysId, skipActiveCheck) {
+    getWorkloadsBySyncFilter: function(syncFilterSysId, skipActiveCheck, sysIdsOnly) {
         var result = {
             success: false,
             workloads: [],
@@ -1421,16 +1456,20 @@ IllumioUtils.prototype = {
                 }
             }
 
-            // Convert to array and fetch full workload records
             var finalSysIds = Object.keys(finalWorkloadSysIds);
             gs.info('[getWorkloadsBySyncFilter] Total unique workloads matched: ' + finalSysIds.length);
 
-            if (finalSysIds.length > 0) {
-                result.workloads = this._fetchWorkloadRecords(finalSysIds);
+            if (sysIdsOnly) {
+                result.sysIds = finalSysIds;
+                result.success = true;
+                result.message = 'Found ' + finalSysIds.length + ' matching workloads';
+            } else {
+                if (finalSysIds.length > 0) {
+                    result.workloads = this._fetchWorkloadRecords(finalSysIds);
+                }
+                result.success = true;
+                result.message = 'Found ' + result.workloads.length + ' matching workloads';
             }
-
-            result.success = true;
-            result.message = 'Found ' + result.workloads.length + ' matching workloads';
 
         } catch (ex) {
             gs.error('[getWorkloadsBySyncFilter] Exception: ' + ex);
@@ -1488,6 +1527,20 @@ IllumioUtils.prototype = {
             }
         }
         return result;
+    },
+
+    /**
+     * Split an array into chunks of a given size
+     * @param {Array} arr Array to split
+     * @param {Number} size Maximum chunk size
+     * @returns {Array} Array of arrays
+     */
+    _chunkArray: function(arr, size) {
+        var chunks = [];
+        for (var i = 0; i < arr.length; i += size) {
+            chunks.push(arr.slice(i, i + size));
+        }
+        return chunks;
     },
 
     /**
@@ -1649,17 +1702,20 @@ IllumioUtils.prototype = {
                 return [];
             }
 
-            // Find workloads linked to matching CIs
+            // Find workloads linked to matching CIs (batched to avoid IN clause limits)
             var tableWorkloads = [];
-            var wlGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
-            wlGr.addQuery('illumio_pce_configuration', pceConfigId);
-            wlGr.addQuery('servicenow_cmdb_identifier', 'IN', matchingCISysIds.join(','));
-            wlGr.addQuery('source_table', tableName);
-            wlGr.addQuery('duplicate', false);
-            wlGr.query();
+            var ciChunks = this._chunkArray(matchingCISysIds, 500);
+            for (var c = 0; c < ciChunks.length; c++) {
+                var wlGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+                wlGr.addQuery('illumio_pce_configuration', pceConfigId);
+                wlGr.addQuery('servicenow_cmdb_identifier', 'IN', ciChunks[c].join(','));
+                wlGr.addQuery('source_table', tableName);
+                wlGr.addQuery('duplicate', false);
+                wlGr.query();
 
-            while (wlGr.next()) {
-                tableWorkloads.push(wlGr.getUniqueValue());
+                while (wlGr.next()) {
+                    tableWorkloads.push(wlGr.getUniqueValue());
+                }
             }
 
             // AND: intersect with previous results
@@ -1913,12 +1969,15 @@ IllumioUtils.prototype = {
      */
     _fetchWorkloadRecords: function(sysIds) {
         var workloads = [];
-        var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
-        gr.addQuery('sys_id', 'IN', sysIds.join(','));
-        gr.query();
+        var chunks = this._chunkArray(sysIds, 500);
+        for (var c = 0; c < chunks.length; c++) {
+            var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+            gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+            gr.query();
 
-        while (gr.next()) {
-            workloads.push(this._workloadToObject(gr));
+            while (gr.next()) {
+                workloads.push(this._workloadToObject(gr));
+            }
         }
         return workloads;
     },
@@ -1952,14 +2011,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>450</sys_mod_count>
+        <sys_mod_count>451</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-22 14:32:38</sys_updated_on>
+        <sys_updated_on>2026-07-27 05:54:01</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

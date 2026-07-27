@@ -77,9 +77,12 @@ IllumioAutoSyncWithPCE.prototype = {
             var syncFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configSysId, 'inclusion');
             if (syncFilterResult.hasFilter) {
                 var workloadsBeforeFilter = sysIds.length;
-                var eligibleSysIds = syncFilterResult.sysIds;
+                var eligibleSet = {};
+                for (var e = 0; e < syncFilterResult.sysIds.length; e++) {
+                    eligibleSet[syncFilterResult.sysIds[e]] = true;
+                }
                 sysIds = sysIds.filter(function(id) {
-                    return eligibleSysIds.indexOf(id) !== -1;
+                    return eligibleSet[id] === true;
                 });
                 var syncFilterLog = 'Workloads with conflicts: ' + workloadsBeforeFilter + '. Eligible workloads after sync filter: ' + sysIds.length;
                 gs.info('[IllumioAutoSyncWithPCE] ' + syncFilterLog);
@@ -168,10 +171,14 @@ IllumioAutoSyncWithPCE.prototype = {
                 var wlLimitObject = thresholdLimit.getThresholdLimit(configSysId);
                 var deleteLimitExceeded = false;
 
+                /* Deletion sync filter — disabled for v2.5.2 release.
+                   Re-enable when deletion filters are fully tested and the
+                   'deletion' choice is restored on the sync filter type field.
+
+                
                 var retiredWorkloadsObject = {};
                 var vensToUnpair = [];
 
-                // Apply Deletion Sync Filter if one exists for this PCE Configuration
                 if (!cancelJobOnLimitExceed) {
                     var deletionFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configSysId, 'deletion');
 
@@ -234,6 +241,7 @@ IllumioAutoSyncWithPCE.prototype = {
                         illumioScheduledJobsGr.update();
                     }
                 }
+                */
 
                 // log the info message
                 if (deleteLimitExceeded) {
@@ -353,8 +361,9 @@ IllumioAutoSyncWithPCE.prototype = {
                         "x_illu2_illumio.bulk_operation_batch_size",
                         1000
                     ),
-                    workloads_to_delete: JSON.stringify(retiredWorkloadsObject),
-                    vens_to_unpair: JSON.stringify(vensToUnpair),
+                    // Disabled for v2.5.2 — deletion sync filters not shipped this release
+                    // workloads_to_delete: JSON.stringify(retiredWorkloadsObject),
+                    // vens_to_unpair: JSON.stringify(vensToUnpair),
                     enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
                     retry_params: JSON.stringify(pceConfig.retry_params)
                 };
@@ -462,14 +471,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>353</sys_mod_count>
+        <sys_mod_count>355</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-23 16:03:46</sys_updated_on>
+        <sys_updated_on>2026-07-27 05:54:01</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>f14ad3f6db34274033c1a026ca96192e</id>

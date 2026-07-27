@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}
+]]></client_script_v2>
+        <comments/>
+        <condition/>
+        <form_action>false</form_action>
+        <form_button>false</form_button>
+        <form_button_icon/>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_button_icon/>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Export Matching Workloads for Filter</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[(function executeExportMatchingWorkloadsForFilter(current, action, gs) {
+    var syncFilterSysId = current.getUniqueValue();
+    var tableName = current.getTableName();
+    var redirectUrl = tableName + '.do?sys_id=' + syncFilterSysId;
+
+    if (gs.nil(syncFilterSysId)) {
+        gs.addErrorMessage("Unable to determine Sync Filter.");
+        action.setRedirectURL(redirectUrl);
+        return;
+    }
+
+    try {
+        var utils = new IllumioUtils();
+        var result = utils.getWorkloadsBySyncFilter(syncFilterSysId, true, true); // skipActiveCheck, sysIdsOnly
+
+        if (!result.success) {
+            gs.addErrorMessage("Error: " + result.message);
+            action.setRedirectURL(redirectUrl);
+            return;
+        }
+
+        var sysIds = result.sysIds;
+
+        if (!sysIds || sysIds.length === 0) {
+            gs.addInfoMessage("No workloads match the current filter criteria.");
+            action.setRedirectURL(redirectUrl);
+            return;
+        }
+
+        var csvContent = utils.generateWorkloadCsv(sysIds);
+
+        var filterName = current.getValue('name') || 'sync_filter';
+        var timestamp = new GlideDateTime().getDisplayValue().replace(/[:\s]/g, '_');
+        var fileName = 'matching_workloads_' + filterName + '_' + timestamp + '.csv';
+
+        var targetGr = new GlideRecord(tableName);
+        targetGr.get(syncFilterSysId);
+
+        var sa = new GlideSysAttachment();
+
+        var existingAttachments = sa.getAttachments(tableName, syncFilterSysId);
+        while (existingAttachments.next()) {
+            if ((existingAttachments.getValue('file_name') || '').indexOf('matching_workloads_') === 0) {
+                sa.deleteAttachment(existingAttachments.getUniqueValue());
+            }
+        }
+
+        var attachmentSysId = sa.write(targetGr, fileName, 'text/csv', csvContent);
+
+        if (gs.nil(attachmentSysId)) {
+            gs.error('[ExportMatchingWorkloadsForFilter] GlideSysAttachment.write returned nil. FileName: ' + fileName + ', CSV length: ' + csvContent.length);
+            gs.addErrorMessage("Failed to generate CSV export. Check application logs for details.");
+        } else {
+            gs.addInfoMessage(sysIds.length + " matching workloads exported. Download the CSV from the attachments on this record.");
+        }
+    } catch (ex) {
+        gs.error('[ExportMatchingWorkloadsForFilter] Exception: ' + ex);
+        gs.addErrorMessage("Error exporting workloads: " + ex);
+    }
+
+    action.setRedirectURL(redirectUrl);
+})(current, action, gs);
+]]></script>
+        <show_form_icon_only>false</show_form_icon_only>
+        <show_insert>true</show_insert>
+        <show_list_icon_only>false</show_list_icon_only>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-07-27 07:42:08</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>04a9a7c6c352431050bffa0ed4013148</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Export Matching Workloads for Filter</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_action_04a9a7c6c352431050bffa0ed4013148</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-07-27 07:42:08</sys_updated_on>
+        <table/>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>
