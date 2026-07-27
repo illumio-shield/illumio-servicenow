@@ -17,14 +17,14 @@ IllumioTestUtils.prototype = {
         return {
             pceConfigSysId: 'f926c944c316031050bffa0ed40131aa',
             table: 'cmdb_ci_server',
-            prefix: '202607271048',
-            seedCount: 20000,
+            prefix: '202607271619',
+            seedCount: 8000,
             values: [
-                { field: 'os',          data: ['Solaris', 'Windows', 'Linux', 'AIX'] },
-                { field: 'environment', data: ['QA', 'Production', 'DR', 'Staging'] },
-                { field: 'os_version',  data: ['11.4', 'Server 2019', 'Debian 12', '7.3'] },
-                { field: 'os_domain',   data: ['corp.apac', 'corp.eu', 'corp.central', 'corp.latam'] },
-                { field: 'cpu_type',    data: ['SPARC T8', 'Intel i9', 'ARM Neoverse', 'IBM POWER10'] }
+              { field: 'os',          data: ['HP-UX', 'FreeBSD', 'z/OS', 'macOS'] },
+              { field: 'environment', data: ['Development', 'UAT', 'Pre-Prod', 'Sandbox'] },
+              { field: 'os_version',  data: ['11i v3', '14.1', '2.5', 'Ventura 13.4'] },
+              { field: 'os_domain',   data: ['corp.na', 'corp.mena', 'corp.anz', 'corp.nordic'] },
+              { field: 'cpu_type',    data: ['PA-RISC', 'AMD EPYC', 'IBM z16', 'Apple M2'] }
             ]
         };
     },
@@ -719,13 +719,13 @@ IllumioTestUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-07-20 14:11:14</sys_created_on>
         <sys_id>178fb88cc392031050bffa0ed401316d</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>IllumioTestUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_178fb88cc392031050bffa0ed401316d</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-27 05:18:48</sys_updated_on>
+        <sys_updated_by>koushik.choudhury</sys_updated_by>
+        <sys_updated_on>2026-07-27 10:52:01</sys_updated_on>
     </sys_script_include>
 </record_update>
