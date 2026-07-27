@@ -37,15 +37,4 @@ var IOUtils  = Packages.org.apache.commons.io.IOUtils;
         <sys_updated_by>hetang.modi</sys_updated_by>
         <sys_updated_on>2025-01-29 08:09:29</sys_updated_on>
     </ecc_agent_script_include>
-    <sys_es_latest_script action="INSERT_OR_UPDATE">
-        <id>962be58adb4c6700dc9fabc5ca96199e</id>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-11-21 09:28:04</sys_created_on>
-        <sys_id>034b8774db8e5e502fcecafc139619be</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-21 09:28:04</sys_updated_on>
-        <table>ecc_agent_script_include</table>
-        <use_es_latest>false</use_es_latest>
-    </sys_es_latest_script>
 </record_update>

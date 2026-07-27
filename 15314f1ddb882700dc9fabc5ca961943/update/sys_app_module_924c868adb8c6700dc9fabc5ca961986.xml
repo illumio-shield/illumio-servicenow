@@ -19,6 +19,8 @@
         <report/>
         <require_confirmation>false</require_confirmation>
         <roles>x_illu2_illumio.illumio_user</roles>
+        <route/>
+        <screen/>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 09:57:55</sys_created_on>
@@ -37,6 +39,7 @@
         <timeline_page/>
         <title>Configuration</title>
         <uncancelable>false</uncancelable>
+        <ux_list/>
         <view_name/>
         <window_name/>
     </sys_app_module>

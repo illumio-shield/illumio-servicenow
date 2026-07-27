@@ -66,7 +66,7 @@
         <update_guid_history>023874d9cfe80b50e2496968f31c9709:1557622601,6a1834d9b2e80b50e147c9fd59af4fae:1056269269</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Label Sync Filter Items">08e8bc1dc3e80b5050bffa0ed40131ac</sys_audit_delete>
+        <sys_audit_delete display_value="">08e8bc1dc3e80b5050bffa0ed40131ac</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-04-28 11:04:35</sys_created_on>

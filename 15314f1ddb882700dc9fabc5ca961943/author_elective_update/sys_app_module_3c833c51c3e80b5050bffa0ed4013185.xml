@@ -66,7 +66,7 @@
         <update_guid_history>fac6fcd5a6e80b5002f6a3cb3f9aed0e:-1686813606,6b16f0d572e80b500020f3bf89846c62:1604967789,a9e5f8952fe80b501796e009e3265d47:-1141701132,4834b0d103e80b50a6d7f2560cc0886a:-289297666,a2d3f491b8e80b50bece96468707b81d:-493980485</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Sync Rules">80e8bc1dc3e80b5050bffa0ed40131a0</sys_audit_delete>
+        <sys_audit_delete display_value="">80e8bc1dc3e80b5050bffa0ed40131a0</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-04-28 11:04:35</sys_created_on>

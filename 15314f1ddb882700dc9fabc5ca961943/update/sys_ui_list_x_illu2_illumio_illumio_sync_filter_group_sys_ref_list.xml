@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_illu2_illumio_illumio_sync_filter_group" version="2" view="sys_ref_list">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>name</element>
+            <list_id display_value="x_illu2_illumio_illumio_sync_filter_group" element="NULL" name="x_illu2_illumio_illumio_sync_filter_group" parent="NULL" relationship="NULL" sys_domain="global" view="88af8252470222108ab8cc02d16d43a7">456718da479683508ab8cc02d16d4346</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>koushik.choudhury.nonadmin</sys_created_by>
+            <sys_created_on>2026-07-27 11:02:05</sys_created_on>
+            <sys_id>c16718da479683508ab8cc02d16d4347</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>koushik.choudhury.nonadmin</sys_updated_by>
+            <sys_updated_on>2026-07-27 11:02:05</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_illu2_illumio_illumio_sync_filter_group</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>koushik.choudhury.nonadmin</sys_created_by>
+            <sys_created_on>2026-07-27 11:02:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>456718da479683508ab8cc02d16d4346</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_illu2_illumio_illumio_sync_filter_group</sys_name>
+            <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+            <sys_update_name>sys_ui_list_x_illu2_illumio_illumio_sync_filter_group_sys_ref_list</sys_update_name>
+            <sys_updated_by>koushik.choudhury.nonadmin</sys_updated_by>
+            <sys_updated_on>2026-07-27 11:02:05</sys_updated_on>
+            <sys_user/>
+            <view display_value="Reference List" name="sys_ref_list">88af8252470222108ab8cc02d16d43a7</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

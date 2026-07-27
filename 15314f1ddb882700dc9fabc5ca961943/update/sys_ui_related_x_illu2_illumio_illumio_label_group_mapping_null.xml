@@ -2,6 +2,7 @@
     <sys_ui_related sys_domain="global" table="x_illu2_illumio_illumio_label_group_mapping" version="2" view="">
         <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
             <filter/>
+            <group_by_field/>
             <list_id display_value="Illumio Label Group Mapping - Default view" name="x_illu2_illumio_illumio_label_group_mapping" related_list="NULL" sys_domain="global" view="Default view">15512003db4c64901206fd641d961956</list_id>
             <order_by/>
             <position>0</position>
