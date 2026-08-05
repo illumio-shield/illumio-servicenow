@@ -18,7 +18,6 @@ IllumioAutoSyncWithPCE.prototype = {
         this.unManagedWorkloadsList = [];
         this.unknownWorkloadsList = [];
         this.payloadSysIds = [];
-        this.workloadsToDelete = 0;
         this.maxSizeOfWorkloadPayload = parseInt(gs.getProperty("x_illu2_illumio.max_workloads_in_each_payload_for_autosync", 10000));
     },
 
@@ -169,93 +168,6 @@ IllumioAutoSyncWithPCE.prototype = {
                 // get workload limit object
                 var thresholdLimit = new IllumioThresholdLimit();
                 var wlLimitObject = thresholdLimit.getThresholdLimit(configSysId);
-                var deleteLimitExceeded = false;
-
-                /* Deletion sync filter — disabled for v2.5.2 release.
-                   Re-enable when deletion filters are fully tested and the
-                   'deletion' choice is restored on the sync filter type field.
-
-                
-                var retiredWorkloadsObject = {};
-                var vensToUnpair = [];
-
-                if (!cancelJobOnLimitExceed) {
-                    var deletionFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configSysId, 'deletion');
-
-                    if (deletionFilterResult.hasFilter && deletionFilterResult.sysIds && deletionFilterResult.sysIds.length > 0) {
-                        var deletionCandidateGr = new GlideRecordSecure("x_illu2_illumio_illumio_pce_workload");
-                        deletionCandidateGr.addQuery('sys_id', 'IN', deletionFilterResult.sysIds.join(','));
-                        deletionCandidateGr.query();
-
-                        var syncFilterDeleteCount = 0;
-                        var syncFilterUnpairCount = 0;
-                        var syncFilterSkippedCount = 0;
-
-                        while (deletionCandidateGr.next()) {
-                            var candidateSysId = deletionCandidateGr.getUniqueValue();
-                            var knownToPce = deletionCandidateGr.getValue("known_to_pce");
-                            var pceHref = deletionCandidateGr.getValue("pce_workload_href");
-
-                            if (knownToPce !== "managed" && knownToPce !== "unmanaged") {
-                                syncFilterSkippedCount++;
-                                continue;
-                            }
-
-                            if (gs.nil(pceHref)) {
-                                syncFilterSkippedCount++;
-                                continue;
-                            }
-
-                            if (!wlLimitObject["limitEnabled"] || !wlLimitObject["isLimitEnabled"]["delete"] || wlLimitObject["wlLimit"]["delete"] > 0) {
-                                this.workloadsToDelete++;
-                                wlLimitObject["wlLimit"]["delete"] -= 1;
-
-                                if (knownToPce === "managed") {
-                                    var candidateVenHref = deletionCandidateGr.getValue("ven_href");
-                                    if (!gs.nil(candidateVenHref)) {
-                                        vensToUnpair.push(candidateVenHref);
-                                        syncFilterUnpairCount++;
-                                    } else {
-                                        syncFilterSkippedCount++;
-                                    }
-                                } else {
-                                    if (!retiredWorkloadsObject.hasOwnProperty(pceHref)) {
-                                        retiredWorkloadsObject[pceHref] = candidateSysId;
-                                        syncFilterDeleteCount++;
-                                    }
-                                }
-                            } else {
-                                deleteLimitExceeded = true;
-                                if (wlLimitObject.cancelJobOnLimitExceed) {
-                                    cancelJobOnLimitExceed = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        var syncFilterDeleteLog = 'Deletion sync filter: ' + syncFilterDeleteCount + ' workload(s) marked for deletion' +
-                            ', ' + syncFilterUnpairCount + ' workload(s) marked for unpair' +
-                            (syncFilterSkippedCount > 0 ? ', ' + syncFilterSkippedCount + ' skipped (not known to PCE or missing href/ven)' : '');
-                        gs.info('[IllumioAutoSyncWithPCE] ' + syncFilterDeleteLog);
-                        illumioScheduledJobsGr.logs += '\n[' + new Date(new GlideDateTime().getNumericValue()).toISOString() + '] ' + syncFilterDeleteLog;
-                        illumioScheduledJobsGr.update();
-                    }
-                }
-                */
-
-                // log the info message
-                if (deleteLimitExceeded) {
-                    if (!cancelJobOnLimitExceed) {
-                        if (thresholdLimitLog)
-                            thresholdLimitLog += " and one or more workloads won't be deleted as workload deletion limit has exceeded";
-                        else
-                            thresholdLimitLog = "One or more workloads won't be deleted as workload deletion limit has exceeded";
-                        gs.info("One or more workloads won't be deleted as workload deletion limit has exceeded for Illumio PCE Configuration with sys_id " + configSysId);
-                    } else {
-                        thresholdLimitLog = "Cancelled the job as workload deletion limit has exceeded";
-                        gs.info(thresholdLimitLog + " for Illumio PCE Configuration with sys_id " + configSysId);
-                    }
-                }
             }
 
 
@@ -285,7 +197,7 @@ IllumioAutoSyncWithPCE.prototype = {
             }
 
             // check if there is unknown or inconsistent or retired workload
-            if (totalRecords == 0 && this.workloadsToDelete == 0) {
+            if (totalRecords == 0) {
                 // Table is empty
                 gs.info("Auto synchronization : No unknown or inconsistent or retired workload found.");
                 illumioScheduledJobsGr.logs +=
@@ -317,7 +229,7 @@ IllumioAutoSyncWithPCE.prototype = {
                     this.unManagedWorkloadsList.length +
                     this.unknownWorkloadsList.length ==
                     0 &&
-                    this.payloadSysIds.length == 0 && this.workloadsToDelete == 0
+                    this.payloadSysIds.length == 0
                 ) {
                     gs.info("Auto synchronization : No unknown or inconsistent workload found for PCE Configuration {0}.", configGr.getValue("name"));
                     illumioScheduledJobsGr.logs +=
@@ -361,9 +273,6 @@ IllumioAutoSyncWithPCE.prototype = {
                         "x_illu2_illumio.bulk_operation_batch_size",
                         1000
                     ),
-                    // Disabled for v2.5.2 — deletion sync filters not shipped this release
-                    // workloads_to_delete: JSON.stringify(retiredWorkloadsObject),
-                    // vens_to_unpair: JSON.stringify(vensToUnpair),
                     enable_pce_mid_proxy: pceConfig.enable_pce_mid_proxy,
                     retry_params: JSON.stringify(pceConfig.retry_params)
                 };
@@ -433,7 +342,7 @@ IllumioAutoSyncWithPCE.prototype = {
             if (
                 (this.managedWorkloadsList.length +
                     this.unManagedWorkloadsList.length +
-                    this.unknownWorkloadsList.length + this.workloadsToDelete) !=
+                    this.unknownWorkloadsList.length) !=
                 0
             ) {
                 var grPayload = new GlideRecordSecure(
@@ -457,7 +366,6 @@ IllumioAutoSyncWithPCE.prototype = {
                     this.managedWorkloadsList = [];
                     this.unManagedWorkloadsList = [];
                     this.unknownWorkloadsList = [];
-                    this.workloadsToDelete = 0;
                     objCounter = 0;
                 }
             }
@@ -471,14 +379,14 @@ IllumioAutoSyncWithPCE.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-10-01 06:20:45</sys_created_on>
         <sys_id>f14ad3f6db34274033c1a026ca96192e</sys_id>
-        <sys_mod_count>355</sys_mod_count>
+        <sys_mod_count>356</sys_mod_count>
         <sys_name>IllumioAutoSyncWithPCE</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_f14ad3f6db34274033c1a026ca96192e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-27 05:54:01</sys_updated_on>
+        <sys_updated_on>2026-08-03 12:09:38</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>f14ad3f6db34274033c1a026ca96192e</id>

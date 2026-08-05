@@ -1338,19 +1338,48 @@ IllumioUtils.prototype = {
      */
     generateWorkloadCsv: function(sysIds) {
         var CSV_BATCH_SIZE = 500;
-        var headers = ['sys_id', 'hostname', 'source_table', 'known_to_pce', 'conflicts', 'pce_workload_href', 'servicenow_cmdb_identifier'];
+        var headers = ['sys_id', 'hostname', 'source_table', 'known_to_pce', 'conflicts', 'pce_workload_href', 'servicenow_cmdb_identifier', 'labels'];
         var lines = [headers.join(',')];
 
         var chunks = this._chunkArray(sysIds, CSV_BATCH_SIZE);
         for (var c = 0; c < chunks.length; c++) {
+            var chunkSysIds = chunks[c];
+            var chunkJoined = chunkSysIds.join(',');
+
+            var labelsMap = {};
+            try {
+                var labelGr = new GlideRecord('x_illu2_illumio_illumio_pce_workload_field_value');
+                labelGr.addQuery('illumio_pce_workload', 'IN', chunkJoined);
+                labelGr.query();
+                while (labelGr.next()) {
+                    var wlSysId = labelGr.getValue('illumio_pce_workload');
+                    var dimKey = labelGr.illumio_label_dimension.key + '';
+                    var labelVal = labelGr.getValue('pce_value') || labelGr.getValue('cmdb_value') || '';
+                    if (dimKey && labelVal) {
+                        if (!labelsMap[wlSysId]) {
+                            labelsMap[wlSysId] = [];
+                        }
+                        labelsMap[wlSysId].push(dimKey + ':' + labelVal);
+                    }
+                }
+            } catch (labelEx) {
+                gs.error('[generateWorkloadCsv] Error fetching labels for batch ' + c + ': ' + labelEx);
+            }
+
             var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
-            gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+            gr.addQuery('sys_id', 'IN', chunkJoined);
             gr.query();
 
             while (gr.next()) {
                 var row = [];
+                var workloadSysId = gr.getUniqueValue();
                 for (var h = 0; h < headers.length; h++) {
-                    var val = gr.getValue(headers[h]) || '';
+                    var val = '';
+                    if (headers[h] === 'labels') {
+                        val = labelsMap[workloadSysId] ? labelsMap[workloadSysId].join('; ') : '';
+                    } else {
+                        val = gr.getValue(headers[h]) || '';
+                    }
                     if (val.indexOf(',') !== -1 || val.indexOf('"') !== -1) {
                         val = '"' + val.replace(/"/g, '""') + '"';
                     }
@@ -1459,6 +1488,15 @@ IllumioUtils.prototype = {
             var finalSysIds = Object.keys(finalWorkloadSysIds);
             gs.info('[getWorkloadsBySyncFilter] Total unique workloads matched: ' + finalSysIds.length);
 
+            // Apply extent filter (known_to_pce) if configured on the Sync Filter
+            var extentValue = syncFilterGr.getValue('extent');
+            if (!gs.nil(extentValue) && finalSysIds.length > 0) {
+                var extentList = extentValue.split(',');
+                gs.info('[getWorkloadsBySyncFilter] Applying extent filter: ' + extentList.join(', '));
+                finalSysIds = this._filterWorkloadsByExtent(finalSysIds, extentList);
+                gs.info('[getWorkloadsBySyncFilter] Workloads after extent filter: ' + finalSysIds.length);
+            }
+
             if (sysIdsOnly) {
                 result.sysIds = finalSysIds;
                 result.success = true;
@@ -1527,6 +1565,22 @@ IllumioUtils.prototype = {
             }
         }
         return result;
+    },
+
+    _filterWorkloadsByExtent: function(sysIds, extentList) {
+        var filtered = [];
+        var chunks = this._chunkArray(sysIds, 500);
+        for (var c = 0; c < chunks.length; c++) {
+            var gr = new GlideRecord('x_illu2_illumio_illumio_pce_workload');
+            gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+            gr.addQuery('known_to_pce', 'IN', extentList.join(','));
+            gr.query();
+
+            while (gr.next()) {
+                filtered.push(gr.getUniqueValue());
+            }
+        }
+        return filtered;
     },
 
     /**
@@ -1987,6 +2041,203 @@ IllumioUtils.prototype = {
      * @param {GlideRecord} gr Workload GlideRecord
      * @returns {Object} Workload object
      */
+    prepareDeletionPayload: function(configSysId) {
+        var result = {
+            success: false,
+            message: '',
+            retiredWorkloads: {},
+            vensToUnpair: [],
+            deletionCount: 0,
+            unpairCount: 0,
+            skippedCount: 0,
+            thresholdExceeded: false,
+            cancelJob: false
+        };
+
+        try {
+            // Validate that a fresh deletion preview exists (≤30 minutes old)
+            var sa = new GlideSysAttachment();
+            var tableName = 'x_illu2_illumio_illumio_pce_conf';
+            var previewFound = false;
+            var attachments = sa.getAttachments(tableName, configSysId);
+            while (attachments.next()) {
+                var fileName = attachments.getValue('file_name') || '';
+                if (fileName.indexOf('DELETION-PREVIEW-') === 0) {
+                    var createdOn = new GlideDateTime(attachments.getValue('sys_created_on'));
+                    var now = new GlideDateTime();
+                    var ageMs = now.getNumericValue() - createdOn.getNumericValue();
+                    var ageMinutes = ageMs / 60000;
+                    if (ageMinutes <= 30) {
+                        previewFound = true;
+                    }
+                    break;
+                }
+            }
+
+            if (!previewFound) {
+                result.message = 'No recent deletion preview found. Please generate a deletion preview (no older than 30 minutes) before starting deletion.';
+                return result;
+            }
+
+            // Get eligible workloads from deletion sync filters
+            var syncFilterResult = this.getEligibleWorkloadSysIdsByConfig(configSysId, 'deletion');
+
+            if (!syncFilterResult.hasFilter) {
+                result.message = 'No active deletion sync filters configured for this PCE Configuration.';
+                return result;
+            }
+
+            if (!syncFilterResult.sysIds || syncFilterResult.sysIds.length === 0) {
+                result.message = 'No workloads match the active deletion sync filter criteria.';
+                return result;
+            }
+
+            // Get threshold limits
+            var thresholdLimit = new IllumioThresholdLimit();
+            var wlLimitObject = thresholdLimit.getThresholdLimit(configSysId);
+
+            // Query workload records and separate into delete vs unpair
+            var chunks = this._chunkArray(syncFilterResult.sysIds, 500);
+            for (var c = 0; c < chunks.length; c++) {
+                var gr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload');
+                gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+                gr.query();
+
+                while (gr.next()) {
+                    var knownToPce = gr.getValue('known_to_pce');
+                    var pceHref = gr.getValue('pce_workload_href');
+
+                    if (knownToPce !== 'managed' && knownToPce !== 'unmanaged') {
+                        result.skippedCount++;
+                        continue;
+                    }
+
+                    if (gs.nil(pceHref)) {
+                        result.skippedCount++;
+                        continue;
+                    }
+
+                    // Enforce threshold limit
+                    if (wlLimitObject.limitEnabled && wlLimitObject.isLimitEnabled['delete'] && wlLimitObject.wlLimit['delete'] <= 0) {
+                        result.thresholdExceeded = true;
+                        if (wlLimitObject.cancelJobOnLimitExceed) {
+                            result.cancelJob = true;
+                            result.message = 'Deletion threshold limit exceeded. Job will be cancelled.';
+                            return result;
+                        }
+                        break;
+                    }
+
+                    if (wlLimitObject.limitEnabled && wlLimitObject.isLimitEnabled['delete']) {
+                        wlLimitObject.wlLimit['delete'] -= 1;
+                    }
+
+                    if (knownToPce === 'managed') {
+                        var venHref = gr.getValue('ven_href');
+                        if (!gs.nil(venHref)) {
+                            result.vensToUnpair.push(venHref);
+                            result.unpairCount++;
+                        } else {
+                            result.skippedCount++;
+                        }
+                    } else {
+                        if (!result.retiredWorkloads.hasOwnProperty(pceHref)) {
+                            result.retiredWorkloads[pceHref] = gr.getUniqueValue();
+                            result.deletionCount++;
+                        }
+                    }
+                }
+
+                if (result.cancelJob) {
+                    break;
+                }
+            }
+
+            if (result.thresholdExceeded) {
+                result.message = 'Deletion threshold limit exceeded. Some workloads were not included.';
+            }
+
+            result.success = true;
+            if (!result.thresholdExceeded) {
+                result.message = result.deletionCount + ' workload(s) for deletion, ' + result.unpairCount + ' workload(s) for unpair' +
+                    (result.skippedCount > 0 ? ', ' + result.skippedCount + ' skipped' : '');
+            }
+
+            gs.info('[prepareDeletionPayload] ' + result.message);
+        } catch (ex) {
+            gs.error('[prepareDeletionPayload] Exception: ' + ex);
+            result.message = 'Exception occurred: ' + ex;
+        }
+
+        return result;
+    },
+
+    buildDeletionPayloadFromSysIds: function(sysIds) {
+        var result = {
+            success: false,
+            message: '',
+            retiredWorkloads: {},
+            vensToUnpair: [],
+            deletionCount: 0,
+            unpairCount: 0,
+            skippedCount: 0
+        };
+
+        try {
+            if (!sysIds || sysIds.length === 0) {
+                result.message = 'No workload sys_ids provided.';
+                return result;
+            }
+
+            var chunks = this._chunkArray(sysIds, 500);
+            for (var c = 0; c < chunks.length; c++) {
+                var gr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload');
+                gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+                gr.query();
+
+                while (gr.next()) {
+                    var knownToPce = gr.getValue('known_to_pce');
+                    var pceHref = gr.getValue('pce_workload_href');
+
+                    if (knownToPce !== 'managed' && knownToPce !== 'unmanaged') {
+                        result.skippedCount++;
+                        continue;
+                    }
+
+                    if (gs.nil(pceHref)) {
+                        result.skippedCount++;
+                        continue;
+                    }
+
+                    if (knownToPce === 'managed') {
+                        var venHref = gr.getValue('ven_href');
+                        if (!gs.nil(venHref)) {
+                            result.vensToUnpair.push(venHref);
+                            result.unpairCount++;
+                        } else {
+                            result.skippedCount++;
+                        }
+                    } else {
+                        if (!result.retiredWorkloads.hasOwnProperty(pceHref)) {
+                            result.retiredWorkloads[pceHref] = gr.getUniqueValue();
+                            result.deletionCount++;
+                        }
+                    }
+                }
+            }
+
+            result.success = true;
+            result.message = result.deletionCount + ' workload(s) for deletion, ' + result.unpairCount + ' workload(s) for unpair' +
+                (result.skippedCount > 0 ? ', ' + result.skippedCount + ' skipped' : '');
+            gs.info('[buildDeletionPayloadFromSysIds] ' + result.message);
+        } catch (ex) {
+            gs.error('[buildDeletionPayloadFromSysIds] Exception: ' + ex);
+            result.message = 'Exception occurred: ' + ex;
+        }
+
+        return result;
+    },
+
     _workloadToObject: function(gr) {
         return {
             sys_id: gr.getUniqueValue(),
@@ -2011,14 +2262,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>451</sys_mod_count>
+        <sys_mod_count>455</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-27 05:54:01</sys_updated_on>
+        <sys_updated_on>2026-08-03 15:03:51</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

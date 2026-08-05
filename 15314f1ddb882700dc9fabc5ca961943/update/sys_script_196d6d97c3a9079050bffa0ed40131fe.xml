@@ -15,7 +15,7 @@
         <condition/>
         <description/>
         <execute_function>false</execute_function>
-        <filter_condition table="x_illu2_illumio_illumio_scheduled_jobs">job_type=data sync^job_statusCHANGESTOcompleted^ORjob_statusCHANGESTOpartial_success^EQ<item display_value="Data Sync" endquery="false" field="job_type" goto="false" newquery="false" operator="=" or="false" value="data sync"/>
+        <filter_condition table="x_illu2_illumio_illumio_scheduled_jobs">job_typeINdata sync,deletion^job_statusCHANGESTOcompleted^ORjob_statusCHANGESTOpartial_success^EQ<item display_value="data sync,deletion" endquery="false" field="job_type" goto="false" newquery="false" operator="IN" or="false" value="data sync,deletion"/>
             <item display_value="Completed" endquery="false" field="job_status" goto="false" newquery="false" operator="CHANGESTO" or="false" value="completed"/>
             <item display_value="Partial Success" endquery="false" field="job_status" goto="false" newquery="false" operator="CHANGESTO" or="true" value="partial_success"/>
             <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
@@ -60,7 +60,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>196d6d97c3a9079050bffa0ed40131fe</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Illumio Trigger Post Sync Discovery</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -68,7 +68,7 @@
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_196d6d97c3a9079050bffa0ed40131fe</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-06-24 08:08:32</sys_updated_on>
+        <sys_updated_on>2026-08-03 12:24:53</sys_updated_on>
         <template/>
         <when>after</when>
     </sys_script>

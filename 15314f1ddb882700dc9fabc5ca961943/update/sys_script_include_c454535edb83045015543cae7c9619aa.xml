@@ -25,9 +25,8 @@ IllumioManageJobs.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         var scheduledJobGr = new GlideRecordSecure('x_illu2_illumio_illumio_scheduled_jobs');
         scheduledJobGr.initialize();
 
-        /* Check if any data collection is already in running state */
+        /* Check if any job (data collection, data sync, or deletion) is already running for this config */
         var runningJobsCount = new GlideAggregate("x_illu2_illumio_illumio_scheduled_jobs");
-        runningJobsCount.addQuery("job_type", "data collection");
         runningJobsCount.addQuery("job_status", "running");
         runningJobsCount.addAggregate('COUNT');
         runningJobsCount.addQuery("illumio_pce_configuration", configSysId);
@@ -71,14 +70,14 @@ IllumioManageJobs.prototype = Object.extendsObject(global.AbstractAjaxProcessor,
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-02-21 05:28:20</sys_created_on>
         <sys_id>c454535edb83045015543cae7c9619aa</sys_id>
-        <sys_mod_count>58</sys_mod_count>
+        <sys_mod_count>59</sys_mod_count>
         <sys_name>IllumioManageJobs</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_c454535edb83045015543cae7c9619aa</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-05-08 14:35:17</sys_updated_on>
+        <sys_updated_on>2026-07-31 12:46:18</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>c454535edb83045015543cae7c9619aa</id>

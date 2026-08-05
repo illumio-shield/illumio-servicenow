@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
     <sys_ui_action action="INSERT_OR_UPDATE">
-        <action_name>export_matching_workloads_for_config</action_name>
+        <action_name>preview_workload_deletion</action_name>
         <active>true</active>
         <client>false</client>
         <client_script_v2><![CDATA[function onClick(g_form) {
 
-}]]></client_script_v2>
+}
+]]></client_script_v2>
         <comments/>
         <condition/>
         <form_action>true</form_action>
-        <form_button>true</form_button>
+        <form_button>false</form_button>
         <form_button_icon/>
         <form_button_v2>false</form_button_v2>
         <form_context_menu>false</form_context_menu>
-        <form_link>false</form_link>
+        <form_link>true</form_link>
         <form_menu_button_v2>false</form_menu_button_v2>
         <form_style/>
         <format_for_configurable_workspace>false</format_for_configurable_workspace>
-        <hint>Export Matching Workloads for PCE Config</hint>
+        <hint/>
         <isolate_script>false</isolate_script>
         <list_action>false</list_action>
         <list_banner_button>false</list_banner_button>
@@ -28,11 +29,11 @@
         <list_link>false</list_link>
         <list_save_with_form_button>false</list_save_with_form_button>
         <list_style/>
-        <messages>Export Matching Workloads for PCE Config</messages>
-        <name>Export Matching Workloads for Config</name>
+        <messages/>
+        <name>Preview Workload Deletion</name>
         <onclick/>
-        <order>101</order>
-        <script><![CDATA[(function executeExportMatchingWorkloads(current, action, gs) {
+        <order>1000</order>
+        <script><![CDATA[(function executePreviewDeletionWorkloads(current, action, gs) {
     var configSysId = current.getUniqueValue();
     var tableName = current.getTableName();
     var redirectUrl = tableName + '.do?sys_id=' + configSysId;
@@ -45,10 +46,10 @@
 
     try {
         var utils = new IllumioUtils();
-        var syncFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configSysId, 'inclusion');
+        var syncFilterResult = utils.getEligibleWorkloadSysIdsByConfig(configSysId, 'deletion');
 
         if (!syncFilterResult.hasFilter) {
-            gs.addInfoMessage("No active inclusion sync filters configured for this PCE Configuration.");
+            gs.addInfoMessage("No active deletion sync filters configured for this PCE Configuration.");
             action.setRedirectURL(redirectUrl);
             return;
         }
@@ -56,7 +57,7 @@
         var sysIds = syncFilterResult.sysIds;
 
         if (!sysIds || sysIds.length === 0) {
-            gs.addInfoMessage("No workloads match the active inclusion sync filter criteria.");
+            gs.addInfoMessage("No workloads match the active deletion sync filter criteria.");
             action.setRedirectURL(redirectUrl);
             return;
         }
@@ -71,7 +72,7 @@
         var dd = ('0' + (parts[2] || '0')).slice(-2);
         var hh = ('0' + (parts[3] || '0')).slice(-2);
         var min = ('0' + (parts[4] || '0')).slice(-2);
-        var fileName = 'INCLUSION-PREVIEW-' + dd + '-' + mm + '-' + yy + '-' + hh + '-' + min + '.csv';
+        var fileName = 'DELETION-PREVIEW-' + dd + '-' + mm + '-' + yy + '-' + hh + '-' + min + '.csv';
 
         var targetGr = new GlideRecord(tableName);
         targetGr.get(configSysId);
@@ -80,7 +81,7 @@
 
         var existingAttachments = sa.getAttachments(tableName, configSysId);
         while (existingAttachments.next()) {
-            if ((existingAttachments.getValue('file_name') || '').indexOf('INCLUSION-PREVIEW-') === 0) {
+            if ((existingAttachments.getValue('file_name') || '').indexOf('DELETION-PREVIEW-') === 0) {
                 sa.deleteAttachment(existingAttachments.getUniqueValue());
             }
         }
@@ -88,14 +89,14 @@
         var attachmentSysId = sa.write(targetGr, fileName, 'text/csv', csvContent);
 
         if (gs.nil(attachmentSysId)) {
-            gs.error('[ExportMatchingWorkloads] GlideSysAttachment.write returned nil. FileName: ' + fileName + ', CSV length: ' + csvContent.length);
-            gs.addErrorMessage("Failed to generate CSV export. Check application logs for details.");
+            gs.error('[PreviewDeletionWorkloads] GlideSysAttachment.write returned nil. FileName: ' + fileName + ', CSV length: ' + csvContent.length);
+            gs.addErrorMessage("Failed to generate deletion preview CSV. Check application logs for details.");
         } else {
-            gs.addInfoMessage(sysIds.length + " matching workloads exported. Download the CSV from the attachments on this record.");
+            gs.addInfoMessage(sysIds.length + " workload(s) matched for deletion. Preview CSV attached to this record.");
         }
     } catch (ex) {
-        gs.error('[ExportMatchingWorkloads] Exception: ' + ex);
-        gs.addErrorMessage("Error exporting workloads: " + ex);
+        gs.error('[PreviewDeletionWorkloads] Exception: ' + ex);
+        gs.addErrorMessage("Error generating deletion preview: " + ex);
     }
 
     action.setRedirectURL(redirectUrl);
@@ -109,32 +110,21 @@
         <show_update>true</show_update>
         <sys_class_name>sys_ui_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-07-27 05:40:50</sys_created_on>
+        <sys_created_on>2026-07-31 12:46:17</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>4a9d4342c356031050bffa0ed40131e7</sys_id>
-        <sys_mod_count>7</sys_mod_count>
-        <sys_name>Export Matching Workloads for Config</sys_name>
+        <sys_id>1a951de3c39e0f1050bffa0ed4013131</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Preview Workload Deletion</sys_name>
         <sys_overrides/>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_ui_action_4a9d4342c356031050bffa0ed40131e7</sys_update_name>
+        <sys_update_name>sys_ui_action_1a951de3c39e0f1050bffa0ed4013131</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-31 13:55:56</sys_updated_on>
+        <sys_updated_on>2026-07-31 14:17:20</sys_updated_on>
         <table>x_illu2_illumio_illumio_pce_conf</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>
     </sys_ui_action>
-    <sys_es_latest_script action="INSERT_OR_UPDATE">
-        <id>4a9d4342c356031050bffa0ed40131e7</id>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2026-07-27 05:40:49</sys_created_on>
-        <sys_id>36ddc786c31a031050bffa0ed4013163</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-27 05:40:49</sys_updated_on>
-        <table>sys_ui_action</table>
-        <use_es_latest>true</use_es_latest>
-    </sys_es_latest_script>
 </record_update>
