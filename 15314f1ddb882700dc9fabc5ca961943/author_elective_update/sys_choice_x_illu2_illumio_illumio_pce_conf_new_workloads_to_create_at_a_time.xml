@@ -6,6 +6,7 @@
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>system</sys_created_by>
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
+            <sys_id>8e0f4016475683508ab8cc02d16d43cd</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>new_workloads_to_create_at_a_time</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -29,6 +30,7 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>a89f845a475683508ab8cc02d16d434f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>system</sys_updated_by>
             <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
@@ -48,6 +50,7 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>ac9f845a475683508ab8cc02d16d4356</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>system</sys_updated_by>
             <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
@@ -67,6 +70,7 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>689f845a475683508ab8cc02d16d436a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>system</sys_updated_by>
             <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
@@ -86,6 +90,7 @@
             <sys_created_on>2020-05-25 08:35:53</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>6c9f845a475683508ab8cc02d16d4371</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>system</sys_updated_by>
             <sys_updated_on>2020-05-25 08:35:53</sys_updated_on>
