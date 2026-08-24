@@ -132,6 +132,42 @@ IllumioDeletionHandler.prototype = Object.extendsObject(global.AbstractAjaxProce
         return JSON.stringify(result);
     },
 
+    validateWorkloadsForDeletion: function() {
+        var checkedSysIds = String(this.getParameter('sysparm_checked_sysids') || '');
+        var result = { managedCount: 0, unmanagedCount: 0, unknownCount: 0 };
+
+        try {
+            if (gs.nil(checkedSysIds)) {
+                return JSON.stringify(result);
+            }
+
+            var sysIds = checkedSysIds.split(',').filter(Boolean);
+            var utils = new IllumioUtils();
+            var chunks = utils._chunkArray(sysIds, 500);
+
+            for (var c = 0; c < chunks.length; c++) {
+                var gr = new GlideRecordSecure('x_illu2_illumio_illumio_pce_workload');
+                gr.addQuery('sys_id', 'IN', chunks[c].join(','));
+                gr.query();
+
+                while (gr.next()) {
+                    var knownToPce = gr.getValue('known_to_pce');
+                    if (knownToPce === 'managed') {
+                        result.managedCount++;
+                    } else if (knownToPce === 'unmanaged') {
+                        result.unmanagedCount++;
+                    } else {
+                        result.unknownCount++;
+                    }
+                }
+            }
+        } catch (ex) {
+            gs.error('[IllumioDeletionHandler.validateWorkloadsForDeletion] Exception: ' + ex);
+        }
+
+        return JSON.stringify(result);
+    },
+
     type: 'IllumioDeletionHandler'
 });
 ]]></script>
@@ -139,14 +175,14 @@ IllumioDeletionHandler.prototype = Object.extendsObject(global.AbstractAjaxProce
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-08-03 15:39:42</sys_created_on>
         <sys_id>0ca91d6cc32e475050bffa0ed401310d</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>IllumioDeletionHandler</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_0ca91d6cc32e475050bffa0ed401310d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-08-05 13:14:51</sys_updated_on>
+        <sys_updated_on>2026-08-14 15:46:13</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>0ca91d6cc32e475050bffa0ed401310d</id>
