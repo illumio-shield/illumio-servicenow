@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
     <sys_scope_privilege action="INSERT_OR_UPDATE">
-        <operation>create</operation>
+        <operation>execute</operation>
         <source_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</source_scope>
         <status>allowed</status>
         <sys_class_name>sys_scope_privilege</sys_class_name>
-        <sys_created_by>koushik.choudhury</sys_created_by>
-        <sys_created_on>2026-07-27 10:52:40</sys_created_on>
-        <sys_id>4f351052479683508ab8cc02d16d433b</sys_id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-08-25 14:50:35</sys_created_on>
+        <sys_id>aeb1e6abc3728b9050bffa0ed40131c8</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>cmdb_ci_server</sys_name>
+        <sys_name>GlideRecord.deleteRecord</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
-        <sys_update_name>sys_scope_privilege_4f351052479683508ab8cc02d16d433b</sys_update_name>
-        <sys_updated_by>koushik.choudhury</sys_updated_by>
-        <sys_updated_on>2026-07-27 10:52:40</sys_updated_on>
-        <target_name>cmdb_ci_server</target_name>
+        <sys_update_name>sys_scope_privilege_aeb1e6abc3728b9050bffa0ed40131c8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-08-25 14:50:35</sys_updated_on>
+        <target_name>GlideRecord.deleteRecord</target_name>
         <target_scope display_value="Global">global</target_scope>
-        <target_type>sys_db_object</target_type>
+        <target_type>scriptable</target_type>
     </sys_scope_privilege>
 </record_update>
