@@ -20,7 +20,7 @@
         <provider_class/>
         <read_access>true</read_access>
         <scriptable_table>false</scriptable_table>
-        <super_class display_value="Scheduled Script Execution" name="sysauto_script">19bf0e52470222108ab8cc02d16d43d1</super_class>
+        <super_class display_value="Scheduled Script Execution" name="sysauto_script">6c5ba282183232108bb255f46a373a08</super_class>
         <sys_class_name>sys_db_object</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-07-02 12:47:20</sys_created_on>

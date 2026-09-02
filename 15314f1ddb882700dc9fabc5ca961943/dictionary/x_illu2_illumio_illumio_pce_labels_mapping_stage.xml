@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="37b285a79300021062233f018bba10bb" label="Illumio PCE Labels Mapping Stage" max_length="40" name="x_illu2_illumio_illumio_pce_labels_mapping_stage" type="collection">
-        <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <element label="JSON Data" max_length="16777215" name="json_data" type="string"/>
+        <element label="Illumio PCE Configuration" max_length="32" name="illumio_pce_configuration" reference="x_illu2_illumio_illumio_pce_conf" type="reference"/>
         <index name="index">
             <element name="illumio_pce_configuration"/>
         </index>

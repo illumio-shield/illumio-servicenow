@@ -6,6 +6,7 @@
             <sys_class_name>sys_choice_set</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2024-12-12 07:33:07</sys_created_on>
+            <sys_id>cbdb7448c392031050bffa0ed40131da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>type</sys_name>
             <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
@@ -29,6 +30,7 @@
             <sys_created_on>2024-04-04 09:01:32</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>149f445a475683508ab8cc02d16d437b</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-04-04 09:01:32</sys_updated_on>
@@ -48,6 +50,7 @@
             <sys_created_on>2024-04-04 09:01:32</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
+            <sys_id>d49f445a475683508ab8cc02d16d437c</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2024-04-04 09:01:32</sys_updated_on>

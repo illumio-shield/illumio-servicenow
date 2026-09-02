@@ -66,7 +66,7 @@
         <update_guid_history>6ad6b819cde80b500c5bf8f3437364a0:2120008513,9bc678194fe80b50ba6939dbf6f40dc5:68983377</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="">44e8bc1dc3e80b5050bffa0ed401316c</sys_audit_delete>
+        <sys_audit_delete display_value="Sync Filters">44e8bc1dc3e80b5050bffa0ed401316c</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2026-04-28 11:04:35</sys_created_on>
