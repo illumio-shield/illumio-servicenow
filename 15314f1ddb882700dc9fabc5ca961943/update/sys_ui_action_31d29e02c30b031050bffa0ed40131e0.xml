@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>false</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments/>
+        <condition/>
+        <form_action>true</form_action>
+        <form_button>false</form_button>
+        <form_button_icon/>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>true</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_button_icon/>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Preview Discovery Filter Mode</name>
+        <onclick/>
+        <order>100</order>
+        <script><![CDATA[gs.include("IllumioConstants");
+(function executePreviewDiscoveryFilter(current, action, gs) {
+    var mappingSysId = current.getUniqueValue();
+    var tableName = current.getTableName();
+    var redirectUrl = tableName + '.do?sys_id=' + mappingSysId;
+
+    if (gs.nil(mappingSysId)) {
+        gs.addErrorMessage("Unable to determine Config Class Mapping.");
+        action.setRedirectURL(redirectUrl);
+        return;
+    }
+
+    try {
+        var sourceTable = current.getValue('source_table');
+        var condition = current.getValue('conditions_for_excluding_workloads');
+        var filterMode = current.getValue('filter_mode') || 'exclusion_legacy';
+
+        if (gs.nil(sourceTable)) {
+            gs.addErrorMessage("No source table configured on this mapping.");
+            action.setRedirectURL(redirectUrl);
+            return;
+        }
+
+        var hostFieldGr = new GlideRecordSecure('x_illu2_illumio_illumio_class_field_mapping');
+        hostFieldGr.addQuery('illumio_config_class_mapping', mappingSysId);
+        hostFieldGr.addQuery('type', 'host_name');
+        hostFieldGr.addActiveQuery();
+        hostFieldGr.setLimit(1);
+        hostFieldGr.query();
+
+        if (!hostFieldGr.next()) {
+            gs.addErrorMessage("Preview requires a hostname field mapping. Configure a Host Name mapping first.");
+            action.setRedirectURL(redirectUrl);
+            return;
+        }
+
+        var isAdvancedHostname = hostFieldGr.getValue('advanced') == '1';
+        var hostnameField = isAdvancedHostname ? null : hostFieldGr['ci_field'].getDisplayValue();
+
+        var maxRecords = parseInt(gs.getProperty("x_illu2_illumio.maximum_ci_records") || '25000');
+        var utils = new IllumioUtils();
+        var discoverHelper = new IllumioDiscoverAndMapCMDBServers();
+
+        var headers = ['sys_id', 'name', 'sys_class_name', 'ip_address', 'hostname'];
+        var lines = [headers.join(',')];
+
+        var result = utils.iterateFilteredCMDBRecords(
+            sourceTable, filterMode, condition, maxRecords,
+            function(previewGr) {
+                var row = [];
+                for (var h = 0; h < headers.length; h++) {
+                    var val = '';
+                    if (headers[h] === 'hostname' && hostnameField) {
+                        val = discoverHelper.getValueFromDotWalkableField(previewGr, hostnameField) || '';
+                    } else if (headers[h] === 'hostname' && isAdvancedHostname) {
+                        val = '(script-based)';
+                    } else {
+                        val = previewGr.getValue(headers[h]) || '';
+                    }
+                    if (val.indexOf(',') !== -1 || val.indexOf('"') !== -1) {
+                        val = '"' + val.replace(/"/g, '""') + '"';
+                    }
+                    row.push(val);
+                }
+                lines.push(row.join(','));
+            }
+        );
+
+        if (result.fetchedCount === 0) {
+            var zeroMsg = "No CMDB records match the current filter configuration.";
+            if (result.excludedCount > 0) {
+                zeroMsg += " (" + result.excludedCount + " record(s) excluded by condition.)";
+            }
+            gs.addInfoMessage(zeroMsg);
+            action.setRedirectURL(redirectUrl);
+            return;
+        }
+
+        var csvContent = lines.join('\n');
+
+        var now = new GlideDateTime();
+        var displayValue = now.getDisplayValue().replace(/[:\s]/g, '-').replace(/[^0-9\-]/g, '').split('-');
+        var yy = (displayValue[0] || '00').slice(-2);
+        var mm = ('0' + (displayValue[1] || '0')).slice(-2);
+        var dd = ('0' + (displayValue[2] || '0')).slice(-2);
+        var hh = ('0' + (displayValue[3] || '0')).slice(-2);
+        var min = ('0' + (displayValue[4] || '0')).slice(-2);
+        var fileName = 'DISCOVERY-PREVIEW-' + dd + '-' + mm + '-' + yy + '-' + hh + '-' + min + '.csv';
+
+        var targetGr = new GlideRecord(tableName);
+        targetGr.get(mappingSysId);
+
+        var sa = new GlideSysAttachment();
+        var existingAttachments = sa.getAttachments(tableName, mappingSysId);
+        while (existingAttachments.next()) {
+            if ((existingAttachments.getValue('file_name') || '').indexOf('DISCOVERY-PREVIEW-') === 0) {
+                sa.deleteAttachment(existingAttachments.getUniqueValue());
+            }
+        }
+
+        var attachmentSysId = sa.write(targetGr, fileName, 'text/csv', csvContent);
+
+        if (gs.nil(attachmentSysId)) {
+            gs.error('[PreviewDiscoveryFilter] GlideSysAttachment.write returned nil. FileName: ' + fileName + ', CSV length: ' + csvContent.length);
+            gs.addErrorMessage("Failed to generate discovery preview CSV. Check application logs for details.");
+        } else {
+            var modeLabel = filterMode === 'inclusion' ? 'Inclusion' : 'Exclusion (Legacy)';
+            var msg = result.fetchedCount + " CMDB record(s) will be processed by discovery (mode: " + modeLabel + "). Preview CSV attached.";
+            if (result.excludedCount > 0) {
+                msg += " " + result.excludedCount + " record(s) excluded.";
+            }
+            gs.addInfoMessage(msg);
+        }
+    } catch (ex) {
+        gs.error('[PreviewDiscoveryFilter] Exception: ' + ex);
+        gs.addErrorMessage("Error generating discovery preview: " + ex);
+    }
+
+    action.setRedirectURL(redirectUrl);
+})(current, action, gs);]]></script>
+        <show_form_icon_only>false</show_form_icon_only>
+        <show_insert>false</show_insert>
+        <show_list_icon_only>false</show_list_icon_only>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-09-02 08:10:04</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>31d29e02c30b031050bffa0ed40131e0</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Preview Discovery Filter Mode</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
+        <sys_update_name>sys_ui_action_31d29e02c30b031050bffa0ed40131e0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-09-02 14:04:06</sys_updated_on>
+        <table>x_illu2_illumio_illumio_config_class_mapping</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

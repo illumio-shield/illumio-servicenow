@@ -1584,6 +1584,93 @@ IllumioUtils.prototype = {
     },
 
     /**
+     * Apply discovery filter condition to a GlideRecord based on filter mode.
+     * For inclusion/exclusion_optimized, adds an encoded query to the GlideRecord (DB-level).
+     * For exclusion_legacy, returns a GlideFilter for in-memory evaluation.
+     * @param {GlideRecord} gr GlideRecord to apply the filter to
+     * @param {String} filterMode 'inclusion' or 'exclusion_legacy'
+     * @param {String} condition Encoded query condition string
+     * @returns {GlideFilter|null} GlideFilter for legacy mode, null for inclusion
+     */
+    applyDiscoveryFilter: function(gr, filterMode, condition) {
+        if (gs.nil(condition)) {
+            return null;
+        }
+        if (filterMode === 'inclusion') {
+            gr.addEncodedQuery(condition);
+            return null;
+        }
+        var excludeFilter = new GlideFilter(condition, "excludeConditionFilter");
+        if (IS_CASE_SENSITIVE == "false") {
+            excludeFilter.setCaseSensitive(false);
+        }
+        return excludeFilter;
+    },
+
+    /**
+     * Iterate over CMDB records with discovery filter mode and batched pagination.
+     * Applies DB-level or in-memory filtering based on filterMode, then calls
+     * the callback for each record that passes the filter.
+     * @param {String} sourceTable CMDB table name (e.g. 'cmdb_ci_server')
+     * @param {String} filterMode 'inclusion' or 'exclusion_legacy'
+     * @param {String} condition Encoded query condition string
+     * @param {Number} maxRecords Maximum records to process
+     * @param {Function} callback Called with (GlideRecord) for each passing record. Return false to stop iteration.
+     * @param {Object} [options] Optional config: { sortField: String, sortOrder: 'ASC'|'DESC' }
+     * @returns {Object} { fetchedCount: Number, excludedCount: Number }
+     */
+    iterateFilteredCMDBRecords: function(sourceTable, filterMode, condition, maxRecords, callback, options) {
+        options = options || {};
+        var gr = new GlideRecord(sourceTable);
+        gr.setLimit(maxRecords);
+
+        var excludeFilter = this.applyDiscoveryFilter(gr, filterMode, condition);
+
+        if (options.sortField) {
+            if (options.sortOrder === 'ASC') {
+                gr.orderBy(options.sortField);
+            } else {
+                gr.orderByDesc(options.sortField);
+            }
+        }
+
+        var fetchedCount = 0;
+        var excludedCount = 0;
+        var recordIndex = 0;
+
+        while (recordIndex < maxRecords) {
+            if (maxRecords - recordIndex >= 10000)
+                gr.chooseWindow(recordIndex, recordIndex + 10000);
+            else gr.chooseWindow(recordIndex, maxRecords);
+
+            gr.query();
+
+            if (!gr.hasNext()) {
+                break;
+            }
+
+            while (gr.next()) {
+                if (excludeFilter) {
+                    if (excludeFilter.match(gr, true)) {
+                        excludedCount++;
+                        continue;
+                    }
+                }
+
+                fetchedCount++;
+                var shouldContinue = callback(gr);
+                if (shouldContinue === false) {
+                    return { fetchedCount: fetchedCount, excludedCount: excludedCount };
+                }
+            }
+
+            recordIndex += 10000;
+        }
+
+        return { fetchedCount: fetchedCount, excludedCount: excludedCount };
+    },
+
+    /**
      * Split an array into chunks of a given size
      * @param {Array} arr Array to split
      * @param {Number} size Maximum chunk size
@@ -2262,14 +2349,14 @@ IllumioUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-11-04 13:11:02</sys_created_on>
         <sys_id>b630a09ddb9020d01206fd641d9619df</sys_id>
-        <sys_mod_count>455</sys_mod_count>
+        <sys_mod_count>458</sys_mod_count>
         <sys_name>IllumioUtils</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_b630a09ddb9020d01206fd641d9619df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-08-03 15:03:51</sys_updated_on>
+        <sys_updated_on>2026-09-02 14:04:07</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>b630a09ddb9020d01206fd641d9619df</id>

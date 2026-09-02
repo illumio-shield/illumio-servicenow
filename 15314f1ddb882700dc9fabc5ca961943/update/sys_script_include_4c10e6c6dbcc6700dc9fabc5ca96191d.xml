@@ -37,75 +37,40 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
 
         for (var table in pceConfig.source) {
             retiredWorkloads[table] = 0;
-            gs.info("Started mapping CMDB Servers with PCE from table {0}", table);
+            var filterMode = pceConfig.source[table].filter_mode || 'exclusion_legacy';
+            var filterCondition = pceConfig.source[table].exclude_condition;
 
-            // CI Relation GlideRecord Object
-            var sourceTableGr = new GlideRecord(table);
-            sourceTableGr.setLimit(maxRecords);
+            gs.info("Started mapping CMDB Servers with PCE from table {0} (filter mode: {1})", [table, filterMode]);
 
-            // Process records in batches
-            var recordIndex = 0;
-            while (recordIndex < maxRecords) {
+            var filterStartTime = Date.now();
 
-                // Slice only 10000 records
-                if (maxRecords - recordIndex >= 10000)
-                    sourceTableGr.chooseWindow(recordIndex, recordIndex + 10000);
-                else sourceTableGr.chooseWindow(recordIndex, maxRecords);
-
-                if (pceConfig.source[table].order_by == "ASC") {
-                    sourceTableGr.orderBy(pceConfig.source[table].sort_order);
-                } else {
-                    sourceTableGr.orderByDesc(pceConfig.source[table].sort_order);
+            // Initialize incident condition filter (in-memory for all modes)
+            var incidentConditionFilter = null;
+            if (!gs.nil(pceConfig.source[table].incident_condition)) {
+                incidentConditionFilter = new GlideFilter(pceConfig.source[table].incident_condition, "incidentConditionFilter");
+                if (IS_CASE_SENSITIVE == "false") {
+                    incidentConditionFilter.setCaseSensitive(false);
                 }
-                sourceTableGr.query();
+            }
 
-                // If there are no more records, break
-                if (!sourceTableGr.hasNext()) {
-                    gs.info("No more data available to process in {0} table.", table);
-                    break;
-                }
-
-				// Initialize filters
-				var excludeConditionFilter = new GlideFilter(pceConfig.source[table].exclude_condition, "excludeConditionFilter");
-				var incidentConditionFilter = new GlideFilter(pceConfig.source[table].incident_condition, "incidentConditionFilter");
-
-				if (IS_CASE_SENSITIVE == "false") {
-					excludeConditionFilter.setCaseSensitive(false);
-					incidentConditionFilter.setCaseSensitive(false);
-				}
-
-                while (sourceTableGr.next()) {
-                    // check the condition for retired wotkloads and delete
-                    if (!gs.nil(pceConfig.source[table].exclude_condition)) {
-						var condition = excludeConditionFilter.match(sourceTableGr, true);
-                        if (condition) {
-                            // condition matched
-                            retiredWorkloads[table]++;
-                            gs.info('Excluding workload from "{0}" table having sys_id: {1}', [table, sourceTableGr.sys_id]);
-                            continue; // skipping retired workload
-                        }
-                    }
-
-                    // Check the condition for creating incident for workload
+            var self = this;
+            var result = this.utils.iterateFilteredCMDBRecords(
+                table, filterMode, filterCondition, maxRecords,
+                function(sourceTableGr) {
                     var createIncident = false;
-                    if (!gs.nil(pceConfig.source[table].incident_condition)) {
-                        var incidentConditionAvail = incidentConditionFilter.match(sourceTableGr, true);
-                        if (incidentConditionAvail) {
+                    if (incidentConditionFilter) {
+                        if (incidentConditionFilter.match(sourceTableGr, true)) {
                             createIncident = true;
                         }
                     }
 
-                    /* Process the record and get the label values */
-                    var hostname = this.getValueFromCMDB(sourceTableGr, pceConfig.source[table].host_name);
+                    var hostname = self.getValueFromCMDB(sourceTableGr, pceConfig.source[table].host_name);
                     if (!gs.nil(hostname)) {
-
-                        // create PCE Workload object
-                        var tempWorkload = this._evaluateClassFieldMapping(pceConfig, sourceTableGr, table);
+                        var tempWorkload = self._evaluateClassFieldMapping(pceConfig, sourceTableGr, table);
                         tempWorkload["source_table"] = table;
                         tempWorkload["host_name"] = hostname;
-                        // check if workload is duplicate
                         if (processedHosts[hostname]) {
-                            tempWorkload['create_incident'] = false; // duplicate workload cannot create incident (if duplicateworkloads and workloads sharing same function in future)
+                            tempWorkload['create_incident'] = false;
                             duplicateWorkloads.push(tempWorkload);
                         } else {
                             tempWorkload['create_incident'] = createIncident;
@@ -115,19 +80,32 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     } else {
                         gs.info("[process] No hostname exist for {0} table having record with sys_id: {1}", [table, sourceTableGr.sys_id]);
                     }
+                },
+                {
+                    sortField: pceConfig.source[table].sort_order,
+                    sortOrder: pceConfig.source[table].order_by
                 }
-                /* Jump 10000 records */
-                recordIndex += 10000;
-            }
+            );
 
-            // add log of retired workload count in scheduled job status
-            if (retiredWorkloads[table] > 0) {
-                var jobContent = {
-                    logs: 'Total excluded workloads from "' + table + '" table : ' + retiredWorkloads[table],
-                    current_operation: "Mapping CMDB servers to PCE",
-                };
-                this.utils.updateJobRecord(this.illumioJobId, jobContent);
-            }
+            retiredWorkloads[table] = result.excludedCount;
+
+            // Log filter phase summary
+            var modeLabel = filterMode === 'inclusion' ? 'Inclusion' : 'Exclusion (Legacy)';
+            var hasConditions = !gs.nil(filterCondition);
+            var filterLog = '\n-----------------------------------------------------\n'
+                + 'PHASE: Fetching & Filtering CMDB Records\n'
+                + '-----------------------------------------------------\n'
+                + 'CMDB Table: ' + table + '\n'
+                + 'Filter Mode: ' + modeLabel + '\n'
+                + 'Filter Conditions: ' + (hasConditions ? 'Found' : 'Not Found') + '\n'
+                + 'Fetched CMDB items: ' + result.fetchedCount + ' (' + (hasConditions ? 'Filtered' : 'All') + ')\n'
+                + 'Time Elapsed (seconds): ' + ((Date.now() - filterStartTime) / 1000).toFixed(2)
+                + '\n';
+            var jobContent = {
+                logs: filterLog,
+                current_operation: "Mapping CMDB servers to PCE",
+            };
+            this.utils.updateJobRecord(this.illumioJobId, jobContent);
         }
         return {
             workloads: workloads,
@@ -260,7 +238,15 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
             this.utils.updateJobRecord(this.illumioJobId, jobContent);
 
             // prepare workload objects
+            this.utils.updateJobRecord(this.illumioJobId, {
+                logs: "Started: Fetching & Filtering CMDB Records",
+            });
             var allWorkloads = this._processTable(pceConfig);
+
+            this.utils.updateJobRecord(this.illumioJobId, {
+                logs: "Started: Comparing CMDB & PCE Data",
+            });
+            var compareStartTime = Date.now();
 
             // create PCE Workloads
             for (var workload in allWorkloads["workloads"]) {
@@ -274,7 +260,25 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
                     allWorkloads["duplicateWorkloads"][item]
                 );
             }
-            gs.info("Added all records to the custom table");
+
+            var managedCount = Object.keys(this.hostnameMap.managed).length;
+            var unmanagedCount = Object.keys(this.hostnameMap.unmanaged).length;
+            var unknownCount = Object.keys(this.hostnameMap.unknown).length;
+            var duplicateCount = allWorkloads.duplicateWorkloads.length;
+            var compareLog = '\n-----------------------------------------------------\n'
+                + 'PHASE: Comparing CMDB & PCE Data\n'
+                + '-----------------------------------------------------\n'
+                + 'Total Workloads: ' + (managedCount + unmanagedCount + unknownCount) + '\n'
+                + 'Managed: ' + managedCount + '\n'
+                + 'Unmanaged: ' + unmanagedCount + '\n'
+                + 'Unknown: ' + unknownCount + '\n'
+                + 'Duplicates: ' + duplicateCount + '\n'
+                + 'Time Elapsed (seconds): ' + ((Date.now() - compareStartTime) / 1000).toFixed(2)
+                + '\n';
+            this.utils.updateJobRecord(this.illumioJobId, {
+                logs: compareLog,
+                current_operation: "Comparing CMDB & PCE Data",
+            });
 
             /* Sync with PCE - only if autoSync is enabled AND not a post-sync discovery */
             var autoSyncEnabled = !!pceConfig.autoSync;
@@ -790,14 +794,14 @@ IllumioDiscoverAndMapCMDBServers.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-08-22 11:26:01</sys_created_on>
         <sys_id>4c10e6c6dbcc6700dc9fabc5ca96191d</sys_id>
-        <sys_mod_count>418</sys_mod_count>
+        <sys_mod_count>426</sys_mod_count>
         <sys_name>IllumioDiscoverAndMapCMDBServers</sys_name>
         <sys_package display_value="Illumio" source="x_illu2_illumio">15314f1ddb882700dc9fabc5ca961943</sys_package>
         <sys_policy/>
         <sys_scope display_value="Illumio">15314f1ddb882700dc9fabc5ca961943</sys_scope>
         <sys_update_name>sys_script_include_4c10e6c6dbcc6700dc9fabc5ca96191d</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2026-07-20 15:45:33</sys_updated_on>
+        <sys_updated_on>2026-09-02 14:42:42</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>4c10e6c6dbcc6700dc9fabc5ca96191d</id>
